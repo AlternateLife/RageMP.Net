@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
+using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
     public class Entity : IEntity
     {
+        protected readonly IntPtr _native;
+
         public uint Id { get; }
         public EntityType Type { get; }
 
@@ -18,9 +22,12 @@ namespace RageMP.Net.Entities
         public Vector3 Rotation { get; set; }
         public Vector3 Velocity { get; }
 
-        public Entity(uint id, EntityType type)
+        public Entity(IntPtr native, EntityType type)
         {
-            Id = id;
+            _native = native;
+
+            Id = Rage.Entity.Entity_GetId(_native);
+            //Rage.Player.Player_OutputChatBox(_native, "TEst");
             Type = type;
         }
 

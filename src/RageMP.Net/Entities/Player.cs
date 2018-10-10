@@ -1,15 +1,26 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
+using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
     public partial class Player : Entity, IPlayer
     {
         public string Serial { get; }
-        public string Name { get; set; }
-        public string SocialClubName { get; }
+
+        public string Name
+        {
+            get => Rage.Player.Player_GetName(_native);
+            set => Rage.Player.Player_SetName(_native, value);
+        }
+
+        public string SocialClubName
+        {
+            get => Rage.Player.Player_GetSocialClubName(_native);
+        }
 
         public float Heading { get; set; }
         public float MoveSpeed { get; }
@@ -36,28 +47,28 @@ namespace RageMP.Net.Entities
 
         public IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
-        internal Player(uint id) : base(id, EntityType.Player)
+        internal Player(IntPtr playerPointer) : base(playerPointer, EntityType.Player)
         {
         }
 
         public void Kick(string reason = null)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_Kick(_native, reason);
         }
 
         public void Ban(string reason = null)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_Ban(_native, reason);
         }
 
         public void OutputChatBox(string text)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_OutputChatBox(_native, text);
         }
 
         public void Notify(string text)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_Notify(_native, text);
         }
 
         public void Call(string eventName, params object[] arguments)
