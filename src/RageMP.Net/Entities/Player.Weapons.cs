@@ -5,8 +5,17 @@ namespace RageMP.Net.Entities
 {
     public partial class Player
     {
-        public uint CurrentWeapon { get; set; }
-        public uint CurrentWeaponAmmo { get; set; }
+        public uint CurrentWeapon
+        {
+            get => Rage.Player.Player_GetCurrentWeapon(NativePointer);
+            set => Rage.Player.Player_SetCurrentWeapon(NativePointer, value);
+        }
+
+        public uint CurrentWeaponAmmo
+        {
+            get => Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer);
+            set => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
+        }
 
         public uint GetWeaponAmmo(uint weaponHash)
         {
