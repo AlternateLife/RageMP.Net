@@ -167,7 +167,7 @@ namespace RageMP.Net.Native
             internal static extern bool Vehicle_GetExtra(IntPtr vehicle, uint id);
 
             [DllImport(_dllName)]
-            internal static extern void Vehicle_GetExtra(IntPtr vehicle, uint id, bool state);
+            internal static extern void Vehicle_SetExtra(IntPtr vehicle, uint id, bool state);
 
             [DllImport(_dllName)]
             internal static extern float Vehicle_GetMovableState(IntPtr vehicle);

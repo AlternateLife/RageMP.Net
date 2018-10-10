@@ -59,5 +59,8 @@ namespace RageMP.Net.Interfaces
         void SetColor(uint primary, uint seconary);
         void SetPaint(PaintData pimary, PaintData secondary);
 
+        bool GetExtra(uint id);
+        void SetExtra(uint id, bool state);
+
     }
 }

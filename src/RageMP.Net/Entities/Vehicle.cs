@@ -194,5 +194,15 @@ namespace RageMP.Net.Entities
         {
             throw new NotImplementedException();
         }
+
+        public bool GetExtra(uint id)
+        {
+            return Rage.Vehicle.Vehicle_GetExtra(NativePointer, id);
+        }
+
+        public void SetExtra(uint id, bool state)
+        {
+            Rage.Vehicle.Vehicle_SetExtra(NativePointer, id, state);
+        }
     }
 }
