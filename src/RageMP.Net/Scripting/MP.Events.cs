@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using RageMP.Net.Entities;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -169,18 +170,18 @@ namespace RageMP.Net.Scripting
                 _playerQuit.Call(x => x(player, type, reason));
             }
 
-            private static void DispatchPlayerCommand(IntPtr playerPointer, string text)
+            private static void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
             {
                 var player = new Player(playerPointer);
 
-                _playerCommand.Call(x => x(player, text));
+                _playerCommand.Call(x => x(player, Marshal.PtrToStringUni(text)));
             }
 
-            private static void DispatchPlayerChat(IntPtr playerPointer, string text)
+            private static void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)
             {
                 var player = new Player(playerPointer);
 
-                _playerChat.Call(x => x(player, text));
+                _playerChat.Call(x => x(player, Marshal.PtrToStringUni(text)));
             }
 
             private static void DispatchPlayerSpawn(IntPtr playerPointer)

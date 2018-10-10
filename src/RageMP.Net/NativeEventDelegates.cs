@@ -7,8 +7,8 @@ namespace RageMP.Net
     public delegate void NativePlayerJoinDelegate(IntPtr playerPointer);
     public delegate void NativePlayerReadyDelegate(IntPtr playerPointer);
     public delegate void NativePlayerQuitDelegate(IntPtr playerPointer, uint type, string reason);
-    public delegate void NativePlayerCommandDelegate(IntPtr playerPointer, string text);
-    public delegate void NativePlayerChatDelegate(IntPtr playerPointer, string text);
+    public delegate void NativePlayerCommandDelegate(IntPtr playerPointer, IntPtr text);
+    public delegate void NativePlayerChatDelegate(IntPtr playerPointer, IntPtr text);
     public delegate void NativePlayerDeathDelegate(IntPtr playerPointer, uint reason, IntPtr killerPlayerPointer);
     public delegate void NativePlayerSpawnDelegate(IntPtr playerPointer);
     public delegate void NativePlayerDamageDelegate(IntPtr playerPointer, float healthLoss, float armorLoss);
