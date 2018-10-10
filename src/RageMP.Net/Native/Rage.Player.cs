@@ -137,13 +137,13 @@ namespace RageMP.Net.Native
             [DllImport(_dllName)]
             internal static extern bool Player_IsStreamed(IntPtr player, IntPtr otherPlayer);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_PlayAnimation(IntPtr player, string dictionary, string name, float speed, int flags);
 
             [DllImport(_dllName)]
             internal static extern void Player_StopAnimation(IntPtr player);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_PlayScenario(IntPtr player, string scenario);
 
             [DllImport(_dllName)]
