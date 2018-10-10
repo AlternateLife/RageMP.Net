@@ -23,7 +23,7 @@ namespace RageMP.Net.Interfaces
         bool IsBreakActive { get; }
         bool AreNeonsActive { get; set; }
 
-        bool IsLocked { get; }
+        bool IsLocked { get; set; }
         bool IsDead { get; }
 
         float SteerAngle { get; }
@@ -51,7 +51,7 @@ namespace RageMP.Net.Interfaces
         uint GetMod(uint id);
         void SetMod(uint id, uint mod);
 
-        void SetNeonsColor(uint r, uint g, uint b);
+        void SetNeonsColor(uint red, uint green, uint blue);
         uint GetColor(uint id);
         uint GetPaint(uint id);
 
