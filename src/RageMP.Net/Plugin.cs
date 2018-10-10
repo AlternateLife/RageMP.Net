@@ -19,32 +19,32 @@ namespace RageMP.Net
 
         private void OnPlayerChat(IPlayer player, string text)
         {
-            Console.WriteLine($"{nameof(OnPlayerChat)}: {player.Id}, {text}");
+            Console.WriteLine($"{nameof(OnPlayerChat)}: {player.Name}, {text}");
         }
 
         private void OnPlayerQuit(IPlayer player, uint type, string reason)
         {
-            Console.WriteLine($"{nameof(OnPlayerQuit)}: {player.Id}, {type}, {reason}");
+            Console.WriteLine($"{nameof(OnPlayerQuit)}: {player.Name}, {type}, {reason}");
         }
 
         private void OnPlayerDamage(IPlayer player, float healthloss, float armorloss)
         {
-            Console.WriteLine($"{nameof(OnPlayerDamage)}: {player.Id}, {healthloss}, {armorloss}");
+            Console.WriteLine($"{nameof(OnPlayerDamage)}: {player.Name}, {healthloss}, {armorloss}");
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
         {
-            Console.WriteLine($"{nameof(OnPlayerDeath)}: {player.Id}, {reason}, {killerplayer.Id}");
+            Console.WriteLine($"{nameof(OnPlayerDeath)}: {player.Name}, {reason}, {killerplayer.Id}");
         }
 
         private void OnPlayerJoin(IPlayer player)
         {
-            Console.WriteLine($"{nameof(OnPlayerJoin)}: {player.Id} {player.SocialClubName}");
+            Console.WriteLine($"{nameof(OnPlayerJoin)}: {player.Name} {player.SocialClubName}");
         }
 
         private void OnPlayerReady(IPlayer player)
         {
-            Console.WriteLine($"{nameof(OnPlayerReady)}: {player.Id}");
+            Console.WriteLine($"{nameof(OnPlayerReady)}: {player.Name}");
         }
     }
 }
