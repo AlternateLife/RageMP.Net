@@ -22,6 +22,7 @@ namespace RageMP.Net
             Console.WriteLine($"{nameof(OnPlayerChat)}: {player.Name}, {text}, {player.Position}");
 
             player.Position += Vector3.UnitZ * 5;
+            player.GiveWeapon(0x97EA20B8, 100);
         }
 
         private void OnPlayerQuit(IPlayer player, uint type, string reason)

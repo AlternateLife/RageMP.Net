@@ -6,11 +6,11 @@ namespace RageMP.Net.Entities
     public partial class Player
     {
         public IVehicle Vehicle { get; }
-        public int Seat { get; }
+        public int Seat => Rage.Player.Player_GetSeat(NativePointer);
 
         public void PutIntoVehicle(IVehicle vehicle, int seat)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat);
         }
 
         public void RemoveFromVehicle()

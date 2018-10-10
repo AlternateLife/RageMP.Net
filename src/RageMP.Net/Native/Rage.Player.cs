@@ -147,6 +147,9 @@ namespace RageMP.Net.Native
             internal static extern void Player_PlayScenario(IntPtr player, string scenario);
 
             [DllImport(_dllName)]
+            internal static extern void Player_PutIntoVehicle(IntPtr player, IntPtr vehicle, int seat);
+
+            [DllImport(_dllName)]
             internal static extern void Player_RemoveFromVehicle(IntPtr player);
         }
     }

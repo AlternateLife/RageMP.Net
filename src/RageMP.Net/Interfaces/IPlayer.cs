@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Numerics;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 
@@ -15,7 +15,7 @@ namespace RageMP.Net.Interfaces
         float Health { get; set; }
         float Armor { get; set; }
 
-        System.Numerics.Vector3 AimingAt { get; }
+        Vector3 AimingAt { get; }
 
         string Ip { get; }
         int Ping { get; }
@@ -32,9 +32,9 @@ namespace RageMP.Net.Interfaces
         bool IsReloading { get; }
         bool IsInMelee { get; }
 
-        int EyeColor { get; set; }
-        int HairColor { get; }
-        int HairHighlightColor { get; }
+        uint EyeColor { get; set; }
+        uint HairColor { get; }
+        uint HairHighlightColor { get; }
         HeadBlendData HeadBlend { get; set; }
 
         string ActionString { get; }
@@ -55,7 +55,7 @@ namespace RageMP.Net.Interfaces
         void Call(string eventName, params object[] arguments);
         void Invoke(ulong nativeHash, params object[] arguments);
 
-        void Spawn(System.Numerics.Vector3 position, float heading);
+        void Spawn(Vector3 position, float heading);
         void PlayAnimation(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);
         void StopAnimation();
         void PlayScenario(string scenario);

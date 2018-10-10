@@ -6,9 +6,15 @@ namespace RageMP.Net.Entities
 {
     public partial class Player
     {
-        public int EyeColor { get; set; }
-        public int HairColor { get; }
-        public int HairHighlightColor { get; }
+        public uint EyeColor
+        {
+            get => Rage.Player.Player_GetEyeColor(NativePointer);
+            set => Rage.Player.Player_SetEyeColor(NativePointer, value);
+        }
+
+        public uint HairColor => Rage.Player.Player_GetHairColor(NativePointer);
+        public uint HairHighlightColor => Rage.Player.Player_GetHairHighlightColor(NativePointer);
+
         public HeadBlendData HeadBlend { get; set; }
 
         public uint GetDecoration(uint collection)
