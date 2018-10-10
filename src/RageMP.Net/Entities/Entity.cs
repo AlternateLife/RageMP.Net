@@ -35,17 +35,17 @@ namespace RageMP.Net.Entities
 
         public Vector3 Position
         {
-            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetPosition(NativePointer)).ToNumericsVector();
-            set => Rage.Entity.Entity_SetPosition(NativePointer, Data.Vector3.FromNumericsVector(value));
+            get => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer));
+            set => Rage.Entity.Entity_SetPosition(NativePointer, value);
         }
 
         public Vector3 Rotation
         {
-            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetRotation(NativePointer)).ToNumericsVector();
-            set => Rage.Entity.Entity_SetRotation(NativePointer, Data.Vector3.FromNumericsVector(value));
+            get => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
+            set => Rage.Entity.Entity_SetRotation(NativePointer, value);
         }
 
-        public Vector3 Velocity => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer)).ToNumericsVector();
+        public Vector3 Velocity => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
 
         public Entity(IntPtr nativePointer, EntityType type)
         {

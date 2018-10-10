@@ -19,7 +19,9 @@ namespace RageMP.Net
 
         private void OnPlayerChat(IPlayer player, string text)
         {
-            Console.WriteLine($"{nameof(OnPlayerChat)}: {player.Name}, {text}");
+            Console.WriteLine($"{nameof(OnPlayerChat)}: {player.Name}, {text}, {player.Position}");
+
+            player.Position += Vector3.UnitZ * 5;
         }
 
         private void OnPlayerQuit(IPlayer player, uint type, string reason)
