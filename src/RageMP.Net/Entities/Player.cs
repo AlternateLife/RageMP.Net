@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
@@ -87,7 +88,9 @@ namespace RageMP.Net.Entities
 
         public void Call(string eventName, params object[] arguments)
         {
-            throw new System.NotImplementedException();
+            var data = ArgumentData.ConvertFromArguments(arguments);
+
+            Rage.Player.Player__Call(NativePointer, eventName, data, data.Length);
         }
 
         public void Invoke(ulong nativeHash, params object[] arguments)

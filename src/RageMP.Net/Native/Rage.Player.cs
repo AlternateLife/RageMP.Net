@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 
 namespace RageMP.Net.Native
 {
@@ -151,6 +152,9 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Player_RemoveFromVehicle(IntPtr player);
+
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
+            internal static extern void Player__Call(IntPtr player, string eventName, ArgumentData[] data, int dataCount);
         }
     }
 }
