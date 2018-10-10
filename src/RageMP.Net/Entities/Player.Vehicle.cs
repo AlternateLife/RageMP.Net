@@ -1,4 +1,5 @@
 using RageMP.Net.Interfaces;
+using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
@@ -14,7 +15,7 @@ namespace RageMP.Net.Entities
 
         public void RemoveFromVehicle()
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_RemoveFromVehicle(NativePointer);
         }
     }
 }

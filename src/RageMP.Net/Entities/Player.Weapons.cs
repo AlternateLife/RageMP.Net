@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
@@ -9,12 +10,12 @@ namespace RageMP.Net.Entities
 
         public uint GetWeaponAmmo(uint weaponHash)
         {
-            throw new System.NotImplementedException();
+            return Rage.Player.Player_GetWeaponAmmo(NativePointer, weaponHash);
         }
 
         public void SetWeaponAmmo(uint weaponHash, uint ammo)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_SetWeaponAmmo(NativePointer, weaponHash, ammo);
         }
 
         public IReadOnlyDictionary<uint, uint> GetWeapons()
@@ -24,7 +25,7 @@ namespace RageMP.Net.Entities
 
         public void GiveWeapon(uint weaponHash, uint ammo)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_GiveWeapon(NativePointer, weaponHash, ammo);
         }
 
         public void GiveWeapons(IDictionary<uint, uint> weapons)
@@ -34,7 +35,7 @@ namespace RageMP.Net.Entities
 
         public void RemoveWeapon(uint weaponHash)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_RemoveWeapon(NativePointer, weaponHash);
         }
 
         public void RemoveWeapons(IEnumerable<uint> weaponHashes)
@@ -44,7 +45,7 @@ namespace RageMP.Net.Entities
 
         public void RemoveAllWeapons()
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_RemoveAllWeapons(NativePointer);
         }
 
     }

@@ -10,54 +10,54 @@ namespace RageMP.Net.Entities
 {
     public class Entity : IEntity
     {
-        protected readonly IntPtr _native;
+        public IntPtr NativePointer { get; }
 
         public uint Id { get; }
         public EntityType Type { get; }
 
         public uint Model
         {
-            get => Rage.Entity.Entity_GetModel(_native);
-            set => Rage.Entity.Entity_SetModel(_native, value);
+            get => Rage.Entity.Entity_GetModel(NativePointer);
+            set => Rage.Entity.Entity_SetModel(NativePointer, value);
         }
 
         public uint Alpha
         {
-            get => Rage.Entity.Entity_GetAlpha(_native);
-            set => Rage.Entity.Entity_SetAlpha(_native, value);
+            get => Rage.Entity.Entity_GetAlpha(NativePointer);
+            set => Rage.Entity.Entity_SetAlpha(NativePointer, value);
         }
 
         public uint Dimension
         {
-            get => Rage.Entity.Entity_GetDimension(_native);
-            set => Rage.Entity.Entity_SetDimension(_native, value);
+            get => Rage.Entity.Entity_GetDimension(NativePointer);
+            set => Rage.Entity.Entity_SetDimension(NativePointer, value);
         }
 
         public Vector3 Position
         {
-            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetPosition(_native)).ToNumericsVector();
-            set => Rage.Entity.Entity_SetPosition(_native, Data.Vector3.FromNumericsVector(value));
+            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetPosition(NativePointer)).ToNumericsVector();
+            set => Rage.Entity.Entity_SetPosition(NativePointer, Data.Vector3.FromNumericsVector(value));
         }
 
         public Vector3 Rotation
         {
-            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetRotation(_native)).ToNumericsVector();
-            set => Rage.Entity.Entity_SetRotation(_native, Data.Vector3.FromNumericsVector(value));
+            get => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetRotation(NativePointer)).ToNumericsVector();
+            set => Rage.Entity.Entity_SetRotation(NativePointer, Data.Vector3.FromNumericsVector(value));
         }
 
-        public Vector3 Velocity => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetVelocity(_native)).ToNumericsVector();
+        public Vector3 Velocity => Marshal.PtrToStructure<Data.Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer)).ToNumericsVector();
 
-        public Entity(IntPtr native, EntityType type)
+        public Entity(IntPtr nativePointer, EntityType type)
         {
-            _native = native;
+            NativePointer = nativePointer;
 
-            Id = Rage.Entity.Entity_GetId(_native);
+            Id = Rage.Entity.Entity_GetId(NativePointer);
             Type = type;
         }
 
         public void Destroy()
         {
-            Rage.Entity.Entity_Destroy(_native);
+            Rage.Entity.Entity_Destroy(NativePointer);
         }
 
         public object GetVariable(string key)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using RageMP.Net.Enums;
@@ -6,6 +7,7 @@ namespace RageMP.Net.Interfaces
 {
     public interface IEntity
     {
+        IntPtr NativePointer { get; }
         uint Id { get; }
         EntityType Type { get; }
 

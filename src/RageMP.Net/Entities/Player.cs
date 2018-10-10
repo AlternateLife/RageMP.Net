@@ -10,27 +10,43 @@ namespace RageMP.Net.Entities
 {
     public partial class Player : Entity, IPlayer
     {
-        public string Serial { get; }
+        public string Serial => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSerial(NativePointer));
 
         public string Name
         {
-            get => Marshal.PtrToStringAnsi(Rage.Player.Player_GetName(_native));
-            set => Rage.Player.Player_SetName(_native, value);
+            get => Marshal.PtrToStringAnsi(Rage.Player.Player_GetName(NativePointer));
+            set => Rage.Player.Player_SetName(NativePointer, value);
         }
 
-        public string SocialClubName => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSocialClubName(_native));
+        public string SocialClubName => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSocialClubName(NativePointer));
 
-        public float Heading { get; set; }
-        public float MoveSpeed { get; }
-        public float Health { get; set; }
-        public float Armor { get; set; }
+        public float Heading
+        {
+            get => Rage.Player.Player_GetHeading(NativePointer);
+            set => Rage.Player.Player_SetHeading(NativePointer, value);
+        }
+
+        public float MoveSpeed => Rage.Player.Player_GetMoveSpeed(NativePointer);
+
+        public float Health
+        {
+            get => Rage.Player.Player_GetHealth(NativePointer);
+            set => Rage.Player.Player_SetHealth(NativePointer, value);
+        }
+
+        public float Armor
+        {
+            get => Rage.Player.Player_GetArmor(NativePointer);
+            set => Rage.Player.Player_SetArmor(NativePointer, value);
+        }
+
         public Vector3 AimingAt { get; }
 
-        public string Ip { get; }
-        public int Ping { get; }
-        public float PacketLoss { get; }
+        public string Ip => Marshal.PtrToStringAnsi(Rage.Player.Player_GetIp(NativePointer));
+        public int Ping => Rage.Player.Player_GetPing(NativePointer);
+        public float PacketLoss => Rage.Player.Player_GetPacketLoss(NativePointer);
 
-        public string KickReason { get; }
+        public string KickReason => Marshal.PtrToStringAnsi(Rage.Player.Player_GetKickReason(NativePointer));
 
         public bool IsJumping { get; }
         public bool IsInCover { get; }
@@ -41,7 +57,7 @@ namespace RageMP.Net.Entities
         public bool IsReloading { get; }
         public bool IsInMelee { get; }
 
-        public string ActionString { get; }
+        public string ActionString => Marshal.PtrToStringAnsi(Rage.Player.Player_GetActionString(NativePointer));
 
         public IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
@@ -51,22 +67,22 @@ namespace RageMP.Net.Entities
 
         public void Kick(string reason = null)
         {
-            Rage.Player.Player_Kick(_native, reason);
+            Rage.Player.Player_Kick(NativePointer, reason);
         }
 
         public void Ban(string reason = null)
         {
-            Rage.Player.Player_Ban(_native, reason);
+            Rage.Player.Player_Ban(NativePointer, reason);
         }
 
         public void OutputChatBox(string text)
         {
-            Rage.Player.Player_OutputChatBox(_native, text);
+            Rage.Player.Player_OutputChatBox(NativePointer, text);
         }
 
         public void Notify(string text)
         {
-            Rage.Player.Player_Notify(_native, text);
+            Rage.Player.Player_Notify(NativePointer, text);
         }
 
         public void Call(string eventName, params object[] arguments)
@@ -86,27 +102,22 @@ namespace RageMP.Net.Entities
 
         public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_PlayAnimation(NativePointer, dictionary, name, speed, (int) flags);
         }
 
         public void StopAnimation()
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_StopAnimation(NativePointer);
         }
 
         public void PlayScenario(string scenario)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public uint GetDecoration(uint collection)
-        {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_PlayScenario(NativePointer, scenario);
         }
 
         public bool IsStreamed(IPlayer player)
         {
-            throw new System.NotImplementedException();
+            return Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer);
         }
     }
 }
