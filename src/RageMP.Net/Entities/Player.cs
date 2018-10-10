@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
@@ -13,14 +14,11 @@ namespace RageMP.Net.Entities
 
         public string Name
         {
-            get => Rage.Player.Player_GetName(_native);
+            get => Marshal.PtrToStringAnsi(Rage.Player.Player_GetName(_native));
             set => Rage.Player.Player_SetName(_native, value);
         }
 
-        public string SocialClubName
-        {
-            get => Rage.Player.Player_GetSocialClubName(_native);
-        }
+        public string SocialClubName => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSocialClubName(_native));
 
         public float Heading { get; set; }
         public float MoveSpeed { get; }

@@ -7,26 +7,26 @@ namespace RageMP.Net.Native
     {
         internal static class Player
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_Kick(IntPtr player, string reason);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_Ban(IntPtr player, string reason);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_OutputChatBox(IntPtr player, string text);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_Notify(IntPtr player, string text);
 
             [DllImport(_dllName)]
-            internal static extern string Player_GetName(IntPtr player);
+            internal static extern IntPtr Player_GetName(IntPtr player);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CharSet = CharSet.Ansi)]
             internal static extern void Player_SetName(IntPtr player, string name);
 
             [DllImport(_dllName)]
-            internal static extern string Player_GetSocialClubName(IntPtr player);
+            internal static extern IntPtr Player_GetSocialClubName(IntPtr player);
         }
     }
 }

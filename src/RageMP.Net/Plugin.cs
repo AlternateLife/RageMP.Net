@@ -38,7 +38,7 @@ namespace RageMP.Net
 
         private void OnPlayerJoin(IPlayer player)
         {
-            Console.WriteLine($"{nameof(OnPlayerJoin)}: {player.Id}");
+            Console.WriteLine($"{nameof(OnPlayerJoin)}: {player.Id} {player.SocialClubName}");
         }
 
         private void OnPlayerReady(IPlayer player)
