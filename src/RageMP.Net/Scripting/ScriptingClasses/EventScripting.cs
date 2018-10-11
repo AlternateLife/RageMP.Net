@@ -7,7 +7,7 @@ using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Scripting.ScriptingClasses
 {
-    public class EventScripting : IEventScripting
+    internal class EventScripting : IEventScripting
     {
         private readonly EventHandler<NativeTickDelegate, TickDelegate> _tick;
         public event TickDelegate Tick
@@ -31,7 +31,6 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         }
 
         private readonly EventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate> _playerDeath;
-
         public event PlayerDeathDelegate PlayerDeath
         {
             add => _playerDeath.Subscribe(value);
@@ -46,7 +45,6 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         }
 
         private readonly EventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate> _playerCommand;
-
         public event PlayerCommandDelegate PlayerCommand
         {
             add => _playerCommand.Subscribe(value);
