@@ -8,7 +8,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Scripting.ScriptingClasses
 {
-    internal abstract class PoolBase<T> : IPool<T> where T : IEntity
+    internal abstract class PoolBase<T> : IPool<T>, IInternalPool where T : IEntity
     {
         protected readonly IntPtr _nativePointer;
 
@@ -52,6 +52,33 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             }
 
             return entity;
+        }
+
+        public bool AddEntity(IEntity entity)
+        {
+            if (entity is T correctEntity)
+            {
+                return _entities.TryAdd(correctEntity.NativePointer, correctEntity);
+            }
+
+            return false;
+        }
+
+        public IEntity GetEntity(IntPtr entity)
+        {
+            return this[entity];
+        }
+
+        public bool RemoveEntity(IntPtr entityPointer, Action<IEntity> preRemoveCallback)
+        {
+            if (_entities.TryGetValue(entityPointer, out T entity) == false)
+            {
+                return false;
+            }
+
+            preRemoveCallback?.Invoke(entity);
+
+            return _entities.TryRemove(entityPointer, out _);
         }
 
         public IEnumerator<T> GetEnumerator()

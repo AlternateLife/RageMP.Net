@@ -1,6 +1,7 @@
 using System;
-using System.Numerics;
-using RageMP.Net.Data;
+using System.Collections.Generic;
+using RageMP.Net.Entities;
+using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 using RageMP.Net.Scripting;
@@ -15,6 +16,8 @@ namespace RageMP.Net
         internal PlayerPool PlayerPool { get; }
         internal VehiclePool VehiclePool { get; }
 
+        internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
+
         public Plugin(IntPtr multiplayer)
         {
             NativeMultiplayer = multiplayer;
@@ -24,12 +27,34 @@ namespace RageMP.Net
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer));
             VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer));
 
-            MP.Events.PlayerJoin += OnPlayerJoin;
-            MP.Events.PlayerReady += OnPlayerReady;
+            EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
+            {
+                { EntityType.Player, PlayerPool },
+                { EntityType.Vehicle, VehiclePool }
+            };
+
             MP.Events.PlayerChat += OnPlayerChat;
-            MP.Events.PlayerDeath += OnPlayerDeath;
-            MP.Events.PlayerDamage += OnPlayerDamage;
-            MP.Events.PlayerQuit += OnPlayerQuit;
+            MP.Events.PlayerEnterVehicle += PlayerEnterVehicle;
+        }
+
+        internal IEntity BuildEntity(EntityType type, IntPtr entityPointer)
+        {
+            switch (type)
+            {
+                case EntityType.Player:
+                    return new Player(entityPointer);
+
+                case EntityType.Vehicle:
+                    return new Vehicle(entityPointer);
+
+                default:
+                    return null;
+            }
+        }
+
+        private void PlayerEnterVehicle(IPlayer player, IVehicle vehicle, uint seat)
+        {
+            player.OutputChatBox($"Du hast das Fahrzeug {vehicle.Model} betreten! (Sitz: {seat}");
         }
 
         private void OnPlayerChat(IPlayer player, string text)
@@ -50,31 +75,11 @@ namespace RageMP.Net
             player.PutIntoVehicle(vehicle, -1);
 
             MP.Players.Broadcast("LEL");
-        }
 
-        private void OnPlayerQuit(IPlayer player, uint type, string reason)
-        {
-            Console.WriteLine($"{nameof(OnPlayerQuit)}: {player.Name}, {type}, {reason}");
-        }
-
-        private void OnPlayerDamage(IPlayer player, float healthloss, float armorloss)
-        {
-            Console.WriteLine($"{nameof(OnPlayerDamage)}: {player.Name}, {healthloss}, {armorloss}");
-        }
-
-        private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
-        {
-            Console.WriteLine($"{nameof(OnPlayerDeath)}: {player.Name}, {reason}, {killerplayer.Id}");
-        }
-
-        private void OnPlayerJoin(IPlayer player)
-        {
-            Console.WriteLine($"{nameof(OnPlayerJoin)}: {player.Name} {player.SocialClubName}");
-        }
-
-        private void OnPlayerReady(IPlayer player)
-        {
-            Console.WriteLine($"{nameof(OnPlayerReady)}: {player.Name}");
+            foreach (var otherPlayer in MP.Players)
+            {
+                otherPlayer.OutputChatBox("HEH");
+            }
         }
     }
 }

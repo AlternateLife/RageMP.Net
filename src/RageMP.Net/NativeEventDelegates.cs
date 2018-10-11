@@ -4,6 +4,10 @@ namespace RageMP.Net
 {
     public delegate void NativeTickDelegate();
 
+    public delegate void NativeEntityCreatedDelegate(IntPtr entityPointer);
+    public delegate void NativeEntityDestroyedDelegate(IntPtr entityPointer);
+    public delegate void NativeEntityModelChangeDelegate(IntPtr entityPointer, uint oldModel);
+
     public delegate void NativePlayerJoinDelegate(IntPtr playerPointer);
     public delegate void NativePlayerReadyDelegate(IntPtr playerPointer);
     public delegate void NativePlayerQuitDelegate(IntPtr playerPointer, uint type, string reason);

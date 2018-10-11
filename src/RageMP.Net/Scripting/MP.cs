@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting
         {
             _plugin = plugin;
 
-            InternalEvents = new EventScripting();
+            InternalEvents = new EventScripting(_plugin);
         }
 
     }

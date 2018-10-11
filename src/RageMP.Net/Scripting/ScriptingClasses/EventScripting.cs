@@ -1,14 +1,37 @@
 using System;
 using System.Runtime.InteropServices;
-using RageMP.Net.Entities;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
+using RageMP.Net.Native;
 
 namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class EventScripting : IEventScripting
     {
+        private readonly Plugin _plugin;
+
+        private readonly EventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate> _entityCreated;
+        public event EntityCreatedDelegate EntityCreated
+        {
+            add => _entityCreated.Subscribe(value);
+            remove => _entityCreated.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeEntityDestroyedDelegate, EntityDestroyedDelegate> _entityDestroyed;
+        public event EntityDestroyedDelegate EntityDestroyed
+        {
+            add => _entityDestroyed.Subscribe(value);
+            remove => _entityDestroyed.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeEntityModelChangeDelegate, EntityModelChangeDelegate> _entityModelChange;
+        public event EntityModelChangeDelegate EntityModelChange
+        {
+            add => _entityModelChange.Subscribe(value);
+            remove => _entityModelChange.Unsubscribe(value);
+        }
+
         private readonly EventHandler<NativeTickDelegate, TickDelegate> _tick;
         public event TickDelegate Tick
         {
@@ -107,9 +130,16 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             remove => _playerExitVehicle.Unsubscribe(value);
         }
 
-        public EventScripting()
+        public EventScripting(Plugin plugin)
         {
+            _plugin = plugin;
+
             _tick = new EventHandler<NativeTickDelegate, TickDelegate>(EventType.Tick, DispatchTick);
+
+            _entityCreated = new EventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate>(EventType.EntityCreated, DispatchEntityCreated, true);
+            _entityDestroyed = new EventHandler<NativeEntityDestroyedDelegate, EntityDestroyedDelegate>(EventType.EntityDestroyed, DispatchEntityDestroyed, true);
+            _entityModelChange = new EventHandler<NativeEntityModelChangeDelegate, EntityModelChangeDelegate>(EventType.EntityModelChanged, DispatchEntityModelChange);
+
             _playerJoin = new EventHandler<NativePlayerJoinDelegate, PlayerJoinDelegate>(EventType.PlayerJoin, DispatchPlayerJoin);
             _playerReady = new EventHandler<NativePlayerReadyDelegate, PlayerReadyDelegate>(EventType.PlayerReady, DispatchPlayerReady);
             _playerDeath = new EventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate>(EventType.PlayerDeath, DispatchPlayerDeath);
@@ -125,6 +155,34 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _playerExitVehicle = new EventHandler<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate>(EventType.PlayerExitVehicle, DispatchPlayerExitVehicle);
         }
 
+        private void DispatchEntityCreated(IntPtr entitypointer)
+        {
+            if (TryBuildEntity(entitypointer, out IEntity createdEntity) == false)
+            {
+                return;
+            }
+
+            _entityCreated.Call(x => x(createdEntity));
+        }
+
+        private void DispatchEntityDestroyed(IntPtr entitypointer)
+        {
+            TryRemoveEntity(entitypointer, entity =>
+            {
+                _entityDestroyed.Call(x => x(entity));
+            });
+        }
+
+        private void DispatchEntityModelChange(IntPtr entitypointer, uint oldmodel)
+        {
+            if (TryGetEntity(entitypointer, out IEntity entity) == false)
+            {
+                return;
+            }
+
+            _entityModelChange.Call(x => x(entity, oldmodel));
+        }
+
         private void DispatchTick()
         {
             _tick.Call(x => x());
@@ -132,94 +190,154 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         private void DispatchPlayerJoin(IntPtr playerPointer)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerJoin.Call(x => x(player));
         }
 
         private void DispatchPlayerReady(IntPtr playerPointer)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerReady.Call(x => x(player));
         }
 
         private void DispatchPlayerDeath(IntPtr playerPointer, uint reason, IntPtr killerplayerpointer)
         {
-            var player = new Player(playerPointer);
-            var killer = new Player(killerplayerpointer);
+            var player = _plugin.PlayerPool[playerPointer];
+            var killer = _plugin.PlayerPool[killerplayerpointer];
 
             _playerDeath.Call(x => x(player, reason, killer));
         }
 
         private void DisaptchPlayerQuit(IntPtr playerPointer, uint type, string reason)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerQuit.Call(x => x(player, type, reason));
         }
 
         private void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerCommand.Call(x => x(player, Marshal.PtrToStringUni(text)));
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerChat.Call(x => x(player, Marshal.PtrToStringUni(text)));
         }
 
         private void DispatchPlayerSpawn(IntPtr playerPointer)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerSpawn.Call(x => x(player));
         }
 
         private void DispatchPlayerDamage(IntPtr playerPointer, float healthLoss, float armorLoss)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerDamage.Call(x => x(player, healthLoss, armorLoss));
         }
 
         private void DispatchPlayerWeaponChange(IntPtr playerPointer, uint oldWeapon, uint newWeapon)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
 
             _playerWeaponChange.Call(x => x(player, oldWeapon, newWeapon));
         }
 
-        private void DispatchStartEnterVehicle(IntPtr playerPointer, IntPtr vehiclepointer, uint seat)
+        private void DispatchStartEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
+            var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerStartEnterVehicle.Call(x => x(player, null, seat));
+            _playerStartEnterVehicle.Call(x => x(player, vehicle, seat));
         }
 
-        private void DispatchPlayerEnterVehicle(IntPtr playerPointer, IntPtr vehiclepointer, uint seat)
+        private void DispatchPlayerEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
+            var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerEnterVehicle.Call(x => x(player, null, seat));
+            _playerEnterVehicle.Call(x => x(player, vehicle, seat));
         }
 
-        private void DispatchStartExitVehicle(IntPtr playerPointer, IntPtr vehiclepointer)
+        private void DispatchStartExitVehicle(IntPtr playerPointer, IntPtr vehiclePointer)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
+            var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerStartExitVehicle.Call(x => x(player, null));
+            _playerStartExitVehicle.Call(x => x(player, vehicle));
         }
 
-        private void DispatchPlayerExitVehicle(IntPtr playerPointer, IntPtr vehiclepointer)
+        private void DispatchPlayerExitVehicle(IntPtr playerPointer, IntPtr vehiclePointer)
         {
-            var player = new Player(playerPointer);
+            var player = _plugin.PlayerPool[playerPointer];
+            var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerExitVehicle.Call(x => x(player, null));
+            _playerExitVehicle.Call(x => x(player, vehicle));
+        }
+
+        private bool GetPoolFromPointer(IntPtr entityPointer, out IInternalPool pool, out EntityType type)
+        {
+            type = (EntityType) Rage.Entity.Entity_GetType(entityPointer);
+
+            if (_plugin.EntityPoolMapping.TryGetValue(type, out pool) == false)
+            {
+                pool = null;
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool TryBuildEntity(IntPtr entityPointer, out IEntity createdEntity)
+        {
+            if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out EntityType type) == false)
+            {
+                createdEntity = null;
+
+                return false;
+            }
+
+            createdEntity = _plugin.BuildEntity(type, entityPointer);
+            if (createdEntity == null)
+            {
+                return false;
+            }
+
+            return pool.AddEntity(createdEntity);
+        }
+
+        private bool TryGetEntity(IntPtr entityPointer, out IEntity entity)
+        {
+            if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out _) == false)
+            {
+                entity = null;
+
+                return false;
+            }
+
+            entity = pool.GetEntity(entityPointer);
+
+            return entity != null;
+        }
+
+        private bool TryRemoveEntity(IntPtr entityPointer, Action<IEntity> preRemoveCallback)
+        {
+            if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out _) == false)
+            {
+                return false;
+            }
+
+            return pool.RemoveEntity(entityPointer, preRemoveCallback);
         }
     }
 }

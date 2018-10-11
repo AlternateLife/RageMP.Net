@@ -3,8 +3,12 @@ using RageMP.Net.Interfaces;
 namespace RageMP.Net.Scripting
 {
     public delegate void TickDelegate();
-    public delegate void PlayerJoinDelegate(IPlayer player);
 
+    public delegate void EntityCreatedDelegate(IEntity entity);
+    public delegate void EntityDestroyedDelegate(IEntity entity);
+    public delegate void EntityModelChangeDelegate(IEntity entity, uint oldModel);
+
+    public delegate void PlayerJoinDelegate(IPlayer player);
     public delegate void PlayerReadyDelegate(IPlayer player);
     public delegate void PlayerQuitDelegate(IPlayer player, uint type, string reason);
     public delegate void PlayerCommandDelegate(IPlayer player, string text);

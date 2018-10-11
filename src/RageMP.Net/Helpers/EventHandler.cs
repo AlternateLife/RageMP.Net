@@ -11,19 +11,27 @@ namespace RageMP.Net.Helpers
     {
         private readonly EventType _type;
         private readonly TNative _nativeCallback;
+        private readonly bool _forceRegistration;
+
         private readonly HashSet<TEvent> _subscriptions = new HashSet<TEvent>();
 
-        public EventHandler(EventType type, TNative nativeCallback)
+        public EventHandler(EventType type, TNative nativeCallback, bool forceRegistration = false)
         {
             _type = type;
             _nativeCallback = nativeCallback;
+            _forceRegistration = forceRegistration;
+
+            if (_forceRegistration)
+            {
+                Rage.Events.RegisterEventHandler((int) _type, Marshal.GetFunctionPointerForDelegate(_nativeCallback));
+            }
         }
 
         public void Subscribe(TEvent callback)
         {
             var wasEmpty = _subscriptions.Any() == false;
 
-            if (_subscriptions.Add(callback) == false || wasEmpty == false)
+            if (_forceRegistration || _subscriptions.Add(callback) == false || wasEmpty == false)
             {
                 return;
             }
@@ -33,7 +41,7 @@ namespace RageMP.Net.Helpers
 
         public void Unsubscribe(TEvent callback)
         {
-            if (_subscriptions.Remove(callback) == false || _subscriptions.Any())
+            if (_forceRegistration || _subscriptions.Remove(callback) == false || _subscriptions.Any())
             {
                 return;
             }
@@ -51,7 +59,7 @@ namespace RageMP.Net.Helpers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.ToString());
                 }
             }
         }
