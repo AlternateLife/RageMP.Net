@@ -5,4 +5,8 @@
         <RootNamespace>RageMP.Net</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="NLog" Version="4.5.10" />
+    </ItemGroup>
+
 </Project>

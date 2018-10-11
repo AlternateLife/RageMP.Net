@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
 using RageMP.Net.Native;
+using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Helpers
 {
@@ -59,7 +60,7 @@ namespace RageMP.Net.Helpers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.ToString());
+                    MP.Logger.Error($"An error occured during execution of {_type}", e);
                 }
             }
         }

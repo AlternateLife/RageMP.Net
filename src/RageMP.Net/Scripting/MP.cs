@@ -15,6 +15,7 @@ namespace RageMP.Net.Scripting
         public static IEventScripting Events => InternalEvents;
         public static IVehiclePool Vehicles => InternalVehicles;
         public static IPlayerPool Players => InternalPlayers;
+        public static ILogger Logger => _plugin.Logger;
 
         internal static void Setup(Plugin plugin)
         {

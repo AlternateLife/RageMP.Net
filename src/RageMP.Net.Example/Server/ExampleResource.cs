@@ -1,4 +1,3 @@
-using System;
 using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Example
@@ -7,12 +6,12 @@ namespace RageMP.Net.Example
     {
         public void OnStart()
         {
-            Console.WriteLine($"{nameof(ExampleResource)}: {nameof(OnStart)}");
+            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStart)}");
         }
 
         public void OnStop()
         {
-            Console.WriteLine($"{nameof(ExampleResource)}: {nameof(OnStop)}");
+            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStop)}");
         }
     }
 }

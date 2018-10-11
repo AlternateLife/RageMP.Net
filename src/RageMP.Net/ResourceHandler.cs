@@ -21,13 +21,13 @@ namespace RageMP.Net
 
         public void Start()
         {
-            Console.WriteLine($"Loading resource {_directory.Name}...");
+            MP.Logger.Info($"{_directory.Name}\": Starting resource...");
 
             LoadAssemblies();
 
             if (_loadedAssemblies.Any() == false)
             {
-                Console.WriteLine($"No assemblies in {_directory.Name} found");
+                MP.Logger.Warn($"Could not find any assembly inside resource {_directory.Name}.");
 
                 return;
             }
@@ -35,10 +35,24 @@ namespace RageMP.Net
             _entryPoint = LoadEntryPoint();
             if (_entryPoint == null)
             {
+                MP.Logger.Warn($"{_directory.Name}: Could not find the entrypoint-class of type `{typeof(IResource)}`!");
+
                 return;
             }
 
-            _entryPoint.OnStart();
+            try
+            {
+                _entryPoint.OnStart();
+            }
+            catch (Exception e)
+            {
+                MP.Logger.Error($"{_directory.Name}: An error occured during resource startup!", e);
+
+                return;
+            }
+
+
+            MP.Logger.Info($"{_directory.Name}: Resource successfully started!");
         }
 
         private void LoadAssemblies()
