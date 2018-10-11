@@ -1,6 +1,7 @@
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
+include_directories(${CMAKE_SOURCE_DIR}/thirdparty/ragemp-c-sdk/thirdparty)
 
 add_library(wrapper SHARED rage.cpp eventHandler.cpp clrHost.cpp clrPlugin.cpp)
 
