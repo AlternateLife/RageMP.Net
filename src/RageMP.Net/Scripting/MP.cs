@@ -1,4 +1,5 @@
 using RageMP.Net.Interfaces;
+using RageMP.Net.Native;
 using RageMP.Net.Scripting.ScriptingClasses;
 
 namespace RageMP.Net.Scripting
@@ -7,13 +8,19 @@ namespace RageMP.Net.Scripting
     {
         private static Plugin _plugin;
 
-        public static IEventScripting Events { get; private set; }
+        internal static EventScripting InternalEvents { get; private set; }
+        internal static VehiclePool InternalVehicles => _plugin.VehiclePool;
+        internal static PlayerPool InternalPlayers => _plugin.PlayerPool;
+
+        public static IEventScripting Events => InternalEvents;
+        public static IVehiclePool Vehicles => InternalVehicles;
+        public static IPlayerPool Players => InternalPlayers;
 
         internal static void Setup(Plugin plugin)
         {
             _plugin = plugin;
 
-            Events = new EventScripting();
+            InternalEvents = new EventScripting();
         }
 
     }
