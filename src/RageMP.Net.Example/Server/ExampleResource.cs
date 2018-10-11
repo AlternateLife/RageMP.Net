@@ -7,12 +7,12 @@ namespace RageMP.Net.Example
     {
         public void OnStart()
         {
-            Console.WriteLine("OMEGALUL");
+            Console.WriteLine($"{nameof(ExampleResource)}: {nameof(OnStart)}");
         }
 
         public void OnStop()
         {
-
+            Console.WriteLine($"{nameof(ExampleResource)}: {nameof(OnStop)}");
         }
     }
 }
