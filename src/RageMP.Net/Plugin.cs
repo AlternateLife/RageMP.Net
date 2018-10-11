@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using RageMP.Net.Entities;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
@@ -11,6 +12,8 @@ namespace RageMP.Net
 {
     internal class Plugin
     {
+        private ResourceLoader _resourceLoader;
+
         internal IntPtr NativeMultiplayer { get; }
 
         internal PlayerPool PlayerPool { get; }
@@ -32,6 +35,9 @@ namespace RageMP.Net
                 { EntityType.Player, PlayerPool },
                 { EntityType.Vehicle, VehiclePool }
             };
+
+            _resourceLoader = new ResourceLoader(this);
+            _resourceLoader.Start();
         }
 
         internal IEntity BuildEntity(EntityType type, IntPtr entityPointer)
