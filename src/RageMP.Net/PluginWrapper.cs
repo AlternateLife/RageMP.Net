@@ -6,7 +6,7 @@ namespace RageMP.Net
     {
         public static void Main(IntPtr multiplayer)
         {
-            var plugin = new Plugin();
+            var plugin = new Plugin(multiplayer);
         }
     }
 }

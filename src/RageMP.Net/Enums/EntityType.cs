@@ -1,6 +1,6 @@
 namespace RageMP.Net.Enums
 {
-    public enum EntityType : ushort
+    public enum EntityType : byte
     {
         Player,
         Vehicle,

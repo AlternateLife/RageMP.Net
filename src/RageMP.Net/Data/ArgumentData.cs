@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
+using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Data
 {
@@ -89,6 +90,17 @@ namespace RageMP.Net.Data
                         {
                             ValueType = (byte) ArgumentValueType.Vector3,
                             Vector3Value = vector3
+                        };
+
+                        break;
+                    }
+
+                    case IEntity entity:
+                    {
+                        data[i] = new ArgumentData
+                        {
+                            ValueType = (byte) ArgumentValueType.Entity,
+                            EntityValue = new EntityData(entity)
                         };
 
                         break;

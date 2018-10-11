@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Data
 {
@@ -10,11 +11,11 @@ namespace RageMP.Net.Data
         public ushort Id;
         public IntPtr Pointer;
 
-        public EntityData(byte type, ushort id, IntPtr pointer)
+        public EntityData(IEntity entity)
         {
-            Type = type;
-            Id = id;
-            Pointer = pointer;
+            Type = (byte) entity.Type;
+            Id = (ushort) entity.Id;
+            Pointer = entity.NativePointer;
         }
     }
 }

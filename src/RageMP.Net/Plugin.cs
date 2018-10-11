@@ -8,8 +8,14 @@ namespace RageMP.Net
 {
     internal class Plugin
     {
-        public Plugin()
+        internal IntPtr NativeMultiplayer { get; }
+
+        public Plugin(IntPtr multiplayer)
         {
+            NativeMultiplayer = multiplayer;
+
+            MP.Setup(this);
+
             MP.Events.PlayerJoin += OnPlayerJoin;
             MP.Events.PlayerReady += OnPlayerReady;
             MP.Events.PlayerChat += OnPlayerChat;
