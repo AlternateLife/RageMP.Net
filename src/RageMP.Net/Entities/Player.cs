@@ -91,6 +91,8 @@ namespace RageMP.Net.Entities
             var data = ArgumentData.ConvertFromArguments(arguments);
 
             Rage.Player.Player__Call(NativePointer, eventName, data, data.Length);
+
+            ArgumentData.Dispose(data);
         }
 
         public void Invoke(ulong nativeHash, params object[] arguments)

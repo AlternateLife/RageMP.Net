@@ -5,7 +5,7 @@ using RageMP.Net.Enums;
 
 namespace RageMP.Net.Data
 {
-    [StructLayout(LayoutKind.Explicit, Size = 13)]
+    [StructLayout(LayoutKind.Explicit, Size = 13, Pack = 1)]
     internal struct ArgumentData
     {
         [FieldOffset(0)]
@@ -21,7 +21,7 @@ namespace RageMP.Net.Data
         public IntPtr StringValue;
 
         [FieldOffset(0)]
-        public IntPtr Vector3Value;
+        public Vector3 Vector3Value;
 
         [FieldOffset(0)]
         public EntityData EntityValue;
@@ -85,23 +85,16 @@ namespace RageMP.Net.Data
 
                     case Vector3 vector3:
                     {
-                        Console.Write("VECTOR: " + vector3 + " -> " + Marshal.SizeOf(typeof(Vector3)));
-
-                        IntPtr buffer = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(Vector3)));
-
-                        Marshal.StructureToPtr(vector3, buffer, true);
-
                         data[i] = new ArgumentData
                         {
                             ValueType = (byte) ArgumentValueType.Vector3,
-                            Vector3Value = buffer
+                            Vector3Value = vector3
                         };
 
                         break;
                     }
                 }
             }
-
 
             return data;
         }
@@ -123,6 +116,20 @@ namespace RageMP.Net.Data
             return value is float
                    || value is double
                    || value is decimal;
+        }
+
+        internal static void Dispose(ArgumentData[] data)
+        {
+            foreach (var argumentData in data)
+            {
+                switch ((ArgumentValueType) argumentData.ValueType)
+                {
+                    case ArgumentValueType.String:
+                        Marshal.FreeCoTaskMem(argumentData.StringValue);
+
+                        break;
+                }
+            }
         }
     }
 }

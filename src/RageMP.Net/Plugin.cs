@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using RageMP.Net.Data;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting;
 
@@ -23,7 +24,7 @@ namespace RageMP.Net
 
             player.GiveWeapon(0x97EA20B8, 100);
 
-            player.Call("TEST", "cello", new Vector3(-1056.7841f, -237.7237f, 44.0211f));
+            player.Call("TEST", "cello", 1, 1.2, new Vector3(-1388.594f, -586.711f, 30.219f));
         }
 
         private void OnPlayerQuit(IPlayer player, uint type, string reason)
