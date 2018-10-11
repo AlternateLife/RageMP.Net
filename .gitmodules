@@ -1,0 +1,3 @@
+[submodule "clrhost/thirdparty/ragemp-c-sdk"]
+	path = clrhost/thirdparty/ragemp-c-sdk
+	url = https://github.com/AlternateLife/ragemp-c-sdk.git
