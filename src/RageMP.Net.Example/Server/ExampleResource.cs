@@ -1,7 +1,7 @@
 using System;
 using RageMP.Net.Scripting;
 
-namespace RageMP.Net.Example.Server
+namespace RageMP.Net.Example
 {
     public class ExampleResource : IResource
     {
