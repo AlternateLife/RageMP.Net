@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
@@ -57,12 +58,16 @@ namespace RageMP.Net.Entities
 
         public void ShowRoute(ICollection<IPlayer> forPlayers, uint color, float scale)
         {
-            throw new NotImplementedException();
+            var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
+
+            Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale);
         }
 
         public void HideRoute(ICollection<IPlayer> forPlayers)
         {
-            throw new NotImplementedException();
+            var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
+
+            Rage.Blip.Blip_UnrouteFor(NativePointer, playerPointers, playerPointers.Length);
         }
     }
 }
