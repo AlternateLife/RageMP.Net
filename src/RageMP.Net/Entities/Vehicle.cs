@@ -188,7 +188,7 @@ namespace RageMP.Net.Entities
             return Rage.Vehicle.Vehicle_GetPaint(NativePointer, id);
         }
 
-        public void SetColorRgb(ColorRgb primaryColor, ColorRgb secondaryColor)
+        public void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor)
         {
             throw new NotImplementedException();
         }

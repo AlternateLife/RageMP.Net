@@ -1,3 +1,5 @@
+using System.Numerics;
+using RageMP.Net.Data;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting;
 
@@ -16,7 +18,7 @@ namespace RageMP.Net.Example
 
         private void OnPlayerChat(IPlayer player, string text)
         {
-            MP.Blips.New(++_lastBlip, player.Position, 1, 59, text, 255, 100, true, 0, 0);
+            MP.Checkpoints.New(0, player.Position + Vector3.UnitY * 3, player.Position + Vector3.UnitY * 20, 5, new ColorRgba(0, 0, 255, 255), true, 0);
         }
 
         public void OnStop()
