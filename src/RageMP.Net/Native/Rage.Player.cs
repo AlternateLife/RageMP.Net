@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 
@@ -19,6 +20,9 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Player_Notify(IntPtr player, IntPtr text);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_Spawn(IntPtr player, Vector3 position, float heading);
 
             [DllImport(_dllName)]
             internal static extern IntPtr Player_GetName(IntPtr player);
@@ -154,7 +158,40 @@ namespace RageMP.Net.Native
             internal static extern void Player_RemoveFromVehicle(IntPtr player);
 
             [DllImport(_dllName)]
-            internal static extern void Player__Call(IntPtr player, IntPtr eventName, ArgumentData[] data, int dataCount);
+            internal static extern void Player__Call(IntPtr player, IntPtr eventName, ArgumentData[] data, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern void Player__CallHash(IntPtr player, ulong eventHash, ArgumentData[] data, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Player__Invoke(IntPtr player, ulong nativeHash, ArgumentData[] arguments, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsJumping(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsInCover(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsEnteringVehicle(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsLeavingVehicle(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsClimbing(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsOnLadder(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsReloading(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern bool Player_IsInMelee(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Player_GetAminingAt(IntPtr player);
         }
     }
 }

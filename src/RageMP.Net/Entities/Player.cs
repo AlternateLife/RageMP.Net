@@ -48,7 +48,7 @@ namespace RageMP.Net.Entities
             set => Rage.Player.Player_SetArmor(NativePointer, value);
         }
 
-        public Vector3 AimingAt { get; }
+        public Vector3 AimingAt => Marshal.PtrToStructure<Vector3>(Rage.Player.Player_GetAminingAt(NativePointer));
 
         public string Ip => StringConverter.PointerToString(Rage.Player.Player_GetIp(NativePointer));
         public int Ping => Rage.Player.Player_GetPing(NativePointer);
@@ -56,14 +56,14 @@ namespace RageMP.Net.Entities
 
         public string KickReason => StringConverter.PointerToString(Rage.Player.Player_GetKickReason(NativePointer));
 
-        public bool IsJumping { get; }
-        public bool IsInCover { get; }
-        public bool IsEnteringVehicle { get; }
-        public bool IsLeavingVehicle { get; }
-        public bool IsClimbing { get; }
-        public bool IsOnLadder { get; }
-        public bool IsReloading { get; }
-        public bool IsInMelee { get; }
+        public bool IsJumping => Rage.Player.Player_IsJumping(NativePointer);
+        public bool IsInCover => Rage.Player.Player_IsInCover(NativePointer);
+        public bool IsEnteringVehicle => Rage.Player.Player_IsEnteringVehicle(NativePointer);
+        public bool IsLeavingVehicle => Rage.Player.Player_IsLeavingVehicle(NativePointer);
+        public bool IsClimbing => Rage.Player.Player_IsClimbing(NativePointer);
+        public bool IsOnLadder => Rage.Player.Player_IsOnLadder(NativePointer);
+        public bool IsReloading => Rage.Player.Player_IsReloading(NativePointer);
+        public bool IsInMelee => Rage.Player.Player_IsInMelee(NativePointer);
 
         public string ActionString => StringConverter.PointerToString(Rage.Player.Player_GetActionString(NativePointer));
 
@@ -111,20 +111,33 @@ namespace RageMP.Net.Entities
 
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player__Call(NativePointer, converter.StringToPointer(eventName), data, data.Length);
+                Rage.Player.Player__Call(NativePointer, converter.StringToPointer(eventName), data, (ulong) data.Length);
             }
+
+            ArgumentData.Dispose(data);
+        }
+
+        public void CallHash(ulong eventHash, params object[] arguments)
+        {
+            var data = ArgumentData.ConvertFromArguments(arguments);
+
+            Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
 
             ArgumentData.Dispose(data);
         }
 
         public void Invoke(ulong nativeHash, params object[] arguments)
         {
-            throw new System.NotImplementedException();
+            var data = ArgumentData.ConvertFromArguments(arguments);
+
+            Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
+
+            ArgumentData.Dispose(data);
         }
 
         public void Spawn(Vector3 position, float heading)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_Spawn(NativePointer, position, heading);
         }
 
         public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)

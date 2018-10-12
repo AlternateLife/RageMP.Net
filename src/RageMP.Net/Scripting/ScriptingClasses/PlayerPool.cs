@@ -47,6 +47,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 Rage.PlayerPool.PlayerPool__Call(_nativePointer, converter.StringToPointer(eventName), data, (ulong) data.Length);
             }
+
+            ArgumentData.Dispose(data);
         }
 
         public void CallInRange(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
@@ -57,6 +59,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 Rage.PlayerPool.PlayerPool__CallInRange(_nativePointer, position, range, dimension, converter.StringToPointer(eventName), data, (ulong) data.Length);
             }
+
+            ArgumentData.Dispose(data);
         }
 
         public void CallInDimension(uint dimension, string eventName, params object[] arguments)
@@ -67,6 +71,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 Rage.PlayerPool.PlayerPool__CallInDimension(_nativePointer, dimension, converter.StringToPointer(eventName), data, (ulong) data.Length);
             }
+
+            ArgumentData.Dispose(data);
         }
 
         public void CallFor(ICollection<IPlayer> players, string eventName, params object[] arguments)
@@ -78,6 +84,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 Rage.PlayerPool.PlayerPool__CallFor(_nativePointer, playerPointers, (ulong) playerPointers.Length, converter.StringToPointer(eventName), data, (ulong) data.Length);
             }
+
+            ArgumentData.Dispose(data);
         }
 
         public void Invoke(ulong nativeHash, params object[] arguments)
@@ -85,6 +93,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var data = ArgumentData.ConvertFromArguments(arguments);
 
             Rage.PlayerPool.PlayerPool__Invoke(_nativePointer, nativeHash, data, (ulong) data.Length);
+
+            ArgumentData.Dispose(data);
         }
 
         public void InvokeInRange(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
@@ -92,6 +102,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var data = ArgumentData.ConvertFromArguments(arguments);
 
             Rage.PlayerPool.PlayerPool__InvokeInRange(_nativePointer, position, range, dimension, nativeHash, data, (ulong) data.Length);
+
+            ArgumentData.Dispose(data);
         }
 
         public void InvokeInDimension(uint dimension, ulong nativeHash, params object[] arguments)
@@ -99,6 +111,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var data = ArgumentData.ConvertFromArguments(arguments);
 
             Rage.PlayerPool.PlayerPool__InvokeInDimension(_nativePointer, dimension, nativeHash, data, (ulong) data.Length);
+
+            ArgumentData.Dispose(data);
         }
 
         public void InvokeFor(ICollection<IPlayer> players, ulong nativeHash, params object[] arguments)
@@ -107,6 +121,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             Rage.PlayerPool.PlayerPool__InvokeFor(_nativePointer, playerPointers, (ulong) playerPointers.Length, nativeHash, data, (ulong) data.Length);
+
+            ArgumentData.Dispose(data);
         }
     }
 }

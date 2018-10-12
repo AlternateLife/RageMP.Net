@@ -53,6 +53,7 @@ namespace RageMP.Net.Interfaces
         void Notify(string text);
 
         void Call(string eventName, params object[] arguments);
+        void CallHash(ulong eventHash, params object[] arguments);
         void Invoke(ulong nativeHash, params object[] arguments);
 
         void Spawn(Vector3 position, float heading);
