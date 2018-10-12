@@ -35,11 +35,8 @@
 #pragma clang diagnostic pop
 #endif
 
-#include "eventHandler.h"
 #include "clrHost.h"
 #include "clrPlugin.h"
-
-#include <iostream>
 
 RAGE_API rage::IPlugin *InitializePlugin(rage::IMultiplayer *mp) {
     auto clrHost = new ClrHost();
@@ -47,13 +44,7 @@ RAGE_API rage::IPlugin *InitializePlugin(rage::IMultiplayer *mp) {
         return nullptr;
     }
 
-    for (auto &plugin : clrHost->plugins()) {
-        mp->AddEventHandler(plugin->eventHandler());
 
-        if (plugin->mainCallback() != nullptr) {
-            plugin->mainCallback()(mp);
-        }
-    }
 
     return new rage::IPlugin();
 }
