@@ -30,7 +30,6 @@
 
 #include <string>
 #include <set>
-#include <vector>
 
 #include <coreclr/coreclrhost.h>
 
@@ -40,7 +39,8 @@
 
 #include <ragemp-c-sdk/include/rage.h>
 
-class ClrPlugin;
+
+typedef void (* MainMethod)(rage::IMultiplayer *);
 
 class ClrHost {
 private:
@@ -57,7 +57,7 @@ private:
     void *_runtimeHost;
     unsigned int _domainId;
 
-    std::vector<ClrPlugin *> _plugins;
+    MainMethod _mainCallback;
 
 public:
     ClrHost();
@@ -66,15 +66,14 @@ public:
     bool load();
     void unload();
 
-    std::vector<ClrPlugin *> plugins() const;
+    MainMethod mainCallback() const;
 
 private:
     bool loadCoreClr();
     bool createAppDomain();
-    void getPlugins();
 
     std::set<std::string> getTrustedAssemblies();
-    bool getDelegate(std::string filename, std::string methodName, void **callback);
+    bool getDelegate(std::string methodName, void **callback);
 
     std::string getAbsolutePath(std::string relativePath);
     std::string getFilenameWithoutExtension(std::string filename);
