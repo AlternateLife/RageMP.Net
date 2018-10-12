@@ -36,15 +36,14 @@
 #endif
 
 #include "clrHost.h"
-#include "clrPlugin.h"
 
-//RAGE_API rage::IPlugin *InitializePlugin(rage::IMultiplayer *mp) {
-//    auto clrHost = new ClrHost();
-//    if (clrHost->load() == false) {
-//        return nullptr;
-//    }
-//
-//
-//
-//    return new rage::IPlugin();
-//}
+void SetupPlugin(rage::IMultiplayer *mp) {
+    auto clrHost = new ClrHost();
+    if (clrHost->load() == false) {
+        return;
+    }
+
+    if (clrHost->mainCallback() != nullptr) {
+        clrHost->mainCallback()(mp);
+    }
+}

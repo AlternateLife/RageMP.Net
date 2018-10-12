@@ -1,6 +1,6 @@
 set(TARGET_NAME core_clr_host)
 
-add_library(${TARGET_NAME} SHARED rage.cpp clrHost.cpp clrPlugin.cpp)
+add_library(${TARGET_NAME} SHARED rage.cpp clrHost.cpp)
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "dotnet-wrapper")
 
