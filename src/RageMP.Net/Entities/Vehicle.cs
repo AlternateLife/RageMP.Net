@@ -6,18 +6,19 @@ using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
+using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Entities
 {
     internal class Vehicle : Entity, IVehicle
     {
-        public Quaternion Quaternion { get; }
+        public Quaternion Quaternion => Marshal.PtrToStructure<Quaternion>(Rage.Vehicle.Vehicle_GetQuaternion(NativePointer));
 
         public float Heading => Rage.Vehicle.Vehicle_GetHeading(NativePointer);
         public float MovableState => Rage.Vehicle.Vehicle_GetMovableState(NativePointer);
 
-        public IVehicle Trailer { get; }
-        public IVehicle TraileredBy { get; }
+        public IVehicle Trailer => MP.InternalVehicles[Rage.Vehicle.Vehicle_GetTrailer(NativePointer)];
+        public IVehicle TraileredBy => MP.InternalVehicles[Rage.Vehicle.Vehicle_GetTraileredBy(NativePointer)];
 
         public bool IsSirenActive
         {
@@ -159,7 +160,7 @@ namespace RageMP.Net.Entities
 
         public void Spawn(Vector3 position, float heading)
         {
-            throw new NotImplementedException();
+            Rage.Vehicle.Vehicle_Spawn(NativePointer, position, heading);
         }
 
         public uint GetMod(uint id)

@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace RageMP.Net.Native
@@ -180,6 +181,12 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern IntPtr Vehicle_GetTraileredBy(IntPtr vehicle);
+
+            [DllImport(_dllName)]
+            internal static extern void Vehicle_Spawn(IntPtr vehicle, Vector3 position, float heading);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Vehicle_GetQuaternion(IntPtr vehicle);
 
 
         }
