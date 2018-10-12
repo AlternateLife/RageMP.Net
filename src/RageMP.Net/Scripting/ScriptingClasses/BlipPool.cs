@@ -17,7 +17,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             using (var converter = new StringConverter())
             {
-                var blipPointer = Rage.BlipPool.VehiclePool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
+                var blipPointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
                     rotation, dimension);
 
                 return new Blip(blipPointer);
