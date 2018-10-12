@@ -12,7 +12,7 @@ namespace RageMP.Net.Entities
 {
     public partial class Player : Entity, IPlayer
     {
-        public string Serial => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSerial(NativePointer));
+        public string Serial => StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
 
         public string Name
         {
@@ -26,7 +26,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public string SocialClubName => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSocialClubName(NativePointer));
+        public string SocialClubName => StringConverter.PointerToString(Rage.Player.Player_GetSocialClubName(NativePointer));
 
         public float Heading
         {
@@ -50,11 +50,11 @@ namespace RageMP.Net.Entities
 
         public Vector3 AimingAt { get; }
 
-        public string Ip => Marshal.PtrToStringAnsi(Rage.Player.Player_GetIp(NativePointer));
+        public string Ip => StringConverter.PointerToString(Rage.Player.Player_GetIp(NativePointer));
         public int Ping => Rage.Player.Player_GetPing(NativePointer);
         public float PacketLoss => Rage.Player.Player_GetPacketLoss(NativePointer);
 
-        public string KickReason => Marshal.PtrToStringAnsi(Rage.Player.Player_GetKickReason(NativePointer));
+        public string KickReason => StringConverter.PointerToString(Rage.Player.Player_GetKickReason(NativePointer));
 
         public bool IsJumping { get; }
         public bool IsInCover { get; }
@@ -65,7 +65,7 @@ namespace RageMP.Net.Entities
         public bool IsReloading { get; }
         public bool IsInMelee { get; }
 
-        public string ActionString => Marshal.PtrToStringAnsi(Rage.Player.Player_GetActionString(NativePointer));
+        public string ActionString => StringConverter.PointerToString(Rage.Player.Player_GetActionString(NativePointer));
 
         public IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
