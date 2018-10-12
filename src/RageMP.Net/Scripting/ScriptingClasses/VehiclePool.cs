@@ -10,7 +10,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class VehiclePool : PoolBase<IVehicle>, IVehiclePool
     {
-        public VehiclePool(IntPtr nativePointer) : base(nativePointer)
+        internal VehiclePool(IntPtr nativePointer) : base(nativePointer)
         {
         }
 

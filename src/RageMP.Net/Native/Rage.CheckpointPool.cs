@@ -10,7 +10,7 @@ namespace RageMP.Net.Native
         internal static class CheckpointPool
         {
             [DllImport(_dllName)]
-            internal static extern IntPtr CheckpointPool_New(IntPtr checkpointPool, uint type, Vector3 vector3, Vector3 nextPosition, float radius, ColorRgba color, bool visible,
+            internal static extern IntPtr CheckpointPool_New(IntPtr checkpointPool, uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible,
                 uint dimension);
         }
     }

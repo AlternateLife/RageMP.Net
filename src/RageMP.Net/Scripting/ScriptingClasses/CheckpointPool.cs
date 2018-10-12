@@ -9,7 +9,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class CheckpointPool : PoolBase<ICheckpoint>, ICheckpointPool
     {
-        public CheckpointPool(IntPtr nativePointer) : base(nativePointer)
+        internal CheckpointPool(IntPtr nativePointer) : base(nativePointer)
         {
         }
 

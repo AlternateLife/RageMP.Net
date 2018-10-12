@@ -9,7 +9,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class BlipPool : PoolBase<IBlip>, IBlipPool
     {
-        public BlipPool(IntPtr nativePointer) : base(nativePointer)
+        internal BlipPool(IntPtr nativePointer) : base(nativePointer)
         {
         }
 

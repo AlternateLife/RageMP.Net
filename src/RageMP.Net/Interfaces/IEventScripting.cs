@@ -18,5 +18,9 @@ namespace RageMP.Net.Interfaces
         event PlayerEnterVehicleDelegate PlayerEnterVehicle;
         event PlayerStartExitVehicleDelegate PlayerStartExitVehicle;
         event PlayerExitVehicleDelegate PlayerExitVehicle;
+        event PlayerEnterCheckpointDelegate PlayerEnterCheckpoint;
+        event PlayerExitCheckpointDelegate PlayerExitCheckpoint;
+        event PlayerEnterColshapeDelegate PlayerEnterColshape;
+        event PlayerExitColshapeDelegate PlayerExitColshape;
     }
 }

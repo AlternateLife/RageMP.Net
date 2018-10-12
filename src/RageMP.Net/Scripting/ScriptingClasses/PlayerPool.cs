@@ -11,7 +11,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class PlayerPool : PoolBase<IPlayer>, IPlayerPool
     {
-        public PlayerPool(IntPtr nativePointer) : base(nativePointer)
+        internal PlayerPool(IntPtr nativePointer) : base(nativePointer)
         {
         }
 

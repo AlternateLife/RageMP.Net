@@ -27,8 +27,8 @@ namespace RageMP.Net.Enums
         VehicleTrailerAttached,
         VehicleDamage,
 
-        PlayerEnterColShape,
-        PlayerExitColShape,
+        PlayerEnterColshape,
+        PlayerExitColshape,
 
         PlayerEnterCheckpoint,
         PlayerExitCheckpoint,

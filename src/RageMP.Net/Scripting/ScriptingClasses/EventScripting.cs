@@ -132,7 +132,35 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             remove => _playerExitVehicle.Unsubscribe(value);
         }
 
-        public EventScripting(Plugin plugin)
+        private readonly EventHandler<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate> _playerEnterCheckpoint;
+        public event PlayerEnterCheckpointDelegate PlayerEnterCheckpoint
+        {
+            add => _playerEnterCheckpoint.Subscribe(value);
+            remove => _playerEnterCheckpoint.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate> _playerExitCheckpoint;
+        public event PlayerExitCheckpointDelegate PlayerExitCheckpoint
+        {
+            add => _playerExitCheckpoint.Subscribe(value);
+            remove => _playerExitCheckpoint.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate> _playerEnterColshape;
+        public event PlayerEnterColshapeDelegate PlayerEnterColshape
+        {
+            add => _playerEnterColshape.Subscribe(value);
+            remove => _playerEnterColshape.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate> _playerExitColshape;
+        public event PlayerExitColshapeDelegate PlayerExitColshape
+        {
+            add => _playerExitColshape.Subscribe(value);
+            remove => _playerExitColshape.Unsubscribe(value);
+        }
+
+        internal EventScripting(Plugin plugin)
         {
             _plugin = plugin;
 
@@ -155,6 +183,12 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _playerEnterVehicle = new EventHandler<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate>(EventType.PlayerEnterVehicle, DispatchPlayerEnterVehicle);
             _playerStartExitVehicle = new EventHandler<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate>(EventType.PlayerStartExitVehicle, DispatchStartExitVehicle);
             _playerExitVehicle = new EventHandler<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate>(EventType.PlayerExitVehicle, DispatchPlayerExitVehicle);
+
+            _playerEnterCheckpoint = new EventHandler<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate>(EventType.PlayerEnterCheckpoint, DispatchPlayerEnterCheckpoint);
+            _playerExitCheckpoint = new EventHandler<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate>(EventType.PlayerExitCheckpoint, DispatchPlayerExitCheckpoint);
+
+            _playerEnterColshape = new EventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate>(EventType.PlayerEnterColshape, DispatchPlayerEnterColshape);
+            _playerExitColshape = new EventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate>(EventType.PlayerExitColshape, DispatchPlayerExitColshape);
         }
 
         private void DispatchEntityCreated(IntPtr entitypointer)
@@ -284,6 +318,38 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var vehicle = _plugin.VehiclePool[vehiclePointer];
 
             _playerExitVehicle.Call(x => x(player, vehicle));
+        }
+
+        private void DispatchPlayerEnterCheckpoint(IntPtr playerpointer, IntPtr checkpointPointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var checkpoint = _plugin.CheckpointPool[checkpointPointer];
+
+            _playerEnterCheckpoint.Call(x => x(player, checkpoint));
+        }
+
+        private void DispatchPlayerExitCheckpoint(IntPtr playerpointer, IntPtr checkpointPointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var checkpoint = _plugin.CheckpointPool[checkpointPointer];
+
+            _playerExitCheckpoint.Call(x => x(player, checkpoint));
+        }
+
+        private void DispatchPlayerEnterColshape(IntPtr playerpointer, IntPtr checkpointPointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var checkpoint = _plugin.ColshapePool[checkpointPointer];
+
+            _playerEnterColshape.Call(x => x(player, checkpoint));
+        }
+
+        private void DispatchPlayerExitColshape(IntPtr playerpointer, IntPtr checkpointPointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var checkpoint = _plugin.ColshapePool[checkpointPointer];
+
+            _playerExitColshape.Call(x => x(player, checkpoint));
         }
 
         private bool GetPoolFromPointer(IntPtr entityPointer, out IInternalPool pool, out EntityType type)

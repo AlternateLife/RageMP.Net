@@ -22,6 +22,7 @@ namespace RageMP.Net
         internal VehiclePool VehiclePool { get; }
         internal BlipPool BlipPool { get; }
         internal CheckpointPool CheckpointPool { get; }
+        internal ColshapePool ColshapePool { get; }
 
         internal Logger Logger { get; }
 
@@ -38,13 +39,15 @@ namespace RageMP.Net
             VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer));
             BlipPool = new BlipPool(Rage.Multiplayer.Multiplayer_GetBlipPool(NativeMultiplayer));
             CheckpointPool = new CheckpointPool(Rage.Multiplayer.Multiplayer_GetCheckpointPool(NativeMultiplayer));
+            ColshapePool = new ColshapePool(Rage.Multiplayer.Multiplayer_GetColshapePool(NativeMultiplayer));
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
                 { EntityType.Player, PlayerPool },
                 { EntityType.Vehicle, VehiclePool },
                 { EntityType.Blip, BlipPool },
-                { EntityType.Checkpoint, CheckpointPool }
+                { EntityType.Checkpoint, CheckpointPool },
+                { EntityType.Colshape, ColshapePool }
             };
 
             Start();
@@ -75,6 +78,9 @@ namespace RageMP.Net
 
                 case EntityType.Checkpoint:
                     return new Checkpoint(entityPointer);
+
+                case EntityType.Colshape:
+                    return new Colshape(entityPointer);
 
                 default:
                     return null;

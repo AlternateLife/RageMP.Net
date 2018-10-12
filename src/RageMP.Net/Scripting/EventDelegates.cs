@@ -29,11 +29,11 @@ namespace RageMP.Net.Scripting
     public delegate void VehicleTrailerAttachedDelegate(IVehicle vehicle, IVehicle trailer);
     public delegate void VehicleDamageDelegateDelegate(IVehicle vehicle, float bodyHealthLoss, float engineHealthLoss);
 
-    /*public delegate void PlayerEnterColshapeDelegate(IPlayer player, IntPtr colshapePointer);
-    public delegate void PlayerExitColshapeDelegate(IPlayer player, IntPtr colshapePointer);
+    public delegate void PlayerEnterColshapeDelegate(IPlayer player, IColshape colshapePointer);
+    public delegate void PlayerExitColshapeDelegate(IPlayer player, IColshape colshapePointer);
 
-    public delegate void PlayerEnterCheckpointDelegate(IPlayer player, IntPtr checkpointPointer);
-    public delegate void PlayerExitCheckpointDelegate(IPlayer player, IntPtr checkpointPointer);*/
+    public delegate void PlayerEnterCheckpointDelegate(IPlayer player, ICheckpoint checkpointPointer);
+    public delegate void PlayerExitCheckpointDelegate(IPlayer player, ICheckpoint checkpointPointer);
 
     //public delegate void CreateWaypointDelegate(IPlayer player/**, Vector3 position (?) **/);
     public delegate void ReachWaypointDelegate(IPlayer player);
