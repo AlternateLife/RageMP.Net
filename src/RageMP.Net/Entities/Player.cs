@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -15,8 +16,14 @@ namespace RageMP.Net.Entities
 
         public string Name
         {
-            get => Marshal.PtrToStringAnsi(Rage.Player.Player_GetName(NativePointer));
-            set => Rage.Player.Player_SetName(NativePointer, value);
+            get => StringConverter.PointerToString(Rage.Player.Player_GetName(NativePointer));
+            set
+            {
+                using (var converter = new StringConverter())
+                {
+                    Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value));
+                }
+            }
         }
 
         public string SocialClubName => Marshal.PtrToStringAnsi(Rage.Player.Player_GetSocialClubName(NativePointer));
@@ -68,29 +75,44 @@ namespace RageMP.Net.Entities
 
         public void Kick(string reason = null)
         {
-            Rage.Player.Player_Kick(NativePointer, reason);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_Kick(NativePointer, converter.StringToPointer(reason));
+            }
         }
 
         public void Ban(string reason = null)
         {
-            Rage.Player.Player_Ban(NativePointer, reason);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_Ban(NativePointer, converter.StringToPointer(reason));
+            }
         }
 
         public void OutputChatBox(string text)
         {
-            Rage.Player.Player_OutputChatBox(NativePointer, text);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_OutputChatBox(NativePointer, converter.StringToPointer(text));
+            }
         }
 
         public void Notify(string text)
         {
-            Rage.Player.Player_Notify(NativePointer, text);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_Notify(NativePointer, converter.StringToPointer(text));
+            }
         }
 
         public void Call(string eventName, params object[] arguments)
         {
             var data = ArgumentData.ConvertFromArguments(arguments);
 
-            Rage.Player.Player__Call(NativePointer, eventName, data, data.Length);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player__Call(NativePointer, converter.StringToPointer(eventName), data, data.Length);
+            }
 
             ArgumentData.Dispose(data);
         }
@@ -107,7 +129,10 @@ namespace RageMP.Net.Entities
 
         public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
         {
-            Rage.Player.Player_PlayAnimation(NativePointer, dictionary, name, speed, (int) flags);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_PlayAnimation(NativePointer, converter.StringToPointer(dictionary), converter.StringToPointer(name), speed, (int) flags);
+            }
         }
 
         public void StopAnimation()
@@ -117,7 +142,10 @@ namespace RageMP.Net.Entities
 
         public void PlayScenario(string scenario)
         {
-            Rage.Player.Player_PlayScenario(NativePointer, scenario);
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_PlayScenario(NativePointer, converter.StringToPointer(scenario));
+            }
         }
 
         public bool IsStreamed(IPlayer player)

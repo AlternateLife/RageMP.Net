@@ -8,23 +8,23 @@ namespace RageMP.Net.Native
     {
         internal static class Player
         {
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_Kick(IntPtr player, string reason);
+            [DllImport(_dllName)]
+            internal static extern void Player_Kick(IntPtr player, IntPtr reason);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_Ban(IntPtr player, string reason);
+            [DllImport(_dllName)]
+            internal static extern void Player_Ban(IntPtr player, IntPtr reason);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_OutputChatBox(IntPtr player, string text);
+            [DllImport(_dllName)]
+            internal static extern void Player_OutputChatBox(IntPtr player, IntPtr text);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_Notify(IntPtr player, string text);
+            [DllImport(_dllName)]
+            internal static extern void Player_Notify(IntPtr player, IntPtr text);
 
             [DllImport(_dllName)]
             internal static extern IntPtr Player_GetName(IntPtr player);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_SetName(IntPtr player, string name);
+            [DllImport(_dllName)]
+            internal static extern void Player_SetName(IntPtr player, IntPtr name);
 
             [DllImport(_dllName)]
             internal static extern IntPtr Player_GetSocialClubName(IntPtr player);
@@ -138,14 +138,14 @@ namespace RageMP.Net.Native
             [DllImport(_dllName)]
             internal static extern bool Player_IsStreamed(IntPtr player, IntPtr otherPlayer);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_PlayAnimation(IntPtr player, string dictionary, string name, float speed, int flags);
+            [DllImport(_dllName)]
+            internal static extern void Player_PlayAnimation(IntPtr player, IntPtr dictionary, IntPtr name, float speed, int flags);
 
             [DllImport(_dllName)]
             internal static extern void Player_StopAnimation(IntPtr player);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player_PlayScenario(IntPtr player, string scenario);
+            [DllImport(_dllName)]
+            internal static extern void Player_PlayScenario(IntPtr player, IntPtr scenario);
 
             [DllImport(_dllName)]
             internal static extern void Player_PutIntoVehicle(IntPtr player, IntPtr vehicle, int seat);
@@ -153,8 +153,8 @@ namespace RageMP.Net.Native
             [DllImport(_dllName)]
             internal static extern void Player_RemoveFromVehicle(IntPtr player);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Player__Call(IntPtr player, string eventName, ArgumentData[] data, int dataCount);
+            [DllImport(_dllName)]
+            internal static extern void Player__Call(IntPtr player, IntPtr eventName, ArgumentData[] data, int dataCount);
         }
     }
 }

@@ -109,8 +109,8 @@ namespace RageMP.Net.Native
             [DllImport(_dllName)]
             internal static extern IntPtr Vehicle_GetNumberPlate(IntPtr vehicle);
 
-            [DllImport(_dllName, CharSet = CharSet.Ansi)]
-            internal static extern void Vehicle_SetNumberPlate(IntPtr vehicle, string numberPlate);
+            [DllImport(_dllName)]
+            internal static extern void Vehicle_SetNumberPlate(IntPtr vehicle, IntPtr numberPlate);
 
             [DllImport(_dllName)]
             internal static extern bool Vehicle_IsStreamed(IntPtr vehicle, IntPtr player);

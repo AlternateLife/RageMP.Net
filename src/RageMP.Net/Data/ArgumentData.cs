@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Data
@@ -45,7 +46,7 @@ namespace RageMP.Net.Data
                         data[i] = new ArgumentData
                         {
                             ValueType = (byte) ArgumentValueType.String,
-                            StringValue = Marshal.StringToCoTaskMemAnsi(text)
+                            StringValue = StringConverter.StringToPointerUnsafe(text)
                         };
 
                         break;
@@ -137,7 +138,7 @@ namespace RageMP.Net.Data
                 switch ((ArgumentValueType) argumentData.ValueType)
                 {
                     case ArgumentValueType.String:
-                        Marshal.FreeCoTaskMem(argumentData.StringValue);
+                        Marshal.FreeHGlobal(argumentData.StringValue);
 
                         break;
                 }

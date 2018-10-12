@@ -1,5 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
+using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
@@ -210,11 +212,11 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _playerDeath.Call(x => x(player, reason, killer));
         }
 
-        private void DisaptchPlayerQuit(IntPtr playerPointer, uint type, string reason)
+        private void DisaptchPlayerQuit(IntPtr playerPointer, uint type, IntPtr reason)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerQuit.Call(x => x(player, type, reason));
+            _playerQuit.Call(x => x(player, type, StringConverter.PointerToString(reason)));
         }
 
         private void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)

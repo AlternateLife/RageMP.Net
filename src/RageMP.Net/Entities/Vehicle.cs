@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -84,8 +85,14 @@ namespace RageMP.Net.Entities
 
         public string NumberPlate
         {
-            get => Marshal.PtrToStringAnsi(Rage.Vehicle.Vehicle_GetNumberPlate(NativePointer));
-            set => Rage.Vehicle.Vehicle_SetNumberPlate(NativePointer, value);
+            get => StringConverter.PointerToString(Rage.Vehicle.Vehicle_GetNumberPlate(NativePointer));
+            set
+            {
+                using (var converter = new StringConverter())
+                {
+                    Rage.Vehicle.Vehicle_SetNumberPlate(NativePointer, converter.StringToPointer(value));
+                }
+            }
         }
 
         public uint Livery

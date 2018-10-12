@@ -10,7 +10,7 @@ namespace RageMP.Net
 
     public delegate void NativePlayerJoinDelegate(IntPtr playerPointer);
     public delegate void NativePlayerReadyDelegate(IntPtr playerPointer);
-    public delegate void NativePlayerQuitDelegate(IntPtr playerPointer, uint type, string reason);
+    public delegate void NativePlayerQuitDelegate(IntPtr playerPointer, uint type, IntPtr reason);
     public delegate void NativePlayerCommandDelegate(IntPtr playerPointer, IntPtr text);
     public delegate void NativePlayerChatDelegate(IntPtr playerPointer, IntPtr text);
     public delegate void NativePlayerDeathDelegate(IntPtr playerPointer, uint reason, IntPtr killerPlayerPointer);
