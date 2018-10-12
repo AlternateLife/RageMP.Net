@@ -8,14 +8,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-if(WIN32)
+if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
-endif(WIN32)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/ragemp-c-sdk/thirdparty)
+endif(MSVC)
 
 add_subdirectory(src)
 
