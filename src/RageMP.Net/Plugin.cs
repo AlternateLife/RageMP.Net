@@ -20,6 +20,8 @@ namespace RageMP.Net
 
         internal PlayerPool PlayerPool { get; }
         internal VehiclePool VehiclePool { get; }
+        internal BlipPool BlipPool { get; }
+
         internal Logger Logger { get; }
 
         internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
@@ -33,11 +35,13 @@ namespace RageMP.Net
 
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer));
             VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer));
+            BlipPool = new BlipPool(Rage.Multiplayer.Multiplayer_GetBlipPool(NativeMultiplayer));
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
                 { EntityType.Player, PlayerPool },
-                { EntityType.Vehicle, VehiclePool }
+                { EntityType.Vehicle, VehiclePool },
+                { EntityType.Blip, BlipPool }
             };
 
             Start();
@@ -62,6 +66,9 @@ namespace RageMP.Net
 
                 case EntityType.Vehicle:
                     return new Vehicle(entityPointer);
+
+                case EntityType.Blip:
+                    return new Blip(entityPointer);
 
                 default:
                     return null;
