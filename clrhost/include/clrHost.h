@@ -38,6 +38,8 @@
 #include <windows.h>
 #endif
 
+#include <ragemp-c-sdk/include/rage.h>
+
 class ClrPlugin;
 
 class ClrHost {
