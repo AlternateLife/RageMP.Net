@@ -3,7 +3,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    public partial class Player
+    internal partial class Player
     {
         public IVehicle Vehicle { get; }
         public int Seat => Rage.Player.Player_GetSeat(NativePointer);

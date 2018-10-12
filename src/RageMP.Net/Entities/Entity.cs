@@ -8,7 +8,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    public class Entity : IEntity
+    internal class Entity : IEntity
     {
         public IntPtr NativePointer { get; }
 
@@ -47,7 +47,7 @@ namespace RageMP.Net.Entities
 
         public Vector3 Velocity => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
 
-        public Entity(IntPtr nativePointer, EntityType type)
+        protected Entity(IntPtr nativePointer, EntityType type)
         {
             NativePointer = nativePointer;
 

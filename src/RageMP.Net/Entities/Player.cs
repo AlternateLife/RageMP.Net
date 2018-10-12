@@ -10,7 +10,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    public partial class Player : Entity, IPlayer
+    internal partial class Player : Entity, IPlayer
     {
         public string Serial => StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
 

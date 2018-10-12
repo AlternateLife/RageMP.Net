@@ -3,7 +3,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    public partial class Player
+    internal partial class Player
     {
         public uint CurrentWeapon
         {

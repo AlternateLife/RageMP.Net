@@ -8,7 +8,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    public class Blip : Entity, IBlip
+    internal class Blip : Entity, IBlip
     {
         public float DrawDistance
         {
@@ -52,7 +52,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
+        internal Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
         {
         }
 
