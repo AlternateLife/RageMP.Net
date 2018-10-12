@@ -1,7 +1,11 @@
+using System.Runtime.InteropServices;
+
 namespace RageMP.Net.Data
 {
+    [StructLayout(LayoutKind.Explicit, Size = 4, Pack = 1)]
     public struct ColorRgba
     {
+        [FieldOffset(0)]
         public uint NumberValue;
 
         public ColorRgba(byte red, byte green, byte blue, byte alpha)
