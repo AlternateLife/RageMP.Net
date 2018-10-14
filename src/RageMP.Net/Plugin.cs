@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using RageMP.Net.Data;
 using RageMP.Net.Entities;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -27,6 +26,7 @@ namespace RageMP.Net
         internal ColshapePool ColshapePool { get; }
         internal MarkerPool MarkerPool { get; }
         internal ObjectPool ObjectPool { get; }
+        internal TextLabelPool TextLabelPool { get; }
 
         internal Logger Logger { get; }
 
@@ -46,6 +46,7 @@ namespace RageMP.Net
             ColshapePool = new ColshapePool(Rage.Multiplayer.Multiplayer_GetColshapePool(NativeMultiplayer));
             MarkerPool = new MarkerPool(Rage.Multiplayer.Multiplayer_GetMarkerPool(NativeMultiplayer));
             ObjectPool = new ObjectPool(Rage.Multiplayer.Multiplayer_GetObjectPool(NativeMultiplayer));
+            TextLabelPool = new TextLabelPool(Rage.Multiplayer.Multiplayer_GetLabelPPool(NativeMultiplayer));
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
@@ -55,7 +56,8 @@ namespace RageMP.Net
                 { EntityType.Checkpoint, CheckpointPool },
                 { EntityType.Colshape, ColshapePool },
                 { EntityType.Marker, MarkerPool },
-                { EntityType.Object, ObjectPool }
+                { EntityType.Object, ObjectPool },
+                { EntityType.TextLabel, TextLabelPool }
             };
 
             Start();
@@ -95,6 +97,9 @@ namespace RageMP.Net
 
                 case EntityType.Object:
                     return new Object(entityPointer);
+
+                case EntityType.TextLabel:
+                    return new TextLabel(entityPointer);
 
                 default:
                     return null;
