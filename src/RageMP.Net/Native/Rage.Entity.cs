@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 
 namespace RageMP.Net.Native
 {
@@ -49,6 +50,18 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Entity_SetAlpha(IntPtr entity, uint alpha);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Entity_GetVariable(IntPtr entity, IntPtr key);
+
+            [DllImport(_dllName)]
+            internal static extern void Entity_SetVariable(IntPtr entity, IntPtr key, ArgumentData value);
+
+            [DllImport(_dllName)]
+            internal static extern void Entity_SetVariables(IntPtr entity, IntPtr[] keys, ArgumentData[] values, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern bool Entity_HasVariable(IntPtr entity, IntPtr key);
         }
     }
 }

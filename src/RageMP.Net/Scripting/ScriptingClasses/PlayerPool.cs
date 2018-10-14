@@ -42,7 +42,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void Call(string eventName, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -54,7 +54,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void CallInRange(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -66,7 +66,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void CallInDimension(uint dimension, string eventName, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -78,7 +78,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void CallFor(ICollection<IPlayer> players, string eventName, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             using (var converter = new StringConverter())
@@ -91,7 +91,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void Invoke(ulong nativeHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             Rage.PlayerPool.PlayerPool__Invoke(_nativePointer, nativeHash, data, (ulong) data.Length);
 
@@ -100,7 +100,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void InvokeInRange(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             Rage.PlayerPool.PlayerPool__InvokeInRange(_nativePointer, position, range, dimension, nativeHash, data, (ulong) data.Length);
 
@@ -109,7 +109,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void InvokeInDimension(uint dimension, ulong nativeHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             Rage.PlayerPool.PlayerPool__InvokeInDimension(_nativePointer, dimension, nativeHash, data, (ulong) data.Length);
 
@@ -118,7 +118,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void InvokeFor(ICollection<IPlayer> players, ulong nativeHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             Rage.PlayerPool.PlayerPool__InvokeFor(_nativePointer, playerPointers, (ulong) playerPointers.Length, nativeHash, data, (ulong) data.Length);
