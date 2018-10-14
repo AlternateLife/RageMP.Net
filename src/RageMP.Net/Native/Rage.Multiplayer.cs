@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 
 namespace RageMP.Net.Native
 {
@@ -7,6 +8,9 @@ namespace RageMP.Net.Native
     {
         internal static class Multiplayer
         {
+            [DllImport(_dllName)]
+            internal static extern void Multiplayer_AddRemoteEventHandler(IntPtr multiplayer, string eventName, NativeRemoteEventDelegate callback);
+
             [DllImport(_dllName)]
             internal static extern IntPtr Multiplayer_GetPlayerPool(IntPtr multiplayer);
 
