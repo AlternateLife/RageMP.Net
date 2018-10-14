@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace RageMP.Net.Data
@@ -6,8 +7,24 @@ namespace RageMP.Net.Data
     internal struct ArgumentsData
     {
         public ulong Length;
+        public IntPtr Arguments;
 
-        [MarshalAs(UnmanagedType.ByValArray)]
-        public ArgumentData[] Arguments;
+        public object[] ConvertToArguments()
+        {
+            var arguments = new object[Length];
+
+            Console.WriteLine($"Length: {Length}");
+
+            for (var i = 0; i < (int) Length; i++)
+            {
+                var address = Arguments + Marshal.SizeOf(typeof(ArgumentData)) * i;
+
+                var argument = Marshal.PtrToStructure<ArgumentData>(address);
+
+                arguments[i] = argument.ToObject();
+            }
+
+            return arguments;
+        }
     }
 }

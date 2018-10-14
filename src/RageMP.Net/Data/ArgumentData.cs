@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
+using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Data
 {
@@ -110,6 +111,64 @@ namespace RageMP.Net.Data
             }
 
             return data;
+        }
+
+        public object ToObject()
+        {
+            switch ((ArgumentValueType)ValueType)
+            {
+                case ArgumentValueType.Int:
+                    return Int32Value;
+
+                case ArgumentValueType.Float:
+                    return FloatValue;
+
+                case ArgumentValueType.String:
+                    return StringConverter.PointerToString(StringValue);
+
+                case ArgumentValueType.Boolean:
+                    return BoolValue;
+
+                case ArgumentValueType.Vector3:
+                    return Vector3Value;
+
+                case ArgumentValueType.Object:
+                    return StringValue;
+
+                case ArgumentValueType.Null:
+                    return null;
+
+                case ArgumentValueType.Entity:
+                    return ToEntity();
+
+                default:
+                    MP.Logger.Warn($"Conversion not implemented for {((ArgumentValueType)ValueType).ToString()}");
+
+                    return null;
+            }
+        }
+
+        private IEntity ToEntity()
+        {
+            switch ((EntityType)EntityValue.Type)
+            {
+                case EntityType.Blip:
+                    return MP.InternalBlips[EntityValue.Pointer];
+
+                case EntityType.Checkpoint:
+                    return MP.InternalCheckpoints[EntityValue.Pointer];
+
+                case EntityType.Player:
+                    return MP.InternalPlayers[EntityValue.Pointer];
+
+                case EntityType.Vehicle:
+                    return MP.InternalVehicles[EntityValue.Pointer];
+
+                default:
+                    MP.Logger.Warn($"Entity conversion not implemented for {((EntityType)EntityValue.Type).ToString()}");
+
+                    return null;
+            }
         }
 
         private static bool IsValueInteger(object value)
