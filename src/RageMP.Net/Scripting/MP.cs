@@ -1,5 +1,4 @@
 using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
 using RageMP.Net.Scripting.ScriptingClasses;
 
 namespace RageMP.Net.Scripting
@@ -13,12 +12,14 @@ namespace RageMP.Net.Scripting
         internal static PlayerPool InternalPlayers => _plugin.PlayerPool;
         internal static BlipPool InternalBlips => _plugin.BlipPool;
         internal static CheckpointPool InternalCheckpoints => _plugin.CheckpointPool;
+        internal static ColshapePool InternalColshapes => _plugin.ColshapePool;
 
         public static IEventScripting Events => InternalEvents;
         public static IVehiclePool Vehicles => InternalVehicles;
         public static IPlayerPool Players => InternalPlayers;
         public static IBlipPool Blips => InternalBlips;
         public static ICheckpointPool Checkpoints => InternalCheckpoints;
+        public static IColshapePool Colshapes => InternalColshapes;
 
         public static ILogger Logger => _plugin.Logger;
 

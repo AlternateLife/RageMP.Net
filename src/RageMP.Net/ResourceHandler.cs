@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using RageMP.Net.Scripting;
 
 namespace RageMP.Net
@@ -21,7 +20,7 @@ namespace RageMP.Net
 
         public void Start()
         {
-            MP.Logger.Info($"{_directory.Name}\": Starting resource...");
+            MP.Logger.Info($"{_directory.Name}: Starting resource...");
 
             LoadAssemblies();
 

@@ -28,9 +28,7 @@
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" 
-              DestinationFolder="../../../RageMP Server/dotnet/plugins/" 
-              SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
     </Target>
 
 </Project>
