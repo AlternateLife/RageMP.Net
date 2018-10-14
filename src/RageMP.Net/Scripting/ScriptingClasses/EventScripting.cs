@@ -334,22 +334,25 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         private void DisaptchPlayerQuit(IntPtr playerPointer, uint type, IntPtr reason)
         {
             var player = _plugin.PlayerPool[playerPointer];
+            var message = StringConverter.PointerToString(reason);
 
-            _playerQuit.Call(x => x(player, type, StringConverter.PointerToString(reason)));
+            _playerQuit.Call(x => x(player, type, message));
         }
 
         private void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
         {
             var player = _plugin.PlayerPool[playerPointer];
+            var message = Marshal.PtrToStringUni(text);
 
-            _playerCommand.Call(x => x(player, Marshal.PtrToStringUni(text)));
+            _playerCommand.Call(x => x(player, message));
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)
         {
             var player = _plugin.PlayerPool[playerPointer];
+            var message = Marshal.PtrToStringUni(text);
 
-            _playerChat.Call(x => x(player, Marshal.PtrToStringUni(text)));
+            _playerChat.Call(x => x(player, message));
         }
 
         private void DispatchPlayerSpawn(IntPtr playerPointer)
