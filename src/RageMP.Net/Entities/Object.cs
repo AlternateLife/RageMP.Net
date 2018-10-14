@@ -6,7 +6,7 @@ namespace RageMP.Net.Entities
 {
     internal class Object : Entity, IObject
     {
-        internal Object(IntPtr nativePointer) : base(nativePointer, EntityType.Object)
+        internal Object(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Object)
         {
         }
     }

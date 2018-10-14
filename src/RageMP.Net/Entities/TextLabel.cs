@@ -46,7 +46,7 @@ namespace RageMP.Net.Entities
             set => Rage.TextLabel.TextLabel_SetFont(NativePointer, value);
         }
 
-        internal TextLabel(IntPtr nativePointer) : base(nativePointer, EntityType.TextLabel)
+        internal TextLabel(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.TextLabel)
         {
         }
     }

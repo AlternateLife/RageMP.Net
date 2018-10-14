@@ -10,7 +10,7 @@ namespace RageMP.Net.Entities
     {
         public uint ShapeType => Rage.Colshape.Colshape_GetShapeType(NativePointer);
 
-        internal Colshape(IntPtr nativePointer) : base(nativePointer, EntityType.Colshape)
+        internal Colshape(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Colshape)
         {
         }
 

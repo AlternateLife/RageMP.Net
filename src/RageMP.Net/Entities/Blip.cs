@@ -52,7 +52,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        internal Blip(IntPtr nativePointer) : base(nativePointer, EntityType.Blip)
+        internal Blip(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Blip)
         {
         }
 

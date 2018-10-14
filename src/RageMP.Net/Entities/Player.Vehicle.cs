@@ -1,6 +1,5 @@
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
-using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Entities
 {
@@ -12,7 +11,7 @@ namespace RageMP.Net.Entities
             {
                 var pointer = Rage.Player.Player_GetVehicle(NativePointer);
 
-                return MP.InternalVehicles[pointer];
+                return Plugin.VehiclePool[pointer];
             }
         }
 
