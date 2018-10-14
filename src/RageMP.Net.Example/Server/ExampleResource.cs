@@ -60,7 +60,7 @@ namespace RageMP.Net.Example
                     return;
                 }
 
-                foreach (var occupant in vehicle.GetOccupants())
+                foreach (var occupant in vehicle.Occupants)
                 {
                     MP.Logger.Info($"Occupant: {occupant.SocialClubName}");
                 }
