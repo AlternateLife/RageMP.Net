@@ -6,13 +6,22 @@
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\RageMP.Net\RageMP.Net.csproj" />
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy   SourceFiles="$(OutputPath)\RageMP.Net.Example.dll;$(OutputPath)\RageMP.Net.Example.pdb"
-                DestinationFolder="../../../RageMP Server/dotnet/resources/example/"
-                SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\RageMP.Net.Example.dll;$(OutputPath)\RageMP.Net.Example.pdb" 
+              DestinationFolder="../../../RageMP Server/dotnet/resources/example/" 
+              SkipUnchangedFiles="false" />
     </Target>
 </Project>

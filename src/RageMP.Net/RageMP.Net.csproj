@@ -7,6 +7,15 @@
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <PackageReference Include="NLog" Version="4.5.10" />
     </ItemGroup>
@@ -19,9 +28,9 @@
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy   SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" 
-                DestinationFolder="../../../RageMP Server/dotnet/plugins/" 
-                SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" 
+              DestinationFolder="../../../RageMP Server/dotnet/plugins/" 
+              SkipUnchangedFiles="false" />
     </Target>
 
 </Project>
