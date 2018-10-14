@@ -35,8 +35,6 @@ namespace RageMP.Net
             NativeMultiplayer = multiplayer;
             Logger = new Logger(this);
 
-            Rage.Multiplayer.Multiplayer_AddRemoteEventHandler(multiplayer, "RAGE", RemoteEvent);
-
             MP.Setup(this);
 
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer));
@@ -57,18 +55,6 @@ namespace RageMP.Net
             };
 
             Start();
-        }
-
-        private void RemoteEvent(IntPtr playerPointer, ArgumentsData arguments)
-        {
-            MP.Logger.Info($"Remote event called: Length {arguments.Length}");
-
-            for (ulong i = 0; i < arguments.Length; i++)
-            {
-                var argument = arguments.Arguments[i];
-
-                MP.Logger.Info($"Argument: {argument.Int32Value}");
-            }
         }
 
         private void Start()
