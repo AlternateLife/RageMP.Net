@@ -137,10 +137,13 @@ namespace RageMP.Net.Native
             internal static extern void Player_GiveWeapon(IntPtr player, uint weaponHash, uint ammo);
 
             [DllImport(_dllName)]
-            internal static extern void Player_GiveWeapons(IntPtr player, uint[] weapons, uint ammo, ulong count);
+            internal static extern void Player_GiveWeapons(IntPtr player, uint[] weapons, uint[] ammo, ulong count);
 
             [DllImport(_dllName)]
             internal static extern void Player_RemoveWeapon(IntPtr player, uint weaponHash);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_RemoveWeapons(IntPtr player, uint[] weapons, ulong count);
 
             [DllImport(_dllName)]
             internal static extern void Player_RemoveAllWeapons(IntPtr player);
