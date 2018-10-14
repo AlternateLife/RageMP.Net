@@ -57,7 +57,7 @@ namespace RageMP.Net.Helpers
                 }
                 catch (Exception e)
                 {
-                    MP.Logger.Error($"An error occured during exception of {eventName}", e);
+                    MP.Logger.Error($"An error occured during execution of {eventName}", e);
                 }
             }
         }
