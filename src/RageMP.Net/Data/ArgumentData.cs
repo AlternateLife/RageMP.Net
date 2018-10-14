@@ -139,33 +139,10 @@ namespace RageMP.Net.Data
                     return null;
 
                 case ArgumentValueType.Entity:
-                    return ToEntity();
+                    return EntityValue.ToEntity();
 
                 default:
                     MP.Logger.Warn($"Conversion not implemented for {((ArgumentValueType)ValueType).ToString()}");
-
-                    return null;
-            }
-        }
-
-        private IEntity ToEntity()
-        {
-            switch ((EntityType)EntityValue.Type)
-            {
-                case EntityType.Blip:
-                    return MP.InternalBlips[EntityValue.Pointer];
-
-                case EntityType.Checkpoint:
-                    return MP.InternalCheckpoints[EntityValue.Pointer];
-
-                case EntityType.Player:
-                    return MP.InternalPlayers[EntityValue.Pointer];
-
-                case EntityType.Vehicle:
-                    return MP.InternalVehicles[EntityValue.Pointer];
-
-                default:
-                    MP.Logger.Warn($"Entity conversion not implemented for {((EntityType)EntityValue.Type).ToString()}");
 
                     return null;
             }

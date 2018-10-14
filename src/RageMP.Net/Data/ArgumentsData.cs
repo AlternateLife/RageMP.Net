@@ -9,7 +9,7 @@ namespace RageMP.Net.Data
         public ulong Length;
         public IntPtr Arguments;
 
-        public object[] ConvertToArguments()
+        public object[] ToArguments()
         {
             var arguments = new object[Length];
 
