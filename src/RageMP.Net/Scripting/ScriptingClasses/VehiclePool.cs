@@ -10,7 +10,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class VehiclePool : PoolBase<IVehicle>, IVehiclePool
     {
-        internal VehiclePool(IntPtr nativePointer) : base(nativePointer)
+        internal VehiclePool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 var createdVehicle = Rage.VehiclePool.VehiclePool_New(_nativePointer, model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
 
-                return new Vehicle(createdVehicle);
+                return new Vehicle(createdVehicle, _plugin);
             }
         }
     }

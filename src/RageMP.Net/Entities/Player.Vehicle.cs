@@ -11,7 +11,7 @@ namespace RageMP.Net.Entities
             {
                 var pointer = Rage.Player.Player_GetVehicle(NativePointer);
 
-                return Plugin.VehiclePool[pointer];
+                return _plugin.VehiclePool[pointer];
             }
         }
 

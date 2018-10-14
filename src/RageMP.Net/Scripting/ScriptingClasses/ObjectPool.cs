@@ -8,7 +8,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class ObjectPool : PoolBase<IObject>, IObjectPool
     {
-        public ObjectPool(IntPtr nativePointer) : base(nativePointer)
+        public ObjectPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
@@ -16,7 +16,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             var pointer = Rage.ObjectPool.ObjectPool_New(_nativePointer, model, position, rotation, dimension);
 
-            return new Object(pointer);
+            return new Object(pointer, _plugin);
         }
     }
 }

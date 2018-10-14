@@ -10,7 +10,7 @@ namespace RageMP.Net.Entities
 {
     internal class Entity : IEntity
     {
-        protected readonly Plugin Plugin;
+        protected readonly Plugin _plugin;
 
         public IntPtr NativePointer { get; }
 
@@ -52,7 +52,7 @@ namespace RageMP.Net.Entities
         protected Entity(IntPtr nativePointer, Plugin plugin, EntityType type)
         {
             NativePointer = nativePointer;
-            Plugin = plugin;
+            _plugin = plugin;
 
             Id = Rage.Entity.Entity_GetId(NativePointer);
             Type = type;

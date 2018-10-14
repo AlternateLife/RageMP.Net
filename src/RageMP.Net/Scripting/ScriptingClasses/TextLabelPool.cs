@@ -10,7 +10,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class TextLabelPool : PoolBase<ITextLabel>, ITextLabelPool
     {
-        public TextLabelPool(IntPtr nativePointer) : base(nativePointer)
+        public TextLabelPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 var pointer = Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, converter.StringToPointer(text), font, color, drawDistance, los, dimension);
 
-                return new TextLabel(pointer);
+                return new TextLabel(pointer, _plugin);
             }
         }
     }

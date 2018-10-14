@@ -11,6 +11,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
     internal abstract class PoolBase<T> : IPool<T>, IInternalPool where T : IEntity
     {
         protected readonly IntPtr _nativePointer;
+        protected readonly Plugin _plugin;
 
         private readonly ConcurrentDictionary<IntPtr, T> _entities = new ConcurrentDictionary<IntPtr, T>();
 
@@ -32,9 +33,10 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        internal PoolBase(IntPtr nativePointer)
+        internal PoolBase(IntPtr nativePointer, Plugin plugin)
         {
             _nativePointer = nativePointer;
+            _plugin = _plugin;
         }
 
         public T GetAt(int index)
