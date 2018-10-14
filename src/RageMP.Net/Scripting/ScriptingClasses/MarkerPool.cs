@@ -9,7 +9,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class MarkerPool : PoolBase<IMarker>, IMarkerPool
     {
-        internal MarkerPool(IntPtr nativePointer) : base(nativePointer)
+        internal MarkerPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
@@ -17,7 +17,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             var pointer = Rage.MarkerPool.MarkerPool_New(_nativePointer, model, position, rotation, direction, scale, color, visible, dimension);
 
-            return new Marker(pointer);
+            return new Marker(pointer, _plugin);
         }
     }
 }

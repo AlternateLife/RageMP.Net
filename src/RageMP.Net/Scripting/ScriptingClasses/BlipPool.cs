@@ -9,7 +9,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 {
     internal class BlipPool : PoolBase<IBlip>, IBlipPool
     {
-        internal BlipPool(IntPtr nativePointer) : base(nativePointer)
+        internal BlipPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 var blipPointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
                     rotation, dimension);
 
-                return new Blip(blipPointer);
+                return new Blip(blipPointer, _plugin);
             }
         }
     }
