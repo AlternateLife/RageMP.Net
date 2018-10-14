@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using System.Text;
 using RageMP.Net.Data;
@@ -12,6 +13,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
     internal class EventScripting : IEventScripting
     {
         private readonly Plugin _plugin;
+        private readonly RemoteEventHandler _remoteEventHandler;
 
         private readonly EventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate> _entityCreated;
         public event EntityCreatedDelegate EntityCreated
@@ -163,6 +165,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         internal EventScripting(Plugin plugin)
         {
             _plugin = plugin;
+            _remoteEventHandler = new RemoteEventHandler(plugin);
 
             _tick = new EventHandler<NativeTickDelegate, TickDelegate>(EventType.Tick, DispatchTick);
 
@@ -189,6 +192,11 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
             _playerEnterColshape = new EventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate>(EventType.PlayerEnterColshape, DispatchPlayerEnterColshape);
             _playerExitColshape = new EventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate>(EventType.PlayerExitColshape, DispatchPlayerExitColshape);
+        }
+
+        public void Add(string eventName, PlayerRemoteEventDelegate callback)
+        {
+            _remoteEventHandler.Subscribe(eventName, callback);
         }
 
         private void DispatchEntityCreated(IntPtr entitypointer)
