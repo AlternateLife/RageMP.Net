@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
@@ -218,6 +219,20 @@ namespace RageMP.Net.Entities
             var pointer = Rage.Vehicle.Vehicle_GetOccupant(NativePointer, seat);
 
             return MP.InternalPlayers[pointer];
+        }
+
+        public ICollection<IPlayer> GetOccupants()
+        {
+            Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out var playerPointers, out var size);
+
+            var players = new List<IPlayer>();
+
+            for (var i = 0; i < (int)size; i++)
+            {
+                players.Add(_plugin.PlayerPool[playerPointers[i]]);
+            }
+
+            return players;
         }
 
         public void SetOccupant(int seat, IPlayer player)

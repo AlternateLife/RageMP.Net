@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
@@ -63,6 +64,7 @@ namespace RageMP.Net.Interfaces
         void SetExtra(uint id, bool state);
 
         IPlayer GetOccupant(int seat);
+        ICollection<IPlayer> GetOccupants();
         void SetOccupant(int seat, IPlayer player);
     }
 }
