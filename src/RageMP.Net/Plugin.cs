@@ -30,9 +30,9 @@ namespace RageMP.Net
 
         internal Logger Logger { get; }
 
-        public Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
+        internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
 
-        public Plugin(IntPtr multiplayer)
+        internal Plugin(IntPtr multiplayer)
         {
             NativeMultiplayer = multiplayer;
             Logger = new Logger(this);

@@ -8,7 +8,7 @@ using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
 {
-    internal class Entity : IEntity
+    internal abstract class Entity : IEntity
     {
         protected readonly Plugin _plugin;
 
