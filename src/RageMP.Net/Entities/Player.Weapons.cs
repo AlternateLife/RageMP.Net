@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
@@ -51,7 +52,12 @@ namespace RageMP.Net.Entities
 
         public void GiveWeapons(IDictionary<uint, uint> weapons)
         {
-            throw new System.NotImplementedException();
+            var count = weapons.Count;
+
+            var hashes = weapons.Keys.ToArray();
+            var ammo = weapons.Values.ToArray();
+
+            Rage.Player.Player_GiveWeapons(NativePointer, hashes, ammo, (ulong) count);
         }
 
         public void RemoveWeapon(uint weaponHash)
@@ -61,7 +67,9 @@ namespace RageMP.Net.Entities
 
         public void RemoveWeapons(IEnumerable<uint> weaponHashes)
         {
-            throw new System.NotImplementedException();
+            var weapons = weaponHashes.ToArray();
+
+            Rage.Player.Player_RemoveWeapons(NativePointer, weapons, (ulong) weapons.Length);
         }
 
         public void RemoveAllWeapons()

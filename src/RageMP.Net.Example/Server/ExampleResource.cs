@@ -82,11 +82,15 @@ namespace RageMP.Net.Example
                     { "KEY3", player.Position },
                     { "KEY4", "LEL" },
                 });
+
+                return;
             }
 
             if (text == "r")
             {
                 player.ResetVariable("TEST");
+
+                return;
             }
 
             if (text == "w")
@@ -96,9 +100,14 @@ namespace RageMP.Net.Example
                     MP.Logger.Debug($"Weapon: {weapon.Key} -> {weapon.Value}");
                 }
 
-                player.GiveWeapon(0xD8DF3C3C, 20);
-                player.GiveWeapon(0x5EF9FEC4, 123);
-                player.GiveWeapon(0xE284C527, 500);
+                player.GiveWeapons(new Dictionary<uint, uint>
+                {
+                    { 0xD8DF3C3C, 20 },
+                    { 0x5EF9FEC4, 123 },
+                    { 0xE284C527, 500 }
+                });
+
+                return;
             }
         }
 
