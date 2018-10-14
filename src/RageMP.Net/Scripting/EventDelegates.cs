@@ -40,4 +40,6 @@ namespace RageMP.Net.Scripting
 
     public delegate void PlayerStreamInDelegate(IPlayer player, IPlayer forPlayer);
     public delegate void PlayerStreamOutDelegate(IPlayer player, IPlayer forPlayer);
+
+    public delegate void PlayerRemoteEventDelegate(IPlayer player, string eventName, object[] arguments);
 }

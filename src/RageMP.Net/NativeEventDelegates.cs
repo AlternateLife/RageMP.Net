@@ -42,5 +42,5 @@ namespace RageMP.Net
     internal delegate void NativePlayerStreamInDelegate(IntPtr playerPointer, IntPtr forPlayerPointer);
     internal delegate void NativePlayerStreamOutDelegate(IntPtr playerPointer, IntPtr forPlayerPointer);
 
-    internal delegate void NativeRemoteEventDelegate(IntPtr playerPointer, ArgumentsData arguments);
+    internal delegate void NativePlayerRemoteEventDelegate(IntPtr playerPointer, ArgumentsData arguments);
 }

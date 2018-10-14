@@ -22,5 +22,7 @@ namespace RageMP.Net.Interfaces
         event PlayerExitCheckpointDelegate PlayerExitCheckpoint;
         event PlayerEnterColshapeDelegate PlayerEnterColshape;
         event PlayerExitColshapeDelegate PlayerExitColshape;
+
+        void Add(string eventName, PlayerRemoteEventDelegate callback);
     }
 }
