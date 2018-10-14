@@ -527,7 +527,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 return false;
             }
 
-            return pool.CreateEntity(entityPointer, out createdEntity);
+            return pool.CreateAndSaveEntity(entityPointer, out createdEntity);
         }
 
         private bool TryGetEntity(IntPtr entityPointer, out IEntity entity)

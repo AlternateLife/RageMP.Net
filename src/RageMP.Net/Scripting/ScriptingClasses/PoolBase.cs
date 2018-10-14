@@ -39,6 +39,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
         }
 
+        protected abstract T BuildEntity(IntPtr entityPointer);
+
         public T GetAt(int index)
         {
             return GetAt((uint) index);
@@ -83,7 +85,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             return _entities.TryRemove(entityPointer, out _);
         }
 
-        public bool CreateEntity(IntPtr entityPointer, out IEntity entity)
+        public bool CreateAndSaveEntity(IntPtr entityPointer, out IEntity entity)
         {
             entity = CreateAndSaveEntity(entityPointer);
 
@@ -96,9 +98,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             return true;
         }
 
-        protected abstract T BuildEntity(IntPtr entityPointer);
-
-        protected virtual T CreateAndSaveEntity(IntPtr entityPointer)
+        protected T CreateAndSaveEntity(IntPtr entityPointer)
         {
             if (_entities.TryGetValue(entityPointer, out var entity))
             {
