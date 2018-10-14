@@ -64,7 +64,7 @@ namespace RageMP.Net.Interfaces
         void SetExtra(uint id, bool state);
 
         IPlayer GetOccupant(int seat);
-        ICollection<IPlayer> GetOccupants();
+        IReadOnlyCollection<IPlayer> GetOccupants();
         void SetOccupant(int seat, IPlayer player);
     }
 }
