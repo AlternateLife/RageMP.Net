@@ -75,10 +75,10 @@ namespace RageMP.Net.Native
             internal static extern float Vehicle_GetBodyHealth(IntPtr vehicle);
 
             [DllImport(_dllName)]
-            internal static extern IntPtr Vehicle_GetOccupant(IntPtr vehicle, uint seat);
+            internal static extern IntPtr Vehicle_GetOccupant(IntPtr vehicle, int seat);
 
             [DllImport(_dllName)]
-            internal static extern void Vehicle_SetOccupant(IntPtr vehicle, uint seat, IntPtr player);
+            internal static extern void Vehicle_SetOccupant(IntPtr vehicle, int seat, IntPtr player);
 
             [DllImport(_dllName)]
             internal static extern void Vehicle_Explode(IntPtr vehicle);

@@ -212,5 +212,17 @@ namespace RageMP.Net.Entities
         {
             Rage.Vehicle.Vehicle_SetExtra(NativePointer, id, state);
         }
+
+        public IPlayer GetOccupant(int seat)
+        {
+            var pointer = Rage.Vehicle.Vehicle_GetOccupant(NativePointer, seat);
+
+            return MP.InternalPlayers[pointer];
+        }
+
+        public void SetOccupant(int seat, IPlayer player)
+        {
+            Rage.Vehicle.Vehicle_SetOccupant(NativePointer, seat, player.NativePointer);
+        }
     }
 }

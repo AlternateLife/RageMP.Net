@@ -62,5 +62,7 @@ namespace RageMP.Net.Interfaces
         bool GetExtra(uint id);
         void SetExtra(uint id, bool state);
 
+        IPlayer GetOccupant(int seat);
+        void SetOccupant(int seat, IPlayer player);
     }
 }
