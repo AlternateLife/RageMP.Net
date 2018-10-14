@@ -13,8 +13,6 @@ namespace RageMP.Net.Data
         {
             var arguments = new object[Length];
 
-            Console.WriteLine($"Length: {Length}");
-
             for (var i = 0; i < (int) Length; i++)
             {
                 var address = Arguments + Marshal.SizeOf(typeof(ArgumentData)) * i;

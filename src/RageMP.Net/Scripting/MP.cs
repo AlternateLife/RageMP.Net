@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting.ScriptingClasses;
 
@@ -14,6 +16,7 @@ namespace RageMP.Net.Scripting
         internal static CheckpointPool InternalCheckpoints => _plugin.CheckpointPool;
         internal static ColshapePool InternalColshapes => _plugin.ColshapePool;
         internal static MarkerPool InternalMarkers => _plugin.MarkerPool;
+        internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
         public static IEventScripting Events => InternalEvents;
         public static IVehiclePool Vehicles => InternalVehicles;

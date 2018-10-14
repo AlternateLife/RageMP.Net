@@ -22,25 +22,14 @@ namespace RageMP.Net.Data
 
         public IEntity ToEntity()
         {
-            switch ((EntityType)Type)
+            if (MP.EntityPoolMapping.TryGetValue((EntityType) Type, out var pool) == false)
             {
-                case EntityType.Blip:
-                    return MP.InternalBlips[Pointer];
+                MP.Logger.Warn($"Entity conversion not implemented for {((EntityType)Type).ToString()}");
 
-                case EntityType.Checkpoint:
-                    return MP.InternalCheckpoints[Pointer];
-
-                case EntityType.Player:
-                    return MP.InternalPlayers[Pointer];
-
-                case EntityType.Vehicle:
-                    return MP.InternalVehicles[Pointer];
-
-                default:
-                    MP.Logger.Warn($"Entity conversion not implemented for {((EntityType)Type).ToString()}");
-
-                    return null;
+                return null;
             }
+
+            return pool.GetEntity(Pointer);
         }
     }
 }
