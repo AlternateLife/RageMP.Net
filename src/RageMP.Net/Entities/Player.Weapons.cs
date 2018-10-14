@@ -17,6 +17,23 @@ namespace RageMP.Net.Entities
             set => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
         }
 
+        public IReadOnlyDictionary<uint, uint> Weapons
+        {
+            get
+            {
+                Rage.Player.Player_GetWeapons(NativePointer, out var weapons, out var ammo, out var count);
+
+                var allWeapons = new Dictionary<uint, uint>();
+
+                for (ulong i = 0; i < count; i++)
+                {
+                    allWeapons[weapons[i]] = ammo[i];
+                }
+
+                return allWeapons;
+            }
+        }
+
         public uint GetWeaponAmmo(uint weaponHash)
         {
             return Rage.Player.Player_GetWeaponAmmo(NativePointer, weaponHash);
@@ -25,11 +42,6 @@ namespace RageMP.Net.Entities
         public void SetWeaponAmmo(uint weaponHash, uint ammo)
         {
             Rage.Player.Player_SetWeaponAmmo(NativePointer, weaponHash, ammo);
-        }
-
-        public IReadOnlyDictionary<uint, uint> GetWeapons()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void GiveWeapon(uint weaponHash, uint ammo)

@@ -44,6 +44,7 @@ namespace RageMP.Net.Interfaces
 
         uint CurrentWeapon { get; set; }
         uint CurrentWeaponAmmo { get; set; }
+        IReadOnlyDictionary<uint, uint> Weapons { get; }
 
         IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
@@ -81,8 +82,6 @@ namespace RageMP.Net.Interfaces
 
         uint GetWeaponAmmo(uint weaponHash);
         void SetWeaponAmmo(uint weaponHash, uint ammo);
-
-        IReadOnlyDictionary<uint, uint> GetWeapons();
 
         void GiveWeapon(uint weaponHash, uint ammo);
         void GiveWeapons(IDictionary<uint, uint> weapons);
