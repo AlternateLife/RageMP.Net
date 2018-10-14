@@ -13,6 +13,42 @@ namespace RageMP.Net.Example
 
             MP.Events.PlayerChat += OnPlayerChat;
             MP.Events.PlayerDeath += OnPlayerDeath;
+            MP.Events.PlayerCommand += OnPlayerCommand;
+        }
+
+        private void OnPlayerCommand(IPlayer player, string text)
+        {
+            if (text == "v")
+            {
+                var vehicle = MP.Vehicles.New(0x6210CBB0, player.Position, 0, "", 255, false, true, 0);
+
+                player.PutIntoVehicle(vehicle, -1);
+
+                return;
+            }
+
+            if (text == "g")
+            {
+                var vehicle = player.Vehicle;
+                if (vehicle == null)
+                {
+                    player.OutputChatBox("Vehicle not found");
+
+                    return;
+                }
+
+                var occupant = vehicle.GetOccupant(-1);
+                if (occupant == null)
+                {
+                    player.OutputChatBox("Occupant not found");
+
+                    return;
+                }
+
+                player.OutputChatBox($"Occupant {occupant.SocialClubName} found");
+
+                return;
+            }
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
