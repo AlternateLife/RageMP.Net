@@ -18,6 +18,7 @@ namespace RageMP.Net.Scripting
         internal static ColshapePool InternalColshapes => _plugin.ColshapePool;
         internal static MarkerPool InternalMarkers => _plugin.MarkerPool;
         internal static ObjectPool InternalObjects => _plugin.ObjectPool;
+        internal static TextLabelPool InternalTextLabels => _plugin.TextLabelPool;
 
         internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
@@ -29,6 +30,7 @@ namespace RageMP.Net.Scripting
         public static IColshapePool Colshapes => InternalColshapes;
         public static IMarkerPool Markers => InternalMarkers;
         public static IObjectPool Objects => InternalObjects;
+        public static ITextLabelPool TextLabels => InternalTextLabels;
 
         public static ILogger Logger => _plugin.Logger;
 

@@ -25,6 +25,8 @@ namespace RageMP.Net.Example
             MP.Markers.New(0, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true, 0);
 
             MP.Objects.New(212137959, player.Position, Vector3.One, 0);
+
+            MP.TextLabels.New(player.Position, "HÖHÖ, höhö", 0, new ColorRgba(255, 255, 0, 255), 20, true, 0);
         }
 
         public void OnStop()
