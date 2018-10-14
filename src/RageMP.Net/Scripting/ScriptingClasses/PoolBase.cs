@@ -36,7 +36,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         internal PoolBase(IntPtr nativePointer, Plugin plugin)
         {
             _nativePointer = nativePointer;
-            _plugin = _plugin;
+            _plugin = plugin;
         }
 
         public T GetAt(int index)

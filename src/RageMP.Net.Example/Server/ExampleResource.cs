@@ -49,6 +49,22 @@ namespace RageMP.Net.Example
 
                 return;
             }
+
+            if (text == "o")
+            {
+                var vehicle = player.Vehicle;
+                if (vehicle == null)
+                {
+                    player.OutputChatBox("Vehicle not found");
+
+                    return;
+                }
+
+                foreach (var occupant in vehicle.GetOccupants())
+                {
+                    MP.Logger.Info($"Occupant: {occupant.SocialClubName}");
+                }
+            }
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
