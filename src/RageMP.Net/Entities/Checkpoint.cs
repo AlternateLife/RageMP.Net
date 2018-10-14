@@ -36,7 +36,7 @@ namespace RageMP.Net.Entities
             set => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value);
         }
 
-        internal Checkpoint(IntPtr nativePointer) : base(nativePointer, EntityType.Checkpoint)
+        internal Checkpoint(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Checkpoint)
         {
         }
 

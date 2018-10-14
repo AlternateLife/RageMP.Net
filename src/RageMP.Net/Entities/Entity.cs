@@ -10,6 +10,8 @@ namespace RageMP.Net.Entities
 {
     internal class Entity : IEntity
     {
+        protected readonly Plugin Plugin;
+
         public IntPtr NativePointer { get; }
 
         public uint Id { get; }
@@ -47,9 +49,10 @@ namespace RageMP.Net.Entities
 
         public Vector3 Velocity => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
 
-        protected Entity(IntPtr nativePointer, EntityType type)
+        protected Entity(IntPtr nativePointer, Plugin plugin, EntityType type)
         {
             NativePointer = nativePointer;
+            Plugin = plugin;
 
             Id = Rage.Entity.Entity_GetId(NativePointer);
             Type = type;

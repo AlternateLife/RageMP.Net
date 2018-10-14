@@ -36,7 +36,7 @@ namespace RageMP.Net.Entities
             set => Rage.Marker.Marker_SetVisible(NativePointer, value);
         }
 
-        internal Marker(IntPtr nativePointer) : base(nativePointer, EntityType.Marker)
+        internal Marker(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Marker)
         {
         }
 

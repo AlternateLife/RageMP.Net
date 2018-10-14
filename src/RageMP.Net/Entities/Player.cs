@@ -69,7 +69,7 @@ namespace RageMP.Net.Entities
 
         public IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
-        internal Player(IntPtr playerPointer) : base(playerPointer, EntityType.Player)
+        internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
         }
 

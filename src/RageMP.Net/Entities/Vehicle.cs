@@ -144,7 +144,7 @@ namespace RageMP.Net.Entities
             set => Rage.Vehicle.Vehicle_SetTrimColor(NativePointer, value);
         }
 
-        internal Vehicle(IntPtr nativePointer) : base(nativePointer, EntityType.Vehicle)
+        internal Vehicle(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Vehicle)
         {
         }
 
