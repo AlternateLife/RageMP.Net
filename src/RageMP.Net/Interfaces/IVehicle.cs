@@ -45,6 +45,8 @@ namespace RageMP.Net.Interfaces
         uint DashboardColor { get; set; }
         uint TrimColor { get; set; }
 
+        IReadOnlyCollection<IPlayer> Occupants { get; }
+
         void Explode();
         void Repair();
         void Spawn(Vector3 position, float heading);
@@ -64,7 +66,6 @@ namespace RageMP.Net.Interfaces
         void SetExtra(uint id, bool state);
 
         IPlayer GetOccupant(int seat);
-        IReadOnlyCollection<IPlayer> GetOccupants();
         void SetOccupant(int seat, IPlayer player);
     }
 }
