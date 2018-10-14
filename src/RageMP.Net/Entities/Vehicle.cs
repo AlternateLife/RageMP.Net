@@ -221,7 +221,7 @@ namespace RageMP.Net.Entities
             return MP.InternalPlayers[pointer];
         }
 
-        public ICollection<IPlayer> GetOccupants()
+        public IReadOnlyCollection<IPlayer> GetOccupants()
         {
             Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out var playerPointers, out var size);
 
