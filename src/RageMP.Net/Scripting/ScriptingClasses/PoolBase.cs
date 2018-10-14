@@ -85,7 +85,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public bool CreateEntity(IntPtr entityPointer, out IEntity entity)
         {
-            entity = TryCreateAndSaveEntity(entityPointer);
+            entity = CreateAndSaveEntity(entityPointer);
 
             if (entity == null)
             {
@@ -98,7 +98,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         protected abstract T BuildEntity(IntPtr entityPointer);
 
-        protected virtual T TryCreateAndSaveEntity(IntPtr entityPointer)
+        protected virtual T CreateAndSaveEntity(IntPtr entityPointer)
         {
             if (_entities.TryGetValue(entityPointer, out var entity))
             {

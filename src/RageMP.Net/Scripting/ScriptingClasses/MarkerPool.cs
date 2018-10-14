@@ -17,7 +17,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             var pointer = Rage.MarkerPool.MarkerPool_New(_nativePointer, model, position, rotation, direction, scale, color, visible, dimension);
 
-            return TryCreateAndSaveEntity(pointer);
+            return CreateAndSaveEntity(pointer);
         }
 
         protected override IMarker BuildEntity(IntPtr entityPointer)

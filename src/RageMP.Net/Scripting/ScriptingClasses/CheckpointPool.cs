@@ -17,7 +17,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             var pointer = Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color, visible, dimension);
 
-            return TryCreateAndSaveEntity(pointer);
+            return CreateAndSaveEntity(pointer);
         }
 
         protected override ICheckpoint BuildEntity(IntPtr entityPointer)

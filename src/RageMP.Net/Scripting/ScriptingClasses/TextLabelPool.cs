@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 var pointer = Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, converter.StringToPointer(text), font, color, drawDistance, los, dimension);
 
-                return TryCreateAndSaveEntity(pointer);
+                return CreateAndSaveEntity(pointer);
             }
         }
 
