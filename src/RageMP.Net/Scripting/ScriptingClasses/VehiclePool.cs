@@ -18,10 +18,15 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             using (var converter = new StringConverter())
             {
-                var createdVehicle = Rage.VehiclePool.VehiclePool_New(_nativePointer, model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
+                var pointer = Rage.VehiclePool.VehiclePool_New(_nativePointer, model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
 
-                return new Vehicle(createdVehicle, _plugin);
+                return TryCreateAndSaveEntity(pointer);
             }
+        }
+
+        protected override IVehicle BuildEntity(IntPtr entityPointer)
+        {
+            return new Vehicle(entityPointer, _plugin);
         }
     }
 }

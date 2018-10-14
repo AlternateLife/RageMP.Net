@@ -73,39 +73,6 @@ namespace RageMP.Net
             MP.Logger.Info("Rage.NET startup finished");
         }
 
-        internal IEntity BuildEntity(EntityType type, IntPtr entityPointer)
-        {
-            switch (type)
-            {
-                case EntityType.Player:
-                    return new Player(entityPointer, this);
-
-                case EntityType.Vehicle:
-                    return new Vehicle(entityPointer, this);
-
-                case EntityType.Blip:
-                    return new Blip(entityPointer, this);
-
-                case EntityType.Checkpoint:
-                    return new Checkpoint(entityPointer, this);
-
-                case EntityType.Colshape:
-                    return new Colshape(entityPointer, this);
-
-                case EntityType.Marker:
-                    return new Marker(entityPointer, this);
-
-                case EntityType.Object:
-                    return new Object(entityPointer, this);
-
-                case EntityType.TextLabel:
-                    return new TextLabel(entityPointer, this);
-
-                default:
-                    return null;
-            }
-        }
-
         internal string GetBasePath(string path)
         {
             return Path.Combine(Environment.CurrentDirectory, Path.Combine(_basePath, path));

@@ -83,6 +83,38 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             return _entities.TryRemove(entityPointer, out _);
         }
 
+        public bool CreateEntity(IntPtr entityPointer, out IEntity entity)
+        {
+            entity = TryCreateAndSaveEntity(entityPointer);
+
+            if (entity == null)
+            {
+                entity = default(IEntity);
+                return false;
+            }
+
+            return true;
+        }
+
+        protected abstract T BuildEntity(IntPtr entityPointer);
+
+        protected virtual T TryCreateAndSaveEntity(IntPtr entityPointer)
+        {
+            if (_entities.TryGetValue(entityPointer, out var entity))
+            {
+                return entity;
+            }
+
+            entity = BuildEntity(entityPointer);
+
+            if (_entities.TryAdd(entityPointer, entity) == false)
+            {
+                return default(T);
+            }
+
+            return entity;
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return _entities.Values.GetEnumerator();

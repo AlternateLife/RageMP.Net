@@ -16,7 +16,12 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             var pointer = Rage.ObjectPool.ObjectPool_New(_nativePointer, model, position, rotation, dimension);
 
-            return new Object(pointer, _plugin);
+            return TryCreateAndSaveEntity(pointer);
+        }
+
+        protected override IObject BuildEntity(IntPtr entityPointer)
+        {
+            return new Object(entityPointer, _plugin);
         }
     }
 }
