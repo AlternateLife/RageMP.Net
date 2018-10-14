@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using RageMP.Net.Data;
+using RageMP.Net.Entities;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
@@ -124,5 +125,11 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
             ArgumentData.Dispose(data);
         }
+
+        protected override IPlayer BuildEntity(IntPtr entityPointer)
+        {
+            return new Player(entityPointer, _plugin);
+        }
     }
+
 }

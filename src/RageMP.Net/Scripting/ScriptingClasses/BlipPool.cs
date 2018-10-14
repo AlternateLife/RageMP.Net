@@ -17,11 +17,16 @@ namespace RageMP.Net.Scripting.ScriptingClasses
         {
             using (var converter = new StringConverter())
             {
-                var blipPointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
+                var pointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
                     rotation, dimension);
 
-                return new Blip(blipPointer, _plugin);
+                return TryCreateAndSaveEntity(pointer);
             }
+        }
+
+        protected override IBlip BuildEntity(IntPtr entity)
+        {
+            return new Blip(entity, _plugin);
         }
     }
 }

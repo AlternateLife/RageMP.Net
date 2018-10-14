@@ -7,5 +7,6 @@ namespace RageMP.Net.Interfaces
         bool AddEntity(IEntity entity);
         IEntity GetEntity(IntPtr entity);
         bool RemoveEntity(IntPtr entity, Action<IEntity> preRemoveCallback);
+        bool CreateEntity(IntPtr entityPointer, out IEntity entity);
     }
 }

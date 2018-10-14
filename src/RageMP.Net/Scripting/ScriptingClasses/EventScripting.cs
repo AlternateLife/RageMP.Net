@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Concurrent;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Text;
-using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
@@ -530,13 +527,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 return false;
             }
 
-            createdEntity = _plugin.BuildEntity(type, entityPointer);
-            if (createdEntity == null)
-            {
-                return false;
-            }
-
-            return pool.AddEntity(createdEntity);
+            return pool.CreateEntity(entityPointer, out createdEntity);
         }
 
         private bool TryGetEntity(IntPtr entityPointer, out IEntity entity)
