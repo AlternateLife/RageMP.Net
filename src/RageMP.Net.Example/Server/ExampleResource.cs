@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Numerics;
 using RageMP.Net.Data;
 using RageMP.Net.Interfaces;
@@ -64,6 +65,26 @@ namespace RageMP.Net.Example
                 {
                     MP.Logger.Info($"Occupant: {occupant.SocialClubName}");
                 }
+            }
+
+            if (text == "d")
+            {
+                MP.Logger.Debug($"HasData: {player.HasVariable("TEST")}");
+
+                player.SetVariable("TEST", 12345);
+
+                player.SetVariables(new Dictionary<string, object>
+                {
+                    { "KEY1", 123.45 },
+                    { "KEY2", player },
+                    { "KEY3", player.Position },
+                    { "KEY4", "LEL" },
+                });
+            }
+
+            if (text == "r")
+            {
+                player.ResetVariable("TEST");
             }
         }
 

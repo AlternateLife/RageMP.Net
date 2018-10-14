@@ -31,7 +31,7 @@ namespace RageMP.Net.Entities
         public bool LOS
         {
             get => Rage.TextLabel.TextLabel_GetLOS(NativePointer);
-            set => Rage.TextLabel.TextLabel_SetLos(NativePointer, value);
+            set => Rage.TextLabel.TextLabel_SetLOS(NativePointer, value);
         }
 
         public float DrawDistance

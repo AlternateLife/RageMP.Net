@@ -36,7 +36,7 @@ namespace RageMP.Net.Native
             internal static extern IntPtr Multiplayer_GetObjectPool(IntPtr multiplayer);
 
             [DllImport(_dllName)]
-            internal static extern IntPtr Multiplayer_GetLabelPPool(IntPtr multiplayer);
+            internal static extern IntPtr Multiplayer_GetLabelPool(IntPtr multiplayer);
 
             [DllImport(_dllName)]
             internal static extern IntPtr Multiplayer_GetWorld(IntPtr multiplayer);

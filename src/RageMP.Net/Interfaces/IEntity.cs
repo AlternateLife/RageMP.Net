@@ -25,5 +25,6 @@ namespace RageMP.Net.Interfaces
         void SetVariable(string key, object data);
         void SetVariables(Dictionary<string, object> values);
         bool HasVariable(string key);
+        void ResetVariable(string key);
     }
 }

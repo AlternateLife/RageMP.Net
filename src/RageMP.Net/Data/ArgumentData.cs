@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Enums;
@@ -32,85 +33,88 @@ namespace RageMP.Net.Data
         [FieldOffset(12)]
         public byte ValueType;
 
-        public static ArgumentData[] ConvertFromArguments(object[] arguments)
+        public static ArgumentData[] ConvertFromObjects(ICollection<object> arguments)
         {
-            var data = new ArgumentData[arguments.Length];
+            var data = new ArgumentData[arguments.Count];
 
-            for (int i = 0; i < arguments.Length; i++)
+            var count = 0;
+            foreach (var argument in arguments)
             {
-                var element = arguments[i];
-
-                switch (element)
-                {
-                    case string text:
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.String,
-                            StringValue = StringConverter.StringToPointerUnsafe(text)
-                        };
-
-                        break;
-                    }
-
-                    case bool state:
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Boolean,
-                            BoolValue = state
-                        };
-
-                        break;
-                    }
-
-                    case object number when IsValueInteger(number):
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Int,
-                            Int32Value = Convert.ToInt32(number)
-                        };
-
-                        break;
-                    }
-
-                    case object number when IsValueFloat(number):
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Float,
-                            FloatValue = Convert.ToSingle(number)
-                        };
-
-                        break;
-                    }
-
-                    case Vector3 vector3:
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Vector3,
-                            Vector3Value = vector3
-                        };
-
-                        break;
-                    }
-
-                    case IEntity entity:
-                    {
-                        data[i] = new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Entity,
-                            EntityValue = new EntityData(entity)
-                        };
-
-                        break;
-                    }
-                }
+                data[count++] = ConvertFromObject(argument);
             }
 
             return data;
+        }
+
+        public static ArgumentData ConvertFromObject(object element)
+        {
+            switch (element)
+            {
+                case string text:
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.String,
+                        StringValue = StringConverter.StringToPointerUnsafe(text)
+                    };
+
+                    break;
+                }
+
+                case bool state:
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Boolean,
+                        BoolValue = state
+                    };
+
+                    break;
+                }
+
+                case object number when IsValueInteger(number):
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Int,
+                        Int32Value = Convert.ToInt32(number)
+                    };
+                }
+
+                case object number when IsValueFloat(number):
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Float,
+                        FloatValue = Convert.ToSingle(number)
+                    };
+                }
+
+                case Vector3 vector3:
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Vector3,
+                        Vector3Value = vector3
+                    };
+                }
+
+                case IEntity entity:
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Entity,
+                        EntityValue = new EntityData(entity)
+                    };
+                }
+
+                default:
+
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Null
+                    };
+            }
         }
 
         public object ToObject()

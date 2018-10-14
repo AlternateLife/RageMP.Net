@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -65,22 +67,53 @@ namespace RageMP.Net.Entities
 
         public object GetVariable(string key)
         {
-            throw new System.NotImplementedException();
+            using (var converter = new StringConverter())
+            {
+                var argument = Rage.Entity.Entity_GetVariable(NativePointer, converter.StringToPointer(key));
+
+                return Marshal.PtrToStructure<ArgumentData>(argument).ToObject();
+            }
         }
 
         public void SetVariable(string key, object data)
         {
-            throw new System.NotImplementedException();
+            using (var converter = new StringConverter())
+            {
+                Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), ArgumentData.ConvertFromObject(data));
+            }
         }
 
-        public void SetVariables(Dictionary<string, object> values)
+        public void SetVariables(Dictionary<string, object> data)
         {
-            throw new System.NotImplementedException();
+            using (var converter = new StringConverter())
+            {
+                var keys = new IntPtr[data.Count];
+                var values = new ArgumentData[data.Count];
+
+                var index = 0;
+                foreach (var element in data)
+                {
+                    keys[index] = converter.StringToPointer(element.Key);
+                    values[index] = ArgumentData.ConvertFromObject(element.Value);
+
+                    index++;
+                }
+
+                Rage.Entity.Entity_SetVariables(NativePointer, keys, values, (ulong) data.Count);
+            }
         }
 
         public bool HasVariable(string key)
         {
-            throw new System.NotImplementedException();
+            using (var converter = new StringConverter())
+            {
+                return Rage.Entity.Entity_HasVariable(NativePointer, converter.StringToPointer(key)) && GetVariable(key) != null;
+            }
+        }
+
+        public void ResetVariable(string key)
+        {
+            SetVariable(key, null);
         }
     }
 }

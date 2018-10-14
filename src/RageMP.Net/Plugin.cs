@@ -46,7 +46,7 @@ namespace RageMP.Net
             ColshapePool = new ColshapePool(Rage.Multiplayer.Multiplayer_GetColshapePool(NativeMultiplayer), this);
             MarkerPool = new MarkerPool(Rage.Multiplayer.Multiplayer_GetMarkerPool(NativeMultiplayer), this);
             ObjectPool = new ObjectPool(Rage.Multiplayer.Multiplayer_GetObjectPool(NativeMultiplayer), this);
-            TextLabelPool = new TextLabelPool(Rage.Multiplayer.Multiplayer_GetLabelPPool(NativeMultiplayer), this);
+            TextLabelPool = new TextLabelPool(Rage.Multiplayer.Multiplayer_GetLabelPool(NativeMultiplayer), this);
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {

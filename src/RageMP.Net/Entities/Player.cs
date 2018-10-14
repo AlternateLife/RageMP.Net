@@ -107,7 +107,7 @@ namespace RageMP.Net.Entities
 
         public void Call(string eventName, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -119,7 +119,7 @@ namespace RageMP.Net.Entities
 
         public void CallHash(ulong eventHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
 
@@ -128,7 +128,7 @@ namespace RageMP.Net.Entities
 
         public void Invoke(ulong nativeHash, params object[] arguments)
         {
-            var data = ArgumentData.ConvertFromArguments(arguments);
+            var data = ArgumentData.ConvertFromObjects(arguments);
 
             Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
 

@@ -24,7 +24,7 @@ namespace RageMP.Net.Native
             internal static extern bool TextLabel_GetLOS(IntPtr textLabel);
 
             [DllImport(_dllName)]
-            internal static extern void TextLabel_SetLos(IntPtr textLabel, bool toggle);
+            internal static extern void TextLabel_SetLOS(IntPtr textLabel, bool toggle);
 
             [DllImport(_dllName)]
             internal static extern float TextLabel_GetDrawDistance(IntPtr textLabel);
