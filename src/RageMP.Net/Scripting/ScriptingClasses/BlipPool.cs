@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 var pointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
                     rotation, dimension);
 
-                return TryCreateAndSaveEntity(pointer);
+                return CreateAndSaveEntity(pointer);
             }
         }
 

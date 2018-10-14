@@ -20,7 +20,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             {
                 var pointer = Rage.VehiclePool.VehiclePool_New(_nativePointer, model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
 
-                return TryCreateAndSaveEntity(pointer);
+                return CreateAndSaveEntity(pointer);
             }
         }
 
