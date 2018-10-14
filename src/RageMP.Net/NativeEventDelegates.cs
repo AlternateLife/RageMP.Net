@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using RageMP.Net.Data;
 
 namespace RageMP.Net
@@ -26,9 +27,9 @@ namespace RageMP.Net
 
     internal delegate void NativeVehicleDeathDelegate(IntPtr vehiclePointer, uint reason, IntPtr killerPlayerPointer);
     internal delegate void NativeVehicleSirenToggleDelegate(IntPtr vehiclePointer, bool toggle);
-    internal delegate void NativeVehicleHornDelegate(IntPtr vehiclePointer, bool toggle);
+    internal delegate void NativeVehicleHornToggleDelegate(IntPtr vehiclePointer, bool toggle);
     internal delegate void NativeVehicleTrailerAttachedDelegate(IntPtr vehiclePointer, IntPtr trailerPointer);
-    internal delegate void NativeVehicleDamageDelegateDelegate(IntPtr vehiclePointer, float bodyHealthLoss, float engineHealthLoss);
+    internal delegate void NativeVehicleDamageDelegate(IntPtr vehiclePointer, float bodyHealthLoss, float engineHealthLoss);
 
     internal delegate void NativePlayerEnterColshapeDelegate(IntPtr playerPointer, IntPtr colshapePointer);
     internal delegate void NativePlayerExitColshapeDelegate(IntPtr playerPointer, IntPtr colshapePointer);
@@ -36,8 +37,8 @@ namespace RageMP.Net
     internal delegate void NativePlayerEnterCheckpointDelegate(IntPtr playerPointer, IntPtr checkpointPointer);
     internal delegate void NativePlayerExitCheckpointDelegate(IntPtr playerPointer, IntPtr checkpointPointer);
 
-    //internal delegate void NativeCreateWaypointDelegate(IntPtr playerPointer/**, Vector3 position (?) **/);
-    internal delegate void NativeReachWaypointDelegate(IntPtr playerPointer);
+    internal delegate void NativePlayerCreateWaypointDelegate(IntPtr playerPointer, Vector3 position);
+    internal delegate void NativePlayerReachWaypointDelegate(IntPtr playerPointer);
 
     internal delegate void NativePlayerStreamInDelegate(IntPtr playerPointer, IntPtr forPlayerPointer);
     internal delegate void NativePlayerStreamOutDelegate(IntPtr playerPointer, IntPtr forPlayerPointer);

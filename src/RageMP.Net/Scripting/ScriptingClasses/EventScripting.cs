@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using RageMP.Net.Data;
@@ -162,6 +163,69 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             remove => _playerExitColshape.Unsubscribe(value);
         }
 
+        private readonly EventHandler<NativeVehicleDeathDelegate, VehicleDeathDelegate> _vehicleDeath;
+        public event VehicleDeathDelegate VehicleDeath
+        {
+            add => _vehicleDeath.Subscribe(value);
+            remove => _vehicleDeath.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate> _vehicleSirenToggle;
+        public event VehicleSirenToggleDelegate VehicleSirenToggle
+        {
+            add => _vehicleSirenToggle.Subscribe(value);
+            remove => _vehicleSirenToggle.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate> _vehicleHornToggle;
+        public event VehicleHornToggleDelegate VehicleHornToggle
+        {
+            add => _vehicleHornToggle.Subscribe(value);
+            remove => _vehicleHornToggle.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate> _vehicleTrailerAttached;
+        public event VehicleTrailerAttachedDelegate VehicleTrailerAttached
+        {
+            add => _vehicleTrailerAttached.Subscribe(value);
+            remove => _vehicleTrailerAttached.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativeVehicleDamageDelegate, VehicleDamageDelegate> _vehicleDamage;
+        public event VehicleDamageDelegate VehicleDamage
+        {
+            add => _vehicleDamage.Subscribe(value);
+            remove => _vehicleDamage.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate> _playerCreateWaypoint;
+        public event PlayerCreateWaypointDelegate PlayerCreateWaypoint
+        {
+            add => _playerCreateWaypoint.Subscribe(value);
+            remove => _playerCreateWaypoint.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate> _playerReachWaypoint;
+        public event PlayerReachWaypointDelegate PlayerReachWaypoint
+        {
+            add => _playerReachWaypoint.Subscribe(value);
+            remove => _playerReachWaypoint.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerStreamInDelegate, PlayerStreamInDelegate> _playerStreamIn;
+        public event PlayerStreamInDelegate PlayerStreamIn
+        {
+            add => _playerStreamIn.Subscribe(value);
+            remove => _playerStreamIn.Unsubscribe(value);
+        }
+
+        private readonly EventHandler<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate> _playerStreamOut;
+        public event PlayerStreamOutDelegate PlayerStreamOut
+        {
+            add => _playerStreamOut.Subscribe(value);
+            remove => _playerStreamOut.Unsubscribe(value);
+        }
+
         internal EventScripting(Plugin plugin)
         {
             _plugin = plugin;
@@ -182,6 +246,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _playerSpawn = new EventHandler<NativePlayerSpawnDelegate, PlayerSpawnDelegate>(EventType.PlayerSpawn, DispatchPlayerSpawn);
             _playerDamage = new EventHandler<NativePlayerDamageDelegate, PlayerDamageDelegate>(EventType.PlayerDamage, DispatchPlayerDamage);
             _playerWeaponChange = new EventHandler<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeDelegate>(EventType.PlayerWeaponChange, DispatchPlayerWeaponChange);
+
             _playerStartEnterVehicle = new EventHandler<NativePlayerStartEnterVehicleDelegate, PlayerStartEnterVehicleDelegate>(EventType.PlayerStartEnterVehicle, DispatchStartEnterVehicle);
             _playerEnterVehicle = new EventHandler<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate>(EventType.PlayerEnterVehicle, DispatchPlayerEnterVehicle);
             _playerStartExitVehicle = new EventHandler<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate>(EventType.PlayerStartExitVehicle, DispatchStartExitVehicle);
@@ -192,6 +257,18 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
             _playerEnterColshape = new EventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate>(EventType.PlayerEnterColshape, DispatchPlayerEnterColshape);
             _playerExitColshape = new EventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate>(EventType.PlayerExitColshape, DispatchPlayerExitColshape);
+
+            _playerCreateWaypoint = new EventHandler<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate>(EventType.PlayerCreateWaypoint, DispatchPlayerCreateWaypoint);
+            _playerReachWaypoint = new EventHandler<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate>(EventType.PlayerReachWaypoint, DispatchPlayerReachWaypoint);
+
+            _playerStreamIn = new EventHandler<NativePlayerStreamInDelegate, PlayerStreamInDelegate>(EventType.PlayerStreamIn, DispatchPlayerStreamIn);
+            _playerStreamOut = new EventHandler<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate>(EventType.PlayerStreamOut, DispatchPlayerStreamOut);
+
+            _vehicleDeath = new EventHandler<NativeVehicleDeathDelegate, VehicleDeathDelegate>(EventType.VehicleDeath, DispatchVehicleDeath);
+            _vehicleSirenToggle = new EventHandler<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate>(EventType.VehicleSirenToggle, DispatchVehicleSirenToggle);
+            _vehicleHornToggle = new EventHandler<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate>(EventType.VehicleHornToggle, DispatchVehicleHornToggle);
+            _vehicleTrailerAttached = new EventHandler<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate>(EventType.VehicleTrailerAttached, DispatchTrailerAttached);
+            _vehicleDamage = new EventHandler<NativeVehicleDamageDelegate, VehicleDamageDelegate>(EventType.VehicleDamage, DispatchVehicleDamage);
         }
 
         public void Add(string eventName, PlayerRemoteEventDelegate callback)
@@ -358,6 +435,73 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var checkpoint = _plugin.ColshapePool[checkpointPointer];
 
             _playerExitColshape.Call(x => x(player, checkpoint));
+        }
+
+        private void DispatchVehicleDeath(IntPtr vehiclepointer, uint reason, IntPtr killerplayerpointer)
+        {
+            var vehicle = _plugin.VehiclePool[vehiclepointer];
+            var killerPlayer = _plugin.PlayerPool[killerplayerpointer];
+
+            _vehicleDeath.Call(x => x(vehicle, reason, killerPlayer));
+        }
+
+        private void DispatchVehicleSirenToggle(IntPtr vehiclepointer, bool toggle)
+        {
+            var vehicle = _plugin.VehiclePool[vehiclepointer];
+
+            _vehicleSirenToggle.Call(x => x(vehicle, toggle));
+        }
+
+        private void DispatchVehicleHornToggle(IntPtr vehiclepointer, bool toggle)
+        {
+            var vehicle = _plugin.VehiclePool[vehiclepointer];
+
+            _vehicleSirenToggle.Call(x => x(vehicle, toggle));
+        }
+
+        private void DispatchTrailerAttached(IntPtr vehiclepointer, IntPtr trailerpointer)
+        {
+            var vehicle = _plugin.VehiclePool[vehiclepointer];
+            var trailer = _plugin.VehiclePool[trailerpointer];
+
+            _vehicleTrailerAttached.Call(x => x(vehicle, trailer));
+        }
+
+        private void DispatchVehicleDamage(IntPtr vehiclepointer, float bodyhealthloss, float enginehealthloss)
+        {
+            var vehicle = _plugin.VehiclePool[vehiclepointer];
+
+            _vehicleDamage.Call(x => x(vehicle, bodyhealthloss, enginehealthloss));
+        }
+
+        private void DispatchPlayerCreateWaypoint(IntPtr playerpointer, Vector3 position)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+
+            _playerCreateWaypoint.Call(x => x(player, position));
+        }
+
+        private void DispatchPlayerReachWaypoint(IntPtr playerpointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+
+            _playerReachWaypoint.Call(x => x(player));
+        }
+
+        private void DispatchPlayerStreamIn(IntPtr playerpointer, IntPtr forplayerpointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var forPlayer = _plugin.PlayerPool[forplayerpointer];
+
+            _playerStreamIn.Call(x => x(player, forPlayer));
+        }
+
+        private void DispatchPlayerStreamOut(IntPtr playerpointer, IntPtr forplayerpointer)
+        {
+            var player = _plugin.PlayerPool[playerpointer];
+            var forPlayer = _plugin.PlayerPool[forplayerpointer];
+
+            _playerStreamOut.Call(x => x(player, forPlayer));
         }
 
         private bool GetPoolFromPointer(IntPtr entityPointer, out IInternalPool pool, out EntityType type)
