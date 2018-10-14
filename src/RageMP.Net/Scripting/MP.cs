@@ -13,6 +13,7 @@ namespace RageMP.Net.Scripting
         internal static BlipPool InternalBlips => _plugin.BlipPool;
         internal static CheckpointPool InternalCheckpoints => _plugin.CheckpointPool;
         internal static ColshapePool InternalColshapes => _plugin.ColshapePool;
+        internal static MarkerPool InternalMarkers => _plugin.MarkerPool;
 
         public static IEventScripting Events => InternalEvents;
         public static IVehiclePool Vehicles => InternalVehicles;
@@ -20,6 +21,7 @@ namespace RageMP.Net.Scripting
         public static IBlipPool Blips => InternalBlips;
         public static ICheckpointPool Checkpoints => InternalCheckpoints;
         public static IColshapePool Colshapes => InternalColshapes;
+        public static IMarkerPool Markers => InternalMarkers;
 
         public static ILogger Logger => _plugin.Logger;
 
