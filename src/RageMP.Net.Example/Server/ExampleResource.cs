@@ -65,6 +65,8 @@ namespace RageMP.Net.Example
                 {
                     MP.Logger.Info($"Occupant: {occupant.SocialClubName}");
                 }
+
+                return;
             }
 
             if (text == "d")
@@ -85,6 +87,18 @@ namespace RageMP.Net.Example
             if (text == "r")
             {
                 player.ResetVariable("TEST");
+            }
+
+            if (text == "w")
+            {
+                foreach (var weapon in player.Weapons)
+                {
+                    MP.Logger.Debug($"Weapon: {weapon.Key} -> {weapon.Value}");
+                }
+
+                player.GiveWeapon(0xD8DF3C3C, 20);
+                player.GiveWeapon(0x5EF9FEC4, 123);
+                player.GiveWeapon(0xE284C527, 500);
             }
         }
 
