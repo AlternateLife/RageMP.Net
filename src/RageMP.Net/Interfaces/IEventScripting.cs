@@ -22,6 +22,17 @@ namespace RageMP.Net.Interfaces
         event PlayerExitCheckpointDelegate PlayerExitCheckpoint;
         event PlayerEnterColshapeDelegate PlayerEnterColshape;
         event PlayerExitColshapeDelegate PlayerExitColshape;
+        event PlayerCreateWaypointDelegate PlayerCreateWaypoint;
+        event PlayerReachWaypointDelegate PlayerReachWaypoint;
+
+        event VehicleDeathDelegate VehicleDeath;
+        event VehicleSirenToggleDelegate VehicleSirenToggle;
+        event VehicleHornToggleDelegate VehicleHornToggle;
+        event VehicleTrailerAttachedDelegate VehicleTrailerAttached;
+        event VehicleDamageDelegate VehicleDamage;
+
+        event PlayerStreamInDelegate PlayerStreamIn;
+        event PlayerStreamOutDelegate PlayerStreamOut;
 
         void Add(string eventName, PlayerRemoteEventDelegate callback);
     }

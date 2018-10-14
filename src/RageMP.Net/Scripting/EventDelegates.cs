@@ -1,3 +1,4 @@
+using System.Numerics;
 using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Scripting
@@ -25,9 +26,9 @@ namespace RageMP.Net.Scripting
 
     public delegate void VehicleDeathDelegate(IVehicle vehicle, uint reason, IPlayer killerPlayer);
     public delegate void VehicleSirenToggleDelegate(IVehicle vehicle, bool toggle);
-    public delegate void VehicleHornDelegate(IVehicle vehicle, bool toggle);
+    public delegate void VehicleHornToggleDelegate(IVehicle vehicle, bool toggle);
     public delegate void VehicleTrailerAttachedDelegate(IVehicle vehicle, IVehicle trailer);
-    public delegate void VehicleDamageDelegateDelegate(IVehicle vehicle, float bodyHealthLoss, float engineHealthLoss);
+    public delegate void VehicleDamageDelegate(IVehicle vehicle, float bodyHealthLoss, float engineHealthLoss);
 
     public delegate void PlayerEnterColshapeDelegate(IPlayer player, IColshape colshapePointer);
     public delegate void PlayerExitColshapeDelegate(IPlayer player, IColshape colshapePointer);
@@ -35,8 +36,8 @@ namespace RageMP.Net.Scripting
     public delegate void PlayerEnterCheckpointDelegate(IPlayer player, ICheckpoint checkpointPointer);
     public delegate void PlayerExitCheckpointDelegate(IPlayer player, ICheckpoint checkpointPointer);
 
-    //public delegate void CreateWaypointDelegate(IPlayer player/**, Vector3 position (?) **/);
-    public delegate void ReachWaypointDelegate(IPlayer player);
+    public delegate void PlayerCreateWaypointDelegate(IPlayer player, Vector3 position);
+    public delegate void PlayerReachWaypointDelegate(IPlayer player);
 
     public delegate void PlayerStreamInDelegate(IPlayer player, IPlayer forPlayer);
     public delegate void PlayerStreamOutDelegate(IPlayer player, IPlayer forPlayer);
