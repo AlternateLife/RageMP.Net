@@ -116,6 +116,11 @@ namespace RageMP.Net.Example
 
                 return;
             }
+
+            if (text == "l")
+            {
+                player.OutputChatBox("TRAFFIC: " + MP.World.TrafficLightsState);
+            }
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
