@@ -71,17 +71,8 @@ namespace RageMP.Net.Entities
         public float SteerAngle => Rage.Vehicle.Vehicle_GetSteerAngle(NativePointer);
         public float GasPedalState => Rage.Vehicle.Vehicle_GetGasPedalState(NativePointer);
 
-        public float EngineHealth
-        {
-            get => Rage.Vehicle.Vehicle_GetEngineHealth(NativePointer);
-            set { }
-        }
-
-        public float BodyHealth
-        {
-            get => Rage.Vehicle.Vehicle_GetBodyHealth(NativePointer);
-            set { }
-        }
+        public float EngineHealth => Rage.Vehicle.Vehicle_GetEngineHealth(NativePointer);
+        public float BodyHealth => Rage.Vehicle.Vehicle_GetBodyHealth(NativePointer);
 
         public MaterialType MaterialType => (MaterialType) Rage.Vehicle.Vehicle_GetMaterialType(NativePointer);
 

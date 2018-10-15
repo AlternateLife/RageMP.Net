@@ -2,8 +2,8 @@ namespace RageMP.Net.Data
 {
     public struct PropData
     {
-        public byte Drawable { get; }
-        public byte Texture { get; }
+        public readonly byte Drawable;
+        public readonly byte Texture;
 
         public PropData(byte drawable, byte texture)
         {

@@ -79,10 +79,16 @@ namespace RageMP.Net.Native
             internal static extern uint Player_GetEyeColor(IntPtr player);
 
             [DllImport(_dllName)]
+            internal static extern IntPtr Player_GetClothes(IntPtr player, uint id);
+
+            [DllImport(_dllName)]
             internal static extern void Player_SetCloth(IntPtr player, uint id, ClothData clothes);
 
             [DllImport(_dllName)]
-            internal static extern void Player_SetCloths(IntPtr player, uint[] keys, ClothData[] clothes, ulong count);
+            internal static extern void Player_SetClothes(IntPtr player, uint[] keys, ClothData[] clothes, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Player_GetProp(IntPtr player, uint id);
 
             [DllImport(_dllName)]
             internal static extern void Player_SetProp(IntPtr player, uint id, PropData props);
@@ -116,6 +122,9 @@ namespace RageMP.Net.Native
             [DllImport(_dllName)]
             internal static extern void Player_SetHeadBlend(IntPtr player, int shapeFirst, int shapeSecond, int shapeThird, int skinFirst, int skinSecond, int skinThird,
                 float shapeMix, float skinMix, float thirdMix);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Player_GetHeadBlend(IntPtr player);
 
             [DllImport(_dllName)]
             internal static extern void Player_UpdateHeadBlend(IntPtr player, float shapeMix, float skinMix, float thirdMix);
@@ -232,7 +241,16 @@ namespace RageMP.Net.Native
             internal static extern bool Player_IsInMelee(IntPtr player);
 
             [DllImport(_dllName)]
+            internal static extern bool Player_IsAiming(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_RemoveObject(IntPtr player, uint model, Vector3 position, float radius);
+
+            [DllImport(_dllName)]
             internal static extern IntPtr Player_GetAminingAt(IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_Eval(IntPtr player, IntPtr code);
         }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -18,7 +17,48 @@ namespace RageMP.Net.Entities
         public uint HairColor => Rage.Player.Player_GetHairColor(NativePointer);
         public uint HairHighlightColor => Rage.Player.Player_GetHairHighlightColor(NativePointer);
 
-        public HeadBlendData HeadBlend { get; set; }
+        public HeadBlendData HeadBlend
+        {
+            get => Marshal.PtrToStructure<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer));
+            set => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2], value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix,
+                value.SkinMix, value.ThirdMix);
+        }
+
+        public ClothData GetCloth(uint id)
+        {
+            return Marshal.PtrToStructure<ClothData>(Rage.Player.Player_GetClothes(NativePointer, id));
+        }
+
+        public void SetCloth(uint id, ClothData data)
+        {
+            Rage.Player.Player_SetCloth(NativePointer, id, data);
+        }
+
+        public void SetClothes(Dictionary<uint, ClothData> clothes)
+        {
+            var keys = clothes.Keys.ToArray();
+            var values = clothes.Values.ToArray();
+
+            Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.Length);
+        }
+
+        public PropData GetProp(uint id)
+        {
+            return Marshal.PtrToStructure<PropData>(Rage.Player.Player_GetProp(NativePointer, id));
+        }
+
+        public void SetProp(uint id, PropData data)
+        {
+            Rage.Player.Player_SetProp(NativePointer, id, data);
+        }
+
+        public void SetProps(Dictionary<uint, PropData> props)
+        {
+            var keys = props.Keys.ToArray();
+            var values = props.Values.ToArray();
+
+            Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.Length);
+        }
 
         public uint GetDecoration(uint collection)
         {

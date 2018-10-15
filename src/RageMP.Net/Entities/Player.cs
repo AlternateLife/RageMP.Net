@@ -64,10 +64,26 @@ namespace RageMP.Net.Entities
         public bool IsOnLadder => Rage.Player.Player_IsOnLadder(NativePointer);
         public bool IsReloading => Rage.Player.Player_IsReloading(NativePointer);
         public bool IsInMelee => Rage.Player.Player_IsInMelee(NativePointer);
+        public bool IsAiming => Rage.Player.Player_IsAiming(NativePointer);
 
         public string ActionString => StringConverter.PointerToString(Rage.Player.Player_GetActionString(NativePointer));
 
-        public IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
+        public IReadOnlyCollection<IPlayer> StreamedPlayers
+        {
+            get
+            {
+                Rage.Player.Player_GetStreamed(NativePointer, out var playerPointers, out var size);
+
+                var players = new List<IPlayer>();
+
+                for (var i = 0; i < (int) size; i++)
+                {
+                    players.Add(_plugin.PlayerPool[playerPointers[i]]);
+                }
+
+                return players;
+            }
+        }
 
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
@@ -164,6 +180,19 @@ namespace RageMP.Net.Entities
         public bool IsStreamed(IPlayer player)
         {
             return Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer);
+        }
+
+        public void RemoveObject(uint model, Vector3 position, float radius)
+        {
+            Rage.Player.Player_RemoveObject(NativePointer, model, position, radius);
+        }
+
+        public void Eval(string code)
+        {
+            using (var converter = new StringConverter())
+            {
+                Rage.Player.Player_Eval(NativePointer, converter.StringToPointer(code));
+            }
         }
     }
 }
