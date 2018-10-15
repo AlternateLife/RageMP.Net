@@ -79,6 +79,23 @@ namespace RageMP.Net.Native
             internal static extern uint Player_GetEyeColor(IntPtr player);
 
             [DllImport(_dllName)]
+            internal static extern void Player_SetCloth(IntPtr player, uint id, ClothData clothes);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetCloths(IntPtr player, uint[] keys, ClothData[] clothes, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetProp(IntPtr player, uint id, PropData props);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetProps(IntPtr player, uint[] keys, PropData[] props, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetCustomization(IntPtr player, bool gender, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor,
+                float[] faceFeatures, ulong faceFeatureCount, int[] headOverlayKeys, HeadOverlayData[] headOverlayValues, ulong headOverlayCount, uint[] decorationKeys,
+                uint[] decorationValues, ulong decorationCount);
+
+            [DllImport(_dllName)]
             internal static extern void Player_SetEyeColor(IntPtr player, uint eyeColor);
 
             [DllImport(_dllName)]
@@ -111,6 +128,15 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Player_SetDecoration(IntPtr player, uint collection, uint overlay);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetDecorations(IntPtr player, uint[] collection, uint[] overlay, ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Player_GetHeadOverlay(IntPtr player, uint overlayId);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_SetHeadOverlay(IntPtr player, uint overlayId, HeadOverlayData overlay);
 
             [DllImport(_dllName)]
             internal static extern uint Player_GetCurrentWeapon(IntPtr player);

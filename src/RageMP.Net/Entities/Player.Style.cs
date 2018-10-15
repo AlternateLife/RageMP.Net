@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 using RageMP.Net.Native;
 
@@ -34,7 +37,10 @@ namespace RageMP.Net.Entities
 
         public void SetDecorations(Dictionary<uint, uint> decorations)
         {
-            throw new System.NotImplementedException();
+            var keys = decorations.Keys.ToArray();
+            var values = decorations.Values.ToArray();
+
+            Rage.Player.Player_SetDecorations(NativePointer, keys, values, (ulong) keys.Length);
         }
 
         public void SetHairColor(uint color, uint highlightColor)
@@ -59,13 +65,25 @@ namespace RageMP.Net.Entities
 
         public HeadOverlayData GetHeadOverlay(uint overlayId)
         {
-            throw new System.NotImplementedException();
+            return Marshal.PtrToStructure<HeadOverlayData>(Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId));
         }
 
         public void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData)
         {
-            throw new System.NotImplementedException();
+            Rage.Player.Player_SetHeadOverlay(NativePointer, overlayId, overlayData);
         }
 
+        public void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
+            IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations)
+        {
+            var headOverlayKeys = headOverlays.Keys.ToArray();
+            var headOverlayValues = headOverlays.Values.ToArray();
+
+            var decorationKeys = decorations.Keys.ToArray();
+            var decorationValues = decorations.Values.ToArray();
+
+            Rage.Player.Player_SetCustomization(NativePointer, isMale, headBlend, eyeColor, hairColor, highlightColor, faceFeatures, (ulong) faceFeatures.Length, headOverlayKeys,
+                headOverlayValues, (ulong) headOverlayKeys.Length, decorationKeys, decorationValues, (ulong) decorationKeys.Length);
+        }
     }
 }
