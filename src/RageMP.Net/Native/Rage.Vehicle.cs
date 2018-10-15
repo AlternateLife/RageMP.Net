@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using RageMP.Net.Data;
 
 namespace RageMP.Net.Native
 {
@@ -99,6 +100,9 @@ namespace RageMP.Net.Native
             internal static extern void Vehicle_SetNeonsColor(IntPtr vehicle, uint red, uint green, uint blue);
 
             [DllImport(_dllName)]
+            internal static extern IntPtr Vehicle_GetNeonsColor(IntPtr vehicle);
+
+            [DllImport(_dllName)]
             internal static extern uint Vehicle_GetColor(IntPtr vehicle, uint id);
 
             [DllImport(_dllName)]
@@ -106,6 +110,15 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Vehicle_SetColor(IntPtr vehicle, uint primaryColor, uint secondaryColor);
+
+            [DllImport(_dllName)]
+            internal static extern void Vehicle_SetColorRGB(IntPtr vehicle, ColorRgba primaryColor, ColorRgba secondaryColor);
+
+            [DllImport(_dllName)]
+            internal static extern IntPtr Vehicle_GetColorRGB(IntPtr vehicle, uint id);
+
+            [DllImport(_dllName)]
+            internal static extern void Vehicle_SetPaint(IntPtr vehicle, PaintData primaryPaint, PaintData secondaryPaint);
 
             [DllImport(_dllName)]
             internal static extern uint Vehicle_GetMaterialType(IntPtr vehicle);
@@ -118,6 +131,9 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern bool Vehicle_IsStreamed(IntPtr vehicle, IntPtr player);
+
+            [DllImport(_dllName)]
+            internal static extern void Vehicle_GetStreamed(IntPtr vehicle, out IntPtr[] players, out ulong count);
 
             [DllImport(_dllName)]
             internal static extern uint Vehicle_GetLivery(IntPtr vehicle);

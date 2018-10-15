@@ -85,6 +85,12 @@ namespace RageMP.Net.Entities
 
         public MaterialType MaterialType => (MaterialType) Rage.Vehicle.Vehicle_GetMaterialType(NativePointer);
 
+        public ColorRgba NeonsColor
+        {
+            get => Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer));
+            set => Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue());
+        }
+
         public string NumberPlate
         {
             get => StringConverter.PointerToString(Rage.Vehicle.Vehicle_GetNumberPlate(NativePointer));
@@ -162,6 +168,23 @@ namespace RageMP.Net.Entities
             }
         }
 
+        public IReadOnlyCollection<IPlayer> StreamedPlayers
+        {
+            get
+            {
+                Rage.Vehicle.Vehicle_GetStreamed(NativePointer, out var playerPointers, out var size);
+
+                var players = new List<IPlayer>();
+
+                for (var i = 0; i < (int)size; i++)
+                {
+                    players.Add(_plugin.PlayerPool[playerPointers[i]]);
+                }
+
+                return players;
+            }
+        }
+
         internal Vehicle(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Vehicle)
         {
         }
@@ -191,11 +214,6 @@ namespace RageMP.Net.Entities
             Rage.Vehicle.Vehicle_SetMod(NativePointer, id, mod);
         }
 
-        public void SetNeonsColor(uint red, uint green, uint blue)
-        {
-            Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, red, green, blue);
-        }
-
         public uint GetColor(uint id)
         {
             return Rage.Vehicle.Vehicle_GetColor(NativePointer, id);
@@ -208,7 +226,12 @@ namespace RageMP.Net.Entities
 
         public void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor)
         {
-            throw new NotImplementedException();
+            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor, secondaryColor);
+        }
+
+        public ColorRgba GetColorRgb(bool primary)
+        {
+            return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, primary ? 0u : 1u));
         }
 
         public void SetColor(uint primary, uint seconary)
@@ -216,9 +239,9 @@ namespace RageMP.Net.Entities
             Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, seconary);
         }
 
-        public void SetPaint(PaintData pimary, PaintData secondary)
+        public void SetPaint(PaintData primary, PaintData secondary)
         {
-            throw new NotImplementedException();
+            Rage.Vehicle.Vehicle_SetPaint(NativePointer, primary, secondary);
         }
 
         public bool GetExtra(uint id)
@@ -241,6 +264,11 @@ namespace RageMP.Net.Entities
         public void SetOccupant(int seat, IPlayer player)
         {
             Rage.Vehicle.Vehicle_SetOccupant(NativePointer, seat, player.NativePointer);
+        }
+
+        public bool IsStreamed(IPlayer forPlayer)
+        {
+            return Rage.Vehicle.Vehicle_IsStreamed(NativePointer, forPlayer.NativePointer);
         }
     }
 }
