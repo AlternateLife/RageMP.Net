@@ -20,6 +20,7 @@ namespace RageMP.Net.Scripting
         internal static ObjectPool InternalObjects => _plugin.ObjectPool;
         internal static TextLabelPool InternalTextLabels => _plugin.TextLabelPool;
         internal static Config InternalConfig => _plugin.Config;
+        internal static World InternalWorld => _plugin.World;
 
         internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
@@ -33,6 +34,7 @@ namespace RageMP.Net.Scripting
         public static IObjectPool Objects => InternalObjects;
         public static ITextLabelPool TextLabels => InternalTextLabels;
         public static IConfig Config => InternalConfig;
+        public static IWorld World => InternalWorld;
 
         public static ILogger Logger => _plugin.Logger;
 
