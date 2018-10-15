@@ -77,6 +77,9 @@ namespace RageMP.Net.Interfaces
         HeadOverlayData GetHeadOverlay(uint overlayId);
         void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData);
 
+        void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
+            IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations);
+
         void PutIntoVehicle(IVehicle vehicle, int seat);
         void RemoveFromVehicle();
 

@@ -109,6 +109,13 @@ namespace RageMP.Net.Example
 
                 return;
             }
+
+            if (text == "c")
+            {
+                player.SetCustomization(false, new HeadBlendData(10, 34, 0, 42, 23, 0, 0.8f, 0.7f, 0.1f), 2, 3, 4, new float[0], new Dictionary<int, HeadOverlayData>(), new Dictionary<uint, uint>());
+
+                return;
+            }
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
