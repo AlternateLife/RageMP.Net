@@ -27,6 +27,7 @@ namespace RageMP.Net
         internal MarkerPool MarkerPool { get; }
         internal ObjectPool ObjectPool { get; }
         internal TextLabelPool TextLabelPool { get; }
+        internal Config Config { get; }
 
         internal Logger Logger { get; }
 
@@ -47,6 +48,7 @@ namespace RageMP.Net
             MarkerPool = new MarkerPool(Rage.Multiplayer.Multiplayer_GetMarkerPool(NativeMultiplayer), this);
             ObjectPool = new ObjectPool(Rage.Multiplayer.Multiplayer_GetObjectPool(NativeMultiplayer), this);
             TextLabelPool = new TextLabelPool(Rage.Multiplayer.Multiplayer_GetLabelPool(NativeMultiplayer), this);
+            Config = new Config(Rage.Multiplayer.Multiplayer_GetConfig(NativeMultiplayer), this);
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
