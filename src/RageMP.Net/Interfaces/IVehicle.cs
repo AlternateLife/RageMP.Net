@@ -34,6 +34,7 @@ namespace RageMP.Net.Interfaces
         float BodyHealth { get; set; }
 
         MaterialType MaterialType { get; }
+        ColorRgba NeonsColor { get; set; }
 
         string NumberPlate { get; set; }
         uint Livery { get; set; }
@@ -46,6 +47,7 @@ namespace RageMP.Net.Interfaces
         uint TrimColor { get; set; }
 
         IReadOnlyCollection<IPlayer> Occupants { get; }
+        IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
         void Explode();
         void Repair();
@@ -53,19 +55,20 @@ namespace RageMP.Net.Interfaces
 
         uint GetMod(uint id);
         void SetMod(uint id, uint mod);
-
-        void SetNeonsColor(uint red, uint green, uint blue);
         uint GetColor(uint id);
         uint GetPaint(uint id);
 
         void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor);
+        ColorRgba GetColorRgb(bool primary);
         void SetColor(uint primary, uint seconary);
-        void SetPaint(PaintData pimary, PaintData secondary);
+        void SetPaint(PaintData primary, PaintData secondary);
 
         bool GetExtra(uint id);
         void SetExtra(uint id, bool state);
 
         IPlayer GetOccupant(int seat);
+
         void SetOccupant(int seat, IPlayer player);
+        bool IsStreamed(IPlayer forPlayer);
     }
 }
