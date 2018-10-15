@@ -30,8 +30,8 @@ namespace RageMP.Net.Interfaces
         float SteerAngle { get; }
         float GasPedalState { get; }
 
-        float EngineHealth { get; set; }
-        float BodyHealth { get; set; }
+        float EngineHealth { get; }
+        float BodyHealth { get; }
 
         MaterialType MaterialType { get; }
         ColorRgba NeonsColor { get; set; }

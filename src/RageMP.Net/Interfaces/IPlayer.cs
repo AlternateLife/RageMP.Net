@@ -31,6 +31,7 @@ namespace RageMP.Net.Interfaces
         bool IsOnLadder { get; }
         bool IsReloading { get; }
         bool IsInMelee { get; }
+        bool IsAiming { get; }
 
         uint EyeColor { get; set; }
         uint HairColor { get; }
@@ -61,6 +62,14 @@ namespace RageMP.Net.Interfaces
         void PlayAnimation(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);
         void StopAnimation();
         void PlayScenario(string scenario);
+
+        ClothData GetCloth(uint id);
+        void SetCloth(uint id, ClothData data);
+        void SetClothes(Dictionary<uint, ClothData> clothes);
+
+        PropData GetProp(uint id);
+        void SetProp(uint id, PropData data);
+        void SetProps(Dictionary<uint, PropData> props);
 
         uint GetDecoration(uint collection);
         void RemoveDecoration(uint collection, uint overlay);
@@ -94,6 +103,9 @@ namespace RageMP.Net.Interfaces
         void RemoveAllWeapons();
 
         bool IsStreamed(IPlayer player);
+
+        void RemoveObject(uint model, Vector3 position, float radius);
+        void Eval(string code);
 
     }
 }
