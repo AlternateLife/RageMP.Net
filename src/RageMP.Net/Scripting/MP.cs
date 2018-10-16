@@ -5,7 +5,7 @@ using RageMP.Net.Scripting.ScriptingClasses;
 
 namespace RageMP.Net.Scripting
 {
-    public static partial class MP
+    public static class MP
     {
         private static Plugin _plugin;
 
@@ -37,6 +37,8 @@ namespace RageMP.Net.Scripting
         public static IWorld World => InternalWorld;
 
         public static ILogger Logger => _plugin.Logger;
+
+        public const uint GlobalDimension = uint.MaxValue;
 
         internal static void Setup(Plugin plugin)
         {
