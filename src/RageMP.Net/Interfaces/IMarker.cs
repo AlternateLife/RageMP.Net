@@ -9,7 +9,7 @@ namespace RageMP.Net.Interfaces
         ColorRgba Color { get; set; }
         Vector3 Direction { get; set; }
         float Scale { get; set; }
-        bool Visible { get; set; }
+        bool IsVisible { get; set; }
 
         void ShowFor(ICollection<IPlayer> players);
         void HideFor(ICollection<IPlayer> players);

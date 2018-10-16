@@ -8,9 +8,11 @@ namespace RageMP.Net.Scripting
 {
     public static class MP
     {
+        public const uint GlobalDimension = uint.MaxValue;
+
         private static Plugin _plugin;
 
-        internal static EventScripting InternalEvents { get; private set; }
+        internal static EventScripting InternalEvents => _plugin.EventScripting;
 
         internal static VehiclePool InternalVehicles => _plugin.VehiclePool;
         internal static PlayerPool InternalPlayers => _plugin.PlayerPool;
@@ -39,13 +41,9 @@ namespace RageMP.Net.Scripting
 
         public static ILogger Logger => _plugin.Logger;
 
-        public const uint GlobalDimension = uint.MaxValue;
-
         internal static void Setup(Plugin plugin)
         {
             _plugin = plugin;
-
-            InternalEvents = new EventScripting(_plugin);
         }
 
         public static uint Joaat(string data)
