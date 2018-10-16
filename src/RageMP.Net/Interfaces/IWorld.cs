@@ -9,7 +9,7 @@ namespace RageMP.Net.Interfaces
         bool AreTrafficLightsLocked { get; set; }
         int TrafficLightsState { get; set; }
 
-        void SetWeatherTransition(string weather, float time);
+        void SetWeatherTransition(string weather, float time = 0.5f);
 
         void RequestIpl(string ipl);
         void RemoveIpl(string ipl);
