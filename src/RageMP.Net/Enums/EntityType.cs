@@ -10,6 +10,6 @@ namespace RageMP.Net.Enums
         Checkpoint,
         Marker,
         Colshape,
-        TextLabel,
+        TextLabel
     }
 }

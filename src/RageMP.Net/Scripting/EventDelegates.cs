@@ -1,4 +1,5 @@
 using System.Numerics;
+using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 
 namespace RageMP.Net.Scripting
@@ -11,7 +12,7 @@ namespace RageMP.Net.Scripting
 
     public delegate void PlayerJoinDelegate(IPlayer player);
     public delegate void PlayerReadyDelegate(IPlayer player);
-    public delegate void PlayerQuitDelegate(IPlayer player, uint type, string reason);
+    public delegate void PlayerQuitDelegate(IPlayer player, DisconnectReason type, string reason);
     public delegate void PlayerCommandDelegate(IPlayer player, string text);
     public delegate void PlayerChatDelegate(IPlayer player, string text);
     public delegate void PlayerDeathDelegate(IPlayer player, uint reason, IPlayer killerPlayer);
