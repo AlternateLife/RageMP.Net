@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting.ScriptingClasses;
@@ -45,6 +46,43 @@ namespace RageMP.Net.Scripting
             _plugin = plugin;
 
             InternalEvents = new EventScripting(_plugin);
+        }
+
+        public static uint Joaat(string data)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return 0;
+            }
+
+            var characters = Encoding.UTF8.GetBytes(data.ToLower());
+
+            uint hash = 0;
+
+            foreach (var t in characters)
+            {
+                hash += t;
+                hash += hash << 10;
+                hash ^= hash >> 6;
+            }
+
+            hash += hash << 3;
+            hash ^= hash >> 11;
+            hash += hash << 15;
+
+            return hash;
+        }
+
+        public static IList<uint> Joaat(IList<string> input)
+        {
+            var result = new uint[input.Count];
+
+            for (var i = 0; i < input.Count; i++)
+            {
+                result[i] = Joaat(input[i]);
+            }
+
+            return result;
         }
 
     }
