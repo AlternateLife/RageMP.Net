@@ -5,7 +5,7 @@ using RageMP.Net.Scripting.ScriptingClasses;
 
 namespace RageMP.Net.Scripting
 {
-    public static class MP
+    public static partial class MP
     {
         private static Plugin _plugin;
 
