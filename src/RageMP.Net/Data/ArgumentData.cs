@@ -57,8 +57,6 @@ namespace RageMP.Net.Data
                         ValueType = (byte) ArgumentValueType.String,
                         StringValue = StringConverter.StringToPointerUnsafe(text)
                     };
-
-                    break;
                 }
 
                 case bool state:
@@ -68,8 +66,6 @@ namespace RageMP.Net.Data
                         ValueType = (byte) ArgumentValueType.Boolean,
                         BoolValue = state
                     };
-
-                    break;
                 }
 
                 case object number when IsValueInteger(number):
