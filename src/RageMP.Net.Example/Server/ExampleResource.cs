@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Numerics;
+using System.Text;
 using RageMP.Net.Data;
+using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting;
 
@@ -15,15 +19,13 @@ namespace RageMP.Net.Example
             MP.Events.PlayerChat += OnPlayerChat;
             MP.Events.PlayerDeath += OnPlayerDeath;
             MP.Events.PlayerCommand += OnPlayerCommand;
-
-            MP.Logger.Info("Test: " + MP.Joaat("test") + " -> " + MP.Joaat("Test"));
         }
 
         private void OnPlayerCommand(IPlayer player, string text)
         {
             if (text == "v")
             {
-                var vehicle = MP.Vehicles.New(0x6210CBB0, player.Position, 0, "", 255, false, true, 0);
+                var vehicle = MP.Vehicles.New(VehicleHash.T20, player.Position, 0, "", 255, false, true, 0);
 
                 player.PutIntoVehicle(vehicle, -1);
 
