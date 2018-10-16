@@ -1,6 +1,6 @@
 namespace RageMP.Net.Enums
 {
-    public enum ArgumentValueType
+    internal enum ArgumentValueType
     {
         Int,
         Float,
