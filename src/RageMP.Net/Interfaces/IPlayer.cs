@@ -63,13 +63,13 @@ namespace RageMP.Net.Interfaces
         void StopAnimation();
         void PlayScenario(string scenario);
 
-        ClothData GetCloth(uint id);
-        void SetCloth(uint id, ClothData data);
-        void SetClothes(Dictionary<uint, ClothData> clothes);
+        ClothData GetCloth(ClothSlot slot);
+        void SetCloth(ClothSlot slot, ClothData data);
+        void SetClothes(Dictionary<ClothSlot, ClothData> clothes);
 
-        PropData GetProp(uint id);
-        void SetProp(uint id, PropData data);
-        void SetProps(Dictionary<uint, PropData> props);
+        PropData GetProp(PropSlot slot);
+        void SetProp(PropSlot slot, PropData data);
+        void SetProps(Dictionary<PropSlot, PropData> props);
 
         uint GetDecoration(uint collection);
         void RemoveDecoration(uint collection, uint overlay);

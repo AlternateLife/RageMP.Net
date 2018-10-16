@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
+using RageMP.Net.Enums;
 using RageMP.Net.Native;
 
 namespace RageMP.Net.Entities
@@ -24,37 +25,37 @@ namespace RageMP.Net.Entities
                 value.SkinMix, value.ThirdMix);
         }
 
-        public ClothData GetCloth(uint id)
+        public ClothData GetCloth(ClothSlot slot)
         {
-            return Marshal.PtrToStructure<ClothData>(Rage.Player.Player_GetClothes(NativePointer, id));
+            return Marshal.PtrToStructure<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot));
         }
 
-        public void SetCloth(uint id, ClothData data)
+        public void SetCloth(ClothSlot slot, ClothData data)
         {
-            Rage.Player.Player_SetCloth(NativePointer, id, data);
+            Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data);
         }
 
-        public void SetClothes(Dictionary<uint, ClothData> clothes)
+        public void SetClothes(Dictionary<ClothSlot, ClothData> clothes)
         {
-            var keys = clothes.Keys.ToArray();
+            var keys = clothes.Keys.Select(x => (uint) x).ToArray();
             var values = clothes.Values.ToArray();
 
             Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.Length);
         }
 
-        public PropData GetProp(uint id)
+        public PropData GetProp(PropSlot slot)
         {
-            return Marshal.PtrToStructure<PropData>(Rage.Player.Player_GetProp(NativePointer, id));
+            return Marshal.PtrToStructure<PropData>(Rage.Player.Player_GetProp(NativePointer, (uint) slot));
         }
 
-        public void SetProp(uint id, PropData data)
+        public void SetProp(PropSlot slot, PropData data)
         {
-            Rage.Player.Player_SetProp(NativePointer, id, data);
+            Rage.Player.Player_SetProp(NativePointer, (uint) slot, data);
         }
 
-        public void SetProps(Dictionary<uint, PropData> props)
+        public void SetProps(Dictionary<PropSlot, PropData> props)
         {
-            var keys = props.Keys.ToArray();
+            var keys = props.Keys.Select(x => (uint) x).ToArray();
             var values = props.Values.ToArray();
 
             Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.Length);
