@@ -59,7 +59,7 @@ namespace RageMP.Net.Interfaces
         uint GetPaint(uint id);
 
         void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor);
-        ColorRgba GetColorRgb(bool primary);
+        ColorRgba GetColorRgb(uint colorSlot);
         void SetColor(uint primary, uint seconary);
         void SetPaint(PaintData primary, PaintData secondary);
 

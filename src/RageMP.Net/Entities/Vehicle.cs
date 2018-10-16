@@ -220,9 +220,9 @@ namespace RageMP.Net.Entities
             Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor, secondaryColor);
         }
 
-        public ColorRgba GetColorRgb(bool primary)
+        public ColorRgba GetColorRgb(uint colorSlot)
         {
-            return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, primary ? 0u : 1u));
+            return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
         }
 
         public void SetColor(uint primary, uint seconary)
