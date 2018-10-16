@@ -30,7 +30,7 @@ namespace RageMP.Net.Entities
             set => Rage.Marker.Marker_SetScale(NativePointer, value);
         }
 
-        public bool Visible
+        public bool IsVisible
         {
             get => Rage.Marker.Marker_IsVisible(NativePointer);
             set => Rage.Marker.Marker_SetVisible(NativePointer, value);

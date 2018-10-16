@@ -19,6 +19,7 @@ namespace RageMP.Net
 
         internal IntPtr NativeMultiplayer { get; }
 
+        internal EventScripting EventScripting { get; }
         internal PlayerPool PlayerPool { get; }
         internal VehiclePool VehiclePool { get; }
         internal BlipPool BlipPool { get; }
@@ -40,6 +41,8 @@ namespace RageMP.Net
             Logger = new Logger(this);
 
             MP.Setup(this);
+
+            EventScripting = new EventScripting(this);
 
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer), this);
             VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer), this);

@@ -15,6 +15,8 @@ namespace RageMP.Net.Example
             MP.Events.PlayerChat += OnPlayerChat;
             MP.Events.PlayerDeath += OnPlayerDeath;
             MP.Events.PlayerCommand += OnPlayerCommand;
+
+            MP.Logger.Info("Test: " + MP.Joaat("test") + " -> " + MP.Joaat("Test"));
         }
 
         private void OnPlayerCommand(IPlayer player, string text)
