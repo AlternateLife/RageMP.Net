@@ -14,6 +14,7 @@ namespace RageMP.Net.Interfaces
         float MoveSpeed { get; }
         float Health { get; set; }
         float Armor { get; set; }
+        new PedHash Model { get; set; }
 
         Vector3 AimingAt { get; }
 

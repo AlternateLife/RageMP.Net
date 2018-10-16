@@ -9,6 +9,12 @@ namespace RageMP.Net.Entities
 {
     internal partial class Player
     {
+        public new PedHash Model
+        {
+            get => (PedHash) base.Model;
+            set => base.Model = (uint) value;
+        }
+
         public uint EyeColor
         {
             get => Rage.Player.Player_GetEyeColor(NativePointer);
