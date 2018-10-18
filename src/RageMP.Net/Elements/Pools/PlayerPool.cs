@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using RageMP.Net.Data;
-using RageMP.Net.Entities;
+using RageMP.Net.Elements.Entities;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
-namespace RageMP.Net.Scripting.ScriptingClasses
+namespace RageMP.Net.Elements.Pools
 {
     internal class PlayerPool : PoolBase<IPlayer>, IPlayerPool
     {

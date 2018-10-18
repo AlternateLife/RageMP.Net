@@ -6,7 +6,7 @@ using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
-namespace RageMP.Net.Entities
+namespace RageMP.Net.Elements.Entities
 {
     internal class Blip : Entity, IBlip
     {

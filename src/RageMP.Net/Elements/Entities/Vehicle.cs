@@ -9,7 +9,7 @@ using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 using RageMP.Net.Scripting;
 
-namespace RageMP.Net.Entities
+namespace RageMP.Net.Elements.Entities
 {
     internal class Vehicle : Entity, IVehicle
     {

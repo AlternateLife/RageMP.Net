@@ -2,9 +2,9 @@ using System;
 using System.Numerics;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
-using Object = RageMP.Net.Entities.Object;
+using Object = RageMP.Net.Elements.Entities.Object;
 
-namespace RageMP.Net.Scripting.ScriptingClasses
+namespace RageMP.Net.Elements.Pools
 {
     internal class ObjectPool : PoolBase<IObject>, IObjectPool
     {

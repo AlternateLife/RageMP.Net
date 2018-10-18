@@ -7,7 +7,7 @@ using System.Numerics;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
-namespace RageMP.Net.Scripting.ScriptingClasses
+namespace RageMP.Net.Elements.Pools
 {
     internal abstract class PoolBase<T> : IPool<T>, IInternalPool where T : IEntity
     {
