@@ -41,7 +41,7 @@ namespace RageMP.Net.Elements.Entities
         {
         }
 
-        public void ShowFor(ICollection<IPlayer> players)
+        public void ShowFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
 
@@ -50,7 +50,7 @@ namespace RageMP.Net.Elements.Entities
             Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.Length);
         }
 
-        public void HideFor(ICollection<IPlayer> players)
+        public void HideFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
 

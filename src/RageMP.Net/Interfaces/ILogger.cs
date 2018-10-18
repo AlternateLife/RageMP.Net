@@ -1,5 +1,4 @@
 using System;
-using RageMP.Net.Enums;
 
 namespace RageMP.Net.Interfaces
 {

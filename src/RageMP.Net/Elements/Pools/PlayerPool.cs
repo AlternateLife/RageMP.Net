@@ -113,7 +113,7 @@ namespace RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallForAsync(ICollection<IPlayer> players, string eventName, params object[] arguments)
+        public async Task CallForAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments)
         {
             Contract.NotNull(players, nameof(players));
             Contract.NotEmpty(eventName, nameof(eventName));
@@ -166,7 +166,7 @@ namespace RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeForAsync(ICollection<IPlayer> players, ulong nativeHash, params object[] arguments)
+        public async Task InvokeForAsync(IEnumerable<IPlayer> players, ulong nativeHash, params object[] arguments)
         {
             Contract.NotNull(players, nameof(players));
 
