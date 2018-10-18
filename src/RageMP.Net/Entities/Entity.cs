@@ -68,13 +68,15 @@ namespace RageMP.Net.Entities
             Rage.Entity.Entity_Destroy(NativePointer);
         }
 
-        public object GetSharedData(string key)
+        public bool TryGetSharedData(string key, out object data)
         {
             using (var converter = new StringConverter())
             {
                 var argument = Rage.Entity.Entity_GetVariable(NativePointer, converter.StringToPointer(key));
 
-                return Marshal.PtrToStructure<ArgumentData>(argument).ToObject();
+                data = Marshal.PtrToStructure<ArgumentData>(argument).ToObject();
+
+                return data != null;
             }
         }
 
@@ -110,7 +112,7 @@ namespace RageMP.Net.Entities
         {
             using (var converter = new StringConverter())
             {
-                return Rage.Entity.Entity_HasVariable(NativePointer, converter.StringToPointer(key)) && GetSharedData(key) != null;
+                return TryGetSharedData(key, out _);
             }
         }
 
