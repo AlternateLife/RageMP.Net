@@ -23,8 +23,15 @@ namespace RageMP.Net.Interfaces
 
         object GetSharedData(string key);
         void SetSharedData(string key, object data);
-        void SetSharedData(Dictionary<string, object> values);
+        void SetSharedData(IDictionary<string, object> values);
         bool HasSharedData(string key);
         void ResetSharedData(string key);
+
+        bool TryGetData(string key, out object data);
+        void SetData(string key, object data);
+        void SetData(IDictionary<string, object> values);
+        bool HasData(string key);
+        void ResetData(string key);
+        void ClearData();
     }
 }

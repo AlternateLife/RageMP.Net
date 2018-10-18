@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -12,6 +13,8 @@ namespace RageMP.Net.Entities
 {
     internal abstract class Entity : IEntity
     {
+        private readonly ConcurrentDictionary<string, object> _data = new ConcurrentDictionary<string, object>();
+
         protected readonly Plugin _plugin;
 
         public IntPtr NativePointer { get; }
@@ -83,7 +86,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public void SetSharedData(Dictionary<string, object> data)
+        public void SetSharedData(IDictionary<string, object> data)
         {
             using (var converter = new StringConverter())
             {
@@ -114,6 +117,64 @@ namespace RageMP.Net.Entities
         public void ResetSharedData(string key)
         {
             SetSharedData(key, null);
+        }
+
+        public bool TryGetData(string key, out object data)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            return _data.TryGetValue(key, out data);
+        }
+
+        public void SetData(string key, object data)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            _data[key] = data;
+        }
+
+        public void SetData(IDictionary<string, object> values)
+        {
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
+
+            foreach (var keyValue in values)
+            {
+                _data[keyValue.Key] = keyValue.Value;
+            }
+        }
+
+        public bool HasData(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            return _data.ContainsKey(key);
+        }
+
+        public void ResetData(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            _data.Remove(key, out _);
+        }
+
+        public void ClearData()
+        {
+            _data.Clear();
         }
     }
 }
