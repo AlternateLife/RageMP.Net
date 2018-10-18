@@ -21,7 +21,7 @@ namespace RageMP.Net.Interfaces
 
         void Destroy();
 
-        object GetSharedData(string key);
+        bool TryGetSharedData(string key, out object data);
         void SetSharedData(string key, object data);
         void SetSharedData(IDictionary<string, object> values);
         bool HasSharedData(string key);
