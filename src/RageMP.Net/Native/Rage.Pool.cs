@@ -1,4 +1,5 @@
 using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace RageMP.Net.Native
@@ -15,6 +16,12 @@ namespace RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern uint Pool_GetCount(IntPtr pool);
+
+            [DllImport(_dllName)]
+            internal static extern void Pool_GetInRange(IntPtr pool, Vector3 position, float range, uint dimension, out IntPtr[] entities, out ulong count);
+
+            [DllImport(_dllName)]
+            internal static extern void Pool_GetInDimension(IntPtr pool, uint dimension, out IntPtr[] entities, out ulong count);
         }
     }
 }

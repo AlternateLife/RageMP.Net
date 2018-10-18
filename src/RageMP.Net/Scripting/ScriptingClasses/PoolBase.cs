@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -56,6 +57,34 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             }
 
             return entity;
+        }
+
+        public IEnumerable<T> GetInRange(Vector3 position, float range, uint dimension)
+        {
+            Rage.Pool.Pool_GetInRange(_nativePointer, position, range, dimension, out var entityPointers, out var size);
+
+            var entities = new List<T>();
+
+            for (var i = 0; i < (int)size; i++)
+            {
+                entities.Add(this[entityPointers[i]]);
+            }
+
+            return entities;
+        }
+
+        public IEnumerable<T> GetInDimension(uint dimension)
+        {
+            Rage.Pool.Pool_GetInDimension(_nativePointer, dimension, out var entityPointers, out var size);
+
+            var entities = new List<T>();
+
+            for (var i = 0; i < (int)size; i++)
+            {
+                entities.Add(this[entityPointers[i]]);
+            }
+
+            return entities;
         }
 
         public bool AddEntity(IEntity entity)
