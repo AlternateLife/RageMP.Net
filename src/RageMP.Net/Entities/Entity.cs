@@ -65,7 +65,7 @@ namespace RageMP.Net.Entities
             Rage.Entity.Entity_Destroy(NativePointer);
         }
 
-        public object GetVariable(string key)
+        public object GetSharedData(string key)
         {
             using (var converter = new StringConverter())
             {
@@ -75,7 +75,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public void SetVariable(string key, object data)
+        public void SetSharedData(string key, object data)
         {
             using (var converter = new StringConverter())
             {
@@ -83,7 +83,7 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public void SetVariables(Dictionary<string, object> data)
+        public void SetSharedData(Dictionary<string, object> data)
         {
             using (var converter = new StringConverter())
             {
@@ -103,17 +103,17 @@ namespace RageMP.Net.Entities
             }
         }
 
-        public bool HasVariable(string key)
+        public bool HasSharedData(string key)
         {
             using (var converter = new StringConverter())
             {
-                return Rage.Entity.Entity_HasVariable(NativePointer, converter.StringToPointer(key)) && GetVariable(key) != null;
+                return Rage.Entity.Entity_HasVariable(NativePointer, converter.StringToPointer(key)) && GetSharedData(key) != null;
             }
         }
 
-        public void ResetVariable(string key)
+        public void ResetSharedData(string key)
         {
-            SetVariable(key, null);
+            SetSharedData(key, null);
         }
     }
 }
