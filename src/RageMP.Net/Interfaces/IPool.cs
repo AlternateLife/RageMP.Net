@@ -11,7 +11,7 @@ namespace RageMP.Net.Interfaces
         T GetAt(int index);
         T GetAt(uint index);
 
-        IEnumerable<T> GetInRange(Vector3 position, float range, uint dimension = MP.GlobalDimension);
-        IEnumerable<T> GetInDimension(uint dimension);
+        IReadOnlyCollection<T> GetInRange(Vector3 position, float range, uint dimension = MP.GlobalDimension);
+        IReadOnlyCollection<T> GetInDimension(uint dimension);
     }
 }

@@ -59,7 +59,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             return entity;
         }
 
-        public IEnumerable<T> GetInRange(Vector3 position, float range, uint dimension)
+        public IReadOnlyCollection<T> GetInRange(Vector3 position, float range, uint dimension)
         {
             Rage.Pool.Pool_GetInRange(_nativePointer, position, range, dimension, out var entityPointers, out var size);
 
@@ -73,7 +73,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             return entities;
         }
 
-        public IEnumerable<T> GetInDimension(uint dimension)
+        public IReadOnlyCollection<T> GetInDimension(uint dimension)
         {
             Rage.Pool.Pool_GetInDimension(_nativePointer, dimension, out var entityPointers, out var size);
 
