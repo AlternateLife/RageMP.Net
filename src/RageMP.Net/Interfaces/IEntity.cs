@@ -21,10 +21,10 @@ namespace RageMP.Net.Interfaces
 
         void Destroy();
 
-        object GetVariable(string key);
-        void SetVariable(string key, object data);
-        void SetVariables(Dictionary<string, object> values);
-        bool HasVariable(string key);
-        void ResetVariable(string key);
+        object GetSharedData(string key);
+        void SetSharedData(string key, object data);
+        void SetSharedData(Dictionary<string, object> values);
+        bool HasSharedData(string key);
+        void ResetSharedData(string key);
     }
 }

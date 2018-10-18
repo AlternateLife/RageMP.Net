@@ -75,11 +75,11 @@ namespace RageMP.Net.Example
 
             if (text == "d")
             {
-                MP.Logger.Debug($"HasData: {player.HasVariable("TEST")}");
+                MP.Logger.Debug($"HasData: {player.HasSharedData("TEST")}");
 
-                player.SetVariable("TEST", 12345);
+                player.SetSharedData("TEST", 12345);
 
-                player.SetVariables(new Dictionary<string, object>
+                player.SetSharedData(new Dictionary<string, object>
                 {
                     { "KEY1", 123.45 },
                     { "KEY2", player },
@@ -92,7 +92,7 @@ namespace RageMP.Net.Example
 
             if (text == "r")
             {
-                player.ResetVariable("TEST");
+                player.ResetSharedData("TEST");
 
                 return;
             }
