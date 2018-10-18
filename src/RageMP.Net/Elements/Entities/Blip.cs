@@ -56,7 +56,7 @@ namespace RageMP.Net.Elements.Entities
         {
         }
 
-        public void ShowRoute(ICollection<IPlayer> forPlayers, uint color, float scale)
+        public void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
 
@@ -65,7 +65,7 @@ namespace RageMP.Net.Elements.Entities
             Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale);
         }
 
-        public void HideRoute(ICollection<IPlayer> forPlayers)
+        public void HideRoute(IEnumerable<IPlayer> forPlayers)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
 
