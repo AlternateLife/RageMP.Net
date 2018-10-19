@@ -18,6 +18,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public int GetInt(string key, int defaultValue)
         {
+            Contract.NotEmpty(key, nameof(key));
+
             using (var converter = new StringConverter())
             {
                 return Rage.Config.Config_GetInt(_nativePointer, converter.StringToPointer(key), defaultValue);
@@ -26,6 +28,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public string GetString(string key, string defaultValue)
         {
+            Contract.NotEmpty(key, nameof(key));
+
             using (var converter = new StringConverter())
             {
                 var result = Rage.Config.Config_GetString(_nativePointer, converter.StringToPointer(key), converter.StringToPointer(defaultValue));
