@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using RageMP.Net.Enums;
 using RageMP.Net.Native;
 using RageMP.Net.Scripting;
@@ -54,20 +55,33 @@ namespace RageMP.Net.Helpers
             Rage.Events.UnregisterEventHandler((int) _type);
         }
 
-        public void Call(Action<TEvent> callback)
+        public void CallAsync(Func<TEvent, Task> callback)
         {
             Contract.NotNull(callback, nameof(callback));
 
-            foreach (var subscription in _subscriptions)
+            if (_subscriptions.Any() == false)
             {
-                try
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                foreach (var subscription in _subscriptions)
                 {
-                    callback(subscription);
+                    ExecuteSubscriptionAsync(subscription, callback);
                 }
-                catch (Exception e)
-                {
-                    MP.Logger.Error($"An error occured during execution of {_type}", e);
-                }
+            });
+        }
+
+        private async void ExecuteSubscriptionAsync(TEvent subscription, Func<TEvent, Task> callback)
+        {
+            try
+            {
+                await callback(subscription).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                MP.Logger.Error($"An error occured during execution of event {_type}", e);
             }
         }
     }

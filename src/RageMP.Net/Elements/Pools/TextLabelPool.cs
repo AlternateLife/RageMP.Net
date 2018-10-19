@@ -17,15 +17,16 @@ namespace RageMP.Net.Elements.Pools
 
         public async Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, ColorRgba color, float drawDistance, bool los, uint dimension)
         {
-            var pointer = await _plugin.Schedule(() =>
+            using (var converter = new StringConverter())
             {
-                using (var converter = new StringConverter())
-                {
-                    return Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, converter.StringToPointer(text), font, color, drawDistance, los, dimension);
-                }
-            }).ConfigureAwait(false);
+                var textPointer = converter.StringToPointer(text);
 
-            return CreateAndSaveEntity(pointer);
+                var pointer = await _plugin
+                    .Schedule(() => Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, textPointer, font, color, drawDistance, los, dimension))
+                    .ConfigureAwait(false);
+
+                return CreateAndSaveEntity(pointer);
+            }
         }
 
         protected override ITextLabel BuildEntity(IntPtr entityPointer)

@@ -16,16 +16,16 @@ namespace RageMP.Net.Elements.Pools
 
         public async Task<IBlip> NewAsync(uint sprite, Vector3 position, float scale, uint color, string name, uint alpha, float drawDistance, bool shortRange, int rotation, uint dimension)
         {
-            var pointer = await _plugin.Schedule(() =>
+            using (var converter = new StringConverter())
             {
-                using (var converter = new StringConverter())
-                {
-                    return Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
-                        rotation, dimension);
-                }
-            }).ConfigureAwait(false);
+                var namePointer = converter.StringToPointer(name);
 
-            return CreateAndSaveEntity(pointer);
+                var pointer = await _plugin
+                    .Schedule(() => Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, namePointer, alpha, drawDistance, shortRange, rotation, dimension))
+                    .ConfigureAwait(false);
+
+                return CreateAndSaveEntity(pointer);
+            }
         }
 
         protected override IBlip BuildEntity(IntPtr entity)

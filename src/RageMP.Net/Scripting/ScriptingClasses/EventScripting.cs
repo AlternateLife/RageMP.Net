@@ -228,7 +228,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
             _remoteEventHandler = new RemoteEventHandler(plugin);
 
-            _tick = new EventHandler<NativeTickDelegate, TickDelegate>(EventType.Tick, DispatchTick);
+            _tick = new EventHandler<NativeTickDelegate, TickDelegate>(EventType.Tick, DispatchTick, true);
 
             _entityCreated = new EventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate>(EventType.EntityCreated, DispatchEntityCreated, true);
             _entityDestroyed = new EventHandler<NativeEntityDestroyedDelegate, EntityDestroyedDelegate>(EventType.EntityDestroyed, DispatchEntityDestroyed, true);
@@ -282,14 +282,14 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 return;
             }
 
-            _entityCreated.Call(x => x(createdEntity));
+            _entityCreated.CallAsync(x => x(createdEntity));
         }
 
         private void DispatchEntityDestroyed(IntPtr entitypointer)
         {
             TryRemoveEntity(entitypointer, entity =>
             {
-                _entityDestroyed.Call(x => x(entity));
+                _entityDestroyed.CallAsync(x => x(entity));
             });
         }
 
@@ -300,26 +300,28 @@ namespace RageMP.Net.Scripting.ScriptingClasses
                 return;
             }
 
-            _entityModelChange.Call(x => x(entity, oldmodel));
+            _entityModelChange.CallAsync(x => x(entity, oldmodel));
         }
 
         private void DispatchTick()
         {
-            _tick.Call(x => x());
+            _tick.CallAsync(x => x());
+
+            _plugin.TaskScheduler.Tick();
         }
 
         private void DispatchPlayerJoin(IntPtr playerPointer)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerJoin.Call(x => x(player));
+            _playerJoin.CallAsync(x => x(player));
         }
 
         private void DispatchPlayerReady(IntPtr playerPointer)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerReady.Call(x => x(player));
+            _playerReady.CallAsync(x => x(player));
         }
 
         private void DispatchPlayerDeath(IntPtr playerPointer, uint reason, IntPtr killerplayerpointer)
@@ -327,7 +329,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var killer = _plugin.PlayerPool[killerplayerpointer];
 
-            _playerDeath.Call(x => x(player, reason, killer));
+            _playerDeath.CallAsync(x => x(player, reason, killer));
         }
 
         private void DisaptchPlayerQuit(IntPtr playerPointer, uint type, IntPtr reason)
@@ -335,7 +337,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = StringConverter.PointerToString(reason);
 
-            _playerQuit.Call(x => x(player, (DisconnectReason)type, message));
+            _playerQuit.CallAsync(x => x(player, (DisconnectReason)type, message));
         }
 
         private void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
@@ -343,7 +345,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = Marshal.PtrToStringUni(text);
 
-            _playerCommand.Call(x => x(player, message));
+            _playerCommand.CallAsync(x => x(player, message));
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)
@@ -351,28 +353,30 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = Marshal.PtrToStringUni(text);
 
-            _playerChat.Call(x => x(player, message));
+            MP.Logger.Info($"Received {EventType.PlayerChat.ToString()} event");
+
+            _playerChat.CallAsync(x => x(player, message));
         }
 
         private void DispatchPlayerSpawn(IntPtr playerPointer)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerSpawn.Call(x => x(player));
+            _playerSpawn.CallAsync(x => x(player));
         }
 
         private void DispatchPlayerDamage(IntPtr playerPointer, float healthLoss, float armorLoss)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerDamage.Call(x => x(player, healthLoss, armorLoss));
+            _playerDamage.CallAsync(x => x(player, healthLoss, armorLoss));
         }
 
         private void DispatchPlayerWeaponChange(IntPtr playerPointer, uint oldWeapon, uint newWeapon)
         {
             var player = _plugin.PlayerPool[playerPointer];
 
-            _playerWeaponChange.Call(x => x(player, oldWeapon, newWeapon));
+            _playerWeaponChange.CallAsync(x => x(player, oldWeapon, newWeapon));
         }
 
         private void DispatchStartEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
@@ -380,7 +384,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerStartEnterVehicle.Call(x => x(player, vehicle, seat));
+            _playerStartEnterVehicle.CallAsync(x => x(player, vehicle, seat));
         }
 
         private void DispatchPlayerEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
@@ -388,7 +392,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerEnterVehicle.Call(x => x(player, vehicle, seat));
+            _playerEnterVehicle.CallAsync(x => x(player, vehicle, seat));
         }
 
         private void DispatchStartExitVehicle(IntPtr playerPointer, IntPtr vehiclePointer)
@@ -396,7 +400,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerStartExitVehicle.Call(x => x(player, vehicle));
+            _playerStartExitVehicle.CallAsync(x => x(player, vehicle));
         }
 
         private void DispatchPlayerExitVehicle(IntPtr playerPointer, IntPtr vehiclePointer)
@@ -404,7 +408,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];
 
-            _playerExitVehicle.Call(x => x(player, vehicle));
+            _playerExitVehicle.CallAsync(x => x(player, vehicle));
         }
 
         private void DispatchPlayerEnterCheckpoint(IntPtr playerpointer, IntPtr checkpointPointer)
@@ -412,7 +416,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var checkpoint = _plugin.CheckpointPool[checkpointPointer];
 
-            _playerEnterCheckpoint.Call(x => x(player, checkpoint));
+            _playerEnterCheckpoint.CallAsync(x => x(player, checkpoint));
         }
 
         private void DispatchPlayerExitCheckpoint(IntPtr playerpointer, IntPtr checkpointPointer)
@@ -420,7 +424,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var checkpoint = _plugin.CheckpointPool[checkpointPointer];
 
-            _playerExitCheckpoint.Call(x => x(player, checkpoint));
+            _playerExitCheckpoint.CallAsync(x => x(player, checkpoint));
         }
 
         private void DispatchPlayerEnterColshape(IntPtr playerpointer, IntPtr checkpointPointer)
@@ -428,7 +432,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var checkpoint = _plugin.ColshapePool[checkpointPointer];
 
-            _playerEnterColshape.Call(x => x(player, checkpoint));
+            _playerEnterColshape.CallAsync(x => x(player, checkpoint));
         }
 
         private void DispatchPlayerExitColshape(IntPtr playerpointer, IntPtr checkpointPointer)
@@ -436,7 +440,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var checkpoint = _plugin.ColshapePool[checkpointPointer];
 
-            _playerExitColshape.Call(x => x(player, checkpoint));
+            _playerExitColshape.CallAsync(x => x(player, checkpoint));
         }
 
         private void DispatchVehicleDeath(IntPtr vehiclepointer, uint reason, IntPtr killerplayerpointer)
@@ -444,21 +448,21 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var vehicle = _plugin.VehiclePool[vehiclepointer];
             var killerPlayer = _plugin.PlayerPool[killerplayerpointer];
 
-            _vehicleDeath.Call(x => x(vehicle, reason, killerPlayer));
+            _vehicleDeath.CallAsync(x => x(vehicle, reason, killerPlayer));
         }
 
         private void DispatchVehicleSirenToggle(IntPtr vehiclepointer, bool toggle)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleSirenToggle.Call(x => x(vehicle, toggle));
+            _vehicleSirenToggle.CallAsync(x => x(vehicle, toggle));
         }
 
         private void DispatchVehicleHornToggle(IntPtr vehiclepointer, bool toggle)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleSirenToggle.Call(x => x(vehicle, toggle));
+            _vehicleSirenToggle.CallAsync(x => x(vehicle, toggle));
         }
 
         private void DispatchTrailerAttached(IntPtr vehiclepointer, IntPtr trailerpointer)
@@ -466,28 +470,28 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var vehicle = _plugin.VehiclePool[vehiclepointer];
             var trailer = _plugin.VehiclePool[trailerpointer];
 
-            _vehicleTrailerAttached.Call(x => x(vehicle, trailer));
+            _vehicleTrailerAttached.CallAsync(x => x(vehicle, trailer));
         }
 
         private void DispatchVehicleDamage(IntPtr vehiclepointer, float bodyhealthloss, float enginehealthloss)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleDamage.Call(x => x(vehicle, bodyhealthloss, enginehealthloss));
+            _vehicleDamage.CallAsync(x => x(vehicle, bodyhealthloss, enginehealthloss));
         }
 
         private void DispatchPlayerCreateWaypoint(IntPtr playerpointer, Vector3 position)
         {
             var player = _plugin.PlayerPool[playerpointer];
 
-            _playerCreateWaypoint.Call(x => x(player, position));
+            _playerCreateWaypoint.CallAsync(x => x(player, position));
         }
 
         private void DispatchPlayerReachWaypoint(IntPtr playerpointer)
         {
             var player = _plugin.PlayerPool[playerpointer];
 
-            _playerReachWaypoint.Call(x => x(player));
+            _playerReachWaypoint.CallAsync(x => x(player));
         }
 
         private void DispatchPlayerStreamIn(IntPtr playerpointer, IntPtr forplayerpointer)
@@ -495,7 +499,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var forPlayer = _plugin.PlayerPool[forplayerpointer];
 
-            _playerStreamIn.Call(x => x(player, forPlayer));
+            _playerStreamIn.CallAsync(x => x(player, forPlayer));
         }
 
         private void DispatchPlayerStreamOut(IntPtr playerpointer, IntPtr forplayerpointer)
@@ -503,7 +507,7 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerpointer];
             var forPlayer = _plugin.PlayerPool[forplayerpointer];
 
-            _playerStreamOut.Call(x => x(player, forPlayer));
+            _playerStreamOut.CallAsync(x => x(player, forPlayer));
         }
 
         private bool GetPoolFromPointer(IntPtr entityPointer, out IInternalPool pool, out EntityType type)
