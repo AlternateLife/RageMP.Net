@@ -1,2 +1,5 @@
-# ragemp-dotnet-core
-Rage-MP .NET Core Wrapper
+# AlternateLife RageMP.Net
+
+## Description
+
+Rage-MP .NET core wrapper.
