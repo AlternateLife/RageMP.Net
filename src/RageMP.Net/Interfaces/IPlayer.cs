@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 
@@ -50,14 +51,14 @@ namespace RageMP.Net.Interfaces
 
         IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
 
-        void Kick(string reason = null);
-        void Ban(string reason = null);
-        void OutputChatBox(string text);
-        void Notify(string text);
+        Task KickAsync(string reason = null);
+        Task BanAsync(string reason = null);
+        Task OutputChatBoxAsync(string text);
+        Task NotifyAsync(string text);
 
-        void Call(string eventName, params object[] arguments);
-        void CallHash(ulong eventHash, params object[] arguments);
-        void Invoke(ulong nativeHash, params object[] arguments);
+        Task CallAsync(string eventName, params object[] arguments);
+        Task CallHashAsync(ulong eventHash, params object[] arguments);
+        Task InvokeAsync(ulong nativeHash, params object[] arguments);
 
         void Spawn(Vector3 position, float heading);
         void PlayAnimation(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);

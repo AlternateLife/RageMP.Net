@@ -24,7 +24,7 @@ namespace RageMP.Net.Example
         {
             if (text == "v")
             {
-                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true, 0);
+                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true, MP.GlobalDimension);
 
                 player.PutIntoVehicle(vehicle, -1);
 
@@ -36,7 +36,7 @@ namespace RageMP.Net.Example
                 var vehicle = player.Vehicle;
                 if (vehicle == null)
                 {
-                    player.OutputChatBox("Vehicle not found");
+                    player.OutputChatBoxAsync("Vehicle not found");
 
                     return;
                 }
@@ -44,12 +44,12 @@ namespace RageMP.Net.Example
                 var occupant = vehicle.GetOccupant(-1);
                 if (occupant == null)
                 {
-                    player.OutputChatBox("Occupant not found");
+                    player.OutputChatBoxAsync("Occupant not found");
 
                     return;
                 }
 
-                player.OutputChatBox($"Occupant {occupant.SocialClubName} found");
+                player.OutputChatBoxAsync($"Occupant {occupant.SocialClubName} found");
 
                 return;
             }
@@ -59,7 +59,7 @@ namespace RageMP.Net.Example
                 var vehicle = player.Vehicle;
                 if (vehicle == null)
                 {
-                    player.OutputChatBox("Vehicle not found");
+                    player.OutputChatBoxAsync("Vehicle not found");
 
                     return;
                 }
@@ -122,7 +122,7 @@ namespace RageMP.Net.Example
 
             if (text == "l")
             {
-                player.OutputChatBox("TRAFFIC: " + MP.World.TrafficLightsState);
+                player.OutputChatBoxAsync("TRAFFIC: " + MP.World.TrafficLightsState);
             }
 
             if (text == "m")
@@ -148,7 +148,7 @@ namespace RageMP.Net.Example
                     {
                         for (int i = 0; i < 100; i++)
                         {
-                            MP.Markers.NewAsync(2, player.Position + Vector3.UnitZ, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
+                            MP.Markers.NewAsync(2, player.Position, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
                         }
                     });
 
@@ -156,7 +156,7 @@ namespace RageMP.Net.Example
                     {
                         for (int i = 0; i < 100; i++)
                         {
-                            MP.Markers.NewAsync(2, player.Position + Vector3.UnitZ * 2, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
+                            MP.Markers.NewAsync(2, player.Position, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
                         }
                     });
                 }

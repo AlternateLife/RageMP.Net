@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Threading.Tasks.Schedulers;
 using RageMP.Net.Elements.Pools;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -11,7 +10,6 @@ using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 using RageMP.Net.Scripting;
 using RageMP.Net.Scripting.ScriptingClasses;
-using Object = RageMP.Net.Elements.Entities.Object;
 
 namespace RageMP.Net
 {
