@@ -2,9 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
-        <RootNamespace>RageMP.Net</RootNamespace>
+        <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <AssemblyName>AlternateLife.RageMP.Net</AssemblyName>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
@@ -28,7 +29,7 @@
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
     </Target>
 
 </Project>
