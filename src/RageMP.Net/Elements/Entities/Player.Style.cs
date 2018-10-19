@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Native;
 
 namespace RageMP.Net.Elements.Entities
@@ -41,8 +42,10 @@ namespace RageMP.Net.Elements.Entities
             Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data);
         }
 
-        public void SetClothes(Dictionary<ClothSlot, ClothData> clothes)
+        public void SetClothes(IDictionary<ClothSlot, ClothData> clothes)
         {
+            Contract.NotNull(clothes, nameof(clothes));
+
             var keys = clothes.Keys.Select(x => (uint) x).ToArray();
             var values = clothes.Values.ToArray();
 
@@ -59,8 +62,10 @@ namespace RageMP.Net.Elements.Entities
             Rage.Player.Player_SetProp(NativePointer, (uint) slot, data);
         }
 
-        public void SetProps(Dictionary<PropSlot, PropData> props)
+        public void SetProps(IDictionary<PropSlot, PropData> props)
         {
+            Contract.NotNull(props, nameof(props));
+
             var keys = props.Keys.Select(x => (uint) x).ToArray();
             var values = props.Values.ToArray();
 
@@ -82,8 +87,10 @@ namespace RageMP.Net.Elements.Entities
             Rage.Player.Player_SetDecoration(NativePointer, collection, overlay);
         }
 
-        public void SetDecorations(Dictionary<uint, uint> decorations)
+        public void SetDecorations(IDictionary<uint, uint> decorations)
         {
+            Contract.NotNull(decorations, nameof(decorations));
+
             var keys = decorations.Keys.ToArray();
             var values = decorations.Values.ToArray();
 
@@ -123,6 +130,9 @@ namespace RageMP.Net.Elements.Entities
         public void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations)
         {
+            Contract.NotNull(headOverlays, nameof(headOverlays));
+            Contract.NotNull(decorations, nameof(decorations));
+
             var headOverlayKeys = headOverlays.Keys.ToArray();
             var headOverlayValues = headOverlays.Values.ToArray();
 

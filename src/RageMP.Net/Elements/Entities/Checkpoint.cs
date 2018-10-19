@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -42,6 +43,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void ShowFor(ICollection<IPlayer> players)
         {
+            Contract.NotNull(players, nameof(players));
+
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.Length);
@@ -49,6 +52,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void HideFor(ICollection<IPlayer> players)
         {
+            Contract.NotNull(players, nameof(players));
+
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             Rage.Checkpoint.Checkpoint_HideFor(NativePointer, playerPointers, (ulong) playerPointers.Length);

@@ -18,6 +18,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void Broadcast(string message)
         {
+            Contract.NotNull(message, nameof(message));
+
             using (var converter = new StringConverter())
             {
                 Rage.PlayerPool.PlayerPool_Broadcast(_nativePointer, converter.StringToPointer(message));
@@ -26,6 +28,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void BroadcastInRange(string message, Vector3 position, float range, uint dimension)
         {
+            Contract.NotNull(message, nameof(message));
+
             using (var converter = new StringConverter())
             {
                 Rage.PlayerPool.PlayerPool_BroadcastInRange(_nativePointer, converter.StringToPointer(message), position, range, dimension);
@@ -34,6 +38,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void BroadcastInDimension(string message, uint dimension)
         {
+            Contract.NotNull(message, nameof(message));
+
             using (var converter = new StringConverter())
             {
                 Rage.PlayerPool.PlayerPool_BroadcastInDimension(_nativePointer, converter.StringToPointer(message), dimension);
@@ -42,6 +48,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void Call(string eventName, params object[] arguments)
         {
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
@@ -54,6 +62,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void CallInRange(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
         {
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
@@ -66,6 +76,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void CallInDimension(uint dimension, string eventName, params object[] arguments)
         {
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
@@ -78,6 +90,9 @@ namespace RageMP.Net.Elements.Pools
 
         public void CallFor(ICollection<IPlayer> players, string eventName, params object[] arguments)
         {
+            Contract.NotNull(players, nameof(players));
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
@@ -118,6 +133,8 @@ namespace RageMP.Net.Elements.Pools
 
         public void InvokeFor(ICollection<IPlayer> players, ulong nativeHash, params object[] arguments)
         {
+            Contract.NotNull(players, nameof(players));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 

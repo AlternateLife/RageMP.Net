@@ -1,3 +1,4 @@
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 
@@ -19,6 +20,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void PutIntoVehicle(IVehicle vehicle, int seat)
         {
+            Contract.NotNull(vehicle, nameof(vehicle));
+
             Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat);
         }
 

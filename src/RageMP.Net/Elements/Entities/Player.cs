@@ -123,6 +123,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void Call(string eventName, params object[] arguments)
         {
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
@@ -158,6 +160,9 @@ namespace RageMP.Net.Elements.Entities
 
         public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
         {
+            Contract.NotEmpty(dictionary, nameof(dictionary));
+            Contract.NotEmpty(name, nameof(name));
+
             using (var converter = new StringConverter())
             {
                 Rage.Player.Player_PlayAnimation(NativePointer, converter.StringToPointer(dictionary), converter.StringToPointer(name), speed, (int) flags);
@@ -171,6 +176,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void PlayScenario(string scenario)
         {
+            Contract.NotEmpty(scenario, nameof(scenario));
+
             using (var converter = new StringConverter())
             {
                 Rage.Player.Player_PlayScenario(NativePointer, converter.StringToPointer(scenario));
@@ -179,6 +186,8 @@ namespace RageMP.Net.Elements.Entities
 
         public bool IsStreamed(IPlayer player)
         {
+            Contract.NotNull(player, nameof(player));
+
             return Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer);
         }
 
@@ -189,6 +198,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void Eval(string code)
         {
+            Contract.NotEmpty(code, nameof(code));
+
             using (var converter = new StringConverter())
             {
                 Rage.Player.Player_Eval(NativePointer, converter.StringToPointer(code));

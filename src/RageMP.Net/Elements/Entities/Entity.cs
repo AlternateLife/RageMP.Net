@@ -70,6 +70,8 @@ namespace RageMP.Net.Elements.Entities
 
         public bool TryGetSharedData(string key, out object data)
         {
+            Contract.NotEmpty(key, nameof(key));
+
             using (var converter = new StringConverter())
             {
                 var argument = Rage.Entity.Entity_GetVariable(NativePointer, converter.StringToPointer(key));
@@ -82,6 +84,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void SetSharedData(string key, object data)
         {
+            Contract.NotEmpty(key, nameof(key));
+
             using (var converter = new StringConverter())
             {
                 Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), ArgumentData.ConvertFromObject(data));
@@ -90,6 +94,8 @@ namespace RageMP.Net.Elements.Entities
 
         public void SetSharedData(IDictionary<string, object> data)
         {
+            Contract.NotNull(data, nameof(data));
+
             using (var converter = new StringConverter())
             {
                 var keys = new IntPtr[data.Count];
@@ -110,43 +116,35 @@ namespace RageMP.Net.Elements.Entities
 
         public bool HasSharedData(string key)
         {
-            using (var converter = new StringConverter())
-            {
-                return TryGetSharedData(key, out _);
-            }
+            Contract.NotEmpty(key, nameof(key));
+
+            return TryGetSharedData(key, out _);
         }
 
         public void ResetSharedData(string key)
         {
+            Contract.NotEmpty(key, nameof(key));
+
             SetSharedData(key, null);
         }
 
         public bool TryGetData(string key, out object data)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Contract.NotEmpty(key, nameof(key));
 
             return _data.TryGetValue(key, out data);
         }
 
         public void SetData(string key, object data)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Contract.NotEmpty(key, nameof(key));
 
             _data[key] = data;
         }
 
         public void SetData(IDictionary<string, object> values)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Contract.NotNull(values, nameof(values));
 
             foreach (var keyValue in values)
             {
@@ -156,20 +154,14 @@ namespace RageMP.Net.Elements.Entities
 
         public bool HasData(string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Contract.NotEmpty(key, nameof(key));
 
             return _data.ContainsKey(key);
         }
 
         public void ResetData(string key)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Contract.NotEmpty(key, nameof(key));
 
             _data.Remove(key, out _);
         }
