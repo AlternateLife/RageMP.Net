@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using RageMP.Net.Elements.Pools;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -85,6 +87,16 @@ namespace RageMP.Net.Scripting
             }
 
             return result;
+        }
+
+        public static Task Schedule(Action action)
+        {
+            return _plugin.Schedule(action);
+        }
+
+        public static Task<T> Schedule<T>(Func<T> action)
+        {
+            return _plugin.Schedule(action);
         }
 
     }

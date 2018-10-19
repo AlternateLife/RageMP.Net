@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Threading.Tasks.Schedulers;
 using RageMP.Net.Elements.Pools;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -15,6 +18,8 @@ namespace RageMP.Net
     internal class Plugin
     {
         private readonly string _basePath = $"dotnet{Path.DirectorySeparatorChar}";
+
+        private RageTaskScheduler _taskScheduler;
         private ResourceLoader _resourceLoader;
 
         internal IntPtr NativeMultiplayer { get; }
@@ -74,10 +79,31 @@ namespace RageMP.Net
         {
             MP.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
 
+            StartTaskScheduler();
+
             _resourceLoader = new ResourceLoader(this);
             _resourceLoader.Start();
 
             MP.Logger.Info("Rage.NET startup finished");
+        }
+
+        private void StartTaskScheduler()
+        {
+            MP.Logger.Info("Main Thread: " + Thread.CurrentThread.ManagedThreadId);
+
+            _taskScheduler = new RageTaskScheduler();
+
+            MP.Events.Tick += _taskScheduler.Tick;
+        }
+
+        internal Task Schedule(Action action)
+        {
+            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.HideScheduler, _taskScheduler);
+        }
+
+        internal Task<T> Schedule<T>(Func<T> action)
+        {
+            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
         }
 
         internal string GetBasePath(string path)

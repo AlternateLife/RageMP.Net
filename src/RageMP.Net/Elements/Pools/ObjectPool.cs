@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
 using Object = RageMP.Net.Elements.Entities.Object;
@@ -12,9 +13,11 @@ namespace RageMP.Net.Elements.Pools
         {
         }
 
-        public IObject New(uint model, Vector3 position, Vector3 rotation, uint dimension)
+        public async Task<IObject> NewAsync(uint model, Vector3 position, Vector3 rotation, uint dimension)
         {
-            var pointer = Rage.ObjectPool.ObjectPool_New(_nativePointer, model, position, rotation, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ObjectPool.ObjectPool_New(_nativePointer, model, position, rotation, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }

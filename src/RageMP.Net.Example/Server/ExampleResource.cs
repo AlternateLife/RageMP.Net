@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Numerics;
-using System.Text;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Interfaces;
@@ -21,11 +20,11 @@ namespace RageMP.Net.Example
             MP.Events.PlayerCommand += OnPlayerCommand;
         }
 
-        private void OnPlayerCommand(IPlayer player, string text)
+        private async void OnPlayerCommand(IPlayer player, string text)
         {
             if (text == "v")
             {
-                var vehicle = MP.Vehicles.New(VehicleHash.T20, player.Position, 0, "", 255, false, true, 0);
+                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true, 0);
 
                 player.PutIntoVehicle(vehicle, -1);
 
@@ -125,6 +124,47 @@ namespace RageMP.Net.Example
             {
                 player.OutputChatBox("TRAFFIC: " + MP.World.TrafficLightsState);
             }
+
+            if (text == "m")
+            {
+                MP.Logger.Info("Create vehicles");
+
+                player.Dimension = MP.GlobalDimension;
+
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                for (int j = 0; j < 10; j++)
+                {
+                    Task.Run(() =>
+                    {
+                        for (int i = 0; i < 100; i++)
+                        {
+                            MP.Markers.NewAsync(2, player.Position, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
+                        }
+                    });
+
+                    Task.Run(() =>
+                    {
+                        for (int i = 0; i < 100; i++)
+                        {
+                            MP.Markers.NewAsync(2, player.Position + Vector3.UnitZ, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
+                        }
+                    });
+
+                    Task.Run(() =>
+                    {
+                        for (int i = 0; i < 100; i++)
+                        {
+                            MP.Markers.NewAsync(2, player.Position + Vector3.UnitZ * 2, player.Rotation, Vector3.One, 1, new ColorRgba(255, 0, 0, 255), true);
+                        }
+                    });
+                }
+
+                stopWatch.Stop();
+
+                MP.Logger.Info("Elapsed Time: " + stopWatch.ElapsedMilliseconds);
+            }
         }
 
         private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
@@ -134,11 +174,11 @@ namespace RageMP.Net.Example
 
         private void OnPlayerChat(IPlayer player, string text)
         {
-            MP.Markers.New(0, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true, 0);
+            MP.Markers.NewAsync(0, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true, 0);
 
-            MP.Objects.New(212137959, player.Position, Vector3.One, 0);
+            MP.Objects.NewAsync(212137959, player.Position, Vector3.One, 0);
 
-            MP.TextLabels.New(player.Position, "HÖHÖ, höhö", 0, new ColorRgba(255, 255, 0, 255), 20, true, 0);
+            MP.TextLabels.NewAsync(player.Position, "HÖHÖ, höhö", 0, new ColorRgba(255, 255, 0, 255), 20, true, 0);
         }
 
         public void OnStop()

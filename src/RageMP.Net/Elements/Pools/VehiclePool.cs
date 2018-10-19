@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Elements.Entities;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -14,14 +15,17 @@ namespace RageMP.Net.Elements.Pools
         {
         }
 
-        public IVehicle New(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
+        public async Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
-            using (var converter = new StringConverter())
+            var pointer = await _plugin.Schedule(() =>
             {
-                var pointer = Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
+                using (var converter = new StringConverter())
+                {
+                    return Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
+                }
+            }).ConfigureAwait(false);
 
-                return CreateAndSaveEntity(pointer);
-            }
+            return CreateAndSaveEntity(pointer);
         }
 
         protected override IVehicle BuildEntity(IntPtr entityPointer)
