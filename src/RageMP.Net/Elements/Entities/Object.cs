@@ -1,8 +1,8 @@
 using System;
-using RageMP.Net.Enums;
-using RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
 
-namespace RageMP.Net.Elements.Entities
+namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Object : Entity, IObject
     {

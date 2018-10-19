@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.Reflection;
 using NLog;
 using NLog.Config;
-using ILogger = RageMP.Net.Interfaces.ILogger;
+using ILogger = AlternateLife.RageMP.Net.Interfaces.ILogger;
 
-namespace RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class Logger : ILogger
+    internal class Logger : Interfaces.ILogger
     {
         private readonly Plugin _plugin;
 

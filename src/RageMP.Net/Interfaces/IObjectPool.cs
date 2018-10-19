@@ -1,7 +1,7 @@
 using System.Numerics;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IObjectPool : IPool<IObject>
     {

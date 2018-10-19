@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
-using RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Data;
 
-namespace RageMP.Net.Native
+namespace AlternateLife.RageMP.Net.Native
 {
     internal static partial class Rage
     {

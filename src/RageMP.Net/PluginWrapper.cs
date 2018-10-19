@@ -1,6 +1,6 @@
 using System;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal static class PluginWrapper
     {

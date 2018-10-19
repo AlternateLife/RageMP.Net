@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IBlip : IEntity
     {

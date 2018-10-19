@@ -1,11 +1,11 @@
 using System;
 using System.Numerics;
-using RageMP.Net.Elements.Entities;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Elements.Entities;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Elements.Pools
+namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class BlipPool : PoolBase<IBlip>, IBlipPool
     {

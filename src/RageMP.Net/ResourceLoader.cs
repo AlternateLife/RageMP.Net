@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal class ResourceLoader
     {

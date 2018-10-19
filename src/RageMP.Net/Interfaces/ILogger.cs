@@ -1,7 +1,7 @@
 using System;
-using RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Enums;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface ILogger
     {

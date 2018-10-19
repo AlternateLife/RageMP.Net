@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal class ResourceHandler
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace RageMP.Net.Enums
+namespace AlternateLife.RageMP.Net.Enums
 {
     [Flags]
     public enum AnimationFlags

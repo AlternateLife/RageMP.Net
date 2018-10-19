@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using RageMP.Net.Data;
-using RageMP.Net.Native;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers
 {
     internal class RemoteEventHandler
     {

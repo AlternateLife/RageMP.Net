@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using RageMP.Net.Elements.Pools;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
-using RageMP.Net.Scripting;
-using RageMP.Net.Scripting.ScriptingClasses;
-using Object = RageMP.Net.Elements.Entities.Object;
+using AlternateLife.RageMP.Net.Elements.Pools;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
+using Object = AlternateLife.RageMP.Net.Elements.Entities.Object;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal class Plugin
     {

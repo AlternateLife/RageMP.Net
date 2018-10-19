@@ -1,8 +1,8 @@
 using System.Numerics;
-using RageMP.Net.Enums;
-using RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
 
-namespace RageMP.Net.Scripting
+namespace AlternateLife.RageMP.Net.Scripting
 {
     public delegate void TickDelegate();
 

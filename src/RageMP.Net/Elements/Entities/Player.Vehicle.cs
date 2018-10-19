@@ -1,8 +1,8 @@
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Elements.Entities
+namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
