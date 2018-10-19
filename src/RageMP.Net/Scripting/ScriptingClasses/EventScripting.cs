@@ -270,6 +270,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void Add(string eventName, PlayerRemoteEventDelegate callback)
         {
+            Contract.NotEmpty(eventName, nameof(eventName));
+
             _remoteEventHandler.Subscribe(eventName, callback);
         }
 
