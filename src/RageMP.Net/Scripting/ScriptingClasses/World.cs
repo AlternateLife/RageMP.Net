@@ -50,6 +50,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void SetWeatherTransition(string weather, float time)
         {
+            Contract.NotEmpty(weather, nameof(weather));
+
             using (var converter = new StringConverter())
             {
                 Rage.World.World_SetWeatherTransition(_nativePointer, converter.StringToPointer(weather), time);
@@ -58,6 +60,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void RequestIpl(string ipl)
         {
+            Contract.NotEmpty(ipl, nameof(ipl));
+
             using (var converter = new StringConverter())
             {
                 Rage.World.World_RequestIpl(_nativePointer, converter.StringToPointer(ipl));
@@ -66,6 +70,8 @@ namespace RageMP.Net.Scripting.ScriptingClasses
 
         public void RemoveIpl(string ipl)
         {
+            Contract.NotEmpty(ipl, nameof(ipl));
+
             using (var converter = new StringConverter())
             {
                 Rage.World.World_RemoveIpl(_nativePointer, converter.StringToPointer(ipl));

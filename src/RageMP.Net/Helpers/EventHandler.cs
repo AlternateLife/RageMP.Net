@@ -30,6 +30,8 @@ namespace RageMP.Net.Helpers
 
         public void Subscribe(TEvent callback)
         {
+            Contract.NotNull(callback, nameof(callback));
+
             var wasEmpty = _subscriptions.Any() == false;
 
             if (_forceRegistration || _subscriptions.Add(callback) == false || wasEmpty == false)
@@ -42,6 +44,8 @@ namespace RageMP.Net.Helpers
 
         public void Unsubscribe(TEvent callback)
         {
+            Contract.NotNull(callback, nameof(callback));
+
             if (_forceRegistration || _subscriptions.Remove(callback) == false || _subscriptions.Any())
             {
                 return;
@@ -52,6 +56,8 @@ namespace RageMP.Net.Helpers
 
         public void Call(Action<TEvent> callback)
         {
+            Contract.NotNull(callback, nameof(callback));
+
             foreach (var subscription in _subscriptions)
             {
                 try
