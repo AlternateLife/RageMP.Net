@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace RageMP.Net.Scripting
 {
     public interface IResource
     {
-        void OnStart();
-        void OnStop();
+        Task OnStartAsync();
+        Task OnStopAsync();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using RageMP.Net.Scripting;
 
 namespace RageMP.Net
@@ -18,11 +19,16 @@ namespace RageMP.Net
             _directory = directory;
         }
 
-        public void Start()
+        public async Task Start()
         {
             MP.Logger.Info($"{_directory.Name}: Starting resource...");
 
-            LoadAssemblies();
+            if (TryLoadAssemblies() == false)
+            {
+                MP.Logger.Warn($"{_directory.Name}: Resource startup has been aborted!");
+
+                return;
+            }
 
             if (_loadedAssemblies.Any() == false)
             {
@@ -41,7 +47,7 @@ namespace RageMP.Net
 
             try
             {
-                _entryPoint.OnStart();
+                await _entryPoint.OnStartAsync();
             }
             catch (Exception e)
             {
@@ -50,16 +56,26 @@ namespace RageMP.Net
                 return;
             }
 
-
             MP.Logger.Info($"{_directory.Name}: Resource successfully started!");
         }
 
-        private void LoadAssemblies()
+        private bool TryLoadAssemblies()
         {
-            foreach (var file in _directory.GetFiles("*.dll"))
+            try
             {
-                _loadedAssemblies.Add(Assembly.LoadFrom(file.FullName));
+                foreach (var file in _directory.GetFiles("*.dll"))
+                {
+                    _loadedAssemblies.Add(Assembly.LoadFrom(file.FullName));
+                }
+
+                return true;
             }
+            catch (Exception e)
+            {
+                MP.Logger.Error($"{_directory.Name}: An error occured during assembly loading!", e);
+            }
+
+            return false;
         }
 
         private IResource LoadEntryPoint()

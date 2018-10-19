@@ -13,54 +13,23 @@ namespace RageMP.Net.Example
 {
     public class ExampleResource : IResource
     {
-        public void OnStart()
+        public Task OnStartAsync()
         {
-            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStart)}");
+            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStartAsync)}");
 
             MP.Events.PlayerChat += OnPlayerChat;
-            MP.Events.PlayerChat += LongPlayerChat;
-            MP.Events.PlayerChat += LongerPlayerChat;
-            MP.Events.PlayerChat += NormalPlayerChat;
-            MP.Events.PlayerChat += FailingPlayerchat;
 
             MP.Events.PlayerDeath += OnPlayerDeath;
             MP.Events.PlayerCommand += OnPlayerCommand;
+
+            return Task.CompletedTask;
         }
 
-        private async Task LongerPlayerChat(IPlayer player, string text)
+        public Task OnStopAsync()
         {
-            MP.Logger.Info($"Start {nameof(LongerPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStopAsync)}");
 
-            await Task.Delay(TimeSpan.FromSeconds(10));
-
-            MP.Logger.Info($"End {nameof(LongerPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
-        }
-
-        private async Task LongPlayerChat(IPlayer player, string text)
-        {
-            MP.Logger.Info($"Start {nameof(LongPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
-
-            await Task.Delay(TimeSpan.FromSeconds(5));
-
-            MP.Logger.Info($"End {nameof(LongPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
-        }
-
-        private async Task NormalPlayerChat(IPlayer player, string text)
-        {
-            MP.Logger.Info($"Start {nameof(NormalPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
-
-            await player.OutputChatBoxAsync("TEST");
-
-            MP.Logger.Info($"End {nameof(NormalPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
-        }
-
-        private async Task FailingPlayerchat(IPlayer player, string text)
-        {
-            MP.Logger.Info($"Start {nameof(FailingPlayerchat)} - {Thread.CurrentThread.ManagedThreadId}");
-
-            throw new Exception("FAILED!");
-
-            MP.Logger.Info($"End {nameof(FailingPlayerchat)} - {Thread.CurrentThread.ManagedThreadId}");
+            return Task.CompletedTask;
         }
 
         private async Task OnPlayerCommand(IPlayer player, string text)
@@ -233,11 +202,6 @@ namespace RageMP.Net.Example
             MP.TextLabels.NewAsync(player.Position, "HÖHÖ, höhö", 0, new ColorRgba(255, 255, 0, 255), 20, true, 0);
 
             return Task.CompletedTask;
-        }
-
-        public void OnStop()
-        {
-            MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStop)}");
         }
     }
 }

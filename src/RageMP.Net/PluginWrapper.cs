@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace RageMP.Net
 {
@@ -7,6 +8,8 @@ namespace RageMP.Net
         public static void Main(IntPtr multiplayer)
         {
             var plugin = new Plugin(multiplayer);
+
+            Task.Run(() => plugin.Start()).Wait();
         }
     }
 }

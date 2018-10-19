@@ -17,7 +17,7 @@ namespace RageMP.Net
     {
         private readonly string _basePath = $"dotnet{Path.DirectorySeparatorChar}";
 
-        private ResourceLoader _resourceLoader;
+        private readonly ResourceLoader _resourceLoader;
 
         internal IntPtr NativeMultiplayer { get; }
 
@@ -45,6 +45,7 @@ namespace RageMP.Net
 
             MP.Setup(this);
 
+            _resourceLoader = new ResourceLoader();
             TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
 
@@ -70,16 +71,13 @@ namespace RageMP.Net
                 { EntityType.Object, ObjectPool },
                 { EntityType.TextLabel, TextLabelPool }
             };
-
-            Start();
         }
 
-        private void Start()
+        public async Task Start()
         {
             MP.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
 
-            _resourceLoader = new ResourceLoader(this);
-            _resourceLoader.Start();
+            await _resourceLoader.Start();
 
             MP.Logger.Info("Rage.NET startup finished");
         }
