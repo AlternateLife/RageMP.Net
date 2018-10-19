@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -63,9 +64,9 @@ namespace RageMP.Net.Elements.Entities
             Type = type;
         }
 
-        public void Destroy()
+        public Task Destroy()
         {
-            Rage.Entity.Entity_Destroy(NativePointer);
+            return _plugin.Schedule(() => Rage.Entity.Entity_Destroy(NativePointer));
         }
 
         public bool TryGetSharedData(string key, out object data)

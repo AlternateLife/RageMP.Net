@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
@@ -89,39 +90,47 @@ namespace RageMP.Net.Elements.Entities
         {
         }
 
-        public void Kick(string reason = null)
+        public async Task KickAsync(string reason = null)
         {
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_Kick(NativePointer, converter.StringToPointer(reason));
+                var reasonPointer = converter.StringToPointer(reason);
+
+                await _plugin.Schedule(() => Rage.Player.Player_Kick(NativePointer, reasonPointer));
             }
         }
 
-        public void Ban(string reason = null)
+        public async Task BanAsync(string reason = null)
         {
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_Ban(NativePointer, converter.StringToPointer(reason));
+                var reasonPointer = converter.StringToPointer(reason);
+
+                await _plugin.Schedule(() => Rage.Player.Player_Ban(NativePointer, reasonPointer));
             }
         }
 
-        public void OutputChatBox(string text)
+        public async Task OutputChatBoxAsync(string text)
         {
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_OutputChatBox(NativePointer, converter.StringToPointer(text));
+                var textPointer = converter.StringToPointer(text);
+
+                await _plugin.Schedule(() => Rage.Player.Player_OutputChatBox(NativePointer, textPointer));
             }
         }
 
-        public void Notify(string text)
+        public async Task NotifyAsync(string text)
         {
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_Notify(NativePointer, converter.StringToPointer(text));
+                var textPointer = converter.StringToPointer(text);
+
+                await _plugin.Schedule(() => Rage.Player.Player_Notify(NativePointer, textPointer));
             }
         }
 
-        public void Call(string eventName, params object[] arguments)
+        public async Task CallAsync(string eventName, params object[] arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
 
@@ -129,26 +138,34 @@ namespace RageMP.Net.Elements.Entities
 
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player__Call(NativePointer, converter.StringToPointer(eventName), data, (ulong) data.Length);
+                var eventNamePointer = converter.StringToPointer(eventName);
+
+                await _plugin.Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length));
             }
 
             ArgumentData.Dispose(data);
         }
 
-        public void CallHash(ulong eventHash, params object[] arguments)
+        public async Task CallHashAsync(ulong eventHash, params object[] arguments)
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
-            Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
+            await _plugin.Schedule(() =>
+            {
+                Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
+            });
 
             ArgumentData.Dispose(data);
         }
 
-        public void Invoke(ulong nativeHash, params object[] arguments)
+        public async Task InvokeAsync(ulong nativeHash, params object[] arguments)
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
-            Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
+            await _plugin.Schedule(() =>
+            {
+                Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
+            });
 
             ArgumentData.Dispose(data);
         }

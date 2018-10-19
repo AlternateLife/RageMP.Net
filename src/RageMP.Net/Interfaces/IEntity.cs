@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Enums;
 
 namespace RageMP.Net.Interfaces
@@ -19,7 +20,7 @@ namespace RageMP.Net.Interfaces
         Vector3 Rotation { get; set; }
         Vector3 Velocity { get; }
 
-        void Destroy();
+        Task Destroy();
 
         bool TryGetSharedData(string key, out object data);
         void SetSharedData(string key, object data);
