@@ -1,3 +1,4 @@
+using System;
 using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Interfaces
@@ -34,6 +35,14 @@ namespace RageMP.Net.Interfaces
         event PlayerStreamInDelegate PlayerStreamIn;
         event PlayerStreamOutDelegate PlayerStreamOut;
 
+        /// <summary>
+        /// Add a client event callback.
+        ///
+        /// The callback is called when a player sends a client event with the given event name.
+        /// </summary>
+        /// <param name="eventName">Name of the event</param>
+        /// <param name="callback">Callback to execute on the event</param>
+        /// <exception cref="ArgumentNullException">Event name is null or empty</exception>
         void Add(string eventName, PlayerRemoteEventDelegate callback);
     }
 }

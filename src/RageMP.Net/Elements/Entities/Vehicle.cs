@@ -108,7 +108,7 @@ namespace RageMP.Net.Elements.Entities
             set => Rage.Vehicle.Vehicle_SetWheelColor(NativePointer, value);
         }
 
-        public uint WheenType
+        public uint WheelType
         {
             get => Rage.Vehicle.Vehicle_GetWheelType(NativePointer);
             set => Rage.Vehicle.Vehicle_SetWheelType(NativePointer, value);
