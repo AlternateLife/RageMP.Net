@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using RageMP.Net.Elements.Pools;
 using RageMP.Net.Enums;
+using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Scripting.ScriptingClasses;
 
@@ -74,6 +75,8 @@ namespace RageMP.Net.Scripting
 
         public static IList<uint> Joaat(IList<string> input)
         {
+            Contract.NotNull(input, nameof(input));
+
             var result = new uint[input.Count];
 
             for (var i = 0; i < input.Count; i++)
