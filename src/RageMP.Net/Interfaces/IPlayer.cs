@@ -66,16 +66,16 @@ namespace RageMP.Net.Interfaces
 
         ClothData GetCloth(ClothSlot slot);
         void SetCloth(ClothSlot slot, ClothData data);
-        void SetClothes(Dictionary<ClothSlot, ClothData> clothes);
+        void SetClothes(IDictionary<ClothSlot, ClothData> clothes);
 
         PropData GetProp(PropSlot slot);
         void SetProp(PropSlot slot, PropData data);
-        void SetProps(Dictionary<PropSlot, PropData> props);
+        void SetProps(IDictionary<PropSlot, PropData> props);
 
         uint GetDecoration(uint collection);
         void RemoveDecoration(uint collection, uint overlay);
         void SetDecoration(uint collection, uint overlay);
-        void SetDecorations(Dictionary<uint, uint> decorations);
+        void SetDecorations(IDictionary<uint, uint> decorations);
 
         void SetHairColor(uint color, uint highlightColor);
 

@@ -225,9 +225,9 @@ namespace RageMP.Net.Elements.Entities
             return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
         }
 
-        public void SetColor(uint primary, uint seconary)
+        public void SetColor(uint primary, uint secondary)
         {
-            Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, seconary);
+            Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, secondary);
         }
 
         public void SetPaint(PaintData primary, PaintData secondary)
@@ -254,11 +254,15 @@ namespace RageMP.Net.Elements.Entities
 
         public void SetOccupant(int seat, IPlayer player)
         {
+            Contract.NotNull(player, nameof(player));
+
             Rage.Vehicle.Vehicle_SetOccupant(NativePointer, seat, player.NativePointer);
         }
 
         public bool IsStreamed(IPlayer forPlayer)
         {
+            Contract.NotNull(forPlayer, nameof(forPlayer));
+
             return Rage.Vehicle.Vehicle_IsStreamed(NativePointer, forPlayer.NativePointer);
         }
     }
