@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
+using System.Threading;
 using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
@@ -16,17 +18,65 @@ namespace RageMP.Net.Example
             MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStart)}");
 
             MP.Events.PlayerChat += OnPlayerChat;
+            MP.Events.PlayerChat += LongPlayerChat;
+            MP.Events.PlayerChat += LongerPlayerChat;
+            MP.Events.PlayerChat += NormalPlayerChat;
+            MP.Events.PlayerChat += FailingPlayerchat;
+
             MP.Events.PlayerDeath += OnPlayerDeath;
             MP.Events.PlayerCommand += OnPlayerCommand;
         }
 
-        private async void OnPlayerCommand(IPlayer player, string text)
+        private async Task LongerPlayerChat(IPlayer player, string text)
+        {
+            MP.Logger.Info($"Start {nameof(LongerPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+
+            await Task.Delay(TimeSpan.FromSeconds(10));
+
+            MP.Logger.Info($"End {nameof(LongerPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        private async Task LongPlayerChat(IPlayer player, string text)
+        {
+            MP.Logger.Info($"Start {nameof(LongPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+
+            await Task.Delay(TimeSpan.FromSeconds(5));
+
+            MP.Logger.Info($"End {nameof(LongPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        private async Task NormalPlayerChat(IPlayer player, string text)
+        {
+            MP.Logger.Info($"Start {nameof(NormalPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+
+            await player.OutputChatBoxAsync("TEST");
+
+            MP.Logger.Info($"End {nameof(NormalPlayerChat)} - {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        private async Task FailingPlayerchat(IPlayer player, string text)
+        {
+            MP.Logger.Info($"Start {nameof(FailingPlayerchat)} - {Thread.CurrentThread.ManagedThreadId}");
+
+            throw new Exception("FAILED!");
+
+            MP.Logger.Info($"End {nameof(FailingPlayerchat)} - {Thread.CurrentThread.ManagedThreadId}");
+        }
+
+        private async Task OnPlayerCommand(IPlayer player, string text)
         {
             if (text == "v")
             {
-                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true, MP.GlobalDimension);
+                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true);
 
                 player.PutIntoVehicle(vehicle, -1);
+
+                return;
+            }
+
+            if (text == "e")
+            {
+                throw new Exception("TEST");
 
                 return;
             }
@@ -167,18 +217,22 @@ namespace RageMP.Net.Example
             }
         }
 
-        private void OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
+        private Task OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
         {
             player.Spawn(player.Position, player.Heading);
+
+            return Task.CompletedTask;
         }
 
-        private void OnPlayerChat(IPlayer player, string text)
+        private Task OnPlayerChat(IPlayer player, string text)
         {
             MP.Markers.NewAsync(0, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true, 0);
 
             MP.Objects.NewAsync(212137959, player.Position, Vector3.One, 0);
 
             MP.TextLabels.NewAsync(player.Position, "HÖHÖ, höhö", 0, new ColorRgba(255, 255, 0, 255), 20, true, 0);
+
+            return Task.CompletedTask;
         }
 
         public void OnStop()

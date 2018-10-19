@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
+using RageMP.Net.Scripting;
 
 namespace RageMP.Net.Elements.Entities
 {
@@ -106,7 +108,9 @@ namespace RageMP.Net.Elements.Entities
             {
                 var reasonPointer = converter.StringToPointer(reason);
 
-                await _plugin.Schedule(() => Rage.Player.Player_Ban(NativePointer, reasonPointer));
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_Ban(NativePointer, reasonPointer))
+                    .ConfigureAwait(false);
             }
         }
 
@@ -116,7 +120,9 @@ namespace RageMP.Net.Elements.Entities
             {
                 var textPointer = converter.StringToPointer(text);
 
-                await _plugin.Schedule(() => Rage.Player.Player_OutputChatBox(NativePointer, textPointer));
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_OutputChatBox(NativePointer, textPointer))
+                    .ConfigureAwait(false);
             }
         }
 
@@ -126,7 +132,9 @@ namespace RageMP.Net.Elements.Entities
             {
                 var textPointer = converter.StringToPointer(text);
 
-                await _plugin.Schedule(() => Rage.Player.Player_Notify(NativePointer, textPointer));
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_Notify(NativePointer, textPointer))
+                    .ConfigureAwait(false);
             }
         }
 
@@ -140,7 +148,9 @@ namespace RageMP.Net.Elements.Entities
             {
                 var eventNamePointer = converter.StringToPointer(eventName);
 
-                await _plugin.Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length));
+                await _plugin
+                    .Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length))
+                    .ConfigureAwait(false);
             }
 
             ArgumentData.Dispose(data);
@@ -150,10 +160,9 @@ namespace RageMP.Net.Elements.Entities
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
-            await _plugin.Schedule(() =>
-            {
-                Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
-            });
+            await _plugin
+                .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length))
+                .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
         }
@@ -162,10 +171,9 @@ namespace RageMP.Net.Elements.Entities
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
-            await _plugin.Schedule(() =>
-            {
-                Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
-            });
+            await _plugin
+                .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length))
+                .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
         }

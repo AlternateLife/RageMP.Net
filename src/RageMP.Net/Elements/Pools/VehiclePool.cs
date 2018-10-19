@@ -17,15 +17,16 @@ namespace RageMP.Net.Elements.Pools
 
         public async Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
-            var pointer = await _plugin.Schedule(() =>
+            using (var converter = new StringConverter())
             {
-                using (var converter = new StringConverter())
-                {
-                    return Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, converter.StringToPointer(numberPlate), alpha, locked, engine, dimension);
-                }
-            }).ConfigureAwait(false);
+                var numberplatePointer = converter.StringToPointer(numberPlate);
 
-            return CreateAndSaveEntity(pointer);
+                var pointer = await _plugin
+                    .Schedule(() => Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, numberplatePointer, alpha, locked, engine, dimension))
+                    .ConfigureAwait(false);
+
+                return CreateAndSaveEntity(pointer);
+            }
         }
 
         protected override IVehicle BuildEntity(IntPtr entityPointer)

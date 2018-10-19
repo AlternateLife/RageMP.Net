@@ -17,7 +17,6 @@ namespace RageMP.Net
     {
         private readonly string _basePath = $"dotnet{Path.DirectorySeparatorChar}";
 
-        private RageTaskScheduler _taskScheduler;
         private ResourceLoader _resourceLoader;
 
         internal IntPtr NativeMultiplayer { get; }
@@ -37,6 +36,7 @@ namespace RageMP.Net
         internal Logger Logger { get; }
 
         internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
+        internal RageTaskScheduler TaskScheduler { get; }
 
         internal Plugin(IntPtr multiplayer)
         {
@@ -45,6 +45,7 @@ namespace RageMP.Net
 
             MP.Setup(this);
 
+            TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
 
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer), this);
@@ -77,31 +78,20 @@ namespace RageMP.Net
         {
             MP.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
 
-            StartTaskScheduler();
-
             _resourceLoader = new ResourceLoader(this);
             _resourceLoader.Start();
 
             MP.Logger.Info("Rage.NET startup finished");
         }
 
-        private void StartTaskScheduler()
-        {
-            MP.Logger.Info("Main Thread: " + Thread.CurrentThread.ManagedThreadId);
-
-            _taskScheduler = new RageTaskScheduler();
-
-            MP.Events.Tick += _taskScheduler.Tick;
-        }
-
         internal Task Schedule(Action action)
         {
-            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.HideScheduler, _taskScheduler);
+            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
         }
 
         internal Task<T> Schedule<T>(Func<T> action)
         {
-            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.None, _taskScheduler);
+            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
         }
 
         internal string GetBasePath(string path)
