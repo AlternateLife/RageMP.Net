@@ -18,7 +18,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RageMP.Net\RageMP.Net.csproj" />
+      <ProjectReference Include="..\AlternateLife.RageMP.Net\AlternateLife.RageMP.Net.csproj" />
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
