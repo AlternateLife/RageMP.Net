@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace RageMP.Net
 {
@@ -7,19 +8,16 @@ namespace RageMP.Net
     {
         private const string _basePath = "dotnet/resources";
 
-        private readonly Plugin _plugin;
-
-        public ResourceLoader(Plugin plugin)
+        public Task Start()
         {
-            _plugin = plugin;
-        }
+            var startTasks = new List<Task>();
 
-        public void Start()
-        {
             foreach (var resource in FindResources())
             {
-                resource.Start();
+                startTasks.Add(Task.Run(() => resource.Start()));
             }
+
+            return Task.WhenAll(startTasks);
         }
 
         private IEnumerable<ResourceHandler> FindResources()
