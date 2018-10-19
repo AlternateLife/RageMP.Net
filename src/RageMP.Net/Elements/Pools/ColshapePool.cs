@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Elements.Entities;
 using RageMP.Net.Interfaces;
 using RageMP.Net.Native;
@@ -12,37 +13,47 @@ namespace RageMP.Net.Elements.Pools
         {
         }
 
-        public IColshape NewCircle(Vector2 position, float radius, uint dimension)
+        public async Task<IColshape> NewCircleAsync(Vector2 position, float radius, uint dimension)
         {
-            var pointer = Rage.ColshapePool.ColshapePool_NewCircle(_nativePointer, position, radius, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ColshapePool.ColshapePool_NewCircle(_nativePointer, position, radius, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public IColshape NewSphere(Vector3 position, float radius, uint dimension)
+        public async Task<IColshape> NewSphereAsync(Vector3 position, float radius, uint dimension)
         {
-            var pointer = Rage.ColshapePool.ColshapePool_NewSphere(_nativePointer, position, radius, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ColshapePool.ColshapePool_NewSphere(_nativePointer, position, radius, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public IColshape NewTube(Vector3 position, float radius, float height, uint dimension)
+        public async Task<IColshape> NewTubeAsync(Vector3 position, float radius, float height, uint dimension)
         {
-            var pointer = Rage.ColshapePool.ColshapePool_NewTube(_nativePointer, position, radius, height, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ColshapePool.ColshapePool_NewTube(_nativePointer, position, radius, height, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public IColshape NewRectangle(Vector2 position, Vector2 size, uint dimension)
+        public async Task<IColshape> NewRectangleAsync(Vector2 position, Vector2 size, uint dimension)
         {
-            var pointer = Rage.ColshapePool.ColshapePool_NewRectangle(_nativePointer, position, size, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ColshapePool.ColshapePool_NewRectangle(_nativePointer, position, size, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public IColshape NewCube(Vector3 position, Vector3 size, uint dimension)
+        public async Task<IColshape> NewCubeAsync(Vector3 position, Vector3 size, uint dimension)
         {
-            var pointer = Rage.ColshapePool.ColshapePool_NewCube(_nativePointer, position, size, dimension);
+            var pointer = await _plugin
+                .Schedule(() => Rage.ColshapePool.ColshapePool_NewCube(_nativePointer, position, size, dimension))
+                .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }

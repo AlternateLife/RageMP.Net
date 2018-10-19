@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Elements.Entities;
 using RageMP.Net.Interfaces;
@@ -13,9 +14,12 @@ namespace RageMP.Net.Elements.Pools
         {
         }
 
-        public ICheckpoint New(uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
+        public async Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
         {
-            var pointer = Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color, visible, dimension);
+            var pointer = await _plugin.Schedule(() =>
+            {
+                return Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color, visible, dimension);
+            }).ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }

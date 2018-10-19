@@ -1,0 +1,52 @@
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using RageMP.Net.Scripting;
+
+namespace RageMP.Net.Helpers
+{
+    internal class RageTaskScheduler : TaskScheduler
+    {
+        private readonly Thread _mainThread;
+
+        public override int MaximumConcurrencyLevel { get; } = 1;
+
+        private readonly ConcurrentQueue<Task> _tasks = new ConcurrentQueue<Task>();
+
+        public RageTaskScheduler()
+        {
+            _mainThread = Thread.CurrentThread;
+        }
+
+        protected override IEnumerable<Task> GetScheduledTasks()
+        {
+            return _tasks;
+        }
+
+        protected override void QueueTask(Task task)
+        {
+            _tasks.Enqueue(task);
+        }
+
+        protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
+        {
+            if (Thread.CurrentThread != _mainThread)
+            {
+                return false;
+            }
+
+            MP.Logger.Info("Inline execute");
+
+            return TryExecuteTask(task);
+        }
+
+        internal void Tick()
+        {
+            while (_tasks.TryDequeue(out Task task))
+            {
+                TryExecuteTask(task);
+            }
+        }
+    }
+}

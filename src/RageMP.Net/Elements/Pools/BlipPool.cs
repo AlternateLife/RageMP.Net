@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using RageMP.Net.Elements.Entities;
 using RageMP.Net.Helpers;
 using RageMP.Net.Interfaces;
@@ -13,15 +14,18 @@ namespace RageMP.Net.Elements.Pools
         {
         }
 
-        public IBlip New(uint sprite, Vector3 position, float scale, uint color, string name, uint alpha, float drawDistance, bool shortRange, int rotation, uint dimension)
+        public async Task<IBlip> NewAsync(uint sprite, Vector3 position, float scale, uint color, string name, uint alpha, float drawDistance, bool shortRange, int rotation, uint dimension)
         {
-            using (var converter = new StringConverter())
+            var pointer = await _plugin.Schedule(() =>
             {
-                var pointer = Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
-                    rotation, dimension);
+                using (var converter = new StringConverter())
+                {
+                    return Rage.BlipPool.BlipPool_New(_nativePointer, sprite, position, scale, color, converter.StringToPointer(name), alpha, drawDistance, shortRange,
+                        rotation, dimension);
+                }
+            }).ConfigureAwait(false);
 
-                return CreateAndSaveEntity(pointer);
-            }
+            return CreateAndSaveEntity(pointer);
         }
 
         protected override IBlip BuildEntity(IntPtr entity)
