@@ -9,7 +9,7 @@ namespace RageMP.Net
         {
             var plugin = new Plugin(multiplayer);
 
-            Task.Run(() => plugin.Start()).Wait();
+            Task.Run(() => plugin.Start());
         }
     }
 }
