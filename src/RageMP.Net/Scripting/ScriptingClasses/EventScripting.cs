@@ -353,8 +353,6 @@ namespace RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = Marshal.PtrToStringUni(text);
 
-            MP.Logger.Info($"Received {EventType.PlayerChat.ToString()} event");
-
             _playerChat.CallAsync(x => x(player, message));
         }
 

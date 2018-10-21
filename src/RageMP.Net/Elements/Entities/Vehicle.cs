@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using RageMP.Net.Data;
 using RageMP.Net.Enums;
 using RageMP.Net.Helpers;

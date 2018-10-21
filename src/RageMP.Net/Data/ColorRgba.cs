@@ -2,13 +2,13 @@ using System.Runtime.InteropServices;
 
 namespace RageMP.Net.Data
 {
-    [StructLayout(LayoutKind.Explicit, Size = 4, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
     public struct ColorRgba
     {
         [FieldOffset(0)]
         public readonly uint NumberValue;
 
-        public ColorRgba(byte red, byte green, byte blue, byte alpha)
+        public ColorRgba(byte red, byte green, byte blue, byte alpha = 255)
         {
             NumberValue = (uint) ((alpha << 24) + (blue << 16) + (green << 8) + red);
         }
