@@ -13,7 +13,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="position">Position of the object</param>
         /// <param name="rotation">Rotation of the object</param>
         /// <param name="dimension">Dimension of the object</param>
-        /// <returns>New object instance</returns>
+        /// <returns>New <see cref="IObject" /> instance</returns>
         Task<IObject> NewAsync(uint model, Vector3 position, Vector3 rotation, uint dimension = MP.GlobalDimension);
     }
 }

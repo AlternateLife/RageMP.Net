@@ -19,7 +19,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="shortRange">Short range flag of the blip</param>
         /// <param name="rotation">Rotation of the blip</param>
         /// <param name="dimension">Dimension of the blip</param>
-        /// <returns>New blip instance</returns>
+        /// <returns>New <see cref="IBlip" /> instance</returns>
         Task<IBlip> NewAsync(uint sprite, Vector3 position, float scale, uint color, string name = "", uint alpha = 255, float drawDistance = 10, bool shortRange = false,
             int rotation = 0, uint dimension = MP.GlobalDimension);
     }

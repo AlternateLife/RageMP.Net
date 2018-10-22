@@ -229,7 +229,7 @@ namespace RageMP.Net.Interfaces
         /// Get the color of the given color slot.
         /// </summary>
         /// <param name="colorSlot">Slot of the color</param>
-        /// <returns>Rgb color of the vehicle at the given <paramref name="colorSlot" /></returns>
+        /// <returns><see cref="ColorRgba" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
         ColorRgba GetColorRgb(uint colorSlot);
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace RageMP.Net.Interfaces
         /// Get player on given seat in the vehicle.
         /// </summary>
         /// <param name="seat">Seat of the vehicle</param>
-        /// <returns>Player on the <paramref name="seat" /> or null if the <paramref name="seat" /> is empty</returns>
+        /// <returns><see cref="IPlayer" /> on the <paramref name="seat" /> or null if the <paramref name="seat" /> is empty</returns>
         IPlayer GetOccupant(int seat);
 
         /// <summary>
