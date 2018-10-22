@@ -77,7 +77,7 @@ namespace RageMP.Net
         {
             MP.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
 
-            await _resourceLoader.Start();
+            await _resourceLoader.Start().ConfigureAwait(false);
 
             MP.Logger.Info("Rage.NET startup finished");
         }
