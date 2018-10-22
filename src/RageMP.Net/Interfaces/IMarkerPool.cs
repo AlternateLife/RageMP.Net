@@ -18,7 +18,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="color">Color of the marker</param>
         /// <param name="visible">Visible state of the marker</param>
         /// <param name="dimension">Dimension of the marker</param>
-        /// <returns>New marker instance</returns>
+        /// <returns>New <see cref="IMarker" /> instance</returns>
         Task<IMarker> NewAsync(uint model, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
     }
 }

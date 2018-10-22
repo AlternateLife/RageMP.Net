@@ -135,7 +135,7 @@ namespace RageMP.Net.Interfaces
         uint HairHighlightColor { get; }
 
         /// <summary>
-        /// Get or set the head blend of the vehicle.
+        /// Get or set the <see cref="HeadBlendData" /> of the vehicle.
         /// </summary>
         HeadBlendData HeadBlend { get; set; }
 
@@ -145,7 +145,7 @@ namespace RageMP.Net.Interfaces
         string ActionString { get; }
 
         /// <summary>
-        /// Get the vehicle the player is in or null if not in any vehicle.
+        /// Get the <see cref="IVehicle" /> the player is in or null if not in any vehicle.
         /// </summary>
         IVehicle Vehicle { get; }
 
@@ -253,7 +253,7 @@ namespace RageMP.Net.Interfaces
         /// Get cloth of the player at given slot.
         /// </summary>
         /// <param name="slot">Slot of the cloth</param>
-        /// <returns>Cloth of the player</returns>
+        /// <returns><see cref="ClothSlot" /> of the player</returns>
         ClothData GetCloth(ClothSlot slot);
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace RageMP.Net.Interfaces
         /// Get prop of the player at given slot.
         /// </summary>
         /// <param name="slot">Slot of the prop</param>
-        /// <returns>Prop of the player</returns>
+        /// <returns><see cref="PropSlot" /> of the player</returns>
         PropData GetProp(PropSlot slot);
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace RageMP.Net.Interfaces
         /// Get the head overlay of the player.
         /// </summary>
         /// <param name="overlayId">Slot of the head overlay</param>
-        /// <returns>Value of the head overlay</returns>
+        /// <returns>Value of the <see cref="HeadOverlayData" /></returns>
         HeadOverlayData GetHeadOverlay(uint overlayId);
 
         /// <summary>

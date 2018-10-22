@@ -38,7 +38,7 @@ namespace RageMP.Net.Interfaces
         /// <summary>
         /// Show route for a list of players with given color and scale.
         ///
-        /// The color and scale are used for the route, not the blip.
+        /// The <paramref name="color" /> and <paramref name="scale" /> are used for the route, not the blip.
         /// </summary>
         /// <param name="forPlayers">List of players to show the route for</param>
         /// <param name="color">Color of the route</param>

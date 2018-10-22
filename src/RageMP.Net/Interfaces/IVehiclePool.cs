@@ -18,7 +18,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="locked">Locked state of the vehicle</param>
         /// <param name="engine">Engine state of the vehicle</param>
         /// <param name="dimension">Dimension of the vehicle</param>
-        /// <returns>New vehicle instance</returns>
+        /// <returns>New <see cref="IVehicle" /> instance</returns>
         Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading = 0, string numberPlate = "", uint alpha = 255, bool locked = false, bool engine = false,
             uint dimension = MP.GlobalDimension);
     }
