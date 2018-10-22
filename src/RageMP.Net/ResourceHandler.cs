@@ -49,7 +49,9 @@ namespace RageMP.Net
 
             try
             {
-                await _entryPoint.OnStartAsync();
+                await _entryPoint
+                    .OnStartAsync()
+                    .ConfigureAwait(false);
             }
             catch (Exception e)
             {

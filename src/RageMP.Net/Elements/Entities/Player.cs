@@ -98,7 +98,9 @@ namespace RageMP.Net.Elements.Entities
             {
                 var reasonPointer = converter.StringToPointer(reason);
 
-                await _plugin.Schedule(() => Rage.Player.Player_Kick(NativePointer, reasonPointer));
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_Kick(NativePointer, reasonPointer))
+                    .ConfigureAwait(false);
             }
         }
 
