@@ -11,12 +11,14 @@ namespace RageMP.Net
     internal class ResourceHandler
     {
         private readonly DirectoryInfo _directory;
+        private readonly ResourceLoader _resourceLoader;
         private readonly List<Assembly> _loadedAssemblies = new List<Assembly>();
         private IResource _entryPoint;
 
-        public ResourceHandler(DirectoryInfo directory)
+        public ResourceHandler(DirectoryInfo directory, ResourceLoader resourceLoader)
         {
             _directory = directory;
+            _resourceLoader = resourceLoader;
         }
 
         public async Task Start()
@@ -40,7 +42,7 @@ namespace RageMP.Net
             _entryPoint = LoadEntryPoint();
             if (_entryPoint == null)
             {
-                MP.Logger.Warn($"{_directory.Name}: Could not find the entrypoint-class of type `{typeof(IResource)}`!");
+                MP.Logger.Warn($"{_directory.Name}: Could not find a valid entrypoint-class implementing interface \"{typeof(IResource)}\"!");
 
                 return;
             }
@@ -65,7 +67,7 @@ namespace RageMP.Net
             {
                 foreach (var file in _directory.GetFiles("*.dll"))
                 {
-                    _loadedAssemblies.Add(Assembly.LoadFrom(file.FullName));
+                    _loadedAssemblies.Add(_resourceLoader.LoadAssembly(file.FullName));
                 }
 
                 return true;
@@ -84,7 +86,31 @@ namespace RageMP.Net
 
             foreach (var assembly in _loadedAssemblies)
             {
-                foreach (var type in assembly.GetTypes())
+                Type[] types;
+                try
+                {
+                    types = assembly.GetTypes();
+                }
+                catch (Exception e)
+                {
+                    MP.Logger.Error($"{_directory.Name}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ");
+
+                    if (e is ReflectionTypeLoadException reflectionException)
+                    {
+                        MP.Logger.Error($"{_directory.Name}: Following LoaderExceptions are given:");
+
+                        var loaderExceptions = reflectionException.LoaderExceptions;
+
+                        for (int i = 0; i < loaderExceptions.Length; i++)
+                        {
+                            MP.Logger.Error($"{_directory.Name}: LoaderException {i + 1} / {loaderExceptions.Length}: ", loaderExceptions[i]);
+                        }
+                    }
+
+                    return null;
+                }
+
+                foreach (var type in types)
                 {
                     if (type.IsClass == false || type.IsAbstract || resourceInterfaceType.IsAssignableFrom(type) == false)
                     {
@@ -93,7 +119,23 @@ namespace RageMP.Net
 
                     var constructor = type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public, null, Type.EmptyTypes, null);
 
-                    return (IResource) constructor.Invoke(null);
+                    if (constructor == null)
+                    {
+                        MP.Logger.Warn($"{_directory.Name}: Possible type \"{type}\" was found, but no parameterless-constructor is available!");
+
+                        continue;
+                    }
+
+                    try
+                    {
+                        return (IResource) constructor.Invoke(null);
+                    }
+                    catch (Exception e)
+                    {
+                        MP.Logger.Error($"{_directory.Name}: An error occured during constructor-execution: ", e);
+
+                        return null;
+                    }
                 }
             }
 

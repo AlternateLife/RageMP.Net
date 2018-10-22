@@ -44,7 +44,7 @@ namespace RageMP.Net.Example
         {
             if (text == "v")
             {
-                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true);
+                var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, player.Position, 0, "", 255, false, true, player.Dimension);
 
                 player.PutIntoVehicle(vehicle, -1);
 
