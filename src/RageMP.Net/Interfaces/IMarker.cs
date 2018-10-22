@@ -31,14 +31,14 @@ namespace RageMP.Net.Interfaces
         /// Show marker for a list of players.
         /// </summary>
         /// <param name="players">List of players to show the marker for</param>
-        /// <exception cref="ArgumentNullException">Players is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         void ShowFor(IEnumerable<IPlayer> players);
 
         /// <summary>
         /// Hide marker for a list of players.
         /// </summary>
         /// <param name="players">List of players to hide the marker for</param>
-        /// <exception cref="ArgumentNullException">Players is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         void HideFor(IEnumerable<IPlayer> players);
     }
 }

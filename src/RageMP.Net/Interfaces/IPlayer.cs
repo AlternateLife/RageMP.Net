@@ -203,7 +203,7 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="eventName">Name of the event</param>
         /// <param name="arguments">Arguments of the event</param>
-        /// <exception cref="ArgumentNullException">Event name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
         Task CallAsync(string eventName, params object[] arguments);
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="name">Name of the animation</param>
         /// <param name="speed">Speed of the animation</param>
         /// <param name="flags">Flags of the animation</param>
-        /// <exception cref="ArgumentNullException">Dictionary or name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dictionary" /> or <paramref name="name" /> is null or empty</exception>
         void PlayAnimation(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace RageMP.Net.Interfaces
         /// Play a scenario on the player.
         /// </summary>
         /// <param name="scenario">Name of the scenario</param>
-        /// <exception cref="ArgumentNullException">Scenario name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="scenario" /> is null or empty</exception>
         void PlayScenario(string scenario);
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace RageMP.Net.Interfaces
         /// Set multiple clothes of the player.
         /// </summary>
         /// <param name="clothes">Clothes to set on the player</param>
-        /// <exception cref="ArgumentNullException">Clothes is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="clothes" /> is null</exception>
         void SetClothes(IDictionary<ClothSlot, ClothData> clothes);
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace RageMP.Net.Interfaces
         /// Set multiple props of the player.
         /// </summary>
         /// <param name="props">Props to set on the player</param>
-        /// <exception cref="ArgumentNullException">Props is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="props" /> is null</exception>
         void SetProps(IDictionary<PropSlot, PropData> props);
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace RageMP.Net.Interfaces
         /// Set multiple decorations on the player.
         /// </summary>
         /// <param name="decorations">Decorations to set on the player</param>
-        /// <exception cref="ArgumentNullException">Decorations is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="decorations" /> is null</exception>
         void SetDecorations(IDictionary<uint, uint> decorations);
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="faceFeatures">Face features of the player</param>
         /// <param name="headOverlays">Head overlays of the player</param>
         /// <param name="decorations">Decorations of the player</param>
-        /// <exception cref="ArgumentNullException">Head overlays or decorations is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="headOverlays" /> or <paramref name="decorations" /> is null</exception>
         void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations);
 
@@ -382,7 +382,7 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="vehicle">Vehicle to put the player into</param>
         /// <param name="seat">Seat the put the player on</param>
-        /// <exception cref="ArgumentNullException">Vehicle is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="vehicle" /> is null</exception>
         void PutIntoVehicle(IVehicle vehicle, int seat);
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace RageMP.Net.Interfaces
         /// Give multiple weapons to the player.
         /// </summary>
         /// <param name="weapons">Key value set of weapons with ammo</param>
-        /// <exception cref="ArgumentNullException">Weapons is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         void GiveWeapons(IDictionary<uint, uint> weapons);
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace RageMP.Net.Interfaces
         /// Remove multiple weapons from the player.
         /// </summary>
         /// <param name="weaponHashes">Weapons to remove</param>
-        /// <exception cref="ArgumentNullException">Weapon hashes is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="weaponHashes" /> hashes is null</exception>
         void RemoveWeapons(IEnumerable<uint> weaponHashes);
 
         /// <summary>
@@ -440,8 +440,8 @@ namespace RageMP.Net.Interfaces
         /// Check if given player is streamed.
         /// </summary>
         /// <param name="player">Player to check</param>
-        /// <returns>True if the player is streamed, otherwise false</returns>
-        /// <exception cref="ArgumentNullException">Player is null</exception>
+        /// <returns>True if the <paramref name="player" /> is streamed, otherwise false</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="player" /> is null</exception>
         bool IsStreamed(IPlayer player);
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace RageMP.Net.Interfaces
         /// WARNING: Use this at your own risk.
         /// </summary>
         /// <param name="code">Code to execute on the player</param>
-        /// <exception cref="ArgumentNullException">Code is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="code" /> is null or empty</exception>
         void Eval(string code);
 
     }

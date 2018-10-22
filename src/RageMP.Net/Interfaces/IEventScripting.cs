@@ -38,11 +38,11 @@ namespace RageMP.Net.Interfaces
         /// <summary>
         /// Add a client event callback.
         ///
-        /// The callback is called when a player sends a client event with the given event name.
+        /// The <paramref name="callback" /> is called when a player sends a client event with the given <paramref name="eventName" />.
         /// </summary>
         /// <param name="eventName">Name of the event</param>
         /// <param name="callback">Callback to execute on the event</param>
-        /// <exception cref="ArgumentNullException">Event name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
         void Add(string eventName, PlayerRemoteEventDelegate callback);
     }
 }

@@ -31,14 +31,14 @@ namespace RageMP.Net.Interfaces
         /// Show checkpoint for a list of players.
         /// </summary>
         /// <param name="players">List of players to show the checkpoint for</param>
-        /// <exception cref="ArgumentNullException">forPlayers is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         void ShowFor(IEnumerable<IPlayer> players);
 
         /// <summary>
         /// Hide checkpoint for a list of players.
         /// </summary>
         /// <param name="players">List of players to hide the checkpoint for</param>
-        /// <exception cref="ArgumentNullException">forPlayers is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         void HideFor(IEnumerable<IPlayer> players);
     }
 }
