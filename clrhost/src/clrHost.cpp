@@ -42,8 +42,8 @@
 #define RUNTIME_DIR_PATH "./dotnet/runtime/"
 #define PLUGIN_DIR_PATH "./dotnet/plugins/"
 
-#define PLUGIN_NAME "RageMP.Net"
-#define PLUGIN_CLASS_NAME "RageMP.Net.PluginWrapper"
+#define PLUGIN_NAME "AlternateLife.RageMP.Net"
+#define PLUGIN_CLASS_NAME "AlternateLife.RageMP.Net.PluginWrapper"
 
 #ifdef _WIN32
 #define LIST_SEPARATOR ";"
