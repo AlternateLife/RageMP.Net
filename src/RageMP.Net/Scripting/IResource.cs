@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace RageMP.Net.Scripting
+namespace AlternateLife.RageMP.Net.Scripting
 {
     public interface IResource
     {

@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using RageMP.Net.Elements.Pools;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Scripting.ScriptingClasses;
+using AlternateLife.RageMP.Net.Elements.Pools;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
-namespace RageMP.Net.Scripting
+namespace AlternateLife.RageMP.Net.Scripting
 {
     public static class MP
     {

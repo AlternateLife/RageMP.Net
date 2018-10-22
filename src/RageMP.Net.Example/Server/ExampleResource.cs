@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
-using RageMP.Net.Data;
-using RageMP.Net.Enums;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Example
+namespace AlternateLife.RageMP.Net.Example
 {
     public class ExampleResource : IResource
     {

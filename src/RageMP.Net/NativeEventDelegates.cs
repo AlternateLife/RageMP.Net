@@ -1,8 +1,8 @@
 using System;
 using System.Numerics;
-using RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Data;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal delegate void NativeTickDelegate();
 

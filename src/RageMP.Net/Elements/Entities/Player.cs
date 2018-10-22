@@ -4,14 +4,14 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using RageMP.Net.Data;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Elements.Entities
+namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player : Entity, IPlayer
     {

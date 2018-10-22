@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using RageMP.Net.Enums;
-using RageMP.Net.Native;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers
 {
     internal class EventHandler<TNative, TEvent>
     {

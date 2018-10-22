@@ -1,11 +1,11 @@
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
-using RageMP.Net.Elements.Entities;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Elements.Entities;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Elements.Pools
+namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class ColshapePool : PoolBase<IColshape>, IColshapePool
     {

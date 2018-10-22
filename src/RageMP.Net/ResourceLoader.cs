@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace RageMP.Net
+namespace AlternateLife.RageMP.Net
 {
     internal class ResourceLoader
     {

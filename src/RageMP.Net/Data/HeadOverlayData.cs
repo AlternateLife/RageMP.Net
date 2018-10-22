@@ -1,4 +1,4 @@
-namespace RageMP.Net.Data
+namespace AlternateLife.RageMP.Net.Data
 {
     public struct HeadOverlayData
     {

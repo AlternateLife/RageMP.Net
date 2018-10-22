@@ -1,12 +1,12 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Scripting.ScriptingClasses
+namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 {
     internal class EventScripting : IEventScripting
     {

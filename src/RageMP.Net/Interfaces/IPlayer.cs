@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
-using RageMP.Net.Data;
-using RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IPlayer : IEntity
     {

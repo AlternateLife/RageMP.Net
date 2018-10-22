@@ -1,7 +1,7 @@
 using System;
-using RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Data;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IWorld
     {
