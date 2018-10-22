@@ -12,7 +12,7 @@ namespace RageMP.Net.Interfaces
         /// Send chat message to all players.
         /// </summary>
         /// <param name="message">Message to the players</param>
-        /// <exception cref="ArgumentNullException">Message is null (empty message is allowed)</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="message" /> is null (empty message is allowed)</exception>
         Task BroadcastAsync(string message);
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="position">Position to search players at</param>
         /// <param name="range">Range to search players in</param>
         /// <param name="dimension">Dimension to search players in</param>
-        /// <exception cref="ArgumentNullException">Message is null (empty message is allowed)</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="message" /> is null (empty message is allowed)</exception>
         Task BroadcastInRangeAsync(string message, Vector3 position, float range, uint dimension = MP.GlobalDimension);
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="message">Message to the players</param>
         /// <param name="dimension">Dimension to search players in</param>
-        /// <exception cref="ArgumentNullException">Message is null (empty message is allowed)</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="message" /> is null (empty message is allowed)</exception>
         Task BroadcastInDimensionAsync(string message, uint dimension);
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="eventName">Name of the event</param>
         /// <param name="arguments">Arguments of the event</param>
-        /// <exception cref="ArgumentNullException">EventName is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
         Task CallAsync(string eventName, params object[] arguments);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="dimension">Dimension to search players in</param>
         /// <param name="eventName">Name of the event</param>
         /// <param name="arguments">Arguments of the event</param>
-        /// <exception cref="ArgumentNullException">EventName is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
         Task CallInRangeAsync(Vector3 position, float range, uint dimension, string eventName, params object[] arguments);
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="dimension">Dimension to search players in</param>
         /// <param name="eventName">Name of the event</param>
         /// <param name="arguments">Arguments of the event</param>
-        /// <exception cref="ArgumentNullException">EventName is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
         Task CallInDimensionAsync(uint dimension, string eventName, params object[] arguments);
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace RageMP.Net.Interfaces
         /// <param name="players">List of players to send the event to.</param>
         /// <param name="eventName">Name of the event</param>
         /// <param name="arguments">Arguments of the event</param>
-        /// <exception cref="ArgumentNullException">Players is null or eventName is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="players" /> is null or <paramref name="eventName" /> is null or empty</exception>
         Task CallForAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments);
 
         /// <summary>

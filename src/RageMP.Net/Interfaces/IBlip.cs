@@ -43,14 +43,14 @@ namespace RageMP.Net.Interfaces
         /// <param name="forPlayers">List of players to show the route for</param>
         /// <param name="color">Color of the route</param>
         /// <param name="scale">Scale of the route</param>
-        /// <exception cref="ArgumentNullException">forPlayers is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
         void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale);
 
         /// <summary>
         /// Hide route for a list of players.
         /// </summary>
         /// <param name="forPlayers">List of players to hide the route for</param>
-        /// <exception cref="ArgumentNullException">forPlayers is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
         void HideRoute(IEnumerable<IPlayer> forPlayers);
     }
 }

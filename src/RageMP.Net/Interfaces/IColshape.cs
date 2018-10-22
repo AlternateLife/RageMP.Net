@@ -14,7 +14,7 @@ namespace RageMP.Net.Interfaces
         /// Check if a position is within the colshape.
         /// </summary>
         /// <param name="position">Position to check</param>
-        /// <returns>True if the position is inside the colshape, otherwise false</returns>
+        /// <returns>True if the <paramref name="position" /> is inside the colshape, otherwise false</returns>
         bool IsPointWhithin(Vector3 position);
     }
 }

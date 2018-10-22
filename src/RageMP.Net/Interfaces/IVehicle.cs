@@ -194,28 +194,28 @@ namespace RageMP.Net.Interfaces
         /// Get the value of a modification slot.
         /// </summary>
         /// <param name="id">Slot of the modification</param>
-        /// <returns>Value of the modification slot</returns>
+        /// <returns>Value of the modification <paramref name="id" /></returns>
         uint GetMod(uint id);
 
         /// <summary>
         /// Set the value of a modification slot.
         /// </summary>
         /// <param name="id">Slot of the modification</param>
-        /// <param name="mod">Value of the modification slot</param>
+        /// <param name="mod">Value of the modification <paramref name="id" /></param>
         void SetMod(uint id, uint mod);
 
         /// <summary>
         /// Get color number of the given color slot.
         /// </summary>
         /// <param name="id">Slot of the color</param>
-        /// <returns>Value of the color slot</returns>
+        /// <returns>Value of the color <paramref name="id" /></returns>
         uint GetColor(uint id);
 
         /// <summary>
         /// Get paint of the given color slot.
         /// </summary>
         /// <param name="id">Slot of the paint</param>
-        /// <returns>Value of the color slot</returns>
+        /// <returns>Value of the color <paramref name="id" /></returns>
         uint GetPaint(uint id);
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace RageMP.Net.Interfaces
         /// Get the color of the given color slot.
         /// </summary>
         /// <param name="colorSlot">Slot of the color</param>
-        /// <returns>Rgb color of the vehicle at the given slot</returns>
+        /// <returns>Rgb color of the vehicle at the given <paramref name="colorSlot" /></returns>
         ColorRgba GetColorRgb(uint colorSlot);
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace RageMP.Net.Interfaces
         /// Check if the extra is set on the vehicle.
         /// </summary>
         /// <param name="id">Slot of the extra</param>
-        /// <returns>True if the slot is set, otherwise false</returns>
+        /// <returns>True if the <paramref name="id" /> is set, otherwise false</returns>
         bool GetExtra(uint id);
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace RageMP.Net.Interfaces
         /// Get player on given seat in the vehicle.
         /// </summary>
         /// <param name="seat">Seat of the vehicle</param>
-        /// <returns>Player on the seat or null if the seat is empty</returns>
+        /// <returns>Player on the <paramref name="seat" /> or null if the <paramref name="seat" /> is empty</returns>
         IPlayer GetOccupant(int seat);
 
         /// <summary>
@@ -272,14 +272,14 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="seat">Seat of the vehicle</param>
         /// <param name="player">Player to place on the seat</param>
-        /// <exception cref="ArgumentNullException">Player is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="player" /> is null</exception>
         void SetOccupant(int seat, IPlayer player);
 
         /// <summary>
         /// Check if the vehicle is streamed for given player.
         /// </summary>
         /// <param name="forPlayer">Player to check for</param>
-        /// <returns>True if the vehicle is streamed for given player, otherwise false</returns>
+        /// <returns>True if the vehicle is streamed for given <paramref name="forPlayer" />, otherwise false</returns>
         bool IsStreamed(IPlayer forPlayer);
     }
 }

@@ -65,8 +65,8 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <param name="data">Value of the data</param>
-        /// <returns>True if any data is set and not null, otherwise false</returns>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <returns>True if any <paramref name="data" /> is set and not null, otherwise false</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         bool TryGetSharedData(string key, out object data);
 
         /// <summary>
@@ -74,14 +74,14 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <param name="data">Value of the data</param>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         void SetSharedData(string key, object data);
 
         /// <summary>
         /// Set multiple shared data on the entity.
         /// </summary>
         /// <param name="values">Key value pairs to set</param>
-        /// <exception cref="ArgumentNullException">Values is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values" /> is null</exception>
         void SetSharedData(IDictionary<string, object> values);
 
         /// <summary>
@@ -89,14 +89,14 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <returns>True if any data is set and not null, otherwise false</returns>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         bool HasSharedData(string key);
 
         /// <summary>
         /// Reset the shared data of the entity.
         /// </summary>
         /// <param name="key">Key of the data to reset</param>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         void ResetSharedData(string key);
 
         /// <summary>
@@ -104,8 +104,8 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <param name="data">Value of the data</param>
-        /// <returns>True if any data is set, otherwise false</returns>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <returns>True if any <paramref name="data" /> is set, otherwise false</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         bool TryGetData(string key, out object data);
 
         /// <summary>
@@ -113,14 +113,14 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <param name="data">Value of the data</param>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         void SetData(string key, object data);
 
         /// <summary>
         /// Set multiple data on the entity.
         /// </summary>
         /// <param name="values">Key value pairs to set</param>
-        /// <exception cref="ArgumentNullException">Values is null</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="values" /> is null</exception>
         void SetData(IDictionary<string, object> values);
 
         /// <summary>
@@ -128,14 +128,14 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="key">Key of the data</param>
         /// <returns>True if any data is set, otherwise false</returns>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         bool HasData(string key);
 
         /// <summary>
         /// Reset data of the entity.
         /// </summary>
         /// <param name="key">Key of the data</param>
-        /// <exception cref="ArgumentNullException">Key is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key" /> is null or empty</exception>
         void ResetData(string key);
 
         /// <summary>

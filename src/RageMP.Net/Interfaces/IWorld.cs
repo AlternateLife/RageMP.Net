@@ -30,21 +30,21 @@ namespace RageMP.Net.Interfaces
         /// </summary>
         /// <param name="weather">New weather to transit to </param>
         /// <param name="time">Duration of the transition</param>
-        /// <exception cref="ArgumentNullException">Weather is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="weather" /> is null or empty</exception>
         void SetWeatherTransition(string weather, float time = 0.5f);
 
         /// <summary>
         /// Request an ipl in the world.
         /// </summary>
         /// <param name="ipl">Name of the ipl to load</param>
-        /// <exception cref="ArgumentNullException">Ipl name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="ipl" /> is null or empty</exception>
         void RequestIpl(string ipl);
 
         /// <summary>
         /// Remove an ipl from the world.
         /// </summary>
         /// <param name="ipl">Name of the ipl to unload</param>
-        /// <exception cref="ArgumentNullException">Ipl name is null or empty</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="ipl" /> is null or empty</exception>
         void RemoveIpl(string ipl);
     }
 }
