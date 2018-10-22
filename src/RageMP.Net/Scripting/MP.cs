@@ -50,6 +50,13 @@ namespace RageMP.Net.Scripting
             _plugin = plugin;
         }
 
+        /// <summary>
+        /// Converts given string to the equivalent Jenkins-One-At-A-Time value.
+        ///
+        /// https://en.wikipedia.org/wiki/Jenkins_hash_function#one_at_a_time
+        /// </summary>
+        /// <param name="data">text to convert</param>
+        /// <returns>Integer that represents given string data</returns>
         public static uint Joaat(string data)
         {
             if (string.IsNullOrEmpty(data))
@@ -75,6 +82,13 @@ namespace RageMP.Net.Scripting
             return hash;
         }
 
+        /// <summary>
+        /// Converts given collection of strings to Jenkins-One-At-A-Time values.
+        ///
+        /// https://en.wikipedia.org/wiki/Jenkins_hash_function#one_at_a_time
+        /// </summary>
+        /// <param name="input">texts to convert</param>
+        /// <returns>Collection of converted values</returns>
         public static IList<uint> Joaat(IList<string> input)
         {
             Contract.NotNull(input, nameof(input));
@@ -89,11 +103,23 @@ namespace RageMP.Net.Scripting
             return result;
         }
 
+        /// <summary>
+        /// Schedules given <see cref="Action"/> in RageMP's main thread.
+        ///
+        /// WARNING: Avoid long procedures, because this could harm general event performance.
+        /// </summary>
+        /// <param name="action"><paramref name="action"/> to schedule</param>
         public static Task Schedule(Action action)
         {
             return _plugin.Schedule(action);
         }
 
+        /// <summary>
+        /// Schedules given <see cref="Func{TResult}"/> in RageMP's main thread.
+        ///
+        /// WARNING: Avoid long procedures, because this could harm general event performance.
+        /// </summary>
+        /// <param name="action"><paramref name="action"/> to schedule</param>
         public static Task<T> Schedule<T>(Func<T> action)
         {
             return _plugin.Schedule(action);
