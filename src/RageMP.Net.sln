@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageMP.Net", "RageMP.Net\RageMP.Net.csproj", "{B41318D4-99B3-4B17-88C1-2B7CCF60541F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageMP.Net", "AlternateLife.RageMP.Net\RageMP.Net.csproj", "{B41318D4-99B3-4B17-88C1-2B7CCF60541F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageMP.Net.Example", "RageMP.Net.Example\RageMP.Net.Example.csproj", "{8198556B-469C-4D54-A5C0-78E2A483B511}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RageMP.Net.Example", "AlternateLife.RageMP.Net.Example\RageMP.Net.Example.csproj", "{8198556B-469C-4D54-A5C0-78E2A483B511}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
