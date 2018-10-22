@@ -2,6 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
+        <RootNamespace>RageMP.Net</RootNamespace>
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
@@ -17,12 +18,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\RageMP.Net\RageMP.Net.csproj" />
+      <PackageReference Include="NLog" Version="4.5.10" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="NLog.config" />
+      <Content Include="NLog.config">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\RageMP.Net.Example.dll;$(OutputPath)\RageMP.Net.Example.pdb"
-              DestinationFolder="../../../RageMP Server/dotnet/resources/example/"
-              SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
     </Target>
+
 </Project>

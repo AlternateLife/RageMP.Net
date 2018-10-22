@@ -2,10 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.0</TargetFramework>
-        <RootNamespace>RageMP.Net</RootNamespace>
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
-        <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
+        <RootNamespace>AlternateLife.RageMP.Net.Example</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
@@ -18,18 +17,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="NLog" Version="4.5.10" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Remove="NLog.config" />
-      <Content Include="NLog.config">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <ProjectReference Include="..\AlternateLife.RageMP.Net\AlternateLife.RageMP.Net.csproj" />
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\RageMP.Net.dll;$(OutputPath)\RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb"
+              DestinationFolder="../../../RageMP Server/dotnet/resources/example/"
+              SkipUnchangedFiles="false" />
     </Target>
-
 </Project>
