@@ -5,6 +5,7 @@
         <RootNamespace>RageMP.Net</RootNamespace>
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
+        <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">

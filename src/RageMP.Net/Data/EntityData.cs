@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
-using RageMP.Net.Enums;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Data
+namespace AlternateLife.RageMP.Net.Data
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct EntityData

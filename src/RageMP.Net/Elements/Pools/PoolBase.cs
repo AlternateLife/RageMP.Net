@@ -4,10 +4,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Elements.Pools
+namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal abstract class PoolBase<T> : IPool<T>, IInternalPool where T : IEntity
     {

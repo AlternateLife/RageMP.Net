@@ -1,4 +1,4 @@
-namespace RageMP.Net.Native
+namespace AlternateLife.RageMP.Net.Native
 {
     internal static partial class Rage
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers
 {
     internal static class Contract
     {

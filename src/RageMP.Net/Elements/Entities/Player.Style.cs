@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using RageMP.Net.Data;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Native;
 
-namespace RageMP.Net.Elements.Entities
+namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {

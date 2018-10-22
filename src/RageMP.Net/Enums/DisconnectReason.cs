@@ -1,4 +1,4 @@
-namespace RageMP.Net.Enums
+namespace AlternateLife.RageMP.Net.Enums
 {
     public enum DisconnectReason
     {

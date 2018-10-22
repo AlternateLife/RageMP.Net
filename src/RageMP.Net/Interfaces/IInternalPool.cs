@@ -1,6 +1,6 @@
 using System;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     internal interface IInternalPool
     {

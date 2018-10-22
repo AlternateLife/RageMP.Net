@@ -1,9 +1,9 @@
 using System.Numerics;
 using System.Threading.Tasks;
-using RageMP.Net.Enums;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IVehiclePool : IPool<IVehicle>
     {

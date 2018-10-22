@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using RageMP.Net.Enums;
-using RageMP.Net.Helpers;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Data
+namespace AlternateLife.RageMP.Net.Data
 {
     [StructLayout(LayoutKind.Explicit, Size = 13, Pack = 1)]
     internal struct ArgumentData

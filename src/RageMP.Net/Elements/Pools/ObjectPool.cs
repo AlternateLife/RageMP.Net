@@ -1,11 +1,11 @@
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
-using RageMP.Net.Interfaces;
-using RageMP.Net.Native;
-using Object = RageMP.Net.Elements.Entities.Object;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Native;
+using Object = AlternateLife.RageMP.Net.Elements.Entities.Object;
 
-namespace RageMP.Net.Elements.Pools
+namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class ObjectPool : PoolBase<IObject>, IObjectPool
     {
@@ -24,7 +24,7 @@ namespace RageMP.Net.Elements.Pools
 
         protected override IObject BuildEntity(IntPtr entityPointer)
         {
-            return new Object(entityPointer, _plugin);
+            return new Entities.Object(entityPointer, _plugin);
         }
     }
 }

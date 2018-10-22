@@ -2,9 +2,9 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting;
 
-namespace RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers
 {
     internal class RageTaskScheduler : TaskScheduler
     {

@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace RageMP.Net.Data
+namespace AlternateLife.RageMP.Net.Data
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct HeadBlendData

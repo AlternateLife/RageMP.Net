@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
-using RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Data;
 
-namespace RageMP.Net.Interfaces
+namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface ICheckpoint : IEntity
     {
