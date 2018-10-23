@@ -130,11 +130,11 @@ namespace AlternateLife.RageMP.Net.Example
                     MP.Logger.Debug($"Weapon: {weapon.Key} -> {weapon.Value}");
                 }
 
-                player.GiveWeapons(new Dictionary<uint, uint>
+                player.GiveWeapons(new Dictionary<WeaponHash, uint>
                 {
-                    { 0xD8DF3C3C, 20 },
-                    { 0x5EF9FEC4, 123 },
-                    { 0xE284C527, 500 }
+                    { WeaponHash.KnuckleDuster, 20 },
+                    { WeaponHash.CombatPistol, 123 },
+                    { WeaponHash.AssaultShotgun, 500 }
                 });
 
                 return;
