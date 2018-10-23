@@ -264,6 +264,15 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void SetCloth(ClothSlot slot, ClothData data);
 
         /// <summary>
+        /// Set cloth of the player at given slot.
+        /// </summary>
+        /// <param name="slot">Slot of the cloth</param>
+        /// <param name="drawable">Drawable value of the cloth</param>
+        /// <param name="texture">Texture value of the cloth</param>
+        /// <param name="palette">Palette value of the cloth</param>
+        void SetCloth(ClothSlot slot, byte drawable, byte texture, byte palette);
+
+        /// <summary>
         /// Set multiple clothes of the player.
         /// </summary>
         /// <param name="clothes">Clothes to set on the player</param>
@@ -283,6 +292,14 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the prop</param>
         /// <param name="data">Value of the prop</param>
         void SetProp(PropSlot slot, PropData data);
+
+        /// <summary>
+        /// Set prop of the player at given slot.
+        /// </summary>
+        /// <param name="slot">Slot of the prop</param>
+        /// <param name="drawable">Drawable value of the prop</param>
+        /// <param name="texture">Texture value of the prop</param>
+        void SetProp(PropSlot slot, byte drawable, byte texture);
 
         /// <summary>
         /// Set multiple props of the player.
