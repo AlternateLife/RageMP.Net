@@ -257,6 +257,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         ClothData GetCloth(ClothSlot slot);
 
         /// <summary>
+        /// Get cloth of the player at given slot.
+        /// </summary>
+        /// <param name="slot">Slot of the cloth</param>
+        /// <returns><see cref="ClothSlot" /> of the player</returns>
+        ClothData GetCloth(int slot);
+
+        /// <summary>
         /// Set cloth of the player at given slot.
         /// </summary>
         /// <param name="slot">Slot of the cloth</param>
@@ -285,6 +292,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the prop</param>
         /// <returns><see cref="PropSlot" /> of the player</returns>
         PropData GetProp(PropSlot slot);
+
+        /// <summary>
+        /// Get prop of the player at given slot.
+        /// </summary>
+        /// <param name="slot">Slot of the prop</param>
+        /// <returns><see cref="PropSlot" /> of the player</returns>
+        PropData GetProp(int slot);
 
         /// <summary>
         /// Set prop of the player at given slot.
@@ -316,11 +330,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint GetDecoration(uint collection);
 
         /// <summary>
+        /// Get the decoration of the player at given collection.
+        /// </summary>
+        /// <param name="collection">Collection of the decoration</param>
+        /// <returns>Decoration of the player</returns>
+        int GetDecoration(int collection);
+
+        /// <summary>
         /// Remove a decoration of the player.
         /// </summary>
         /// <param name="collection">Collection of the decoration</param>
         /// <param name="overlay">Overlay value of the decoration</param>
         void RemoveDecoration(uint collection, uint overlay);
+
+        /// <summary>
+        /// Remove a decoration of the player.
+        /// </summary>
+        /// <param name="collection">Collection of the decoration</param>
+        /// <param name="overlay">Overlay value of the decoration</param>
+        void RemoveDecoration(int collection, int overlay);
 
         /// <summary>
         /// Set a decoration on the player.
@@ -330,11 +358,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void SetDecoration(uint collection, uint overlay);
 
         /// <summary>
+        /// Set a decoration on the player.
+        /// </summary>
+        /// <param name="collection">Collection of the decoration</param>
+        /// <param name="overlay">Overlay value of the decoration</param>
+        void SetDecoration(int collection, int overlay);
+
+        /// <summary>
         /// Set multiple decorations on the player.
         /// </summary>
         /// <param name="decorations">Decorations to set on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="decorations" /> is null</exception>
         void SetDecorations(IDictionary<uint, uint> decorations);
+
+        /// <summary>
+        /// Set multiple decorations on the player.
+        /// </summary>
+        /// <param name="decorations">Decorations to set on the player</param>
+        /// <exception cref="ArgumentNullException"><paramref name="decorations" /> is null</exception>
+        void SetDecorations(IDictionary<int, int> decorations);
 
         /// <summary>
         /// Set the hair color of the player.
@@ -344,6 +386,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void SetHairColor(uint color, uint highlightColor);
 
         /// <summary>
+        /// Set the hair color of the player.
+        /// </summary>
+        /// <param name="color">Color of the hair</param>
+        /// <param name="highlightColor">Highlight color of the hair</param>
+        void SetHairColor(int color, int highlightColor);
+
+        /// <summary>
         /// Get a face feature of the player.
         /// </summary>
         /// <param name="id">Slot of the face feature</param>
@@ -351,11 +400,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         float GetFaceFeature(uint id);
 
         /// <summary>
+        /// Get a face feature of the player.
+        /// </summary>
+        /// <param name="id">Slot of the face feature</param>
+        /// <returns>Value of the face feature</returns>
+        float GetFaceFeature(int id);
+
+        /// <summary>
         /// Set a face feature on the player.
         /// </summary>
         /// <param name="id">Slot of the face feature</param>
         /// <param name="scale">Value of the face feature</param>
         void SetFaceFeature(uint id, float scale);
+
+        /// <summary>
+        /// Set a face feature on the player.
+        /// </summary>
+        /// <param name="id">Slot of the face feature</param>
+        /// <param name="scale">Value of the face feature</param>
+        void SetFaceFeature(int id, float scale);
 
         /// <summary>
         /// Update the head blend of the player.
@@ -373,11 +436,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         HeadOverlayData GetHeadOverlay(uint overlayId);
 
         /// <summary>
+        /// Get the head overlay of the player.
+        /// </summary>
+        /// <param name="overlayId">Slot of the head overlay</param>
+        /// <returns>Value of the <see cref="HeadOverlayData" /></returns>
+        HeadOverlayData GetHeadOverlay(int overlayId);
+
+        /// <summary>
         /// Set the head overlay of the player.
         /// </summary>
         /// <param name="overlayId">Slot of the head overlay</param>
         /// <param name="overlayData">Value of the head overlay</param>
         void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData);
+
+        /// <summary>
+        /// Set the head overlay of the player.
+        /// </summary>
+        /// <param name="overlayId">Slot of the head overlay</param>
+        /// <param name="overlayData">Value of the head overlay</param>
+        void SetHeadOverlay(int overlayId, HeadOverlayData overlayData);
 
         /// <summary>
         /// Customize the player.
@@ -393,6 +470,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <exception cref="ArgumentNullException"><paramref name="headOverlays" /> or <paramref name="decorations" /> is null</exception>
         void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations);
+
+        /// <summary>
+        /// Customize the player.
+        /// </summary>
+        /// <param name="isMale">Male if true, otherwise female</param>
+        /// <param name="headBlend">Head blend of the player</param>
+        /// <param name="eyeColor">Eye color of the player</param>
+        /// <param name="hairColor">Hair color of the player</param>
+        /// <param name="highlightColor">Hair highlight color of the player</param>
+        /// <param name="faceFeatures">Face features of the player</param>
+        /// <param name="headOverlays">Head overlays of the player</param>
+        /// <param name="decorations">Decorations of the player</param>
+        /// <exception cref="ArgumentNullException"><paramref name="headOverlays" /> or <paramref name="decorations" /> is null</exception>
+        void SetCustomization(bool isMale, HeadBlendData headBlend, int eyeColor, int hairColor, int highlightColor, float[] faceFeatures,
+            IDictionary<int, HeadOverlayData> headOverlays, IDictionary<int, int> decorations);
 
         /// <summary>
         /// Place player in given vehicle.
@@ -415,11 +507,46 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint GetWeaponAmmo(WeaponHash weapon);
 
         /// <summary>
+        /// Get the ammo of given weapon.
+        /// </summary>
+        /// <param name="weapon">Weapon to get the ammo for</param>
+        /// <returns>Ammo of the weapon</returns>
+        uint GetWeaponAmmo(uint weapon);
+
+        /// <summary>
+        /// Get the ammo of given weapon.
+        /// </summary>
+        /// <param name="weapon">Weapon to get the ammo for</param>
+        /// <returns>Ammo of the weapon</returns>
+        int GetWeaponAmmo(int weapon);
+
+        /// <summary>
         /// Set the ammo of given weapon.
         /// </summary>
         /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
         void SetWeaponAmmo(WeaponHash weapon, uint ammo);
+
+        /// <summary>
+        /// Set the ammo of given weapon.
+        /// </summary>
+        /// <param name="weapon">Weapon to set the ammo for</param>
+        /// <param name="ammo">Ammo for the weapon</param>
+        void SetWeaponAmmo(WeaponHash weapon, int ammo);
+
+        /// <summary>
+        /// Set the ammo of given weapon.
+        /// </summary>
+        /// <param name="weapon">Weapon to set the ammo for</param>
+        /// <param name="ammo">Ammo for the weapon</param>
+        void SetWeaponAmmo(uint weapon, uint ammo);
+
+        /// <summary>
+        /// Set the ammo of given weapon.
+        /// </summary>
+        /// <param name="weapon">Weapon to set the ammo for</param>
+        /// <param name="ammo">Ammo for the weapon</param>
+        void SetWeaponAmmo(int weapon, int ammo);
 
         /// <summary>
         /// Give a weapon to the player.
@@ -429,11 +556,53 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void GiveWeapon(WeaponHash weapon, uint ammo);
 
         /// <summary>
+        /// Give a weapon to the player.
+        /// </summary>
+        /// <param name="weapon">Weapon to give the player</param>
+        /// <param name="ammo">Ammo of the given weapon</param>
+        void GiveWeapon(WeaponHash weapon, int ammo);
+
+        /// <summary>
+        /// Give a weapon to the player.
+        /// </summary>
+        /// <param name="weapon">Weapon to give the player</param>
+        /// <param name="ammo">Ammo of the given weapon</param>
+        void GiveWeapon(uint weapon, uint ammo);
+
+        /// <summary>
+        /// Give a weapon to the player.
+        /// </summary>
+        /// <param name="weapon">Weapon to give the player</param>
+        /// <param name="ammo">Ammo of the given weapon</param>
+        void GiveWeapon(int weapon, int ammo);
+
+        /// <summary>
         /// Give multiple weapons to the player.
         /// </summary>
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         void GiveWeapons(IDictionary<WeaponHash, uint> weapons);
+
+        /// <summary>
+        /// Give multiple weapons to the player.
+        /// </summary>
+        /// <param name="weapons">Key value set of weapons with ammo</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
+        void GiveWeapons(IDictionary<WeaponHash, int> weapons);
+
+        /// <summary>
+        /// Give multiple weapons to the player.
+        /// </summary>
+        /// <param name="weapons">Key value set of weapons with ammo</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
+        void GiveWeapons(IDictionary<uint, uint> weapons);
+
+        /// <summary>
+        /// Give multiple weapons to the player.
+        /// </summary>
+        /// <param name="weapons">Key value set of weapons with ammo</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
+        void GiveWeapons(IDictionary<int, int> weapons);
 
         /// <summary>
         /// Remove a weapon from the player.
@@ -442,11 +611,37 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void RemoveWeapon(WeaponHash weapon);
 
         /// <summary>
+        /// Remove a weapon from the player.
+        /// </summary>
+        /// <param name="weapon">Weapon to remove</param>
+        void RemoveWeapon(uint weapon);
+
+        /// <summary>
+        /// Remove a weapon from the player.
+        /// </summary>
+        /// <param name="weapon">Weapon to remove</param>
+        void RemoveWeapon(int weapon);
+
+        /// <summary>
         /// Remove multiple weapons from the player.
         /// </summary>
         /// <param name="weapons">Weapons to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
         void RemoveWeapons(IEnumerable<WeaponHash> weapons);
+
+        /// <summary>
+        /// Remove multiple weapons from the player.
+        /// </summary>
+        /// <param name="weapons">Weapons to remove</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
+        void RemoveWeapons(IEnumerable<uint> weapons);
+
+        /// <summary>
+        /// Remove multiple weapons from the player.
+        /// </summary>
+        /// <param name="weapons">Weapons to remove</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
+        void RemoveWeapons(IEnumerable<int> weapons);
 
         /// <summary>
         /// Remove all weapons from the player.
@@ -468,6 +663,14 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="position">Position to search object in</param>
         /// <param name="radius">Radius to search object in</param>
         void RemoveObject(uint model, Vector3 position, float radius);
+
+        /// <summary>
+        /// Remove object from the player.
+        /// </summary>
+        /// <param name="model">Model of the object</param>
+        /// <param name="position">Position to search object in</param>
+        /// <param name="radius">Radius to search object in</param>
+        void RemoveObject(int model, Vector3 position, float radius);
 
         /// <summary>
         /// Run code on the player.

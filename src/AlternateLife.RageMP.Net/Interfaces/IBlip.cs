@@ -47,6 +47,17 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale);
 
         /// <summary>
+        /// Show route for a list of players with given color and scale.
+        ///
+        /// The <paramref name="color" /> and <paramref name="scale" /> are used for the route, not the blip.
+        /// </summary>
+        /// <param name="forPlayers">List of players to show the route for</param>
+        /// <param name="color">Color of the route</param>
+        /// <param name="scale">Scale of the route</param>
+        /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
+        void ShowRoute(IEnumerable<IPlayer> forPlayers, int color, float scale);
+
+        /// <summary>
         /// Hide route for a list of players.
         /// </summary>
         /// <param name="forPlayers">List of players to hide the route for</param>
