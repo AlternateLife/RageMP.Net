@@ -167,7 +167,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get all weapons of the player.
         /// </summary>
-        IReadOnlyDictionary<uint, uint> Weapons { get; }
+        IReadOnlyDictionary<WeaponHash, uint> Weapons { get; }
 
         /// <summary>
         /// Get all streamed players of the player.
@@ -393,43 +393,43 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get the ammo of given weapon.
         /// </summary>
-        /// <param name="weaponHash">Weapon to get the ammo for</param>
+        /// <param name="weapon">Weapon to get the ammo for</param>
         /// <returns>Ammo of the weapon</returns>
-        uint GetWeaponAmmo(uint weaponHash);
+        uint GetWeaponAmmo(WeaponHash weapon);
 
         /// <summary>
         /// Set the ammo of given weapon.
         /// </summary>
-        /// <param name="weaponHash">Weapon to set the ammo for</param>
+        /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
-        void SetWeaponAmmo(uint weaponHash, uint ammo);
+        void SetWeaponAmmo(WeaponHash weapon, uint ammo);
 
         /// <summary>
         /// Give a weapon to the player.
         /// </summary>
-        /// <param name="weaponHash">Weapon to give the player</param>
+        /// <param name="weapon">Weapon to give the player</param>
         /// <param name="ammo">Ammo of the given weapon</param>
-        void GiveWeapon(uint weaponHash, uint ammo);
+        void GiveWeapon(WeaponHash weapon, uint ammo);
 
         /// <summary>
         /// Give multiple weapons to the player.
         /// </summary>
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
-        void GiveWeapons(IDictionary<uint, uint> weapons);
+        void GiveWeapons(IDictionary<WeaponHash, uint> weapons);
 
         /// <summary>
         /// Remove a weapon from the player.
         /// </summary>
-        /// <param name="weaponHash">Weapon to remove</param>
-        void RemoveWeapon(uint weaponHash);
+        /// <param name="weapon">Weapon to remove</param>
+        void RemoveWeapon(WeaponHash weapon);
 
         /// <summary>
         /// Remove multiple weapons from the player.
         /// </summary>
-        /// <param name="weaponHashes">Weapons to remove</param>
-        /// <exception cref="ArgumentNullException"><paramref name="weaponHashes" /> hashes is null</exception>
-        void RemoveWeapons(IEnumerable<uint> weaponHashes);
+        /// <param name="weapons">Weapons to remove</param>
+        /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
+        void RemoveWeapons(IEnumerable<WeaponHash> weapons);
 
         /// <summary>
         /// Remove all weapons from the player.

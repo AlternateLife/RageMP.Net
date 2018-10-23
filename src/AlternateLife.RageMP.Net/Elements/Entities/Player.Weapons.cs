@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Native;
 
@@ -19,60 +20,60 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             set => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
         }
 
-        public IReadOnlyDictionary<uint, uint> Weapons
+        public IReadOnlyDictionary<WeaponHash, uint> Weapons
         {
             get
             {
                 Rage.Player.Player_GetWeapons(NativePointer, out var weapons, out var ammo, out var count);
 
-                var allWeapons = new Dictionary<uint, uint>();
+                var allWeapons = new Dictionary<WeaponHash, uint>();
 
                 for (ulong i = 0; i < count; i++)
                 {
-                    allWeapons[weapons[i]] = ammo[i];
+                    allWeapons[(WeaponHash) weapons[i]] = ammo[i];
                 }
 
                 return allWeapons;
             }
         }
 
-        public uint GetWeaponAmmo(uint weaponHash)
+        public uint GetWeaponAmmo(WeaponHash weaponHash)
         {
-            return Rage.Player.Player_GetWeaponAmmo(NativePointer, weaponHash);
+            return Rage.Player.Player_GetWeaponAmmo(NativePointer, (uint) weaponHash);
         }
 
-        public void SetWeaponAmmo(uint weaponHash, uint ammo)
+        public void SetWeaponAmmo(WeaponHash weaponHash, uint ammo)
         {
-            Rage.Player.Player_SetWeaponAmmo(NativePointer, weaponHash, ammo);
+            Rage.Player.Player_SetWeaponAmmo(NativePointer, (uint) weaponHash, ammo);
         }
 
-        public void GiveWeapon(uint weaponHash, uint ammo)
+        public void GiveWeapon(WeaponHash weaponHash, uint ammo)
         {
-            Rage.Player.Player_GiveWeapon(NativePointer, weaponHash, ammo);
+            Rage.Player.Player_GiveWeapon(NativePointer, (uint) weaponHash, ammo);
         }
 
-        public void GiveWeapons(IDictionary<uint, uint> weapons)
+        public void GiveWeapons(IDictionary<WeaponHash, uint> weapons)
         {
             Contract.NotNull(weapons, nameof(weapons));
 
             var count = weapons.Count;
 
-            var hashes = weapons.Keys.ToArray();
+            var hashes = weapons.Keys.Select(x => (uint) x).ToArray();
             var ammo = weapons.Values.ToArray();
 
             Rage.Player.Player_GiveWeapons(NativePointer, hashes, ammo, (ulong) count);
         }
 
-        public void RemoveWeapon(uint weaponHash)
+        public void RemoveWeapon(WeaponHash weaponHash)
         {
-            Rage.Player.Player_RemoveWeapon(NativePointer, weaponHash);
+            Rage.Player.Player_RemoveWeapon(NativePointer, (uint) weaponHash);
         }
 
-        public void RemoveWeapons(IEnumerable<uint> weaponHashes)
+        public void RemoveWeapons(IEnumerable<WeaponHash> weaponHashes)
         {
             Contract.NotNull(weaponHashes, nameof(weaponHashes));
 
-            var weapons = weaponHashes.ToArray();
+            var weapons = weaponHashes.Select(x => (uint) x).ToArray();
 
             Rage.Player.Player_RemoveWeapons(NativePointer, weapons, (ulong) weapons.Length);
         }
