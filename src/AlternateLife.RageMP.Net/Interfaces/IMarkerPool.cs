@@ -1,6 +1,7 @@
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -10,7 +11,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Create a new marker.
         /// </summary>
-        /// <param name="model">Model of the marker</param>
+        /// <param name="type">Model of the marker</param>
         /// <param name="position">Position of the marker</param>
         /// <param name="rotation">Rotation of the marker</param>
         /// <param name="direction">Direction of the marker</param>
@@ -19,6 +20,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the marker</param>
         /// <param name="dimension">Dimension of the marker</param>
         /// <returns>New <see cref="IMarker" /> instance</returns>
-        Task<IMarker> NewAsync(uint model, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
+        Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
     }
 }
