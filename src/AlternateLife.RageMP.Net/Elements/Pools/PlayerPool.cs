@@ -31,7 +31,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public async Task BroadcastInRangeAsync(string message, Vector3 position, float range, uint dimension)
+        public async Task BroadcastAsync(string message, Vector3 position, float range, uint dimension)
         {
             Contract.NotNull(message, nameof(message));
 
@@ -45,7 +45,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public async Task BroadcastInDimensionAsync(string message, uint dimension)
+        public async Task BroadcastAsync(string message, uint dimension)
         {
             Contract.NotNull(message, nameof(message));
 
@@ -77,7 +77,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallInRangeAsync(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
+        public async Task CallAsync(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
 
@@ -95,7 +95,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallInDimensionAsync(uint dimension, string eventName, params object[] arguments)
+        public async Task CallAsync(uint dimension, string eventName, params object[] arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
 
@@ -113,7 +113,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallForAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments)
+        public async Task CallAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments)
         {
             Contract.NotNull(players, nameof(players));
             Contract.NotEmpty(eventName, nameof(eventName));
@@ -144,7 +144,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeInRangeAsync(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
+        public async Task InvokeAsync(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -155,7 +155,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeInDimensionAsync(uint dimension, ulong nativeHash, params object[] arguments)
+        public async Task InvokeAsync(uint dimension, ulong nativeHash, params object[] arguments)
         {
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -166,7 +166,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeForAsync(IEnumerable<IPlayer> players, ulong nativeHash, params object[] arguments)
+        public async Task InvokeAsync(IEnumerable<IPlayer> players, ulong nativeHash, params object[] arguments)
         {
             Contract.NotNull(players, nameof(players));
 
