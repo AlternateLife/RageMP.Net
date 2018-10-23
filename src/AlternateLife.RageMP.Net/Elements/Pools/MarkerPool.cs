@@ -6,7 +6,6 @@ using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {
@@ -25,12 +24,12 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             return CreateAndSaveEntity(pointer);
         }
 
-        public Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension)
+        public Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
         {
             return NewAsync((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }
 
-        public Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension)
+        public Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
         {
             return NewAsync((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }

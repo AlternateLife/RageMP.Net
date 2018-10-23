@@ -6,7 +6,6 @@ using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {
@@ -30,12 +29,12 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public Task<IVehicle> NewAsync(uint model, Vector3 position, float heading = 0, string numberPlate = "", uint alpha = 255, bool locked = false, bool engine = false, uint dimension = MP.GlobalDimension)
+        public Task<IVehicle> NewAsync(uint model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
             return NewAsync((VehicleHash) model, position, heading, numberPlate, alpha, locked, engine, dimension);
         }
 
-        public Task<IVehicle> NewAsync(int model, Vector3 position, float heading = 0, string numberPlate = "", int alpha = 255, bool locked = false, bool engine = false, uint dimension = MP.GlobalDimension)
+        public Task<IVehicle> NewAsync(int model, Vector3 position, float heading, string numberPlate, int alpha, bool locked, bool engine, uint dimension)
         {
             return NewAsync((VehicleHash) model, position, heading, numberPlate, (uint) alpha, locked, engine, dimension);
         }

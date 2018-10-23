@@ -29,7 +29,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public Task<IBlip> NewAsync(int sprite, Vector3 position, float scale, int color, string name = "", int alpha = 255, float drawDistance = 10, bool shortRange = false, int rotation = 0, uint dimension = MP.GlobalDimension)
+        public Task<IBlip> NewAsync(int sprite, Vector3 position, float scale, int color, string name, int alpha, float drawDistance, bool shortRange, int rotation, uint dimension)
         {
             return NewAsync((uint) sprite, position, scale, (uint) color, name, (uint) alpha, drawDistance, shortRange, rotation, dimension);
         }

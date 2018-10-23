@@ -30,7 +30,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public Task<ITextLabel> NewAsync(Vector3 position, string text, int font, ColorRgba color, float drawDistance = 20, bool los = false, uint dimension = MP.GlobalDimension)
+        public Task<ITextLabel> NewAsync(Vector3 position, string text, int font, ColorRgba color, float drawDistance, bool los, uint dimension)
         {
             return NewAsync(position, text, (uint) font, color, drawDistance, los, dimension);
         }

@@ -23,7 +23,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             return CreateAndSaveEntity(pointer);
         }
 
-        public Task<IObject> NewAsync(int model, Vector3 position, Vector3 rotation, uint dimension = MP.GlobalDimension)
+        public Task<IObject> NewAsync(int model, Vector3 position, Vector3 rotation, uint dimension)
         {
             return NewAsync((uint) model, position, rotation, dimension);
         }
