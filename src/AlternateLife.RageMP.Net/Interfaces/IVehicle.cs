@@ -275,6 +275,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void SetColor(uint primary, uint secondary);
 
         /// <summary>
+        /// Set the primary and secondary color of the vehicle.
+        /// </summary>
+        /// <param name="primary">Primary color number of the vehicle</param>
+        /// <param name="secondary">Secondary color number of the vehicle</param>
+        void SetColor(int primary, int secondary);
+
+        /// <summary>
         /// Set the primary and secondary paint of the vehicle.
         /// </summary>
         /// <param name="primary">Primary paint of the vehicle</param>

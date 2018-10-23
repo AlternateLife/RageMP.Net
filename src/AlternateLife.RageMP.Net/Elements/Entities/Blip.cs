@@ -65,6 +65,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale);
         }
 
+        public void ShowRoute(IEnumerable<IPlayer> forPlayers, int color, float scale)
+        {
+            ShowRoute(forPlayers, (uint) color, scale);
+        }
+
         public void HideRoute(IEnumerable<IPlayer> forPlayers)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));

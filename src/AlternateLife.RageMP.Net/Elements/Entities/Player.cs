@@ -223,6 +223,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Rage.Player.Player_RemoveObject(NativePointer, model, position, radius);
         }
 
+        public void RemoveObject(int model, Vector3 position, float radius)
+        {
+            RemoveObject((uint) model, position, radius);
+        }
+
         public void Eval(string code)
         {
             Contract.NotEmpty(code, nameof(code));

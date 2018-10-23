@@ -255,6 +255,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, secondary);
         }
 
+        public void SetColor(int primary, int secondary)
+        {
+            SetColor((uint) primary, (uint) secondary);
+        }
+
         public void SetPaint(PaintData primary, PaintData secondary)
         {
             Rage.Vehicle.Vehicle_SetPaint(NativePointer, primary, secondary);
