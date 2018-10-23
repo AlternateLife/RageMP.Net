@@ -5,6 +5,7 @@ using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {
@@ -21,6 +22,11 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
+        }
+
+        public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible = true, uint dimension = MP.GlobalDimension)
+        {
+            return NewAsync((uint) type, position, nextPosition, radius, color, visible, dimension);
         }
 
         protected override ICheckpoint BuildEntity(IntPtr entityPointer)

@@ -3,6 +3,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 using Object = AlternateLife.RageMP.Net.Elements.Entities.Object;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
@@ -20,6 +21,11 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
+        }
+
+        public Task<IObject> NewAsync(int model, Vector3 position, Vector3 rotation, uint dimension = MP.GlobalDimension)
+        {
+            return NewAsync((uint) model, position, rotation, dimension);
         }
 
         protected override IObject BuildEntity(IntPtr entityPointer)

@@ -6,6 +6,7 @@ using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {
@@ -27,6 +28,11 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
                 return CreateAndSaveEntity(pointer);
             }
+        }
+
+        public Task<ITextLabel> NewAsync(Vector3 position, string text, int font, ColorRgba color, float drawDistance = 20, bool los = false, uint dimension = MP.GlobalDimension)
+        {
+            return NewAsync(position, text, (uint) font, color, drawDistance, los, dimension);
         }
 
         protected override ITextLabel BuildEntity(IntPtr entityPointer)
