@@ -198,11 +198,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint GetMod(uint id);
 
         /// <summary>
+        /// Get the value of a modification slot.
+        /// </summary>
+        /// <param name="id">Slot of the modification</param>
+        /// <returns>Value of the modification <paramref name="id" /></returns>
+        int GetMod(int id);
+
+        /// <summary>
         /// Set the value of a modification slot.
         /// </summary>
         /// <param name="id">Slot of the modification</param>
         /// <param name="mod">Value of the modification <paramref name="id" /></param>
         void SetMod(uint id, uint mod);
+
+        /// <summary>
+        /// Set the value of a modification slot.
+        /// </summary>
+        /// <param name="id">Slot of the modification</param>
+        /// <param name="mod">Value of the modification <paramref name="id" /></param>
+        void SetMod(int id, int mod);
 
         /// <summary>
         /// Get color number of the given color slot.
@@ -212,11 +226,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint GetColor(uint id);
 
         /// <summary>
+        /// Get color number of the given color slot.
+        /// </summary>
+        /// <param name="id">Slot of the color</param>
+        /// <returns>Value of the color <paramref name="id" /></returns>
+        int GetColor(int id);
+
+        /// <summary>
         /// Get paint of the given color slot.
         /// </summary>
         /// <param name="id">Slot of the paint</param>
         /// <returns>Value of the color <paramref name="id" /></returns>
         uint GetPaint(uint id);
+
+        /// <summary>
+        /// Get paint of the given color slot.
+        /// </summary>
+        /// <param name="id">Slot of the paint</param>
+        /// <returns>Value of the color <paramref name="id" /></returns>
+        int GetPaint(int id);
 
         /// <summary>
         /// Set the color of the vehicle.
@@ -231,6 +259,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="colorSlot">Slot of the color</param>
         /// <returns><see cref="ColorRgba" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
         ColorRgba GetColorRgb(uint colorSlot);
+
+        /// <summary>
+        /// Get the color of the given color slot.
+        /// </summary>
+        /// <param name="colorSlot">Slot of the color</param>
+        /// <returns><see cref="ColorRgba" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
+        ColorRgba GetColorRgb(int colorSlot);
 
         /// <summary>
         /// Set the primary and secondary color of the vehicle.
@@ -254,11 +289,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         bool GetExtra(uint id);
 
         /// <summary>
+        /// Check if the extra is set on the vehicle.
+        /// </summary>
+        /// <param name="id">Slot of the extra</param>
+        /// <returns>True if the <paramref name="id" /> is set, otherwise false</returns>
+        bool GetExtra(int id);
+
+        /// <summary>
         /// Set the extra on the vehicle.
         /// </summary>
         /// <param name="id">Slot of the extra</param>
         /// <param name="state">State of the extra</param>
         void SetExtra(uint id, bool state);
+
+        /// <summary>
+        /// Set the extra on the vehicle.
+        /// </summary>
+        /// <param name="id">Slot of the extra</param>
+        /// <param name="state">State of the extra</param>
+        void SetExtra(int id, bool state);
 
         /// <summary>
         /// Get player on given seat in the vehicle.

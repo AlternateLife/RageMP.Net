@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
@@ -202,9 +200,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return Rage.Vehicle.Vehicle_GetMod(NativePointer, id);
         }
 
+        public int GetMod(int id)
+        {
+            return (int) GetMod((uint) id);
+        }
+
         public void SetMod(uint id, uint mod)
         {
             Rage.Vehicle.Vehicle_SetMod(NativePointer, id, mod);
+        }
+
+        public void SetMod(int id, int mod)
+        {
+            SetMod((uint) id, (uint) mod);
         }
 
         public uint GetColor(uint id)
@@ -212,9 +220,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return Rage.Vehicle.Vehicle_GetColor(NativePointer, id);
         }
 
+        public int GetColor(int id)
+        {
+            return (int) GetColor((uint) id);
+        }
+
         public uint GetPaint(uint id)
         {
             return Rage.Vehicle.Vehicle_GetPaint(NativePointer, id);
+        }
+
+        public int GetPaint(int id)
+        {
+            return (int) GetPaint((uint) id);
         }
 
         public void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor)
@@ -225,6 +243,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public ColorRgba GetColorRgb(uint colorSlot)
         {
             return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
+        }
+
+        public ColorRgba GetColorRgb(int colorSlot)
+        {
+            return GetColorRgb((uint) colorSlot);
         }
 
         public void SetColor(uint primary, uint secondary)
@@ -242,9 +265,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return Rage.Vehicle.Vehicle_GetExtra(NativePointer, id);
         }
 
+        public bool GetExtra(int id)
+        {
+            return GetExtra((uint) id);
+        }
+
         public void SetExtra(uint id, bool state)
         {
             Rage.Vehicle.Vehicle_SetExtra(NativePointer, id, state);
+        }
+
+        public void SetExtra(int id, bool state)
+        {
+            SetExtra((uint) id, state);
         }
 
         public IPlayer GetOccupant(int seat)

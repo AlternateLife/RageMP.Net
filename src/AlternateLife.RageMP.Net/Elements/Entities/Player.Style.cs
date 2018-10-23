@@ -42,6 +42,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data);
         }
 
+        public void SetCloth(ClothSlot slot, byte drawable, byte texture, byte palette)
+        {
+            SetCloth(slot, new ClothData(drawable, texture, palette));
+        }
+
         public void SetClothes(IDictionary<ClothSlot, ClothData> clothes)
         {
             Contract.NotNull(clothes, nameof(clothes));
@@ -60,6 +65,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetProp(PropSlot slot, PropData data)
         {
             Rage.Player.Player_SetProp(NativePointer, (uint) slot, data);
+        }
+
+        public void SetProp(PropSlot slot, byte drawable, byte texture)
+        {
+            SetProp(slot, new PropData(drawable, texture));
         }
 
         public void SetProps(IDictionary<PropSlot, PropData> props)
