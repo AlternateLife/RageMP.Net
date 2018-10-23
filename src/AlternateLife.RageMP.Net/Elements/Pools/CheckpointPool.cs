@@ -24,7 +24,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             return CreateAndSaveEntity(pointer);
         }
 
-        public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible = true, uint dimension = MP.GlobalDimension)
+        public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
         {
             return NewAsync((uint) type, position, nextPosition, radius, color, visible, dimension);
         }
