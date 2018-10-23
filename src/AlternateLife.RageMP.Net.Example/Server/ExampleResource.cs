@@ -169,7 +169,7 @@ namespace AlternateLife.RageMP.Net.Example
 
         private Task OnPlayerChat(IPlayer player, string text)
         {
-            MP.Markers.NewAsync(0, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true);
+            MP.Markers.NewAsync(MarkerType.PlaneModel, player.Position, Vector3.Zero, Vector3.UnitZ, 1, new ColorRgba(255, 255, 0, 255), true);
 
             MP.Objects.NewAsync(MP.Joaat("prop_coffin_01"), player.Position, Vector3.One);
 

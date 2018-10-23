@@ -5,6 +5,7 @@ using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {
@@ -26,6 +27,11 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
                 return CreateAndSaveEntity(pointer);
             }
+        }
+
+        public Task<IBlip> NewAsync(int sprite, Vector3 position, float scale, int color, string name = "", int alpha = 255, float drawDistance = 10, bool shortRange = false, int rotation = 0, uint dimension = MP.GlobalDimension)
+        {
+            return NewAsync((uint) sprite, position, scale, (uint) color, name, (uint) alpha, drawDistance, shortRange, rotation, dimension);
         }
 
         protected override IBlip BuildEntity(IntPtr entity)
