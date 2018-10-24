@@ -9,7 +9,13 @@ namespace AlternateLife.RageMP.Net
         {
             var plugin = new Plugin(multiplayer);
 
+            plugin.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
+
+            plugin.Prepare();
+
             Task.Run(() => plugin.Start());
+
+            plugin.Logger.Info("Rage.NET startup finished");
         }
     }
 }

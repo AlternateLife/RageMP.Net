@@ -73,13 +73,14 @@ namespace AlternateLife.RageMP.Net
             };
         }
 
+        public void Prepare()
+        {
+            _resourceLoader.Prepare();
+        }
+
         public async Task Start()
         {
-            MP.Logger.Info($"Starting Rage.NET Version {typeof(Plugin).Assembly.GetName().Version}...");
-
             await _resourceLoader.Start().ConfigureAwait(false);
-
-            MP.Logger.Info("Rage.NET startup finished");
         }
 
         internal Task Schedule(Action action)

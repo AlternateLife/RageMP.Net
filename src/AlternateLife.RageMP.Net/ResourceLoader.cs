@@ -13,17 +13,28 @@ namespace AlternateLife.RageMP.Net
         private const string _basePath = "dotnet/resources";
 
         private readonly Dictionary<string, Assembly> _loadedAssemblies;
+        private List<ResourceHandler> _resources;
 
         internal ResourceLoader()
         {
             _loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
         }
 
+        public void Prepare()
+        {
+            _resources = new List<ResourceHandler>(FindResources());
+
+            foreach (var resource in _resources)
+            {
+                resource.Prepare();
+            }
+        }
+
         public Task Start()
         {
             var startTasks = new List<Task>();
 
-            foreach (var resource in FindResources())
+            foreach (var resource in _resources)
             {
                 startTasks.Add(Task.Run(() => resource.Start()));
             }

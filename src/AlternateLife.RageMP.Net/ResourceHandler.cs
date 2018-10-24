@@ -21,13 +21,13 @@ namespace AlternateLife.RageMP.Net
             _resourceLoader = resourceLoader;
         }
 
-        public async Task Start()
+        public void Prepare()
         {
-            MP.Logger.Info($"{_directory.Name}: Starting resource...");
+            MP.Logger.Info($"{_directory.Name}: Prepare resource...");
 
             if (TryLoadAssemblies() == false)
             {
-                MP.Logger.Warn($"{_directory.Name}: Resource startup has been aborted!");
+                MP.Logger.Warn($"{_directory.Name}: Resource preparation has been aborted!");
 
                 return;
             }
@@ -40,6 +40,14 @@ namespace AlternateLife.RageMP.Net
             }
 
             _entryPoint = LoadEntryPoint();
+
+            MP.Logger.Info($"{_directory.Name}: Resource successfully prepared!");
+        }
+
+        public async Task Start()
+        {
+            MP.Logger.Info($"{_directory.Name}: Starting resource...");
+
             if (_entryPoint == null)
             {
                 MP.Logger.Warn($"{_directory.Name}: Could not find a valid entrypoint-class implementing interface \"{typeof(IResource)}\"!");
