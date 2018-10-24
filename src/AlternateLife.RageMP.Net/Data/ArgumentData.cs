@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Enums;
@@ -33,17 +34,9 @@ namespace AlternateLife.RageMP.Net.Data
         [FieldOffset(12)]
         public byte ValueType;
 
-        public static ArgumentData[] ConvertFromObjects(ICollection<object> arguments)
+        public static ArgumentData[] ConvertFromObjects(IEnumerable<object> arguments)
         {
-            var data = new ArgumentData[arguments.Count];
-
-            var count = 0;
-            foreach (var argument in arguments)
-            {
-                data[count++] = ConvertFromObject(argument);
-            }
-
-            return data;
+            return arguments.Select(ConvertFromObject).ToArray();
         }
 
         public static ArgumentData ConvertFromObject(object element)

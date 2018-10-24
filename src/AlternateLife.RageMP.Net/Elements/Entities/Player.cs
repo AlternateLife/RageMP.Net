@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
@@ -140,9 +138,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public async Task CallAsync(string eventName, params object[] arguments)
+        public Task CallAsync(string eventName, params object[] arguments)
+        {
+            return CallAsync(eventName, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallAsync(string eventName, IEnumerable<object> arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -158,8 +162,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallHashAsync(ulong eventHash, params object[] arguments)
+        public Task CallHashAsync(ulong eventHash, params object[] arguments)
         {
+            return CallHashAsync(eventHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallHashAsync(ulong eventHash, IEnumerable<object> arguments)
+        {
+            Contract.NotNull(arguments, nameof(arguments));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             await _plugin
@@ -169,8 +180,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeAsync(ulong nativeHash, params object[] arguments)
+        public Task InvokeAsync(ulong nativeHash, params object[] arguments)
         {
+            return InvokeAsync(nativeHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments)
+        {
+            Contract.NotNull(arguments, nameof(arguments));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             await _plugin

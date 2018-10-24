@@ -59,9 +59,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             }
         }
 
-        public async Task CallAsync(string eventName, params object[] arguments)
+        public Task CallAsync(string eventName, params object[] arguments)
+        {
+            return CallAsync(eventName, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallAsync(string eventName, IEnumerable<object> arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -77,9 +83,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallAsync(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
+        public Task CallAsync(Vector3 position, float range, uint dimension, string eventName, params object[] arguments)
+        {
+            return CallAsync(position, range, dimension, eventName, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallAsync(Vector3 position, float range, uint dimension, string eventName, IEnumerable<object> arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -95,9 +107,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallAsync(uint dimension, string eventName, params object[] arguments)
+        public Task CallAsync(uint dimension, string eventName, params object[] arguments)
+        {
+            return CallAsync(dimension, eventName, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallAsync(uint dimension, string eventName, IEnumerable<object> arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
 
@@ -113,13 +131,24 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task CallAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments)
+        public Task CallAsync(IEnumerable<IPlayer> players, string eventName, params object[] arguments)
+        {
+            return CallAsync(players, eventName, (IEnumerable<object>) arguments);
+        }
+
+        public async Task CallAsync(IEnumerable<IPlayer> players, string eventName, IEnumerable<object> arguments)
         {
             Contract.NotNull(players, nameof(players));
             Contract.NotEmpty(eventName, nameof(eventName));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
+
+            if (playerPointers.Any() == false)
+            {
+                return;
+            }
 
             using (var converter = new StringConverter())
             {
@@ -133,8 +162,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeAsync(ulong nativeHash, params object[] arguments)
+        public Task InvokeAsync(ulong nativeHash, params object[] arguments)
         {
+            return InvokeAsync(nativeHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments)
+        {
+            Contract.NotNull(arguments, nameof(arguments));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             await _plugin
@@ -144,8 +180,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeAsync(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
+        public Task InvokeAsync(Vector3 position, float range, uint dimension, ulong nativeHash, params object[] arguments)
         {
+            return InvokeAsync(position, range, dimension, nativeHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task InvokeAsync(Vector3 position, float range, uint dimension, ulong nativeHash, IEnumerable<object> arguments)
+        {
+            Contract.NotNull(arguments, nameof(arguments));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             await _plugin
@@ -155,8 +198,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeAsync(uint dimension, ulong nativeHash, params object[] arguments)
+        public Task InvokeAsync(uint dimension, ulong nativeHash, params object[] arguments)
         {
+            return InvokeAsync(dimension, nativeHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task InvokeAsync(uint dimension, ulong nativeHash, IEnumerable<object> arguments)
+        {
+            Contract.NotNull(arguments, nameof(arguments));
+
             var data = ArgumentData.ConvertFromObjects(arguments);
 
             await _plugin
@@ -166,9 +216,15 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             ArgumentData.Dispose(data);
         }
 
-        public async Task InvokeAsync(IEnumerable<IPlayer> players, ulong nativeHash, params object[] arguments)
+        public Task InvokeAsync(IEnumerable<IPlayer> players, ulong nativeHash, params object[] arguments)
+        {
+            return InvokeAsync(players, nativeHash, (IEnumerable<object>) arguments);
+        }
+
+        public async Task InvokeAsync(IEnumerable<IPlayer> players, ulong nativeHash, IEnumerable<object> arguments)
         {
             Contract.NotNull(players, nameof(players));
+            Contract.NotNull(arguments, nameof(arguments));
 
             var data = ArgumentData.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();

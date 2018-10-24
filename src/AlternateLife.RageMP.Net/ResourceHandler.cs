@@ -69,7 +69,15 @@ namespace AlternateLife.RageMP.Net
             {
                 foreach (var file in _directory.GetFiles("*.dll"))
                 {
-                    _loadedAssemblies.Add(_resourceLoader.LoadAssembly(file.FullName));
+                    var assembly = _resourceLoader.LoadAssembly(file.FullName);
+                    if (assembly == null)
+                    {
+                        MP.Logger.Warn($"Skipping assembly \"{file.FullName}\", because an error occured during load!");
+
+                        continue;
+                    }
+
+                    _loadedAssemblies.Add(assembly);
                 }
 
                 return true;

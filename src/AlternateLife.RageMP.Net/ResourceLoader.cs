@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net
 {
@@ -11,11 +12,11 @@ namespace AlternateLife.RageMP.Net
     {
         private const string _basePath = "dotnet/resources";
 
-        private readonly Dictionary<AssemblyName, Assembly> _loadedAssemblies;
+        private readonly Dictionary<string, Assembly> _loadedAssemblies;
 
         internal ResourceLoader()
         {
-            _loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName(), x => x);
+            _loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
         }
 
         public Task Start()
@@ -44,16 +45,26 @@ namespace AlternateLife.RageMP.Net
         {
             var reflectionAssembly = AssemblyName.GetAssemblyName(path);
 
-            if (_loadedAssemblies.TryGetValue(reflectionAssembly, out var element))
+            if (_loadedAssemblies.TryGetValue(reflectionAssembly.FullName, out var element))
             {
                 return element;
             }
 
-            var loadedAssembly = Assembly.LoadFrom(path);
+            try
+            {
+                var loadedAssembly = Assembly.LoadFrom(path);
 
-            _loadedAssemblies[loadedAssembly.GetName()] = loadedAssembly;
+                _loadedAssemblies[loadedAssembly.GetName().FullName] = loadedAssembly;
 
-            return loadedAssembly;
+                return loadedAssembly;
+            }
+            catch (FileLoadException e)
+            {
+                MP.Logger.Error($"An error occured while loading assembly \"{path}\": ", e);
+
+                return null;
+            }
+
         }
 
     }
