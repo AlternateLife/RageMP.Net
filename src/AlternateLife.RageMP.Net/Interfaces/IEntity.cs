@@ -16,6 +16,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         IntPtr NativePointer { get; }
 
         /// <summary>
+        /// Get current entity existance
+        ///
+        /// WARNING: Do NOT use this.
+        /// </summary>
+        bool Exists { get; }
+
+        /// <summary>
         /// Get the entity id.
         /// </summary>
         uint Id { get; }

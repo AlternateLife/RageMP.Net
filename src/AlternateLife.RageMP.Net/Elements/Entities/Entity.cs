@@ -12,13 +12,14 @@ using AlternateLife.RageMP.Net.Native;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
-    internal abstract class Entity : IEntity
+    internal abstract class Entity : IInternalEntity, IEntity
     {
         private readonly ConcurrentDictionary<string, object> _data = new ConcurrentDictionary<string, object>();
 
         protected readonly Plugin _plugin;
 
         public IntPtr NativePointer { get; }
+        public bool Exists { get; set; }
 
         public uint Id { get; }
         public EntityType Type { get; }
@@ -62,6 +63,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             Id = Rage.Entity.Entity_GetId(NativePointer);
             Type = type;
+            Exists = true;
         }
 
         public Task Destroy()
