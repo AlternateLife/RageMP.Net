@@ -6,6 +6,14 @@
         <Configurations>Debug;Release;Testing</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
+        <Authors>AlternateLife</Authors>
+        <Description>Alternative RAGE Multiplayer .NET Core SDK</Description>
+        <Copyright>2018 AlternateLife</Copyright>
+        <PackageLicenseUrl>https://github.com/AlternateLife/ragemp-dotnet-core/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/AlternateLife/ragemp-dotnet-core/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/AlternateLife/ragemp-dotnet-core/</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>ragemp gta bridge</PackageTags>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
