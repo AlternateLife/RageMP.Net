@@ -111,6 +111,11 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
             preRemoveCallback?.Invoke(entity);
 
+            if (entity is IInternalEntity internalEntity)
+            {
+                internalEntity.Exists = false;
+            }
+
             return _entities.TryRemove(entityPointer, out _);
         }
 
