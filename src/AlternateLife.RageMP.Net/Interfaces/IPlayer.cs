@@ -209,9 +209,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Send an event to the player.
         /// </summary>
+        /// <param name="eventName">Name of the event</param>
+        /// <param name="arguments">Arguments of the event</param>
+        /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty, <paramref name="arguments"/> is null</exception>
+        Task CallAsync(string eventName, IEnumerable<object> arguments);
+
+        /// <summary>
+        /// Send an event to the player.
+        /// </summary>
         /// <param name="eventHash">Hash of the event</param>
         /// <param name="arguments">Arguments of the event</param>
         Task CallHashAsync(ulong eventHash, params object[] arguments);
+
+        /// <summary>
+        /// Send an event to the player.
+        /// </summary>
+        /// <param name="eventHash">Hash of the event</param>
+        /// <param name="arguments">Arguments of the event</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arguments"/> is null</exception>
+        Task CallHashAsync(ulong eventHash, IEnumerable<object> arguments);
 
         /// <summary>
         /// Call a native hash on the player.
@@ -219,6 +235,14 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="nativeHash">Hash of the native</param>
         /// <param name="arguments">Arguments of the native</param>
         Task InvokeAsync(ulong nativeHash, params object[] arguments);
+
+        /// <summary>
+        /// Call a native hash on the player.
+        /// </summary>
+        /// <param name="nativeHash">Hash of the native</param>
+        /// <param name="arguments">Arguments of the native</param>
+        /// <exception cref="ArgumentNullException"><paramref name="arguments"/> is null</exception>
+        Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments);
 
         /// <summary>
         /// Spawn the player at given position.
