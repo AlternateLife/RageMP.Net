@@ -7,6 +7,7 @@ using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
+using Newtonsoft.Json;
 
 namespace AlternateLife.RageMP.Net.Data
 {
@@ -99,9 +100,18 @@ namespace AlternateLife.RageMP.Net.Data
 
                 default:
 
+                    if (element == default(object))
+                    {
+                        return new ArgumentData
+                        {
+                            ValueType = (byte) ArgumentValueType.Null
+                        };
+                    }
+
                     return new ArgumentData
                     {
-                        ValueType = (byte) ArgumentValueType.Null
+                        StringValue = StringConverter.StringToPointerUnsafe(JsonConvert.SerializeObject(element)),
+                        ValueType = (byte) ArgumentValueType.Object
                     };
             }
         }
@@ -167,6 +177,7 @@ namespace AlternateLife.RageMP.Net.Data
                 switch ((ArgumentValueType) argumentData.ValueType)
                 {
                     case ArgumentValueType.String:
+                    case ArgumentValueType.Object:
                         Marshal.FreeHGlobal(argumentData.StringValue);
 
                         break;
