@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using AlternateLife.RageMP.Net.Data;
 
 namespace AlternateLife.RageMP.Net.Native
 {
@@ -9,7 +8,7 @@ namespace AlternateLife.RageMP.Net.Native
         internal static class Multiplayer
         {
             [DllImport(_dllName)]
-            internal static extern void Multiplayer_AddRemoteEventHandler(IntPtr multiplayer, string eventName, NativePlayerRemoteEventDelegate callback);
+            internal static extern void Multiplayer_AddRemoteEventHandler(IntPtr multiplayer, IntPtr eventName, NativePlayerRemoteEventDelegate callback);
 
             [DllImport(_dllName)]
             internal static extern IntPtr Multiplayer_GetPlayerPool(IntPtr multiplayer);
