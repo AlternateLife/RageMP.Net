@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Native;
 using AlternateLife.RageMP.Net.Scripting;
@@ -31,7 +32,14 @@ namespace AlternateLife.RageMP.Net.Helpers
                     return;
                 }
 
-                Rage.Multiplayer.Multiplayer_AddRemoteEventHandler(_plugin.NativeMultiplayer, eventName, (playerPointer, arguments) => OnPlayerRemoteEvent(playerPointer, eventName, arguments));
+                NativePlayerRemoteEventDelegate data = (playerPointer, arguments) => OnPlayerRemoteEvent(playerPointer, eventName, arguments);
+
+                GCHandle.Alloc(data);
+
+                using (var converter = new StringConverter())
+                {
+                    Rage.Multiplayer.Multiplayer_AddRemoteEventHandler(_plugin.NativeMultiplayer, converter.StringToPointer(eventName), data);
+                }
             }
 
             eventSubscriptions.Add(callback);
