@@ -13,9 +13,12 @@ namespace AlternateLife.RageMP.Net
 
             plugin.Prepare();
 
-            Task.Run(() => plugin.Start());
+            Task.Run(async () =>
+            {
+                await plugin.Start();
 
-            plugin.Logger.Info("Rage.NET startup finished");
+                plugin.Logger.Info("Rage.NET startup finished");
+            });
         }
     }
 }

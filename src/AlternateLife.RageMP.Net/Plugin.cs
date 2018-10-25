@@ -73,14 +73,16 @@ namespace AlternateLife.RageMP.Net
             };
         }
 
-        public void Prepare()
+        internal void Prepare()
         {
             _resourceLoader.Prepare();
         }
 
-        public async Task Start()
+        internal async Task Start()
         {
-            await _resourceLoader.Start().ConfigureAwait(false);
+            await _resourceLoader
+                .Start()
+                .ConfigureAwait(false);
         }
 
         internal Task Schedule(Action action)
