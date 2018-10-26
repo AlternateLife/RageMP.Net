@@ -55,6 +55,21 @@ namespace AlternateLife.RageMP.Net.Helpers
             Rage.Events.UnregisterEventHandler((int) _type);
         }
 
+        public void Call(Action<TEvent> callback)
+        {
+            Contract.NotNull(callback, nameof(callback));
+
+            if (_subscriptions.Any() == false)
+            {
+                return;
+            }
+
+            foreach (var subscription in _subscriptions)
+            {
+                ExecuteSubscription(subscription, callback);
+            }
+        }
+
         public void CallAsync(Func<TEvent, Task> callback)
         {
             Contract.NotNull(callback, nameof(callback));
@@ -78,6 +93,18 @@ namespace AlternateLife.RageMP.Net.Helpers
             try
             {
                 await callback(subscription).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                MP.Logger.Error($"An error occured during execution of event {_type}", e);
+            }
+        }
+
+        private void ExecuteSubscription(TEvent subscription, Action<TEvent> callback)
+        {
+            try
+            {
+                callback(subscription);
             }
             catch (Exception e)
             {

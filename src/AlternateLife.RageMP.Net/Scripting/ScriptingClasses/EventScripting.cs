@@ -337,7 +337,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = StringConverter.PointerToString(reason);
 
-            _playerQuit.CallAsync(x => x(player, (DisconnectReason)type, message));
+            _playerQuit.Call(x => x(player, (DisconnectReason)type, message));
         }
 
         private void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
