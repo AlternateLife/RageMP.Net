@@ -16,6 +16,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
+        public bool IsInVehicle => Vehicle != null;
+
         public int Seat => Rage.Player.Player_GetSeat(NativePointer);
 
         public void PutIntoVehicle(IVehicle vehicle, int seat)
