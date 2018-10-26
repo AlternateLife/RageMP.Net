@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Exceptions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
@@ -172,6 +173,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void ClearData()
         {
             _data.Clear();
+        }
+
+        protected void CheckExistence()
+        {
+            if (Exists)
+            {
+                return;
+            }
+
+            throw new EntityDeletedException(this);
         }
     }
 }
