@@ -11,6 +11,11 @@ namespace AlternateLife.RageMP.Net.Helpers
 
         public static string PointerToString(IntPtr pointer)
         {
+            if (pointer == IntPtr.Zero)
+            {
+                return null;
+            }
+
             var length = 0;
 
             while (Marshal.ReadByte(pointer, length) != 0)
