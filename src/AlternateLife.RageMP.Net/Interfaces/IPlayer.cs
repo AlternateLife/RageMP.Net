@@ -150,6 +150,11 @@ namespace AlternateLife.RageMP.Net.Interfaces
         IVehicle Vehicle { get; }
 
         /// <summary>
+        /// Check if the player is in any vehicle.
+        /// </summary>
+        bool IsInVehicle { get; }
+
+        /// <summary>
         /// Get the seat the player is on.
         /// </summary>
         int Seat { get; }

@@ -48,7 +48,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             set => Rage.Entity.Entity_SetPosition(NativePointer, value);
         }
 
-        public Vector3 Rotation
+        public virtual Vector3 Rotation
         {
             get => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
             set => Rage.Entity.Entity_SetRotation(NativePointer, value);

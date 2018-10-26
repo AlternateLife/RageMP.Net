@@ -35,6 +35,22 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             set => Rage.Player.Player_SetHeading(NativePointer, value);
         }
 
+        public override Vector3 Rotation
+        {
+            get
+            {
+                var vehicle = Vehicle;
+
+                if (vehicle != null)
+                {
+                    return vehicle.Rotation;
+                }
+
+                return new Vector3(0, 0, Heading);
+            }
+            set => Heading = value.Z;
+        }
+
         public float MoveSpeed => Rage.Player.Player_GetMoveSpeed(NativePointer);
 
         public float Health
