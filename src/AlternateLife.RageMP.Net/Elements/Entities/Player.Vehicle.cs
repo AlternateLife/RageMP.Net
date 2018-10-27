@@ -10,6 +10,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             get
             {
+                CheckExistence();
+
                 var pointer = Rage.Player.Player_GetVehicle(NativePointer);
 
                 return _plugin.VehiclePool[pointer];
@@ -18,17 +20,28 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public bool IsInVehicle => Vehicle != null;
 
-        public int Seat => Rage.Player.Player_GetSeat(NativePointer);
+        public int Seat
+        {
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetSeat(NativePointer);
+            }
+        }
 
         public void PutIntoVehicle(IVehicle vehicle, int seat)
         {
             Contract.NotNull(vehicle, nameof(vehicle));
+            CheckExistence();
 
             Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat);
         }
 
         public void RemoveFromVehicle()
         {
+            CheckExistence();
+
             Rage.Player.Player_RemoveFromVehicle(NativePointer);
         }
     }

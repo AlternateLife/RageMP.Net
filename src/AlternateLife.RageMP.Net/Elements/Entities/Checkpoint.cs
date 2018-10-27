@@ -15,26 +15,66 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public ColorRgba Color
         {
-            get => Marshal.PtrToStructure<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer));
-            set => Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue(), value.GetAlpha());
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue(), value.GetAlpha());
+            }
         }
 
         public Vector3 Direction
         {
-            get => Marshal.PtrToStructure<Vector3>(Rage.Checkpoint.Checkpoint_GetDirection(NativePointer));
-            set => Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<Vector3>(Rage.Checkpoint.Checkpoint_GetDirection(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value);
+            }
         }
 
         public float Radius
         {
-            get => Rage.Checkpoint.Checkpoint_GetRadius(NativePointer);
-            set => Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Checkpoint.Checkpoint_GetRadius(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value);
+            }
         }
 
         public bool IsVisible
         {
-            get => Rage.Checkpoint.Checkpoint_IsVisible(NativePointer);
-            set => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Checkpoint.Checkpoint_IsVisible(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value);
+            }
         }
 
         internal Checkpoint(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Checkpoint)
@@ -44,6 +84,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void ShowFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
+            CheckExistence();
 
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
@@ -53,6 +94,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void HideFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
+            CheckExistence();
 
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 

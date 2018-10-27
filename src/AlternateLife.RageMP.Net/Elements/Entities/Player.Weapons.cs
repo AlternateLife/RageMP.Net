@@ -10,20 +10,42 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public uint CurrentWeapon
         {
-            get => Rage.Player.Player_GetCurrentWeapon(NativePointer);
-            set => Rage.Player.Player_SetCurrentWeapon(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetCurrentWeapon(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Player.Player_SetCurrentWeapon(NativePointer, value);
+            }
         }
 
         public uint CurrentWeaponAmmo
         {
-            get => Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer);
-            set => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
+            }
         }
 
         public IReadOnlyDictionary<WeaponHash, uint> Weapons
         {
             get
             {
+                CheckExistence();
+
                 Rage.Player.Player_GetWeapons(NativePointer, out var weapons, out var ammo, out var count);
 
                 var allWeapons = new Dictionary<WeaponHash, uint>();
@@ -39,6 +61,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public uint GetWeaponAmmo(WeaponHash weaponHash)
         {
+            CheckExistence();
+
             return Rage.Player.Player_GetWeaponAmmo(NativePointer, (uint) weaponHash);
         }
 
@@ -54,6 +78,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetWeaponAmmo(WeaponHash weaponHash, uint ammo)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetWeaponAmmo(NativePointer, (uint) weaponHash, ammo);
         }
 
@@ -74,6 +100,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void GiveWeapon(WeaponHash weaponHash, uint ammo)
         {
+            CheckExistence();
+
             Rage.Player.Player_GiveWeapon(NativePointer, (uint) weaponHash, ammo);
         }
 
@@ -95,6 +123,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void GiveWeapons(IDictionary<WeaponHash, uint> weapons)
         {
             Contract.NotNull(weapons, nameof(weapons));
+            CheckExistence();
 
             var count = weapons.Count;
 
@@ -121,6 +150,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void RemoveWeapon(WeaponHash weaponHash)
         {
+            CheckExistence();
+
             Rage.Player.Player_RemoveWeapon(NativePointer, (uint) weaponHash);
         }
 
@@ -137,6 +168,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void RemoveWeapons(IEnumerable<uint> weaponHashes)
         {
             Contract.NotNull(weaponHashes, nameof(weaponHashes));
+            CheckExistence();
 
             var weapons = weaponHashes.ToArray();
 
@@ -155,6 +187,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void RemoveAllWeapons()
         {
+            CheckExistence();
+
             Rage.Player.Player_RemoveAllWeapons(NativePointer);
         }
 

@@ -12,28 +12,77 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public new PedHash Model
         {
-            get => (PedHash) base.Model;
-            set => base.Model = (uint) value;
+            get
+            {
+                CheckExistence();
+
+                return (PedHash) base.Model;
+            }
+            set
+            {
+                CheckExistence();
+
+                base.Model = (uint) value;
+            }
         }
 
         public uint EyeColor
         {
-            get => Rage.Player.Player_GetEyeColor(NativePointer);
-            set => Rage.Player.Player_SetEyeColor(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetEyeColor(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Player.Player_SetEyeColor(NativePointer, value);
+            }
         }
 
-        public uint HairColor => Rage.Player.Player_GetHairColor(NativePointer);
-        public uint HairHighlightColor => Rage.Player.Player_GetHairHighlightColor(NativePointer);
+        public uint HairColor
+        {
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetHairColor(NativePointer);
+            }
+        }
+
+        public uint HairHighlightColor
+        {
+            get
+            {
+                CheckExistence();
+
+                return Rage.Player.Player_GetHairHighlightColor(NativePointer);
+            }
+        }
 
         public HeadBlendData HeadBlend
         {
-            get => Marshal.PtrToStructure<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer));
-            set => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2], value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix,
-                value.SkinMix, value.ThirdMix);
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2], value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix,
+                    value.SkinMix, value.ThirdMix);
+            }
         }
 
         public ClothData GetCloth(ClothSlot slot)
         {
+            CheckExistence();
+
             return Marshal.PtrToStructure<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot));
         }
 
@@ -44,6 +93,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetCloth(ClothSlot slot, ClothData data)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data);
         }
 
@@ -55,6 +106,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetClothes(IDictionary<ClothSlot, ClothData> clothes)
         {
             Contract.NotNull(clothes, nameof(clothes));
+            CheckExistence();
 
             var keys = clothes.Keys.Select(x => (uint) x).ToArray();
             var values = clothes.Values.ToArray();
@@ -64,6 +116,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public PropData GetProp(PropSlot slot)
         {
+            CheckExistence();
+
             return Marshal.PtrToStructure<PropData>(Rage.Player.Player_GetProp(NativePointer, (uint) slot));
         }
 
@@ -74,6 +128,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetProp(PropSlot slot, PropData data)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetProp(NativePointer, (uint) slot, data);
         }
 
@@ -85,6 +141,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetProps(IDictionary<PropSlot, PropData> props)
         {
             Contract.NotNull(props, nameof(props));
+            CheckExistence();
 
             var keys = props.Keys.Select(x => (uint) x).ToArray();
             var values = props.Values.ToArray();
@@ -94,6 +151,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public uint GetDecoration(uint collection)
         {
+            CheckExistence();
+
             return Rage.Player.Player_GetDecoration(NativePointer, collection);
         }
 
@@ -104,6 +163,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void RemoveDecoration(uint collection, uint overlay)
         {
+            CheckExistence();
+
             Rage.Player.Player_RemoveDecoration(NativePointer, collection, overlay);
         }
 
@@ -114,6 +175,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetDecoration(uint collection, uint overlay)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetDecoration(NativePointer, collection, overlay);
         }
 
@@ -125,6 +188,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetDecorations(IDictionary<uint, uint> decorations)
         {
             Contract.NotNull(decorations, nameof(decorations));
+            CheckExistence();
 
             var keys = decorations.Keys.ToArray();
             var values = decorations.Values.ToArray();
@@ -139,6 +203,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetHairColor(uint color, uint highlightColor)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetHairColor(NativePointer, color, highlightColor);
         }
 
@@ -149,6 +215,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public float GetFaceFeature(uint id)
         {
+            CheckExistence();
+
             return Rage.Player.Player_GetFaceFeature(NativePointer, id);
         }
 
@@ -159,6 +227,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetFaceFeature(uint id, float scale)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetFaceFeature(NativePointer, id, scale);
         }
 
@@ -169,11 +239,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void UpdateHeadBlend(float shapeMix, float skinMix, float thirdMix)
         {
+            CheckExistence();
+
             Rage.Player.Player_UpdateHeadBlend(NativePointer, shapeMix, skinMix, thirdMix);
         }
 
         public HeadOverlayData GetHeadOverlay(uint overlayId)
         {
+            CheckExistence();
+
             return Marshal.PtrToStructure<HeadOverlayData>(Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId));
         }
 
@@ -184,6 +258,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData)
         {
+            CheckExistence();
+
             Rage.Player.Player_SetHeadOverlay(NativePointer, overlayId, overlayData);
         }
 
@@ -197,6 +273,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotNull(headOverlays, nameof(headOverlays));
             Contract.NotNull(decorations, nameof(decorations));
+            CheckExistence();
 
             var headOverlayKeys = headOverlays.Keys.ToArray();
             var headOverlayValues = headOverlays.Values.ToArray();

@@ -87,16 +87,6 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             return entities;
         }
 
-        public bool AddEntity(IEntity entity)
-        {
-            if (entity is T correctEntity)
-            {
-                return _entities.TryAdd(correctEntity.NativePointer, correctEntity);
-            }
-
-            return false;
-        }
-
         public IEntity GetEntity(IntPtr entity)
         {
             return this[entity];
