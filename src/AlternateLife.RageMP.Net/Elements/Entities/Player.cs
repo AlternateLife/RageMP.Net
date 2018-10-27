@@ -13,7 +13,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player : Entity, IPlayer
     {
-        public string Serial => StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
+        public string Serial { get; }
 
         public string Name
         {
@@ -296,6 +296,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
+            Serial = StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
         }
 
         public async Task KickAsync(string reason = null)

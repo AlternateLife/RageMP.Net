@@ -13,7 +13,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get the serial of the player.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         string Serial { get; }
 
         /// <summary>
