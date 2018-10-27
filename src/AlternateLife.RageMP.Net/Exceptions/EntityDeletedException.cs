@@ -9,5 +9,10 @@ namespace AlternateLife.RageMP.Net.Exceptions
         {
 
         }
+
+        internal EntityDeletedException(IEntity entity, string parameterName) : base($"Parameter {parameterName}: This entity ({entity.Type.ToString()}: ID {entity.Id}) does not exist anymore!")
+        {
+
+        }
     }
 }

@@ -27,35 +27,93 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public uint Model
         {
-            get => Rage.Entity.Entity_GetModel(NativePointer);
-            set => Rage.Entity.Entity_SetModel(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Entity.Entity_GetModel(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Entity.Entity_SetModel(NativePointer, value);
+            }
         }
 
         public uint Alpha
         {
-            get => Rage.Entity.Entity_GetAlpha(NativePointer);
-            set => Rage.Entity.Entity_SetAlpha(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Entity.Entity_GetAlpha(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Entity.Entity_SetAlpha(NativePointer, value);
+            }
         }
 
         public uint Dimension
         {
-            get => Rage.Entity.Entity_GetDimension(NativePointer);
-            set => Rage.Entity.Entity_SetDimension(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Entity.Entity_GetDimension(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Entity.Entity_SetDimension(NativePointer, value);
+            }
         }
 
         public Vector3 Position
         {
-            get => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer));
-            set => Rage.Entity.Entity_SetPosition(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Entity.Entity_SetPosition(NativePointer, value);
+            }
         }
 
         public virtual Vector3 Rotation
         {
-            get => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
-            set => Rage.Entity.Entity_SetRotation(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Entity.Entity_SetRotation(NativePointer, value);
+            }
         }
 
-        public Vector3 Velocity => Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
+        public Vector3 Velocity
+        {
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
+            }
+        }
 
         protected Entity(IntPtr nativePointer, Plugin plugin, EntityType type)
         {
@@ -69,12 +127,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public Task Destroy()
         {
+            CheckExistence();
+
             return _plugin.Schedule(() => Rage.Entity.Entity_Destroy(NativePointer));
         }
 
         public bool TryGetSharedData(string key, out object data)
         {
             Contract.NotEmpty(key, nameof(key));
+            CheckExistence();
 
             using (var converter = new StringConverter())
             {
@@ -89,6 +150,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetSharedData(string key, object data)
         {
             Contract.NotEmpty(key, nameof(key));
+            CheckExistence();
 
             using (var converter = new StringConverter())
             {
@@ -99,6 +161,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetSharedData(IDictionary<string, object> data)
         {
             Contract.NotNull(data, nameof(data));
+            CheckExistence();
 
             using (var converter = new StringConverter())
             {
@@ -121,6 +184,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public bool HasSharedData(string key)
         {
             Contract.NotEmpty(key, nameof(key));
+            CheckExistence();
 
             return TryGetSharedData(key, out _);
         }
@@ -128,6 +192,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void ResetSharedData(string key)
         {
             Contract.NotEmpty(key, nameof(key));
+            CheckExistence();
 
             SetSharedData(key, null);
         }
@@ -183,6 +248,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
 
             throw new EntityDeletedException(this);
+        }
+
+        public override string ToString()
+        {
+            return $"Entity {Type.ToString()}: Id {Id}, Exists: {Exists}";
         }
     }
 }

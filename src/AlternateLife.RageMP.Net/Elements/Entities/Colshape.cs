@@ -8,7 +8,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Colshape : Entity, IColshape
     {
-        public ColshapeType ShapeType => (ColshapeType)Rage.Colshape.Colshape_GetShapeType(NativePointer);
+        public ColshapeType ShapeType
+        {
+            get
+            {
+                CheckExistence();
+
+                return (ColshapeType) Rage.Colshape.Colshape_GetShapeType(NativePointer);
+            }
+        }
 
         internal Colshape(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Colshape)
         {
@@ -16,6 +24,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public bool IsPointWhithin(Vector3 position)
         {
+            CheckExistence();
+
             return Rage.Colshape.Colshape_IsPointWithin(NativePointer, position);
         }
     }

@@ -15,26 +15,66 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public ColorRgba Color
         {
-            get => Marshal.PtrToStructure<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer));
-            set => Rage.Marker.Marker_SetColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue(), value.GetAlpha());
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Marker.Marker_SetColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue(), value.GetAlpha());
+            }
         }
 
         public Vector3 Direction
         {
-            get => Marshal.PtrToStructure<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer));
-            set => Rage.Marker.Marker_SetDirection(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Marshal.PtrToStructure<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer));
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Marker.Marker_SetDirection(NativePointer, value);
+            }
         }
 
         public float Scale
         {
-            get => Rage.Marker.Marker_GetScale(NativePointer);
-            set => Rage.Marker.Marker_SetScale(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Marker.Marker_GetScale(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Marker.Marker_SetScale(NativePointer, value);
+            }
         }
 
         public bool IsVisible
         {
-            get => Rage.Marker.Marker_IsVisible(NativePointer);
-            set => Rage.Marker.Marker_SetVisible(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Marker.Marker_IsVisible(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Marker.Marker_SetVisible(NativePointer, value);
+            }
         }
 
         internal Marker(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Marker)
@@ -44,6 +84,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void ShowFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
+            CheckExistence();
 
             var pointers = players.Select(x => x.NativePointer).ToArray();
 
@@ -53,6 +94,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void HideFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
+            CheckExistence();
 
             var pointers = players.Select(x => x.NativePointer).ToArray();
 

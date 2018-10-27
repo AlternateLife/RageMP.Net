@@ -12,39 +12,96 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public float DrawDistance
         {
-            get => Rage.Blip.Blip_GetDrawDistance(NativePointer);
-            set => Rage.Blip.Blip_SetDrawDistance(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Blip.Blip_GetDrawDistance(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Blip.Blip_SetDrawDistance(NativePointer, value);
+            }
         }
 
         public new int Rotation
         {
-            get => Rage.Blip.Blip_GetRotation(NativePointer);
-            set => Rage.Blip.Blip_SetRotation(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Blip.Blip_GetRotation(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Blip.Blip_SetRotation(NativePointer, value);
+            }
         }
 
         public bool ShortRange
         {
-            get => Rage.Blip.Blip_IsShortRange(NativePointer);
-            set => Rage.Blip.Blip_SetShortRange(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Blip.Blip_IsShortRange(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Blip.Blip_SetShortRange(NativePointer, value);
+            }
         }
 
         public uint Color
         {
-            get => Rage.Blip.Blip_GetColor(NativePointer);
-            set => Rage.Blip.Blip_SetColor(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Blip.Blip_GetColor(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Blip.Blip_SetColor(NativePointer, value);
+            }
         }
 
         public float Scale
         {
-            get => Rage.Blip.Blip_GetScale(NativePointer);
-            set => Rage.Blip.Blip_SetScale(NativePointer, value);
+            get
+            {
+                CheckExistence();
+
+                return Rage.Blip.Blip_GetScale(NativePointer);
+            }
+            set
+            {
+                CheckExistence();
+
+                Rage.Blip.Blip_SetScale(NativePointer, value);
+            }
         }
 
         public string Name
         {
-            get => StringConverter.PointerToString(Rage.Blip.Blip_GetName(NativePointer));
+            get
+            {
+                CheckExistence();
+
+                return StringConverter.PointerToString(Rage.Blip.Blip_GetName(NativePointer));
+            }
             set
             {
+                CheckExistence();
+
                 using (var converter = new StringConverter())
                 {
                     Rage.Blip.Blip_SetName(NativePointer, converter.StringToPointer(value));
@@ -59,6 +116,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
+            CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
@@ -73,6 +131,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void HideRoute(IEnumerable<IPlayer> forPlayers)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
+            CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
