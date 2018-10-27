@@ -22,9 +22,11 @@ namespace AlternateLife.RageMP.Net.Data
 
         public IEntity ToEntity()
         {
-            if (MP.EntityPoolMapping.TryGetValue((EntityType) Type, out var pool) == false)
+            var entityType = (EntityType) Type;
+
+            if (MP.EntityPoolMapping.TryGetValue(entityType, out var pool) == false)
             {
-                MP.Logger.Warn($"Entity conversion not implemented for {((EntityType)Type).ToString()}");
+                MP.Logger.Warn($"Entity conversion not implemented for {entityType.ToString()}");
 
                 return null;
             }

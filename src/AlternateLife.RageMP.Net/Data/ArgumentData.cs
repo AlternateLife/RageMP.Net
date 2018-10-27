@@ -91,6 +91,13 @@ namespace AlternateLife.RageMP.Net.Data
 
                 case IEntity entity:
                 {
+                    if (entity.Exists == false)
+                    {
+                        MP.Logger.Warn($"Provided entity \"{entity}\" is not valid, replacing with NULL.");
+
+                        break;
+                    }
+
                     return new ArgumentData
                     {
                         ValueType = (byte) ArgumentValueType.Entity,
@@ -99,13 +106,10 @@ namespace AlternateLife.RageMP.Net.Data
                 }
 
                 default:
-
+                {
                     if (element == default(object))
                     {
-                        return new ArgumentData
-                        {
-                            ValueType = (byte) ArgumentValueType.Null
-                        };
+                        break;
                     }
 
                     return new ArgumentData
@@ -113,7 +117,13 @@ namespace AlternateLife.RageMP.Net.Data
                         StringValue = StringConverter.StringToPointerUnsafe(JsonConvert.SerializeObject(element)),
                         ValueType = (byte) ArgumentValueType.Object
                     };
+                }
             }
+
+            return new ArgumentData
+            {
+                ValueType = (byte) ArgumentValueType.Null
+            };
         }
 
         public object ToObject()
