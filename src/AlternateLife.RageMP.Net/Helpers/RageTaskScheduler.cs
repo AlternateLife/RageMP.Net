@@ -36,8 +36,6 @@ namespace AlternateLife.RageMP.Net.Helpers
                 return false;
             }
 
-            MP.Logger.Info("Inline execute");
-
             return TryExecuteTask(task);
         }
 

@@ -37,11 +37,13 @@ namespace AlternateLife.RageMP.Net
 
         internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
         internal RageTaskScheduler TaskScheduler { get; }
+        private int MainThreadId { get; }
 
         internal Plugin(IntPtr multiplayer)
         {
             NativeMultiplayer = multiplayer;
             Logger = new Logger(this);
+            MainThreadId = Thread.CurrentThread.ManagedThreadId;
 
             MP.Setup(this);
 
@@ -87,12 +89,43 @@ namespace AlternateLife.RageMP.Net
 
         internal Task Schedule(Action action)
         {
+            if (IsInMainThread())
+            {
+                try
+                {
+                    action();
+
+                    return Task.CompletedTask;
+                }
+                catch (Exception e)
+                {
+                    return Task.FromException(e);
+                }
+            }
+
             return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
         }
 
         internal Task<T> Schedule<T>(Func<T> action)
         {
+            if (IsInMainThread())
+            {
+                try
+                {
+                    return Task.FromResult(action());
+                }
+                catch (Exception e)
+                {
+                    return Task.FromException<T>(e);
+                }
+            }
+
             return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
+        }
+
+        public bool IsInMainThread()
+        {
+            return Thread.CurrentThread.ManagedThreadId == MainThreadId;
         }
 
         internal string GetBasePath(string path)
