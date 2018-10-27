@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    public class StringConverter : IDisposable
+    internal class StringConverter : IDisposable
     {
         private readonly List<IntPtr> _convertedStrings = new List<IntPtr>();
 
