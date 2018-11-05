@@ -11,7 +11,7 @@ else()
 endif(MSVC)
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
-include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty)
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty)
 
 target_link_libraries(${TARGET_NAME} PUBLIC ragemp_c_sdk)
 
