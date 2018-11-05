@@ -202,6 +202,12 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint CurrentWeaponAmmo { get; set; }
 
         /// <summary>
+        /// Get the current list of players that can hear this current player.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        IReadOnlyCollection<IPlayer> VoiceListeners { get; }
+
+        /// <summary>
         /// Get all weapons of the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
@@ -822,6 +828,22 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <exception cref="ArgumentNullException"><paramref name="code" /> is null or empty</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         void Eval(string code);
+
+        /// <summary>
+        /// Enable the current players voice to the specified <paramref name="target"/> player.
+        /// </summary>
+        /// <param name="target">player that should listen the current players voice</param>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null</exception>
+        /// <exception cref="EntityDeletedException"><paramref name="target"/> or this entity was deleted before</exception>
+        void EnableVoiceTo(IPlayer target);
+
+        /// <summary>
+        /// Disable the current players voice from the specified <paramref name="target"/> player
+        /// </summary>
+        /// <param name="target">Player that should not hear the current players voice anymore.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="target"/> is null</exception>
+        /// <exception cref="EntityDeletedException"><paramref name="target"/> or this entity was deleted before</exception>
+        void DisableVoiceTo(IPlayer target);
 
     }
 }

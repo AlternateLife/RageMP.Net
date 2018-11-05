@@ -262,7 +262,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern void Player_DisableVoiceTo(IntPtr player, IntPtr target);
 
             [DllImport(_dllName)]
-            internal static extern void Player_GetVoiceListeners(IntPtr player, IntPtr[] players, ulong count);
+            internal static extern void Player_GetVoiceListeners(IntPtr player, out IntPtr[] players, out ulong count);
 
 
         }
