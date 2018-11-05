@@ -33,6 +33,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotNull(target, nameof(target));
             Contract.EntityValid(target, nameof(target));
+            CheckExistence();
 
             await _plugin
                 .Schedule(() => Rage.Player.Player_EnableVoiceTo(NativePointer, target.NativePointer))
@@ -43,6 +44,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotNull(target, nameof(target));
             Contract.EntityValid(target, nameof(target));
+            CheckExistence();
 
             await _plugin
                 .Schedule(() => Rage.Player.Player_DisableVoiceTo(NativePointer, target.NativePointer))
