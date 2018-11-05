@@ -142,6 +142,9 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern void Player_SetDecorations(IntPtr player, uint[] collection, uint[] overlay, ulong count);
 
             [DllImport(_dllName)]
+            internal static extern void Player_ClearDecorations(IntPtr player);
+
+            [DllImport(_dllName)]
             internal static extern IntPtr Player_GetHeadOverlay(IntPtr player, uint overlayId);
 
             [DllImport(_dllName)]
@@ -251,6 +254,17 @@ namespace AlternateLife.RageMP.Net.Native
 
             [DllImport(_dllName)]
             internal static extern void Player_Eval(IntPtr player, IntPtr code);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_EnableVoiceTo(IntPtr player, IntPtr target);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_DisableVoiceTo(IntPtr player, IntPtr target);
+
+            [DllImport(_dllName)]
+            internal static extern void Player_GetVoiceListeners(IntPtr player, IntPtr[] players, ulong count);
+
+
         }
     }
 }

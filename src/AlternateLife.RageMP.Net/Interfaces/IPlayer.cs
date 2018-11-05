@@ -474,6 +474,12 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void SetDecorations(IDictionary<int, int> decorations);
 
         /// <summary>
+        /// Removes all applied decorations from the player.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void ClearDecorations();
+
+        /// <summary>
         /// Set the hair color of the player.
         /// </summary>
         /// <param name="color">Color of the hair</param>
