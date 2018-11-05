@@ -201,6 +201,13 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             SetDecorations(decorations.ToDictionary(x => (uint) x.Key, x => (uint) x.Value));
         }
 
+        public void ClearDecorations()
+        {
+            CheckExistence();
+
+            Rage.Player.Player_ClearDecorations(NativePointer);
+        }
+
         public void SetHairColor(uint color, uint highlightColor)
         {
             CheckExistence();
