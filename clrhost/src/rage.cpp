@@ -37,8 +37,10 @@
 
 #include "clrHost.h"
 
+static ClrHost *clrHost = nullptr;
+
 void SetupPlugin(rage::IMultiplayer *mp) {
-    auto clrHost = new ClrHost();
+    clrHost = new ClrHost();
     if (clrHost->load() == false) {
         return;
     }
@@ -46,4 +48,15 @@ void SetupPlugin(rage::IMultiplayer *mp) {
     if (clrHost->mainCallback() != nullptr) {
         clrHost->mainCallback()(mp);
     }
+}
+
+void CleanupPlugin() {
+    if (clrHost == nullptr) {
+        return;
+    }
+
+    clrHost->unload();
+
+    delete clrHost;
+    clrHost = nullptr;
 }
