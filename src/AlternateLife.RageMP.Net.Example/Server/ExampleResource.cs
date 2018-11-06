@@ -16,6 +16,7 @@ namespace AlternateLife.RageMP.Net.Example
             MP.Logger.Info($"{nameof(ExampleResource)}: {nameof(OnStartAsync)}");
 
             MP.Events.PlayerChat += OnPlayerChat;
+            MP.Events.PlayerJoin += OnPlayerJoin;
             MP.Events.PlayerReady += OnPlayerReady;
 
             MP.Events.PlayerDeath += OnPlayerDeath;
@@ -24,6 +25,13 @@ namespace AlternateLife.RageMP.Net.Example
             var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, Vector3.One);
 
             vehicle.SetColorRgb(new ColorRgba(255, 0, 255), new ColorRgba(0, 125, 25));
+        }
+
+        private Task OnPlayerJoin(IPlayer player)
+        {
+            MP.Logger.Info($"Player {player.SocialClubName} ({player.Ip}) joined");
+
+            return Task.CompletedTask;
         }
 
         private Task OnPlayerReady(IPlayer player)
