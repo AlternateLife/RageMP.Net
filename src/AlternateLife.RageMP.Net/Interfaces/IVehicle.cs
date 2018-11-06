@@ -197,12 +197,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint TrimColor { get; set; }
 
         /// <summary>
-        /// Get all streamed players for the vehicle.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
-
-        /// <summary>
         /// Explode the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
@@ -396,5 +390,11 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <returns>True if the vehicle is streamed for given <paramref name="forPlayer" />, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         bool IsStreamed(IPlayer forPlayer);
+
+        /// <summary>
+        /// Get all streamed players for the vehicle.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync();
     }
 }
