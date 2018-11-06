@@ -6,7 +6,7 @@ namespace AlternateLife.RageMP.Net.Helpers
 {
     internal static class ArrayHelper
     {
-        internal static List<T> ConvertIntPtr<T>(IntPtr arrayPointer, ulong size, Func<IntPtr, T> creator)
+        internal static List<T> ConvertFromIntPtr<T>(IntPtr arrayPointer, ulong size, Func<IntPtr, T> creator)
         {
             var elements = new List<T>();
             var pointerSize = Marshal.SizeOf<IntPtr>();
