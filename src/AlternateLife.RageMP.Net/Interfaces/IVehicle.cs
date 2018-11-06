@@ -370,7 +370,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get all occupants in the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<IReadOnlyCollection<IPlayer>> GetOccupants();
+        Task<IReadOnlyCollection<IPlayer>> GetOccupantsAsync();
 
         /// <summary>
         /// Get player on given seat in the vehicle.
