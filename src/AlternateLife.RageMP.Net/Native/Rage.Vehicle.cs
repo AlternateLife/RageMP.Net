@@ -133,7 +133,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern bool Vehicle_IsStreamed(IntPtr vehicle, IntPtr player);
 
             [DllImport(_dllName)]
-            internal static extern void Vehicle_GetStreamed(IntPtr vehicle, out IntPtr[] players, out ulong count);
+            internal static extern void Vehicle_GetStreamed(IntPtr vehicle, out IntPtr players, out ulong count);
 
             [DllImport(_dllName)]
             internal static extern uint Vehicle_GetLivery(IntPtr vehicle);
