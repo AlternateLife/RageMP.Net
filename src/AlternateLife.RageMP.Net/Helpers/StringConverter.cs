@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using AlternateLife.RageMP.Net.Native;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
@@ -25,6 +26,8 @@ namespace AlternateLife.RageMP.Net.Helpers
 
             var buffer = new byte[length];
             Marshal.Copy(pointer, buffer, 0, buffer.Length);
+
+            Rage.FreeArray(pointer);
 
             return Encoding.UTF8.GetString(buffer);
         }
