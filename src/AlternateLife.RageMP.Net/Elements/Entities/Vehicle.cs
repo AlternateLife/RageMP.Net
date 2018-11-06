@@ -583,7 +583,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             SetExtra((uint) id, state);
         }
 
-        public async Task<IReadOnlyCollection<IPlayer>> GetOccupants()
+        public async Task<IReadOnlyCollection<IPlayer>> GetOccupantsAsync()
         {
             CheckExistence();
 
