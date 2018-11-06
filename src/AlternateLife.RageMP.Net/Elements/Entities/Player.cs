@@ -275,25 +275,6 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public IReadOnlyCollection<IPlayer> StreamedPlayers
-        {
-            get
-            {
-                CheckExistence();
-
-                Rage.Player.Player_GetStreamed(NativePointer, out var playerPointers, out var size);
-
-                var players = new List<IPlayer>();
-
-                for (var i = 0; i < (int) size; i++)
-                {
-                    players.Add(_plugin.PlayerPool[playerPointers[i]]);
-                }
-
-                return players;
-            }
-        }
-
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
             Serial = StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
@@ -484,6 +465,20 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 Rage.Player.Player_Eval(NativePointer, converter.StringToPointer(code));
             }
+        }
+
+        public async Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
+        {
+            CheckExistence();
+
+            IntPtr playerPointers = IntPtr.Zero;
+            ulong size = 0;
+
+            await _plugin
+                .Schedule(() => Rage.Player.Player_GetStreamed(NativePointer, out playerPointers, out size))
+                .ConfigureAwait(false);
+
+            return ArrayHelper.ConvertFromIntPtr(playerPointers, size, x => _plugin.PlayerPool[x]);
         }
     }
 }

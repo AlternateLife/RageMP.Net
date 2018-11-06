@@ -202,18 +202,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint CurrentWeaponAmmo { get; set; }
 
         /// <summary>
-        /// Get all weapons of the player.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IReadOnlyDictionary<WeaponHash, uint> Weapons { get; }
-
-        /// <summary>
-        /// Get all streamed players of the player.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IReadOnlyCollection<IPlayer> StreamedPlayers { get; }
-
-        /// <summary>
         /// Kick the player.
         /// </summary>
         /// <param name="reason">Reason the player is kicked</param>
@@ -844,5 +832,17 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <exception cref="ArgumentNullException"><paramref name="target"/> is null</exception>
         /// <exception cref="EntityDeletedException"><paramref name="target"/> or this entity was deleted before</exception>
         Task DisableVoiceToAsync(IPlayer target);
+
+        /// <summary>
+        /// Get all weapons of the player.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<IReadOnlyDictionary<WeaponHash, uint>> GetWeaponsAsync();
+
+        /// <summary>
+        /// Get all streamed players of the player.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync();
     }
 }
