@@ -91,7 +91,7 @@ namespace AlternateLife.RageMP.Net.Example
                     return;
                 }
 
-                foreach (var occupant in vehicle.Occupants)
+                foreach (var occupant in await vehicle.GetOccupants())
                 {
                     MP.Logger.Info($"Occupant: {occupant.SocialClubName}");
                 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Exceptions;
@@ -196,12 +197,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         uint TrimColor { get; set; }
 
         /// <summary>
-        /// Get all occupants in the vehicle.
-        /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IReadOnlyCollection<IPlayer> Occupants { get; }
-
-        /// <summary>
         /// Get all streamed players for the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
@@ -370,6 +365,12 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="state">State of the extra</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         void SetExtra(int id, bool state);
+
+        /// <summary>
+        /// Get all occupants in the vehicle.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<IReadOnlyCollection<IPlayer>> GetOccupants();
 
         /// <summary>
         /// Get player on given seat in the vehicle.

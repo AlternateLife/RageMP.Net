@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
@@ -428,25 +429,6 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public IReadOnlyCollection<IPlayer> Occupants
-        {
-            get
-            {
-                CheckExistence();
-
-                Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out var playerPointers, out var size);
-
-                var players = new List<IPlayer>();
-
-                for (var i = 0; i < (int)size; i++)
-                {
-                    players.Add(_plugin.PlayerPool[playerPointers[i]]);
-                }
-
-                return players;
-            }
-        }
-
         public IReadOnlyCollection<IPlayer> StreamedPlayers
         {
             get
@@ -599,6 +581,27 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public void SetExtra(int id, bool state)
         {
             SetExtra((uint) id, state);
+        }
+
+        public async Task<IReadOnlyCollection<IPlayer>> GetOccupants()
+        {
+            CheckExistence();
+
+            IntPtr[] playerPointers = null;
+            ulong size = 0;
+
+            await _plugin
+                .Schedule(() => Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size))
+                .ConfigureAwait(false);
+
+            var players = new List<IPlayer>();
+
+            for (var i = 0; i < (int)size; i++)
+            {
+                players.Add(_plugin.PlayerPool[playerPointers[i]]);
+            }
+
+            return players;
         }
 
         public IPlayer GetOccupant(int seat)
