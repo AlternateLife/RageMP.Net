@@ -169,7 +169,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern void Player_SetWeaponAmmo(IntPtr player, uint weaponHash, uint ammo);
 
             [DllImport(_dllName)]
-            internal static extern void Player_GetWeapons(IntPtr player, out uint[] weapons, out uint[] ammo, out ulong count);
+            internal static extern void Player_GetWeapons(IntPtr player, out IntPtr weapons, out IntPtr ammo, out ulong count);
 
             [DllImport(_dllName)]
             internal static extern void Player_GiveWeapon(IntPtr player, uint weaponHash, uint ammo);
@@ -190,7 +190,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern bool Player_IsStreamed(IntPtr player, IntPtr otherPlayer);
 
             [DllImport(_dllName)]
-            internal static extern void Player_GetStreamed(IntPtr player, out IntPtr[] players, out ulong count);
+            internal static extern void Player_GetStreamed(IntPtr player, out IntPtr players, out ulong count);
 
             [DllImport(_dllName)]
             internal static extern void Player_PlayAnimation(IntPtr player, IntPtr dictionary, IntPtr name, float speed, int flags);

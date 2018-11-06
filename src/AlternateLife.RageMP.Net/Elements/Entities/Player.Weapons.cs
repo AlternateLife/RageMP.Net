@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Native;
@@ -40,24 +43,6 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public IReadOnlyDictionary<WeaponHash, uint> Weapons
-        {
-            get
-            {
-                CheckExistence();
-
-                Rage.Player.Player_GetWeapons(NativePointer, out var weapons, out var ammo, out var count);
-
-                var allWeapons = new Dictionary<WeaponHash, uint>();
-
-                for (ulong i = 0; i < count; i++)
-                {
-                    allWeapons[(WeaponHash) weapons[i]] = ammo[i];
-                }
-
-                return allWeapons;
-            }
-        }
 
         public uint GetWeaponAmmo(WeaponHash weaponHash)
         {
@@ -192,5 +177,29 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Rage.Player.Player_RemoveAllWeapons(NativePointer);
         }
 
+        public async Task<IReadOnlyDictionary<WeaponHash, uint>> GetWeaponsAsync()
+        {
+            CheckExistence();
+
+            IntPtr weapons = IntPtr.Zero;
+            IntPtr ammo = IntPtr.Zero;
+            ulong count = 0;
+
+            await _plugin
+                .Schedule(() => Rage.Player.Player_GetWeapons(NativePointer, out weapons, out ammo, out count))
+                .ConfigureAwait(false);
+
+            var allWeapons = new Dictionary<WeaponHash, uint>();
+
+            for (ulong i = 0; i < count; i++)
+            {
+                var weaponHash = (uint) Marshal.ReadInt32(weapons, (int) i);
+                var weaponAmmo = (uint) Marshal.ReadInt32(ammo, (int) i);
+
+                allWeapons[(WeaponHash) weaponHash] = weaponAmmo;
+            }
+
+            return allWeapons;
+        }
     }
 }

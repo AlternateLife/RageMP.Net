@@ -125,7 +125,7 @@ namespace AlternateLife.RageMP.Net.Example
 
             if (text == "w")
             {
-                foreach (var weapon in player.Weapons)
+                foreach (var weapon in await player.GetWeaponsAsync())
                 {
                     MP.Logger.Debug($"Weapon: {weapon.Key} -> {weapon.Value}");
                 }
