@@ -4,6 +4,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 
@@ -59,32 +61,28 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             return entity;
         }
 
-        public IReadOnlyCollection<T> GetInRange(Vector3 position, float range, uint dimension)
+        public async Task<IReadOnlyCollection<T>> GetInRangeAsync(Vector3 position, float range, uint dimension)
         {
-            Rage.Pool.Pool_GetInRange(_nativePointer, position, range, dimension, out var entityPointers, out var size);
+            IntPtr entityPointers = IntPtr.Zero;
+            ulong size = 0;
 
-            var entities = new List<T>();
+            await _plugin
+                .Schedule(() => Rage.Pool.Pool_GetInRange(_nativePointer, position, range, dimension, out entityPointers, out size))
+                .ConfigureAwait(false);
 
-            for (var i = 0; i < (int)size; i++)
-            {
-                entities.Add(this[entityPointers[i]]);
-            }
-
-            return entities;
+            return ArrayHelper.ConvertFromIntPtr(entityPointers, size, x => this[x]);
         }
 
-        public IReadOnlyCollection<T> GetInDimension(uint dimension)
+        public async Task<IReadOnlyCollection<T>> GetInDimensionAsync(uint dimension)
         {
-            Rage.Pool.Pool_GetInDimension(_nativePointer, dimension, out var entityPointers, out var size);
+            IntPtr entityPointers = IntPtr.Zero;
+            ulong size = 0;
 
-            var entities = new List<T>();
+            await _plugin
+                .Schedule(() => Rage.Pool.Pool_GetInDimension(_nativePointer, dimension, out entityPointers, out size))
+                .ConfigureAwait(false);
 
-            for (var i = 0; i < (int)size; i++)
-            {
-                entities.Add(this[entityPointers[i]]);
-            }
-
-            return entities;
+            return ArrayHelper.ConvertFromIntPtr(entityPointers, size, x => this[x]);
         }
 
         public IEntity GetEntity(IntPtr entity)
