@@ -13,20 +13,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            var pointers = new IntPtr[0];
+            IntPtr players = IntPtr.Zero;
             ulong count = 0;
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_GetVoiceListeners(NativePointer, out pointers, out count))
+                .Schedule(() => Rage.Player.Player_GetVoiceListeners(NativePointer, out players, out count))
                 .ConfigureAwait(false);
 
-            var players = new List<IPlayer>();
-            for (ulong i = 0; i < count; i++)
-            {
-                players.Add(_plugin.PlayerPool[pointers[i]]);
-            }
-
-            return players;
+            return ArrayHelper.ConvertFromIntPtr(players, count, x => _plugin.PlayerPool[x]);
         }
 
         public async Task EnableVoiceToAsync(IPlayer target)
