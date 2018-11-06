@@ -594,7 +594,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 .Schedule(() => Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size))
                 .ConfigureAwait(false);
 
-            return ArrayHelper.ConvertIntPtr(playerPointers, size, p => _plugin.PlayerPool[p]);
+            return ArrayHelper.ConvertFromIntPtr(playerPointers, size, p => _plugin.PlayerPool[p]);
         }
 
         public IPlayer GetOccupant(int seat)
