@@ -587,21 +587,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            IntPtr[] playerPointers = null;
+            IntPtr playerPointers = IntPtr.Zero;
             ulong size = 0;
 
             await _plugin
                 .Schedule(() => Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size))
                 .ConfigureAwait(false);
 
-            var players = new List<IPlayer>();
-
-            for (var i = 0; i < (int)size; i++)
-            {
-                players.Add(_plugin.PlayerPool[playerPointers[i]]);
-            }
-
-            return players;
+            return ArrayHelper.ConvertIntPtr(playerPointers, size, p => _plugin.PlayerPool[p]);
         }
 
         public IPlayer GetOccupant(int seat)
