@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -34,13 +35,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="range">Range to search entities in</param>
         /// <param name="dimension">Dimension to search entities in</param>
         /// <returns>List of found <see typeparamref="T" /></returns>
-        IReadOnlyCollection<T> GetInRange(Vector3 position, float range, uint dimension = MP.GlobalDimension);
+        Task<IReadOnlyCollection<T>> GetInRangeAsync(Vector3 position, float range, uint dimension = MP.GlobalDimension);
 
         /// <summary>
         /// Get a list of entities in given dimension.
         /// </summary>
         /// <param name="dimension">Dimension to search entities in</param>
         /// <returns>List of found <see typeparamref="T" /></returns>
-        IReadOnlyCollection<T> GetInDimension(uint dimension);
+        Task<IReadOnlyCollection<T>> GetInDimensionAsync(uint dimension);
     }
 }
