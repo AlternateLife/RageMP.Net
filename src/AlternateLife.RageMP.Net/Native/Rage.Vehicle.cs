@@ -79,7 +79,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern IntPtr Vehicle_GetOccupant(IntPtr vehicle, int seat);
 
             [DllImport(_dllName)]
-            internal static extern void Vehicle_GetOccupants(IntPtr vehicle, out IntPtr[] players, out ulong size);
+            internal static extern void Vehicle_GetOccupants(IntPtr vehicle, out IntPtr players, out ulong size);
 
             [DllImport(_dllName)]
             internal static extern void Vehicle_SetOccupant(IntPtr vehicle, int seat, IntPtr player);
