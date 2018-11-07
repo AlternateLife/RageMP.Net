@@ -20,7 +20,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Quaternion>(Rage.Vehicle.Vehicle_GetQuaternion(NativePointer));
+                return StructConverter.PointerToStruct<Quaternion>(Rage.Vehicle.Vehicle_GetQuaternion(NativePointer));
             }
         }
 
@@ -272,7 +272,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer));
             }
             set
             {
@@ -365,7 +365,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public uint PearlecentColor
+        public uint PearlescentColor
         {
             get
             {
@@ -513,7 +513,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return Marshal.PtrToStructure<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
+            return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
         }
 
         public ColorRgba GetColorRgb(int colorSlot)

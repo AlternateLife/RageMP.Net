@@ -176,7 +176,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the pearlescent color of the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint PearlecentColor { get; set; }
+        uint PearlescentColor { get; set; }
 
         /// <summary>
         /// Get or set the window tint of the vehicle.

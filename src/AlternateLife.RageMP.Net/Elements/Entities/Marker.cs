@@ -19,7 +19,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer));
             }
             set
             {
@@ -35,7 +35,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer));
+                return StructConverter.PointerToStruct<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer));
             }
             set
             {
