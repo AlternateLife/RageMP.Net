@@ -79,7 +79,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer));
+                return StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer));
             }
             set
             {
@@ -95,7 +95,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
+                return StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer));
             }
             set
             {
@@ -111,7 +111,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
+                return StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer));
             }
         }
 
@@ -141,7 +141,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var argument = Rage.Entity.Entity_GetVariable(NativePointer, converter.StringToPointer(key));
 
-                data = Marshal.PtrToStructure<ArgumentData>(argument).ToObject();
+                data = StructConverter.PointerToStruct<ArgumentData>(argument).ToObject();
 
                 return data != null;
             }
