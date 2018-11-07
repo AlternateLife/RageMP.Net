@@ -21,6 +21,9 @@ namespace AlternateLife.RageMP.Net.Data
         public int Int32Value;
 
         [FieldOffset(0)]
+        public uint UnsignedInt32Value;
+
+        [FieldOffset(0)]
         public float FloatValue;
 
         [FieldOffset(0)]
@@ -68,6 +71,15 @@ namespace AlternateLife.RageMP.Net.Data
                     {
                         ValueType = (byte) ArgumentValueType.Int,
                         Int32Value = Convert.ToInt32(number)
+                    };
+                }
+
+                case object number when IsValueUnsignedInteger(number):
+                {
+                    return new ArgumentData
+                    {
+                        ValueType = (byte) ArgumentValueType.Int,
+                        UnsignedInt32Value = Convert.ToUInt32(number)
                     };
                 }
 
@@ -164,12 +176,16 @@ namespace AlternateLife.RageMP.Net.Data
         private static bool IsValueInteger(object value)
         {
             return value is sbyte
-                   || value is byte
                    || value is short
-                   || value is ushort
                    || value is int
+                   || value is long;
+        }
+
+        private static bool IsValueUnsignedInteger(object value)
+        {
+            return value is byte
+                   || value is ushort
                    || value is uint
-                   || value is long
                    || value is ulong;
         }
 
