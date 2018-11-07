@@ -68,7 +68,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer));
+                return StructConverter.PointerToStruct<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer));
             }
             set
             {
@@ -83,7 +83,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return Marshal.PtrToStructure<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot));
+            return StructConverter.PointerToStruct<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot));
         }
 
         public ClothData GetCloth(int slot)
@@ -118,7 +118,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return Marshal.PtrToStructure<PropData>(Rage.Player.Player_GetProp(NativePointer, (uint) slot));
+            return StructConverter.PointerToStruct<PropData>(Rage.Player.Player_GetProp(NativePointer, (uint) slot));
         }
 
         public PropData GetProp(int slot)
@@ -255,7 +255,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return Marshal.PtrToStructure<HeadOverlayData>(Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId));
+            return StructConverter.PointerToStruct<HeadOverlayData>(Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId));
         }
 
         public HeadOverlayData GetHeadOverlay(int overlayId)

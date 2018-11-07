@@ -14,7 +14,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         public TimeData Time
         {
-            get => Marshal.PtrToStructure<TimeData>(Rage.World.World_GetTime(_nativePointer));
+            get => StructConverter.PointerToStruct<TimeData>(Rage.World.World_GetTime(_nativePointer));
             set => Rage.World.World_SetTime(_nativePointer, value);
         }
 

@@ -131,7 +131,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<Vector3>(Rage.Player.Player_GetAminingAt(NativePointer));
+                return StructConverter.PointerToStruct<Vector3>(Rage.Player.Player_GetAminingAt(NativePointer));
             }
         }
 

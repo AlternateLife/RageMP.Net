@@ -16,7 +16,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Marshal.PtrToStructure<ColorRgba>(Rage.TextLabel.TextLabel_GetColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.TextLabel.TextLabel_GetColor(NativePointer));
             }
             set
             {
