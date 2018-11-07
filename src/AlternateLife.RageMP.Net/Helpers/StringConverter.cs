@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Helpers
     {
         private readonly List<IntPtr> _convertedStrings = new List<IntPtr>();
 
-        public static string PointerToString(IntPtr pointer)
+        public static string PointerToString(IntPtr pointer, bool freePointer = true)
         {
             if (pointer == IntPtr.Zero)
             {
@@ -27,7 +27,10 @@ namespace AlternateLife.RageMP.Net.Helpers
             var buffer = new byte[length];
             Marshal.Copy(pointer, buffer, 0, buffer.Length);
 
-            Rage.FreeArray(pointer);
+            if (freePointer)
+            {
+                Rage.FreeArray(pointer);
+            }
 
             return Encoding.UTF8.GetString(buffer);
         }

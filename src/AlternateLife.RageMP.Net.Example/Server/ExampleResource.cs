@@ -166,6 +166,20 @@ namespace AlternateLife.RageMP.Net.Example
 
                 return;
             }
+
+            if (text == "a")
+            {
+                MP.Logger.Info($"Action: {player.ActionString}");
+
+                return;
+            }
+
+            if (text == "P")
+            {
+                MP.Logger.Info($"Position: {player.Position}");
+
+                return;
+            }
         }
 
         private Task OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
