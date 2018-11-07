@@ -21,8 +21,8 @@ namespace AlternateLife.RageMP.Net.Scripting
     public delegate Task PlayerDamageDelegate(IPlayer player, float healthLoss, float armorLoss);
     public delegate Task PlayerWeaponChangeDelegate(IPlayer player, uint oldWeapon, uint newWeapon);
     //public delegate void PlayerRemoteEventDelegate(IPlayer player, uint eventNameHash, object[] arguments);
-    public delegate Task PlayerStartEnterVehicleDelegate(IPlayer player, IVehicle vehicle, uint seat);
-    public delegate Task PlayerEnterVehicleDelegate(IPlayer player, IVehicle vehicle, uint seat);
+    public delegate Task PlayerStartEnterVehicleDelegate(IPlayer player, IVehicle vehicle, int seat);
+    public delegate Task PlayerEnterVehicleDelegate(IPlayer player, IVehicle vehicle, int seat);
     public delegate Task PlayerStartExitVehicleDelegate(IPlayer player, IVehicle vehicle);
     public delegate Task PlayerExitVehicleDelegate(IPlayer player, IVehicle vehicle);
 

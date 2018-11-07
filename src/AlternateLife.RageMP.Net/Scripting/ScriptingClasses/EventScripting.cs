@@ -377,7 +377,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerWeaponChange.CallAsync(x => x(player, oldWeapon, newWeapon));
         }
 
-        private void DispatchStartEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
+        private void DispatchStartEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, int seat)
         {
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];
@@ -385,7 +385,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerStartEnterVehicle.CallAsync(x => x(player, vehicle, seat));
         }
 
-        private void DispatchPlayerEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, uint seat)
+        private void DispatchPlayerEnterVehicle(IntPtr playerPointer, IntPtr vehiclePointer, int seat)
         {
             var player = _plugin.PlayerPool[playerPointer];
             var vehicle = _plugin.VehiclePool[vehiclePointer];

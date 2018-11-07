@@ -20,8 +20,8 @@ namespace AlternateLife.RageMP.Net
     internal delegate void NativePlayerDamageDelegate(IntPtr playerPointer, float healthLoss, float armorLoss);
     internal delegate void NativePlayerWeaponChangeDelegate(IntPtr playerPointer, uint oldWeapon, uint newWeapon);
     //internal delegate void NativePlayerRemoteEventDelegate(IntPtr playerPointer, uint eventNameHash, object[] arguments);
-    internal delegate void NativePlayerStartEnterVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer, uint seat);
-    internal delegate void NativePlayerEnterVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer, uint seat);
+    internal delegate void NativePlayerStartEnterVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer, int seat);
+    internal delegate void NativePlayerEnterVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer, int seat);
     internal delegate void NativePlayerStartExitVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer);
     internal delegate void NativePlayerExitVehicleDelegate(IntPtr playerPointer, IntPtr vehiclePointer);
 
