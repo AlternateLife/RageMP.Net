@@ -137,7 +137,7 @@ namespace AlternateLife.RageMP.Net.Data
                     return FloatValue;
 
                 case ArgumentValueType.String:
-                    return StringConverter.PointerToString(StringValue);
+                    return StringConverter.PointerToString(StringValue, false);
 
                 case ArgumentValueType.Boolean:
                     return BoolValue;
