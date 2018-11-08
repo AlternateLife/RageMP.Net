@@ -41,7 +41,9 @@ namespace AlternateLife.RageMP.Net.Helpers
 
         internal void Tick()
         {
-            while (_tasks.TryDequeue(out Task task))
+            var runs = _tasks.Count;
+
+            while (runs-- > 0 && _tasks.TryDequeue(out Task task))
             {
                 TryExecuteTask(task);
             }
