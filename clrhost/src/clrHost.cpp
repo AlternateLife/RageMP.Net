@@ -124,14 +124,14 @@ bool ClrHost::loadCoreClr() {
     _createDelegate = (coreclr_create_delegate_ptr)GetProcAddress(_coreClrLib, "coreclr_create_delegate");
 #else
 #ifdef __APPLE__
-    coreClrDllPath += "/libcoreclr.dylib";
+    coreClrDllPath += "libcoreclr.dylib";
 #else
-    coreClrDllPath += "/libcoreclr.so";
+    coreClrDllPath += "libcoreclr.so";
 #endif
 
     _coreClrLib = dlopen(coreClrDllPath.c_str(), RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
-        std::cerr << "[.NET] Unable to find CoreCLR dll: " << dlerror() << std::endl;
+        std::cerr << "[.NET] Unable to find CoreCLR dll [" << coreClrDllPath << "]: " << dlerror() << std::endl;
 
         return false;
     }
@@ -195,7 +195,7 @@ bool ClrHost::createAppDomain() {
     );
 
     if (result < 0) {
-        std::cerr << "[.NET] Unable to create app domain" << std::endl;
+        std::cerr << "[.NET] Unable to create app domain: 0x" << std::hex << result << std::endl;
 
         return false;
     }
@@ -296,7 +296,10 @@ std::set<std::string> ClrHost::getTrustedAssemblies() {
                 continue;
             }
 
-            assemblies.insert(filenameWithoutExt);
+            auto filePath = runtimeDirectory;
+            filePath.append("/");
+            filePath.append(filename);
+            assemblies.insert(filePath);
         }
 
         // rewind directory to search for next extension
@@ -335,12 +338,12 @@ std::string ClrHost::getAbsolutePath(std::string relativePath) {
 #else
     char absolutePath[PATH_MAX];
 
-    if (realpath(relativePath.c_str(), absolutePath) == nullptr) {
+    if (realpath(relativePath.c_str(), absolutePath) != nullptr) {
+        strcat(absolutePath, "/");
+    } else {
         // no absolute path found
         absolutePath[0] = '\0';
     }
-
-    strcat_s(absolutePath, PATH_MAX, "/");
 #endif
 
     return std::string(absolutePath);
