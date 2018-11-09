@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <RootNamespace>RageMP.Net</RootNamespace>
-        <Configurations>Debug;Release;Testing</Configurations>
+        <Configurations>Debug;Release;Testing;Linux</Configurations>
         <Platforms>AnyCPU</Platforms>
         <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
         <Authors>AlternateLife</Authors>
@@ -17,6 +17,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Linux' ">
       <DebugSymbols>true</DebugSymbols>
       <DebugType>full</DebugType>
     </PropertyGroup>
@@ -39,6 +44,10 @@
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
         <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
+    </Target>
+
+    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Linux' ">
+        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="/ragemp-srv/dotnet/plugins/" SkipUnchangedFiles="false" />
     </Target>
 
 </Project>
