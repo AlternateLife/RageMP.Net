@@ -29,21 +29,27 @@ WORKDIR /ragemp-srv/dotnet/runtime
 RUN rm -r download
 
 # Build c++ bridge
-RUN mkdir /dotnet
-COPY . /dotnet
-RUN mkdir /dotnet/clrhost/build
-
+RUN mkdir -p /dotnet/clrhost/build
 WORKDIR /dotnet/clrhost/build
+COPY clrhost/ ..
+
 RUN cmake -DCMAKE_BUILD_TYPE=Release ..
 RUN make install
 
 # Build .net bridge
+RUN mkdir /dotnet/src
 WORKDIR /dotnet/src
-RUN dotnet build -c Linux
+COPY src .
+WORKDIR /dotnet/src/AlternateLife.RageMP.Net
+RUN dotnet publish -c Linux
+
+RUN cp bin/Linux/netcoreapp2.1/publish/NLog.dll /ragemp-srv/dotnet/plugins/
+RUN cp bin/Linux/netcoreapp2.1/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
+RUN cp bin/Linux/netcoreapp2.1/publish/NLog.config /ragemp-srv/dotnet/
 
 WORKDIR /ragemp-srv
 
 EXPOSE 22005/udp
 EXPOSE 22006/tcp
 
-CMD /server
+CMD ./server
