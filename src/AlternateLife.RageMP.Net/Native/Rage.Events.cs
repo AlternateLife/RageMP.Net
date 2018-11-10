@@ -7,10 +7,10 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class Events
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void RegisterEventHandler(int type, IntPtr callback);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void UnregisterEventHandler(int type);
         }
     }

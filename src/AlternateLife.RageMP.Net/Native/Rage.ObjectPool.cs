@@ -8,7 +8,7 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class ObjectPool
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr ObjectPool_New(IntPtr objectPool, uint model, Vector3 position, Vector3 rotation, uint dimension);
         }
     }

@@ -8,19 +8,19 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class Pool
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr Pool_GetAt(IntPtr pool, uint id);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern uint Pool_GetLength(IntPtr pool);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern uint Pool_GetCount(IntPtr pool);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void Pool_GetInRange(IntPtr pool, Vector3 position, float range, uint dimension, out IntPtr entities, out ulong count);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern void Pool_GetInDimension(IntPtr pool, uint dimension, out IntPtr entities, out ulong count);
         }
     }
