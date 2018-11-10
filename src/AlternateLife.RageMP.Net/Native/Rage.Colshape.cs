@@ -8,10 +8,10 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class Colshape
         {
-            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Colshape_IsPointWithin(IntPtr colshape, Vector3 position);
 
-            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern uint Colshape_GetShapeType(IntPtr colshape);
         }
     }
