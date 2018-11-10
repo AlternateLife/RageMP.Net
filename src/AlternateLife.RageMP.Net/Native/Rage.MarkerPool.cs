@@ -9,7 +9,7 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class MarkerPool
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr MarkerPool_New(IntPtr pool, uint model, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible,
                 uint dimension);
         }

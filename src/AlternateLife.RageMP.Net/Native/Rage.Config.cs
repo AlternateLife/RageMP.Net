@@ -7,10 +7,10 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class Config
         {
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern int Config_GetInt(IntPtr config, IntPtr key, int defaultValue);
 
-            [DllImport(_dllName)]
+            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
             internal static extern IntPtr Config_GetString(IntPtr config, IntPtr key, IntPtr defaultValue);
         }
     }
