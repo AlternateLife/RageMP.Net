@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Native
     {
         internal static class TextLabelPool
         {
-            [DllImport(_dllName, CallingConvention = CallingConvention.Cdecl)]
+            [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr TextLabelPool_New(IntPtr pool, Vector3 position, IntPtr text, uint font, ColorRgba color, float drawDistance, bool los, uint dimension);
         }
     }
