@@ -38,5 +38,12 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="message">Message to log</param>
         /// <param name="exception">Exception to log</param>
         void Error(string message, Exception exception = null);
+
+        /// <summary>
+        /// Log an fatal message.
+        /// </summary>
+        /// <param name="message">Message to log</param>
+        /// <param name="exception">Exception to log</param>
+        void Fatal(string message, Exception exception = null);
     }
 }
