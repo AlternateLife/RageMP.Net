@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Elements.Pools;
@@ -10,6 +11,8 @@ using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 using AlternateLife.RageMP.Net.Scripting;
 using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
+
+[assembly:RuntimeCompatibility(WrapNonExceptionThrows = true)]
 
 namespace AlternateLife.RageMP.Net
 {
@@ -41,6 +44,8 @@ namespace AlternateLife.RageMP.Net
 
         internal Plugin(IntPtr multiplayer)
         {
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+
             NativeMultiplayer = multiplayer;
             Logger = new Logger(this);
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
@@ -73,6 +78,11 @@ namespace AlternateLife.RageMP.Net
                 { EntityType.Object, ObjectPool },
                 { EntityType.TextLabel, TextLabelPool }
             };
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.Fatal($"< ==== UNHANDLED EXCEPTION ==== > {Environment.NewLine} Received an unhandled exception from {sender?.GetType()}: ", (Exception) e.ExceptionObject);
         }
 
         internal void Prepare()

@@ -57,6 +57,11 @@ namespace AlternateLife.RageMP.Net.Helpers
             Log(LogLevel.Error, message, exception);
         }
 
+        public void Fatal(string message, Exception exception = null)
+        {
+            Log(LogLevel.Fatal, message, exception);
+        }
+
         private string GetCallerType()
         {
             string className;
