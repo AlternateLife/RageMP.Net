@@ -156,7 +156,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                Rage.Vehicle.Vehicle_SetNeonsActive(NativePointer, value);
+                Rage.Vehicle.Vehicle_EnableNeons(NativePointer, value);
             }
         }
 
