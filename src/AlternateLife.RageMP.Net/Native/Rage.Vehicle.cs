@@ -46,7 +46,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern bool Vehicle_AreNeonsActive(IntPtr vehicle);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetNeonsActive(IntPtr vehicle, bool newStatus);
+            internal static extern void Vehicle_EnableNeons(IntPtr vehicle, bool newStatus);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Vehicle_IsEngineActive(IntPtr vehicle);
