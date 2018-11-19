@@ -16,7 +16,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern bool Vehicle_IsRocketBoostActive(IntPtr vehicle);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern bool Vehicle_IsBreakActive(IntPtr vehicle);
+            internal static extern bool Vehicle_IsBrakeActive(IntPtr vehicle);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Vehicle_IsSirenActive(IntPtr vehicle);
@@ -58,7 +58,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern bool Vehicle_IsLocked(IntPtr vehicle);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetLocked(IntPtr vehicle, bool newStatus);
+            internal static extern void Vehicle_Lock(IntPtr vehicle, bool newStatus);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool Vehicle_IsDead(IntPtr vehicle);

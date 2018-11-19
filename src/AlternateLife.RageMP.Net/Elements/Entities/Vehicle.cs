@@ -172,7 +172,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                Rage.Vehicle.Vehicle_SetLocked(NativePointer, value);
+                Rage.Vehicle.Vehicle_Lock(NativePointer, value);
             }
         }
 
@@ -202,7 +202,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return Rage.Vehicle.Vehicle_IsBreakActive(NativePointer);
+                return Rage.Vehicle.Vehicle_IsBrakeActive(NativePointer);
             }
         }
 
