@@ -97,9 +97,9 @@ namespace AlternateLife.RageMP.Net
                 .ConfigureAwait(false);
         }
 
-        internal Task Schedule(Action action)
+        internal Task Schedule(Action action, bool forceSchedule = false)
         {
-            if (IsInMainThread())
+            if (forceSchedule == false && IsInMainThread())
             {
                 try
                 {
@@ -116,9 +116,9 @@ namespace AlternateLife.RageMP.Net
             return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
         }
 
-        internal Task<T> Schedule<T>(Func<T> action)
+        internal Task<T> Schedule<T>(Func<T> action, bool forceSchedule = false)
         {
-            if (IsInMainThread())
+            if (forceSchedule == false && IsInMainThread())
             {
                 try
                 {

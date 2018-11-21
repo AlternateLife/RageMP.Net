@@ -109,9 +109,10 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// WARNING: Avoid long procedures, because this could harm general event performance.
         /// </summary>
         /// <param name="action"><paramref name="action"/> to schedule</param>
-        public static Task Schedule(Action action)
+        /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
+        public static Task Schedule(Action action, bool forceSchedule = false)
         {
-            return _plugin.Schedule(action);
+            return _plugin.Schedule(action, forceSchedule);
         }
 
         /// <summary>
@@ -120,9 +121,10 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// WARNING: Avoid long procedures, because this could harm general event performance.
         /// </summary>
         /// <param name="action"><paramref name="action"/> to schedule</param>
-        public static Task<T> Schedule<T>(Func<T> action)
+        /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
+        public static Task<T> Schedule<T>(Func<T> action, bool forceSchedule = false)
         {
-            return _plugin.Schedule(action);
+            return _plugin.Schedule(action, forceSchedule);
         }
 
     }
