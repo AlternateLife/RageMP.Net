@@ -13,6 +13,8 @@ namespace AlternateLife.RageMP.Net.Interfaces
 
         /// <summary>
         /// Get or set the weather of the world.
+        ///
+        /// If value is set to WeatherType.XMAS, snow will lay on the ground.
         /// </summary>
         WeatherType Weather { get; set; }
 
