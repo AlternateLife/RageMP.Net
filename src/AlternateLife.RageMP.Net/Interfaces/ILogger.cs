@@ -1,4 +1,5 @@
 using System;
+using AlternateLife.RageMP.Net.Enums;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
@@ -10,6 +11,14 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// This property is very useful, if you create your own wrapper that utilizes this method.
         /// </summary>
         int FramesToSkip { get; set; }
+
+        /// <summary>
+        /// Logs a message with a specific loglevel.
+        /// </summary>
+        /// <param name="logLevel">Loglevel of this message</param>
+        /// <param name="message">Message to log</param>
+        /// <param name="exception">Exception to log</param>
+        void Log(LogLevel logLevel, string message, Exception exception = null);
 
         /// <summary>
         /// Log a trace message.

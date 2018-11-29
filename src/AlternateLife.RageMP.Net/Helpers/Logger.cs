@@ -1,13 +1,13 @@
 using System;
 using System.Diagnostics;
-using System.Reflection;
-using NLog;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
 using NLog.Config;
-using ILogger = AlternateLife.RageMP.Net.Interfaces.ILogger;
+using LogManager = NLog.LogManager;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class Logger : Interfaces.ILogger
+    internal class Logger : ILogger
     {
         private readonly Plugin _plugin;
 
@@ -20,17 +20,45 @@ namespace AlternateLife.RageMP.Net.Helpers
             LogManager.Configuration = new XmlLoggingConfiguration(_plugin.GetBasePath("NLog.config"));
         }
 
-        private void Log(LogLevel logLevel, string message, Exception exception = null)
+        public void Log(LogLevel logLevel, string message, Exception exception = null)
         {
             var logger = LogManager.GetLogger(GetCallerType());
 
+            NLog.LogLevel level;
+            switch (logLevel)
+            {
+                case LogLevel.Trace:
+                    level = NLog.LogLevel.Trace;
+                    break;
+
+                case LogLevel.Debug:
+                    level = NLog.LogLevel.Debug;
+                    break;
+
+                case LogLevel.Warn:
+                    level = NLog.LogLevel.Warn;
+                    break;
+
+                case LogLevel.Error:
+                    level = NLog.LogLevel.Error;
+                    break;
+
+                case LogLevel.Fatal:
+                    level = NLog.LogLevel.Fatal;
+                    break;
+
+                default:
+                    level = NLog.LogLevel.Info;
+                    break;
+            }
+
             if (exception != null)
             {
-                logger.Log(logLevel, exception, message);
+                logger.Log(level, exception, message);
             }
             else
             {
-                logger.Log(logLevel, message);
+                logger.Log(level, message);
             }
         }
 
