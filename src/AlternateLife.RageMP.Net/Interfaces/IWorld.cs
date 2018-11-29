@@ -1,5 +1,6 @@
 using System;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
@@ -13,7 +14,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get or set the weather of the world.
         /// </summary>
-        string Weather { get; set; }
+        WeatherType Weather { get; set; }
 
         /// <summary>
         /// Get or set the traffic lights lock state of the world.
@@ -28,10 +29,9 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Start a weather transition on the world.
         /// </summary>
-        /// <param name="weather">New weather to transit to </param>
+        /// <param name="weather">New weather to transit to</param>
         /// <param name="time">Duration of the transition</param>
-        /// <exception cref="ArgumentNullException"><paramref name="weather" /> is null or empty</exception>
-        void SetWeatherTransition(string weather, float time = 0.5f);
+        void SetWeatherTransition(WeatherType weather, float time = 0.5f);
 
         /// <summary>
         /// Request an ipl in the world.
