@@ -5,6 +5,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface ILogger
     {
         /// <summary>
+        /// Defines how many methods the class detector should skip on a log message.
+        ///
+        /// This property is very useful, if you create your own wrapper that utilizes this method.
+        /// </summary>
+        int FramesToSkip { get; set; }
+
+        /// <summary>
         /// Log a trace message.
         /// </summary>
         /// <param name="message">Message to log</param>

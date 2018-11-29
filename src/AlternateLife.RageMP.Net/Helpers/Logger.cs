@@ -11,6 +11,8 @@ namespace AlternateLife.RageMP.Net.Helpers
     {
         private readonly Plugin _plugin;
 
+        public int FramesToSkip { get; set; } = 3;
+
         public Logger(Plugin plugin)
         {
             _plugin = plugin;
@@ -65,25 +67,26 @@ namespace AlternateLife.RageMP.Net.Helpers
         private string GetCallerType()
         {
             string className;
-            var framesToSkip = 3;
-            var lastClass = "";
+            var framesToSkip = FramesToSkip;
+            var lastClass = string.Empty;
 
             do
             {
-                StackFrame frame = new StackFrame(framesToSkip, false);
-
-                MethodBase method = frame.GetMethod();
+                var frame = new StackFrame(framesToSkip, false);
+                var method = frame.GetMethod();
 
                 if (method == null)
                 {
                     className = lastClass;
+
                     break;
                 }
 
-                Type declaringType = method.DeclaringType;
+                var declaringType = method.DeclaringType;
                 if (declaringType == null)
                 {
                     className = method.Name;
+
                     break;
                 }
 
