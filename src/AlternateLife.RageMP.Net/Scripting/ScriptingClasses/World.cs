@@ -1,6 +1,6 @@
 using System;
-using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
@@ -18,14 +18,20 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             set => Rage.World.World_SetTime(_nativePointer, value);
         }
 
-        public string Weather
+        public WeatherType Weather
         {
-            get => StringConverter.PointerToString(Rage.World.World_GetWeather(_nativePointer));
+            get => ConvertWeatherNameToType(StringConverter.PointerToString(Rage.World.World_GetWeather(_nativePointer)));
             set
             {
+                var weatherName = ConvertWeatherTypeToName(value);
+                if (string.IsNullOrEmpty(weatherName))
+                {
+                    return;
+                }
+
                 using (var converter = new StringConverter())
                 {
-                    Rage.World.World_SetWeather(_nativePointer, converter.StringToPointer(value));
+                    Rage.World.World_SetWeather(_nativePointer, converter.StringToPointer(weatherName));
                 }
             }
         }
@@ -48,13 +54,17 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
         }
 
-        public void SetWeatherTransition(string weather, float time)
+        public void SetWeatherTransition(WeatherType weather, float time)
         {
-            Contract.NotEmpty(weather, nameof(weather));
+            var weatherName = ConvertWeatherTypeToName(weather);
+            if (string.IsNullOrEmpty(weatherName))
+            {
+                return;
+            }
 
             using (var converter = new StringConverter())
             {
-                Rage.World.World_SetWeatherTransition(_nativePointer, converter.StringToPointer(weather), time);
+                Rage.World.World_SetWeatherTransition(_nativePointer, converter.StringToPointer(weatherName), time);
             }
         }
 
@@ -76,6 +86,26 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             {
                 Rage.World.World_RemoveIpl(_nativePointer, converter.StringToPointer(ipl));
             }
+        }
+
+        private string ConvertWeatherTypeToName(WeatherType type)
+        {
+            if (Enum.IsDefined(typeof(WeatherType), type) == false)
+            {
+                return null;
+            }
+
+            return type.ToString().ToUpperInvariant();
+        }
+
+        private WeatherType ConvertWeatherNameToType(string name)
+        {
+            if (Enum.TryParse(name, true, out WeatherType type) == false)
+            {
+                return WeatherType.Invalid;
+            }
+
+            return type;
         }
     }
 }
