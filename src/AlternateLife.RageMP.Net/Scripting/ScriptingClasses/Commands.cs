@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,6 +22,16 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         {
             _plugin = plugin;
             _logger = _plugin.Logger;
+        }
+
+        public bool DoesCommandExist(string name)
+        {
+            return _commands.ContainsKey(name);
+        }
+
+        public IReadOnlyCollection<string> GetRegisteredCommands()
+        {
+            return _commands.Keys.ToList();
         }
 
         public bool Register(string name, CommandDelegate callback)
@@ -123,8 +134,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             if (_commands.TryGetValue(commandName, out var commandInformation) == false)
             {
-                await player.OutputChatBoxAsync($"Command \"{commandName}\" not found.");
-
                 return;
             }
 

@@ -1,10 +1,25 @@
 using System;
+using System.Collections.Generic;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface ICommands
     {
+        /// <summary>
+        /// Checks if specified event exists.
+        /// </summary>
+        /// <param name="name">name to check</param>
+        /// <returns>true if command was registered before, false otherwise</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null or empty</exception>
+        bool DoesCommandExist(string name);
+
+        /// <summary>
+        /// Returns a collection of already created commands.
+        /// </summary>
+        /// <returns>collection of command names</returns>
+        IReadOnlyCollection<string> GetRegisteredCommands();
+
         /// <summary>
         /// Registers a simple command directly without dedicated handler class.
         /// </summary>
@@ -41,6 +56,5 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="handler"><see cref="ICommandHandler"/> to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is null</exception>
         void RemoveHandler(ICommandHandler handler);
-
     }
 }
