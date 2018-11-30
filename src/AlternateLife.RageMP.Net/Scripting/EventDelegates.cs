@@ -45,4 +45,6 @@ namespace AlternateLife.RageMP.Net.Scripting
     public delegate Task PlayerStreamOutDelegate(IPlayer player, IPlayer forPlayer);
 
     public delegate Task PlayerRemoteEventDelegate(IPlayer player, string eventName, object[] arguments);
+
+    public delegate Task CommandDelegate(IPlayer player, string[] arguments);
 }

@@ -25,6 +25,8 @@ namespace AlternateLife.RageMP.Net.Example
             var vehicle = await MP.Vehicles.NewAsync(VehicleHash.T20, Vector3.One);
 
             vehicle.SetColorRgb(new ColorRgba(255, 0, 255), new ColorRgba(0, 125, 25));
+
+            MP.Commands.RegisterCommandHandler(new TestCommandHandler());
         }
 
         private Task OnPlayerJoin(IPlayer player)
