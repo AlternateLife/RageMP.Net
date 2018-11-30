@@ -1,7 +1,77 @@
-# Rage-MP .NET Core Wrapper
+# AlternateLife.RageMP.Net
 ![Build status](https://teamcity.alternate-life.de/app/rest/builds/buildType:(id:AlternateLife_RageMP_Net)/statusIcon)
 
-AlternateLife RageMP.Net is an alternative server-side .NET Core implementation for [RAGE Multiplayer](https://rage.mp).
+AlternateLife.RageMP.Net is an alternative server-side .NET Core 2.1 implementation for [RAGE Multiplayer](https://rage.mp). This library targets more advanced developers which are more familiar with the RAGE Multiplayer server API and its features. It offers a mostly asynchronous API to interact with, so a thread-safe access to the native API is always guaranteed.
+
+## Download & Installation
+
+All releases are available for download in our [Releases page](https://github.com/AlternateLife/ragemp-dotnet-core/releases/latest). You can also find all instructions on how to get started in our [installation guide](https://ragemp.alternate-life.de/documentation/installation.html).
+
+## Documentation
+
+You can find the latest AlternateLife.RageMP.Net documentation [here](https://ragemp.alternate-life.de). 
+
+## Example
+
+This is a sneak-peak on how to create the `Main`-class, so the server can find your entry point where to start from. 
+
+```cs
+using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting;
+
+namespace AlternateLife.RageMP.Net.Example
+{
+    public class Main : IResource
+    {
+        public Main()
+        {
+            MP.Events.PlayerJoin += OnPlayerJoin;
+            MP.Events.PlayerQuit += OnPlayerQuit;
+
+            MP.Events.Add("PLAYER_INTERACT", OnPlayerInteract);
+        }
+
+        public Task OnStartAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task OnStopAsync()
+        {
+            return Task.CompletedTask;
+        }
+
+        private Task OnPlayerJoin(IPlayer player)
+        {
+            MP.Logger.Info($"Player {player.SocialClubName} ({player.Ip}) joined");
+
+            return Task.CompletedTask;
+        }
+
+        private void OnPlayerQuit(IPlayer player, DisconnectReason type, string reason)
+        {
+            MP.Logger.Info($"Player {player.SocialClubName} ({player.Ip}) left the server: {type.ToString()} ({reason})");
+        }
+
+        private Task OnPlayerInteract(IPlayer player, string eventname, object[] arguments)
+        {
+            var health = player.Health;
+
+            health += 5;
+            if (health > 100)
+            {
+                health = 100;
+            }
+
+            player.Health = health;
+
+            return Task.CompletedTask;
+        }
+    }
+}
+```
 
 ## MIT License
 
