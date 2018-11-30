@@ -32,6 +32,7 @@ namespace AlternateLife.RageMP.Net
         internal TextLabelPool TextLabelPool { get; }
         internal Config Config { get; }
         internal World World { get; }
+        internal Commands Commands { get; }
 
         internal Logger Logger { get; }
 
@@ -52,6 +53,7 @@ namespace AlternateLife.RageMP.Net
             _resourceLoader = new ResourceLoader();
             TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
+            Commands = new Commands(this);
 
             PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer), this);
             VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer), this);
