@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -83,6 +84,16 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         public void RemoveCommandHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
+
+            foreach (var command in _commands.Reverse())
+            {
+                if (ReferenceEquals(command.Value.CommandHandler, handler) == false)
+                {
+                    continue;
+                }
+
+                _commands.TryRemove(command.Value.Name, out _);
+            }
         }
 
         public async void ExecuteCommand(IPlayer player, string commandText)
