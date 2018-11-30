@@ -21,8 +21,6 @@
     </ItemGroup>
 
     <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb"
-              DestinationFolder="../../../RageMP Server/dotnet/resources/example/"
-              SkipUnchangedFiles="false" />
+        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb" DestinationFolder="../../../RageMP Server/dotnet/resources/example/" SkipUnchangedFiles="false" />
     </Target>
 </Project>

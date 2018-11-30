@@ -28,6 +28,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         internal static TextLabelPool InternalTextLabels => _plugin.TextLabelPool;
         internal static Config InternalConfig => _plugin.Config;
         internal static World InternalWorld => _plugin.World;
+        internal static Commands InternalCommands => _plugin.Commands;
 
         internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
@@ -42,6 +43,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         public static ITextLabelPool TextLabels => InternalTextLabels;
         public static IConfig Config => InternalConfig;
         public static IWorld World => InternalWorld;
+        public static ICommands Commands => InternalCommands;
 
         public static ILogger Logger => _plugin.Logger;
 
