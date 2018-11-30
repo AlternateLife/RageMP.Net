@@ -34,8 +34,9 @@ namespace AlternateLife.RageMP.Net.Helpers
             Contract.NotNull(callback, nameof(callback));
 
             var wasEmpty = _subscriptions.Any() == false;
+            var wasAdded = _subscriptions.Add(callback);
 
-            if (_forceRegistration || _subscriptions.Add(callback) == false || wasEmpty == false)
+            if (_forceRegistration || wasAdded == false || wasEmpty == false)
             {
                 return;
             }
@@ -47,7 +48,9 @@ namespace AlternateLife.RageMP.Net.Helpers
         {
             Contract.NotNull(callback, nameof(callback));
 
-            if (_forceRegistration || _subscriptions.Remove(callback) == false || _subscriptions.Any())
+            var wasRemoved = _subscriptions.Remove(callback);
+
+            if (_forceRegistration || wasRemoved == false || _subscriptions.Any())
             {
                 return;
             }
@@ -88,7 +91,34 @@ namespace AlternateLife.RageMP.Net.Helpers
             });
         }
 
+        public async Task CallAsyncAwaitable(Func<TEvent, Task> callback)
+        {
+            Contract.NotNull(callback, nameof(callback));
+
+            if (_subscriptions.Any() == false)
+            {
+                return;
+            }
+
+            foreach (var subscription in _subscriptions)
+            {
+                await ExecuteSubscriptionAsyncAwaitable(subscription, callback);
+            }
+        }
+
         private async void ExecuteSubscriptionAsync(TEvent subscription, Func<TEvent, Task> callback)
+        {
+            try
+            {
+                await callback(subscription).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                MP.Logger.Error($"An error occured during execution of event {_type}", e);
+            }
+        }
+
+        private async Task ExecuteSubscriptionAsyncAwaitable(TEvent subscription, Func<TEvent, Task> callback)
         {
             try
             {
