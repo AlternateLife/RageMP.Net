@@ -34,7 +34,14 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return _commands.TryAdd(name, commandInfo);
         }
 
-        public void RegisterCommandHandler(ICommandHandler handler)
+        public void Remove(CommandDelegate callback)
+        {
+            Contract.NotNull(callback, nameof(callback));
+
+            RemoveCommands(x => x.CommandHandler == null && x.Callback == callback);
+        }
+
+        public void RegisterHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
 
@@ -81,18 +88,23 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        public void RemoveCommandHandler(ICommandHandler handler)
+        public void RemoveHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
 
+            RemoveCommands(x => x.CommandHandler == handler);
+        }
+
+        private void RemoveCommands(Func<CommandInformation, bool> predicate)
+        {
             foreach (var command in _commands.Reverse())
             {
-                if (ReferenceEquals(command.Value.CommandHandler, handler) == false)
+                if (predicate(command.Value) == false)
                 {
                     continue;
                 }
 
-                _commands.TryRemove(command.Value.Name, out _);
+                _commands.TryRemove(command.Key, out _);
             }
         }
 
