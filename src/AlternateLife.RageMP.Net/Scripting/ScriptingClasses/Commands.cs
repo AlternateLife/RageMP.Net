@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -39,6 +38,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             Contract.NotNull(callback, nameof(callback));
 
             RemoveCommands(x => x.CommandHandler == null && x.Callback == callback);
+        }
+
+        public void Remove(string name)
+        {
+            Contract.NotEmpty(name, nameof(name));
+
+            RemoveCommands(x => x.Name == name);
         }
 
         public void RegisterHandler(ICommandHandler handler)
@@ -80,11 +86,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 if (_commands.TryAdd(attribute.Name, commandInfo) == false)
                 {
                     _logger.Warn($"Command {attribute.Name}: Could not register command of method \"{commandMethod.Name}\" in \"{commandMethod.DeclaringType}\", maybe command-name is already in use!");
-
-                    continue;
                 }
-
-                _logger.Debug($"Commandmethod found: {commandMethod.Name}");
             }
         }
 
@@ -128,7 +130,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             try
             {
-                await commandInformation.Callback(player, parts.Skip(1).ToArray());
+                await commandInformation.Callback(player, parts.Skip(1).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
             }
             catch (Exception e)
             {

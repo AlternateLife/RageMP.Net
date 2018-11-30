@@ -6,7 +6,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface ICommands
     {
         /// <summary>
-        /// Registers a command directly without dedicated handler class.
+        /// Registers a simple command directly without dedicated handler class.
         /// </summary>
         /// <param name="name">name of the command</param>
         /// <param name="callback">callback to call when command was executed</param>
@@ -15,11 +15,18 @@ namespace AlternateLife.RageMP.Net.Interfaces
         bool Register(string name, CommandDelegate callback);
 
         /// <summary>
-        /// Removes an already existing command callback.
+        /// Removes an already existing simple command callback.
         /// </summary>
         /// <param name="callback">callback that was registered before</param>
         /// <exception cref="ArgumentNullException"><paramref name="callback"/> is null</exception>
         void Remove(CommandDelegate callback);
+
+        /// <summary>
+        /// Removes an already existing command by name.
+        /// </summary>
+        /// <param name="name">name to search for</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is empty or null</exception>
+        void Remove(string name);
 
         /// <summary>
         /// Registers a new commandhandler with command methods

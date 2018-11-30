@@ -36,7 +36,8 @@ namespace AlternateLife.RageMP.Net.Example
             }
 
             MP.Commands.Register("time", TimeCallback);
-            MP.Commands.Remove(TimeCallback);
+
+            MP.Commands.Remove("weather");
         }
 
         private Task OnPlayerJoin(IPlayer player)
