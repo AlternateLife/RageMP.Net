@@ -27,6 +27,11 @@ namespace AlternateLife.RageMP.Net.Example
             vehicle.SetColorRgb(new ColorRgba(255, 0, 255), new ColorRgba(0, 125, 25));
 
             MP.Commands.RegisterCommandHandler(new TestCommandHandler());
+
+            MP.Commands.Register("time", async (player, arguments) =>
+            {
+                MP.World.Time = new TimeData(5, 0, 0);
+            });
         }
 
         private Task OnPlayerJoin(IPlayer player)

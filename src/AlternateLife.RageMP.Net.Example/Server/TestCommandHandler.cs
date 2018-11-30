@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Enums;
@@ -19,9 +20,24 @@ namespace AlternateLife.RageMP.Net.Example
         }
 
         [Command("kill")]
-        public void Kill(IPlayer player, string[] arguments)
+        public async Task Kill(IPlayer player, string[] arguments)
         {
+            throw new Exception();
+        }
 
+        [Command("weather")]
+        public async Task Weather(IPlayer player, string[] arguments)
+        {
+            var weatherType = arguments[0];
+
+            if (Enum.TryParse(weatherType, true, out WeatherType type) == false)
+            {
+                await player.OutputChatBoxAsync($"Weather {weatherType} is invalid!");
+
+                return;
+            }
+
+            MP.World.Weather = type;
         }
     }
 }
