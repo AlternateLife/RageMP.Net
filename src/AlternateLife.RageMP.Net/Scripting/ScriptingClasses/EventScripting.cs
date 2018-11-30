@@ -238,7 +238,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerReady = new EventHandler<NativePlayerReadyDelegate, PlayerReadyDelegate>(EventType.PlayerReady, DispatchPlayerReady);
             _playerDeath = new EventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate>(EventType.PlayerDeath, DispatchPlayerDeath);
             _playerQuit = new EventHandler<NativePlayerQuitDelegate, PlayerQuitDelegate>(EventType.PlayerQuit, DisaptchPlayerQuit);
-            _playerCommand = new EventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate>(EventType.PlayerCommand, DispatchPlayerCommand);
+            _playerCommand = new EventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate>(EventType.PlayerCommand, DispatchPlayerCommand, true);
             _playerChat = new EventHandler<NativePlayerChatDelegate, PlayerChatDelegate>(EventType.PlayerChat, DispatchPlayerChat);
             _playerSpawn = new EventHandler<NativePlayerSpawnDelegate, PlayerSpawnDelegate>(EventType.PlayerSpawn, DispatchPlayerSpawn);
             _playerDamage = new EventHandler<NativePlayerDamageDelegate, PlayerDamageDelegate>(EventType.PlayerDamage, DispatchPlayerDamage);
@@ -346,6 +346,8 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var message = Marshal.PtrToStringUni(text);
 
             _playerCommand.CallAsync(x => x(player, message));
+
+            _plugin.Commands.ExecuteCommand(player, message);
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)

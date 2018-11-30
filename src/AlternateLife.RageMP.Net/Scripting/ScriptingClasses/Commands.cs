@@ -23,6 +23,16 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _logger = _plugin.Logger;
         }
 
+        public bool Register(string name, CommandDelegate callback)
+        {
+            Contract.NotEmpty(name, nameof(name));
+            Contract.NotNull(callback, nameof(callback));
+
+            var commandInfo = new CommandInformation(name, callback);
+
+            return _commands.TryAdd(name, commandInfo);
+        }
+
         public void RegisterCommandHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
@@ -57,9 +67,14 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     continue;
                 }
 
-                var commandInfo = new CommandInformation(handler, attribute, commandDelegate);
+                var commandInfo = new CommandInformation(attribute.Name, commandDelegate, handler);
 
-                _commands.TryAdd(attribute.Name, commandInfo);
+                if (_commands.TryAdd(attribute.Name, commandInfo) == false)
+                {
+                    _logger.Warn($"Command {attribute.Name}: Could not register command of method \"{commandMethod.Name}\" in \"{commandMethod.DeclaringType}\", maybe command-name is already in use!");
+
+                    continue;
+                }
 
                 _logger.Debug($"Commandmethod found: {commandMethod.Name}");
             }
@@ -68,8 +83,34 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         public void RemoveCommandHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
+        }
 
+        public async void ExecuteCommand(IPlayer player, string commandText)
+        {
+            if (string.IsNullOrWhiteSpace(commandText))
+            {
+                return;
+            }
 
+            var parts = commandText.Trim().Split(' ');
+
+            var commandName = parts[0];
+
+            if (_commands.TryGetValue(commandName, out var commandInformation) == false)
+            {
+                await player.OutputChatBoxAsync($"Command \"{commandName}\" not found.");
+
+                return;
+            }
+
+            try
+            {
+                await commandInformation.Callback(player, parts.Skip(1).ToArray());
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"An error occured when player {player.Name} executed command: {commandName}: ", e);
+            }
         }
     }
 }
