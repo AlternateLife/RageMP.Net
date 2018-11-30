@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using System.Windows.Input;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
@@ -348,14 +348,17 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             var eventArgs = new CommandEventArgs();
 
-            await _playerCommand.CallAsyncAwaitable(x => x(player, message, eventArgs));
+            await _playerCommand
+                .CallAsyncAwaitable(x => x(player, message, eventArgs))
+                .ConfigureAwait(false);
 
             if (eventArgs.Cancelled)
             {
                 return;
             }
 
-            _plugin.Commands.ExecuteCommand(player, message);
+            await Task.Run(() => _plugin.Commands.ExecuteCommand(player, message))
+                .ConfigureAwait(false);
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)
