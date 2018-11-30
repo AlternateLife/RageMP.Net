@@ -100,10 +100,14 @@ namespace AlternateLife.RageMP.Net.Helpers
                 return;
             }
 
-            foreach (var subscription in _subscriptions)
+            await Task.Run(async () =>
             {
-                await ExecuteSubscriptionAsyncAwaitable(subscription, callback);
-            }
+                foreach (var subscription in _subscriptions)
+                {
+                    await ExecuteSubscriptionAsyncAwaitable(subscription, callback)
+                        .ConfigureAwait(false);
+                }
+            }).ConfigureAwait(false);
         }
 
         private async void ExecuteSubscriptionAsync(TEvent subscription, Func<TEvent, Task> callback)

@@ -2,7 +2,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {

@@ -121,7 +121,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        public async void ExecuteCommand(IPlayer player, string commandText)
+        public async Task ExecuteCommand(IPlayer player, string commandText)
         {
             if (string.IsNullOrWhiteSpace(commandText))
             {
