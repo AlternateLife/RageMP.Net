@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Scripting
 {
@@ -14,7 +15,7 @@ namespace AlternateLife.RageMP.Net.Scripting
     public delegate Task PlayerJoinDelegate(IPlayer player);
     public delegate Task PlayerReadyDelegate(IPlayer player);
     public delegate void PlayerQuitDelegate(IPlayer player, DisconnectReason type, string reason);
-    public delegate Task PlayerCommandDelegate(IPlayer player, string text);
+    public delegate Task PlayerCommandDelegate(IPlayer player, string text, CommandEventArgs eventArgs);
     public delegate Task PlayerChatDelegate(IPlayer player, string text);
     public delegate Task PlayerDeathDelegate(IPlayer player, uint reason, IPlayer killerPlayer);
     public delegate Task PlayerSpawnDelegate(IPlayer player);

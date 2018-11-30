@@ -6,6 +6,7 @@ using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Example
 {
@@ -61,7 +62,7 @@ namespace AlternateLife.RageMP.Net.Example
             return Task.CompletedTask;
         }
 
-        private async Task OnPlayerCommand(IPlayer player, string text)
+        private async Task OnPlayerCommand(IPlayer player, string text, CommandEventArgs eventArgs)
         {
             if (text == "v")
             {
