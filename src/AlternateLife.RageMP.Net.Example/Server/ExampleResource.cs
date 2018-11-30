@@ -28,13 +28,15 @@ namespace AlternateLife.RageMP.Net.Example
 
             var commandHandler = new TestCommandHandler();
 
-            MP.Commands.RegisterCommandHandler(commandHandler);
-            MP.Commands.RemoveCommandHandler(commandHandler);
+            MP.Commands.RegisterHandler(commandHandler);
 
-            MP.Commands.Register("time", async (player, arguments) =>
+            async Task TimeCallback(IPlayer player, string[] arguments)
             {
                 MP.World.Time = new TimeData(byte.Parse(arguments[0]), 0, 0);
-            });
+            }
+
+            MP.Commands.Register("time", TimeCallback);
+            MP.Commands.Remove(TimeCallback);
         }
 
         private Task OnPlayerJoin(IPlayer player)

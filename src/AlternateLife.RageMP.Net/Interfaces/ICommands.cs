@@ -15,18 +15,25 @@ namespace AlternateLife.RageMP.Net.Interfaces
         bool Register(string name, CommandDelegate callback);
 
         /// <summary>
+        /// Removes an already existing command callback.
+        /// </summary>
+        /// <param name="callback">callback that was registered before</param>
+        /// <exception cref="ArgumentNullException"><paramref name="callback"/> is null</exception>
+        void Remove(CommandDelegate callback);
+
+        /// <summary>
         /// Registers a new commandhandler with command methods
         /// </summary>
         /// <param name="handler"><see cref="ICommandHandler"/> to register</param>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is null</exception>
-        void RegisterCommandHandler(ICommandHandler handler);
+        void RegisterHandler(ICommandHandler handler);
 
         /// <summary>
         /// Removes an already registered commandhandler
         /// </summary>
         /// <param name="handler"><see cref="ICommandHandler"/> to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is null</exception>
-        void RemoveCommandHandler(ICommandHandler handler);
+        void RemoveHandler(ICommandHandler handler);
 
     }
 }
