@@ -7,7 +7,7 @@ using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Example
 {
-    public class TestCommandHandler : ICommandHandler
+    public class CommandHandler : ICommandHandler
     {
         [Command("vehicle")]
         public async Task Vehicle(IPlayer player, string[] arguments)
@@ -17,12 +17,6 @@ namespace AlternateLife.RageMP.Net.Example
             player.PutIntoVehicle(vehicle, -1);
 
             await player.OutputChatBoxAsync("Vehicle created");
-        }
-
-        [Command("kill")]
-        public async Task Kill(IPlayer player, string[] arguments)
-        {
-            throw new Exception();
         }
 
         [Command("weather")]
@@ -38,6 +32,21 @@ namespace AlternateLife.RageMP.Net.Example
             }
 
             MP.World.Weather = type;
+        }
+
+        [Command("weapon")]
+        public async Task Weapon(IPlayer player, string[] arguments)
+        {
+            var weaponName = arguments[0];
+
+            if (Enum.TryParse(weaponName, true, out WeaponHash hash) == false)
+            {
+                await player.OutputChatBoxAsync($"Weapon {weaponName} is invalid!");
+
+                return;
+            }
+
+            player.GiveWeapon(hash, 100);
         }
     }
 }
