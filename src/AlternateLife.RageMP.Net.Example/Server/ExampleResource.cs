@@ -26,11 +26,14 @@ namespace AlternateLife.RageMP.Net.Example
 
             vehicle.SetColorRgb(new ColorRgba(255, 0, 255), new ColorRgba(0, 125, 25));
 
-            MP.Commands.RegisterCommandHandler(new TestCommandHandler());
+            var commandHandler = new TestCommandHandler();
+
+            MP.Commands.RegisterCommandHandler(commandHandler);
+            MP.Commands.RemoveCommandHandler(commandHandler);
 
             MP.Commands.Register("time", async (player, arguments) =>
             {
-                MP.World.Time = new TimeData(5, 0, 0);
+                MP.World.Time = new TimeData(byte.Parse(arguments[0]), 0, 0);
             });
         }
 
