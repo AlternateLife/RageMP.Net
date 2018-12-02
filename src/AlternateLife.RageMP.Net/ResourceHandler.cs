@@ -4,53 +4,62 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net
 {
     internal class ResourceHandler
     {
+        private readonly ILogger _logger;
         private readonly DirectoryInfo _directory;
         private readonly ResourceLoader _resourceLoader;
+
+        private readonly string _resourceName;
         private readonly List<Assembly> _loadedAssemblies = new List<Assembly>();
+
         private IResource _entryPoint;
 
-        public ResourceHandler(DirectoryInfo directory, ResourceLoader resourceLoader)
+        public ResourceHandler(ILogger logger, DirectoryInfo directory, ResourceLoader resourceLoader)
         {
+            _logger = logger;
             _directory = directory;
             _resourceLoader = resourceLoader;
+
+            _resourceName = _directory.Name;
         }
 
         public void Prepare()
         {
-            MP.Logger.Info($"{_directory.Name}: Prepare resource...");
+            Log(LogLevel.Info, "Prepare resource...");
 
             if (TryLoadAssemblies() == false)
             {
-                MP.Logger.Warn($"{_directory.Name}: Resource preparation has been aborted!");
+                Log(LogLevel.Warn, "Resource preparation has been aborted!");
 
                 return;
             }
 
             if (_loadedAssemblies.Any() == false)
             {
-                MP.Logger.Warn($"Could not find any assembly inside resource {_directory.Name}.");
+                Log(LogLevel.Warn, "Could not find any assembly inside resource folder.");
 
                 return;
             }
 
             _entryPoint = LoadEntryPoint();
 
-            MP.Logger.Info($"{_directory.Name}: Resource successfully prepared!");
+            Log(LogLevel.Info, "Resource successfully prepared!");
         }
 
         public async Task Start()
         {
-            MP.Logger.Info($"{_directory.Name}: Starting resource...");
+            Log(LogLevel.Info, "Starting resource...");
 
             if (_entryPoint == null)
             {
-                MP.Logger.Warn($"{_directory.Name}: Could not find a valid entrypoint-class implementing interface \"{typeof(IResource)}\"!");
+                Log(LogLevel.Warn, $"Could not find a valid entrypoint-class implementing interface \"{typeof(IResource)}\"!");
 
                 return;
             }
@@ -63,12 +72,12 @@ namespace AlternateLife.RageMP.Net
             }
             catch (Exception e)
             {
-                MP.Logger.Error($"{_directory.Name}: An error occured during resource startup!", e);
+                Log(LogLevel.Error, "An error occured during resource startup!", e);
 
                 return;
             }
 
-            MP.Logger.Info($"{_directory.Name}: Resource successfully started!");
+            Log(LogLevel.Info, "Resource successfully started!");
         }
 
         private bool TryLoadAssemblies()
@@ -80,7 +89,7 @@ namespace AlternateLife.RageMP.Net
                     var assembly = _resourceLoader.LoadAssembly(file.FullName);
                     if (assembly == null)
                     {
-                        MP.Logger.Warn($"Skipping assembly \"{file.FullName}\", because an error occured during load!");
+                        Log(LogLevel.Warn, $"Skipping assembly \"{file.FullName}\", because an error occured during load!");
 
                         continue;
                     }
@@ -92,7 +101,7 @@ namespace AlternateLife.RageMP.Net
             }
             catch (Exception e)
             {
-                MP.Logger.Error($"{_directory.Name}: An error occured during assembly loading!", e);
+                Log(LogLevel.Error, "An error occured during assembly loading:", e);
             }
 
             return false;
@@ -111,17 +120,17 @@ namespace AlternateLife.RageMP.Net
                 }
                 catch (Exception e)
                 {
-                    MP.Logger.Error($"{_directory.Name}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ");
+                    Log(LogLevel.Error, $"{_directory.Name}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ", e);
 
                     if (e is ReflectionTypeLoadException reflectionException)
                     {
-                        MP.Logger.Error($"{_directory.Name}: Following LoaderExceptions are given:");
+                        Log(LogLevel.Error, "Following LoaderExceptions are given:");
 
                         var loaderExceptions = reflectionException.LoaderExceptions;
 
                         for (int i = 0; i < loaderExceptions.Length; i++)
                         {
-                            MP.Logger.Error($"{_directory.Name}: LoaderException {i + 1} / {loaderExceptions.Length}: ", loaderExceptions[i]);
+                            Log(LogLevel.Error, $"LoaderException {i + 1} / {loaderExceptions.Length}: ", loaderExceptions[i]);
                         }
                     }
 
@@ -139,10 +148,12 @@ namespace AlternateLife.RageMP.Net
 
                     if (constructor == null)
                     {
-                        MP.Logger.Warn($"{_directory.Name}: Possible type \"{type}\" was found, but no parameterless-constructor is available!");
+                        Log(LogLevel.Warn, $"Possible type \"{type}\" was found, but no parameterless-constructor is available!");
 
                         continue;
                     }
+
+                    Log(LogLevel.Debug, $"Entrypoint \"{type}\" found, executing constructor...");
 
                     try
                     {
@@ -150,7 +161,7 @@ namespace AlternateLife.RageMP.Net
                     }
                     catch (Exception e)
                     {
-                        MP.Logger.Error($"{_directory.Name}: An error occured during constructor-execution: ", e);
+                        Log(LogLevel.Error, "An error occured during constructor-execution: ", e);
 
                         return null;
                     }
@@ -158,6 +169,11 @@ namespace AlternateLife.RageMP.Net
             }
 
             return null;
+        }
+
+        private void Log(LogLevel logLevel, string message, Exception exception = null)
+        {
+            _logger.Log(logLevel, $"{_resourceName}: {message}", exception);
         }
 
     }

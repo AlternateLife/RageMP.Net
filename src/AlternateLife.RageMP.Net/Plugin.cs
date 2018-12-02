@@ -50,7 +50,7 @@ namespace AlternateLife.RageMP.Net
 
             MP.Setup(this);
 
-            _resourceLoader = new ResourceLoader();
+            _resourceLoader = new ResourceLoader(Logger);
             TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
             Commands = new Commands(this);
