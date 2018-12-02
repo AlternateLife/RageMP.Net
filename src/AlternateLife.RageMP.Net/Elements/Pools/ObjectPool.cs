@@ -3,8 +3,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
-using Object = AlternateLife.RageMP.Net.Elements.Entities.Object;
 
 namespace AlternateLife.RageMP.Net.Elements.Pools
 {

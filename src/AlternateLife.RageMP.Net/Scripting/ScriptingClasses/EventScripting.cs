@@ -537,7 +537,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         private bool TryBuildEntity(IntPtr entityPointer, out IEntity createdEntity)
         {
-            if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out EntityType type) == false)
+            if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out _) == false)
             {
                 createdEntity = null;
 
@@ -561,14 +561,14 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return entity != null;
         }
 
-        private bool TryRemoveEntity(IntPtr entityPointer, Action<IEntity> preRemoveCallback)
+        private void TryRemoveEntity(IntPtr entityPointer, Action<IEntity> preRemoveCallback)
         {
             if (GetPoolFromPointer(entityPointer, out IInternalPool pool, out _) == false)
             {
-                return false;
+                return;
             }
 
-            return pool.RemoveEntity(entityPointer, preRemoveCallback);
+            pool.RemoveEntity(entityPointer, preRemoveCallback);
         }
     }
 }
