@@ -1,4 +1,3 @@
-using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
