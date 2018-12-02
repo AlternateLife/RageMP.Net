@@ -13,7 +13,7 @@ AlternateLife.RageMP.Net is an alternative server-side .NET Core 2.1 implementat
 PM> Install-Package AlternateLife.RageMP.Net
 ```
 
-All releases are available for download in our [Releases page](https://github.com/AlternateLife/ragemp-dotnet-core/releases/latest). You can also find all instructions on how to get started in our [installation guide](https://ragemp.alternate-life.de/documentation/installation.html). 
+All releases are available for download in our [Releases page](https://github.com/AlternateLife/RageMP.Net/releases/latest). You can also find all instructions on how to get started in our [installation guide](https://ragemp.alternate-life.de/documentation/installation.html). 
 
 ## Documentation
 
