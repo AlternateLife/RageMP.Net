@@ -7,7 +7,7 @@ namespace AlternateLife.RageMP.Net.Attributes
     {
         public string Name { get; }
 
-        public CommandAttribute(string name = default(string))
+        public CommandAttribute(string name)
         {
             Name = name;
         }
