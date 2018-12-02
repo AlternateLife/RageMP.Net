@@ -5,7 +5,15 @@ AlternateLife.RageMP.Net is an alternative server-side .NET Core 2.1 implementat
 
 ## Download & Installation
 
-All releases are available for download in our [Releases page](https://github.com/AlternateLife/ragemp-dotnet-core/releases/latest). You can also find all instructions on how to get started in our [installation guide](https://ragemp.alternate-life.de/documentation/installation.html).
+ℹ️ This library currently supports **win64** only!
+
+**NuGet**
+
+```text
+PM> Install-Package AlternateLife.RageMP.Net
+```
+
+All releases are available for download in our [Releases page](https://github.com/AlternateLife/ragemp-dotnet-core/releases/latest). You can also find all instructions on how to get started in our [installation guide](https://ragemp.alternate-life.de/documentation/installation.html). 
 
 ## Documentation
 
@@ -72,6 +80,10 @@ namespace AlternateLife.RageMP.Net.Example
     }
 }
 ```
+
+## See also
+
+- This package heavily relies on our [RAGE Multiplayer C SDK wrapper](https://github.com/AlternateLife/ragemp-c-sdk).
 
 ## MIT License
 
