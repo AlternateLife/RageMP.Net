@@ -49,7 +49,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return MP.InternalVehicles[Rage.Vehicle.Vehicle_GetTrailer(NativePointer)];
+                return _plugin.VehiclePool[Rage.Vehicle.Vehicle_GetTrailer(NativePointer)];
             }
         }
 
@@ -59,7 +59,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                return MP.InternalVehicles[Rage.Vehicle.Vehicle_GetTraileredBy(NativePointer)];
+                return _plugin.VehiclePool[Rage.Vehicle.Vehicle_GetTraileredBy(NativePointer)];
             }
         }
 
@@ -583,7 +583,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             var pointer = Rage.Vehicle.Vehicle_GetOccupant(NativePointer, seat);
 
-            return MP.InternalPlayers[pointer];
+            return _plugin.PlayerPool[pointer];
         }
 
         public void SetOccupant(int seat, IPlayer player)
