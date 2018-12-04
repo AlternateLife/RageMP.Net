@@ -346,7 +346,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Contract.NotNull(arguments, nameof(arguments));
             CheckExistence();
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -370,7 +370,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Contract.NotNull(arguments, nameof(arguments));
             CheckExistence();
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
                 .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length))
@@ -389,7 +389,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Contract.NotNull(arguments, nameof(arguments));
             CheckExistence();
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
                 .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length))
