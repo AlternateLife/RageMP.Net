@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 
@@ -13,8 +12,6 @@ namespace AlternateLife.RageMP.Net.Scripting
         public const uint GlobalDimension = uint.MaxValue;
 
         private static Plugin _plugin;
-
-        internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
         public static IEventScripting Events => _plugin.EventScripting;
         public static IVehiclePool Vehicles => _plugin.VehiclePool;

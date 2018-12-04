@@ -8,21 +8,5 @@ namespace AlternateLife.RageMP.Net.Data
     {
         public ulong Length;
         public IntPtr Arguments;
-
-        public object[] ToArguments()
-        {
-            var arguments = new object[Length];
-
-            for (var i = 0; i < (int) Length; i++)
-            {
-                var address = Arguments + Marshal.SizeOf(typeof(ArgumentData)) * i;
-
-                var argument = Marshal.PtrToStructure<ArgumentData>(address);
-
-                arguments[i] = argument.ToObject();
-            }
-
-            return arguments;
-        }
     }
 }
