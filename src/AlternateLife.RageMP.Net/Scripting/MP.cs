@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Elements.Pools;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
-using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Scripting
 {
@@ -16,34 +14,20 @@ namespace AlternateLife.RageMP.Net.Scripting
 
         private static Plugin _plugin;
 
-        internal static EventScripting InternalEvents => _plugin.EventScripting;
-
-        internal static VehiclePool InternalVehicles => _plugin.VehiclePool;
-        internal static PlayerPool InternalPlayers => _plugin.PlayerPool;
-        internal static BlipPool InternalBlips => _plugin.BlipPool;
-        internal static CheckpointPool InternalCheckpoints => _plugin.CheckpointPool;
-        internal static ColshapePool InternalColshapes => _plugin.ColshapePool;
-        internal static MarkerPool InternalMarkers => _plugin.MarkerPool;
-        internal static ObjectPool InternalObjects => _plugin.ObjectPool;
-        internal static TextLabelPool InternalTextLabels => _plugin.TextLabelPool;
-        internal static Config InternalConfig => _plugin.Config;
-        internal static World InternalWorld => _plugin.World;
-        internal static Commands InternalCommands => _plugin.Commands;
-
         internal static IReadOnlyDictionary<EntityType, IInternalPool> EntityPoolMapping => _plugin.EntityPoolMapping;
 
-        public static IEventScripting Events => InternalEvents;
-        public static IVehiclePool Vehicles => InternalVehicles;
-        public static IPlayerPool Players => InternalPlayers;
-        public static IBlipPool Blips => InternalBlips;
-        public static ICheckpointPool Checkpoints => InternalCheckpoints;
-        public static IColshapePool Colshapes => InternalColshapes;
-        public static IMarkerPool Markers => InternalMarkers;
-        public static IObjectPool Objects => InternalObjects;
-        public static ITextLabelPool TextLabels => InternalTextLabels;
-        public static IConfig Config => InternalConfig;
-        public static IWorld World => InternalWorld;
-        public static ICommands Commands => InternalCommands;
+        public static IEventScripting Events => _plugin.EventScripting;
+        public static IVehiclePool Vehicles => _plugin.VehiclePool;
+        public static IPlayerPool Players => _plugin.PlayerPool;
+        public static IBlipPool Blips => _plugin.BlipPool;
+        public static ICheckpointPool Checkpoints => _plugin.CheckpointPool;
+        public static IColshapePool Colshapes => _plugin.ColshapePool;
+        public static IMarkerPool Markers => _plugin.MarkerPool;
+        public static IObjectPool Objects => _plugin.ObjectPool;
+        public static ITextLabelPool TextLabels => _plugin.TextLabelPool;
+        public static IConfig Config => _plugin.Config;
+        public static IWorld World => _plugin.World;
+        public static ICommands Commands => _plugin.Commands;
 
         public static ILogger Logger => _plugin.Logger;
 
