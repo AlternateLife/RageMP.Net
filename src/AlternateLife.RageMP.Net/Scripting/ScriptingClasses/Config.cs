@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         private readonly IntPtr _nativePointer;
         private readonly Plugin _plugin;
 
-        internal Config(IntPtr nativePointer, Plugin plugin)
+        public Config(IntPtr nativePointer, Plugin plugin)
         {
             _nativePointer = nativePointer;
             _plugin = plugin;
