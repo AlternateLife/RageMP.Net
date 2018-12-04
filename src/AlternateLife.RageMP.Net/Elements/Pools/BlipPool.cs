@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class BlipPool : PoolBase<IBlip>, IBlipPool
     {
-        internal BlipPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public BlipPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
