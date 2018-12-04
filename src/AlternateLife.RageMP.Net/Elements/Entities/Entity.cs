@@ -140,7 +140,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var argument = Rage.Entity.Entity_GetVariable(NativePointer, converter.StringToPointer(key));
 
-                data = StructConverter.PointerToStruct<ArgumentData>(argument).ToObject();
+                data = _plugin.ArgumentConverter.ConvertToObject(StructConverter.PointerToStruct<ArgumentData>(argument));
 
                 return data != null;
             }
@@ -153,7 +153,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             using (var converter = new StringConverter())
             {
-                Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), ArgumentData.ConvertFromObject(data));
+                Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), _plugin.ArgumentConverter.ConvertFromObject(data));
             }
         }
 
@@ -171,7 +171,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 foreach (var element in data)
                 {
                     keys[index] = converter.StringToPointer(element.Key);
-                    values[index] = ArgumentData.ConvertFromObject(element.Value);
+                    values[index] = _plugin.ArgumentConverter.ConvertFromObject(element.Value);
 
                     index++;
                 }

@@ -35,6 +35,7 @@ namespace AlternateLife.RageMP.Net
         internal Commands Commands { get; }
 
         internal Logger Logger { get; }
+        internal ArgumentConverter ArgumentConverter { get; }
 
         internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
         internal RageTaskScheduler TaskScheduler { get; }
@@ -46,8 +47,10 @@ namespace AlternateLife.RageMP.Net
             MP.Setup(this);
 
             NativeMultiplayer = multiplayer;
-            Logger = new Logger(this);
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
+
+            Logger = new Logger(this);
+            ArgumentConverter = new ArgumentConverter(this);
 
             _resourceLoader = new ResourceLoader(Logger);
             TaskScheduler = new RageTaskScheduler();

@@ -55,7 +55,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
 
             var player = _plugin.PlayerPool[playerPointer];
-            var arguments = data.ToArguments();
+            var arguments = _plugin.ArgumentConverter.ConvertToObjects(data);
 
             foreach (var subscription in eventSubscriptions)
             {

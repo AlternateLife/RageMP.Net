@@ -69,7 +69,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -93,7 +93,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -117,7 +117,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             using (var converter = new StringConverter())
             {
@@ -142,7 +142,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             if (playerPointers.Any() == false)
@@ -171,7 +171,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
                 .Schedule(() => Rage.PlayerPool.PlayerPool__Invoke(_nativePointer, nativeHash, data, (ulong) data.Length))
@@ -189,7 +189,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
                 .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInRange(_nativePointer, position, range, dimension, nativeHash, data, (ulong) data.Length))
@@ -207,7 +207,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
                 .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInDimension(_nativePointer, dimension, nativeHash, data, (ulong) data.Length))
@@ -226,7 +226,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             Contract.NotNull(players, nameof(players));
             Contract.NotNull(arguments, nameof(arguments));
 
-            var data = ArgumentData.ConvertFromObjects(arguments);
+            var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             await _plugin
