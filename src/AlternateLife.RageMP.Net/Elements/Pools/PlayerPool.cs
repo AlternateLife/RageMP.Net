@@ -13,7 +13,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class PlayerPool : PoolBase<IPlayer>, IPlayerPool
     {
-        internal PlayerPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public PlayerPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 

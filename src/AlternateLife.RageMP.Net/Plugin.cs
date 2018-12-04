@@ -43,28 +43,28 @@ namespace AlternateLife.RageMP.Net
         internal Plugin(IntPtr multiplayer)
         {
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            MP.Setup(this);
 
             NativeMultiplayer = multiplayer;
             Logger = new Logger(this);
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
-
-            MP.Setup(this);
 
             _resourceLoader = new ResourceLoader(Logger);
             TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
             Commands = new Commands(this);
 
-            PlayerPool = new PlayerPool(Rage.Multiplayer.Multiplayer_GetPlayerPool(NativeMultiplayer), this);
-            VehiclePool = new VehiclePool(Rage.Multiplayer.Multiplayer_GetVehiclePool(NativeMultiplayer), this);
-            BlipPool = new BlipPool(Rage.Multiplayer.Multiplayer_GetBlipPool(NativeMultiplayer), this);
-            CheckpointPool = new CheckpointPool(Rage.Multiplayer.Multiplayer_GetCheckpointPool(NativeMultiplayer), this);
-            ColshapePool = new ColshapePool(Rage.Multiplayer.Multiplayer_GetColshapePool(NativeMultiplayer), this);
-            MarkerPool = new MarkerPool(Rage.Multiplayer.Multiplayer_GetMarkerPool(NativeMultiplayer), this);
-            ObjectPool = new ObjectPool(Rage.Multiplayer.Multiplayer_GetObjectPool(NativeMultiplayer), this);
-            TextLabelPool = new TextLabelPool(Rage.Multiplayer.Multiplayer_GetLabelPool(NativeMultiplayer), this);
-            Config = new Config(Rage.Multiplayer.Multiplayer_GetConfig(NativeMultiplayer), this);
-            World = new World(Rage.Multiplayer.Multiplayer_GetWorld(NativeMultiplayer), this);
+            PlayerPool = CreateNativeManager<PlayerPool>(Rage.Multiplayer.Multiplayer_GetPlayerPool);
+            VehiclePool = CreateNativeManager<VehiclePool>(Rage.Multiplayer.Multiplayer_GetVehiclePool);
+            BlipPool = CreateNativeManager<BlipPool>(Rage.Multiplayer.Multiplayer_GetBlipPool);
+            CheckpointPool = CreateNativeManager<CheckpointPool>(Rage.Multiplayer.Multiplayer_GetCheckpointPool);
+            ColshapePool = CreateNativeManager<ColshapePool>(Rage.Multiplayer.Multiplayer_GetColshapePool);
+            MarkerPool = CreateNativeManager<MarkerPool>(Rage.Multiplayer.Multiplayer_GetMarkerPool);
+            ObjectPool = CreateNativeManager<ObjectPool>(Rage.Multiplayer.Multiplayer_GetObjectPool);
+            TextLabelPool = CreateNativeManager<TextLabelPool>(Rage.Multiplayer.Multiplayer_GetLabelPool);
+
+            Config = CreateNativeManager<Config>(Rage.Multiplayer.Multiplayer_GetConfig);
+            World = CreateNativeManager<World>(Rage.Multiplayer.Multiplayer_GetWorld);
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
@@ -77,6 +77,11 @@ namespace AlternateLife.RageMP.Net
                 { EntityType.Object, ObjectPool },
                 { EntityType.TextLabel, TextLabelPool }
             };
+        }
+
+        private T CreateNativeManager<T>(Func<IntPtr, IntPtr> pointerReceiver) where T : class
+        {
+            return (T) Activator.CreateInstance(typeof(T), pointerReceiver(NativeMultiplayer), this);
         }
 
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -11,7 +11,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class MarkerPool : PoolBase<IMarker>, IMarkerPool
     {
-        internal MarkerPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public MarkerPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 

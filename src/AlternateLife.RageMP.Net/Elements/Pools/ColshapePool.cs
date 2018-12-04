@@ -9,7 +9,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class ColshapePool : PoolBase<IColshape>, IColshapePool
     {
-        internal ColshapePool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public ColshapePool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
