@@ -48,7 +48,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             set => Rage.World.World_SetTrafficLightsState(_nativePointer, value);
         }
 
-        internal World(IntPtr nativePointer, Plugin plugin)
+        public World(IntPtr nativePointer, Plugin plugin)
         {
             _nativePointer = nativePointer;
             _plugin = plugin;
