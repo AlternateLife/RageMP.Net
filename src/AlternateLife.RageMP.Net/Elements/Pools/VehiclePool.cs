@@ -11,7 +11,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class VehiclePool : PoolBase<IVehicle>, IVehiclePool
     {
-        internal VehiclePool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public VehiclePool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 

@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 {
     internal class CheckpointPool : PoolBase<ICheckpoint>, ICheckpointPool
     {
-        internal CheckpointPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
+        public CheckpointPool(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin)
         {
         }
 
