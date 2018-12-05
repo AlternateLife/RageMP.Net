@@ -19,6 +19,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the name of the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null or empty</exception>
         string Name { get; set; }
 
         /// <summary>
