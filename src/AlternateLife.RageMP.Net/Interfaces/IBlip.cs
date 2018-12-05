@@ -40,6 +40,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set name of the blip.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
         string Name { get; set; }
 
         /// <summary>

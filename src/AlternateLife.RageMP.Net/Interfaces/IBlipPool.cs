@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Scripting;
@@ -20,6 +21,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="rotation">Rotation of the blip</param>
         /// <param name="dimension">Dimension of the blip</param>
         /// <returns>New <see cref="IBlip" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null</exception>
         Task<IBlip> NewAsync(uint sprite, Vector3 position, float scale, uint color, string name = "", uint alpha = 255, float drawDistance = 10, bool shortRange = false,
             int rotation = 0, uint dimension = MP.GlobalDimension);
 
@@ -37,6 +39,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="rotation">Rotation of the blip</param>
         /// <param name="dimension">Dimension of the blip</param>
         /// <returns>New <see cref="IBlip" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null</exception>
         Task<IBlip> NewAsync(int sprite, Vector3 position, float scale, int color, string name = "", int alpha = 255, float drawDistance = 10, bool shortRange = false,
             int rotation = 0, uint dimension = MP.GlobalDimension);
     }
