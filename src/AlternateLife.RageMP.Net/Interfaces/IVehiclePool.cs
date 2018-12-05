@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
@@ -19,6 +20,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="engine">Engine state of the vehicle</param>
         /// <param name="dimension">Dimension of the vehicle</param>
         /// <returns>New <see cref="IVehicle" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="numberPlate"/> is null</exception>
         Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading = 0, string numberPlate = "", uint alpha = 255, bool locked = false, bool engine = false,
             uint dimension = MP.GlobalDimension);
 
@@ -34,6 +36,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="engine">Engine state of the vehicle</param>
         /// <param name="dimension">Dimension of the vehicle</param>
         /// <returns>New <see cref="IVehicle" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="numberPlate"/> is null</exception>
         Task<IVehicle> NewAsync(uint model, Vector3 position, float heading = 0, string numberPlate = "", uint alpha = 255, bool locked = false, bool engine = false,
             uint dimension = MP.GlobalDimension);
 
@@ -49,6 +52,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="engine">Engine state of the vehicle</param>
         /// <param name="dimension">Dimension of the vehicle</param>
         /// <returns>New <see cref="IVehicle" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="numberPlate"/> is null</exception>
         Task<IVehicle> NewAsync(int model, Vector3 position, float heading = 0, string numberPlate = "", int alpha = 255, bool locked = false, bool engine = false,
             uint dimension = MP.GlobalDimension);
     }

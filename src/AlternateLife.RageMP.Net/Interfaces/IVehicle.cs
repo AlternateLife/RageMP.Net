@@ -146,6 +146,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the number plate of the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
         string NumberPlate { get; set; }
 
         /// <summary>

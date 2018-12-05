@@ -16,6 +16,8 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
         public async Task<IBlip> NewAsync(uint sprite, Vector3 position, float scale, uint color, string name, uint alpha, float drawDistance, bool shortRange, int rotation, uint dimension)
         {
+            Contract.NotNull(name, nameof(name));
+            
             using (var converter = new StringConverter())
             {
                 var namePointer = converter.StringToPointer(name);

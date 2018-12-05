@@ -17,6 +17,8 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
         public async Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
+            Contract.NotNull(numberPlate, nameof(numberPlate));
+            
             using (var converter = new StringConverter())
             {
                 var numberplatePointer = converter.StringToPointer(numberPlate);
