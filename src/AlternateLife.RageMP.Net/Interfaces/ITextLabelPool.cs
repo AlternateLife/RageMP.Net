@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
@@ -18,6 +19,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="los">Line of sight state of the text label</param>
         /// <param name="dimension">Dimension of the text label</param>
         /// <returns>New <see cref="ITextLabel" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="text"/> is null</exception>
         Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, ColorRgba color, float drawDistance = 20, bool los = false, uint dimension = MP.GlobalDimension);
 
         /// <summary>
@@ -31,6 +33,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="los">Line of sight state of the text label</param>
         /// <param name="dimension">Dimension of the text label</param>
         /// <returns>New <see cref="ITextLabel" /> instance</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="text"/> is null</exception>
         Task<ITextLabel> NewAsync(Vector3 position, string text, int font, ColorRgba color, float drawDistance = 20, bool los = false, uint dimension = MP.GlobalDimension);
     }
 }
