@@ -35,6 +35,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
             set
             {
+                Contract.NotNull(value, nameof(value));
+                
                 using (var converter = new StringConverter())
                 {
                     Rage.TextLabel.TextLabel_SetText(NativePointer, converter.StringToPointer(value));
