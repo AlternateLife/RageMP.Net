@@ -24,8 +24,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
             set
             {
+                Contract.NotEmpty(value, nameof(value));
                 CheckExistence();
-
+                
                 using (var converter = new StringConverter())
                 {
                     Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value));
