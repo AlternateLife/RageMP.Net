@@ -66,6 +66,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             {
                 var attribute = commandMethod.GetCustomAttribute<CommandAttribute>();
 
+                if (string.IsNullOrEmpty(attribute.Name))
+                {
+                    _logger.Warn($"Skipping method {commandMethod.Name} because of invalid command name.");
+                    
+                    continue;
+                }
+                
                 if (commandMethod.ReturnType != typeof(Task))
                 {
                     _logger.Warn($"Command {attribute.Name}: Return type {commandMethod.ReturnType} is invalid, {typeof(Task)} expected!");
