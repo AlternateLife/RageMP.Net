@@ -17,6 +17,8 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
 
         public async Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, ColorRgba color, float drawDistance, bool los, uint dimension)
         {
+            Contract.NotNull(text, nameof(text));
+            
             using (var converter = new StringConverter())
             {
                 var textPointer = converter.StringToPointer(text);

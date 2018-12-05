@@ -1,3 +1,4 @@
+using System;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Exceptions;
 
@@ -15,6 +16,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the text of the text label.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
         string Text { get; set; }
 
         /// <summary>
