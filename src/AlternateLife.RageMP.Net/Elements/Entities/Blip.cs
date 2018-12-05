@@ -100,6 +100,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
             set
             {
+                Contract.NotNull(value, nameof(value));
                 CheckExistence();
 
                 using (var converter = new StringConverter())
