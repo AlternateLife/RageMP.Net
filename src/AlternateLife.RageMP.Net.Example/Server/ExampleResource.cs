@@ -6,14 +6,13 @@ namespace AlternateLife.RageMP.Net.Example
 {
     public class ExampleResource : IResource
     {
-        public ExampleResource()
+        public ExampleResource(IEventScripting events, ICommands commands)
         {
-            MP.Events.PlayerJoin += OnPlayerJoin;
-            MP.Events.PlayerReady += OnPlayerReady;
+            events.PlayerJoin += OnPlayerJoin;
+            events.PlayerReady += OnPlayerReady;
+            events.PlayerDeath += OnPlayerDeath;
 
-            MP.Events.PlayerDeath += OnPlayerDeath;
-
-            MP.Commands.RegisterHandler(new CommandHandler());
+            commands.RegisterHandler(new CommandHandler());
         }
 
         public Task OnStartAsync()

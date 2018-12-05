@@ -10,6 +10,7 @@ using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 using AlternateLife.RageMP.Net.Scripting;
 using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AlternateLife.RageMP.Net
 {

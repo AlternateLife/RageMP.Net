@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Scripting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AlternateLife.RageMP.Net
 {
@@ -18,7 +19,8 @@ namespace AlternateLife.RageMP.Net
         private readonly string _resourceName;
         private readonly List<Assembly> _loadedAssemblies = new List<Assembly>();
 
-        private IResource _entryPoint;
+        private ICollection<IModule> _modules;
+        private IServiceProvider _serviceProvider;
 
         public ResourceHandler(Plugin plugin, DirectoryInfo directory, ResourceLoader resourceLoader)
         {
@@ -47,36 +49,33 @@ namespace AlternateLife.RageMP.Net
                 return;
             }
 
-            _entryPoint = LoadEntryPoint();
+            _modules = FindAndCreateModules();
+
+            BuildServiceProvider();
 
             Log(LogLevel.Info, "Resource successfully prepared!");
         }
 
-        public async Task Start()
+        private void BuildServiceProvider()
         {
-            Log(LogLevel.Info, "Starting resource...");
-
-            if (_entryPoint == null)
+            if (_modules.Any() == false)
             {
-                Log(LogLevel.Warn, $"Could not find a valid entrypoint-class implementing interface \"{typeof(IResource)}\"!");
+                Log(LogLevel.Warn, "No valid modules were found.");
 
                 return;
             }
 
-            try
-            {
-                await _entryPoint
-                    .OnStartAsync()
-                    .ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                Log(LogLevel.Error, "An error occured during resource startup!", e);
+            var services = new ServiceCollection();
+            var pluginModule = new MainModule();
 
-                return;
+            pluginModule.ConfigureServices(_plugin, services);
+
+            foreach (var module in _modules)
+            {
+                module.ConfigureServices(services);
             }
 
-            Log(LogLevel.Info, "Resource successfully started!");
+            _serviceProvider = services.BuildServiceProvider();
         }
 
         private bool TryLoadAssemblies()
@@ -106,9 +105,10 @@ namespace AlternateLife.RageMP.Net
             return false;
         }
 
-        private IResource LoadEntryPoint()
+        private ICollection<IModule> FindAndCreateModules()
         {
-            var resourceInterfaceType = typeof(IResource);
+            var moduleType = typeof(IModule);
+            var foundModules = new List<IModule>();
 
             foreach (var assembly in _loadedAssemblies)
             {
@@ -119,7 +119,7 @@ namespace AlternateLife.RageMP.Net
                 }
                 catch (Exception e)
                 {
-                    Log(LogLevel.Error, $"{_directory.Name}: An error occured during entrypoint search in assembly \"{assembly.FullName}\": ", e);
+                    Log(LogLevel.Error, $"{_directory.Name}: An error occured during module search in assembly \"{assembly.FullName}\": ", e);
 
                     if (e is ReflectionTypeLoadException reflectionException)
                     {
@@ -133,12 +133,12 @@ namespace AlternateLife.RageMP.Net
                         }
                     }
 
-                    return null;
+                    continue;
                 }
 
                 foreach (var type in types)
                 {
-                    if (type.IsClass == false || type.IsAbstract || resourceInterfaceType.IsAssignableFrom(type) == false)
+                    if (type.IsClass == false || type.IsAbstract || moduleType.IsAssignableFrom(type) == false)
                     {
                         continue;
                     }
@@ -152,22 +152,56 @@ namespace AlternateLife.RageMP.Net
                         continue;
                     }
 
-                    Log(LogLevel.Debug, $"Entrypoint \"{type}\" found, executing constructor...");
+                    Log(LogLevel.Debug, $"Module \"{type}\" found, creating...");
 
                     try
                     {
-                        return (IResource) constructor.Invoke(null);
+                        foundModules.Add((IModule) constructor.Invoke(null));
                     }
                     catch (Exception e)
                     {
                         Log(LogLevel.Error, "An error occured during constructor-execution: ", e);
-
-                        return null;
                     }
                 }
             }
 
-            return null;
+            return foundModules;
+        }
+
+        public async Task Start()
+        {
+            Log(LogLevel.Info, "Starting resource...");
+
+            IEnumerable<IResource> resources;
+
+            try
+            {
+                resources = _serviceProvider.GetServices<IResource>();
+            }
+            catch (Exception e)
+            {
+                Log(LogLevel.Error, "Failed to startup resource", e);
+
+                return;
+            }
+
+            foreach (var resource in resources)
+            {
+                try
+                {
+                    await resource
+                        .OnStartAsync()
+                        .ConfigureAwait(false);
+                }
+                catch (Exception e)
+                {
+                    Log(LogLevel.Error, "An error occured during resource startup!", e);
+
+                    return;
+                }
+            }
+
+            Log(LogLevel.Info, "Resource successfully started!");
         }
 
         private void Log(LogLevel logLevel, string message, Exception exception = null)
