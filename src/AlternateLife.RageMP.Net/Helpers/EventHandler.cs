@@ -5,20 +5,21 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
     internal class EventHandler<TNative, TEvent>
     {
+        private readonly Plugin _plugin;
         private readonly EventType _type;
         private readonly TNative _nativeCallback;
         private readonly bool _forceRegistration;
 
         private readonly HashSet<TEvent> _subscriptions = new HashSet<TEvent>();
 
-        public EventHandler(EventType type, TNative nativeCallback, bool forceRegistration = false)
+        public EventHandler(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false)
         {
+            _plugin = plugin;
             _type = type;
             _nativeCallback = nativeCallback;
             _forceRegistration = forceRegistration;
@@ -118,7 +119,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                MP.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
             }
         }
 
@@ -130,7 +131,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                MP.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
             }
         }
 
@@ -142,7 +143,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                MP.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
             }
         }
     }

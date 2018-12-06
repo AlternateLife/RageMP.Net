@@ -27,7 +27,7 @@ namespace AlternateLife.RageMP.Net.Helpers
 
                 if (_subscriptions.TryAdd(eventName, eventSubscriptions) == false)
                 {
-                    MP.Logger.Error($"Unable to create subscription list for event {eventName}");
+                    _plugin.Logger.Error($"Unable to create subscription list for event {eventName}");
 
                     return;
                 }
@@ -49,7 +49,7 @@ namespace AlternateLife.RageMP.Net.Helpers
         {
             if (_subscriptions.TryGetValue(eventName, out var eventSubscriptions) == false)
             {
-                MP.Logger.Warn($"Unregistered remote event '{eventName}'");
+                _plugin.Logger.Warn($"Unregistered remote event '{eventName}'");
 
                 return;
             }
@@ -65,7 +65,7 @@ namespace AlternateLife.RageMP.Net.Helpers
                 }
                 catch (Exception e)
                 {
-                    MP.Logger.Error($"An error occured during execution of {eventName}", e);
+                    _plugin.Logger.Error($"An error occured during execution of {eventName}", e);
                 }
             }
         }

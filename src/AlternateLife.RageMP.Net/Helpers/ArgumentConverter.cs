@@ -87,7 +87,7 @@ namespace AlternateLife.RageMP.Net.Helpers
                 {
                     if (entity.Exists == false)
                     {
-                        MP.Logger.Warn($"Provided entity \"{entity}\" is not valid, replacing with NULL.");
+                        _plugin.Logger.Warn($"Provided entity \"{entity}\" is not valid, replacing with NULL.");
 
                         break;
                     }
@@ -165,7 +165,7 @@ namespace AlternateLife.RageMP.Net.Helpers
                     return ConvertToEntity(data.EntityValue);
 
                 default:
-                    MP.Logger.Warn($"Conversion not implemented for {((ArgumentValueType) data.ValueType).ToString()}");
+                    _plugin.Logger.Warn($"Conversion not implemented for ValueType {data.ValueType}");
 
                     return null;
             }
@@ -200,7 +200,7 @@ namespace AlternateLife.RageMP.Net.Helpers
 
             if (_plugin.EntityPoolMapping.TryGetValue(entityType, out var pool) == false)
             {
-                MP.Logger.Warn($"Entity conversion not implemented for {entityType.ToString()}");
+                _plugin.Logger.Warn($"Entity conversion not implemented for {entityType.ToString()}");
 
                 return null;
             }

@@ -74,7 +74,7 @@ namespace AlternateLife.RageMP.Net
             }
             catch (FileLoadException e)
             {
-                MP.Logger.Error($"An error occured while loading assembly \"{path}\": ", e);
+                _logger.Error($"An error occured while loading assembly \"{path}\": ", e);
 
                 return null;
             }
