@@ -147,6 +147,7 @@ namespace AlternateLife.RageMP.Net.Helpers
                     return data.FloatValue;
 
                 case ArgumentValueType.String:
+                case ArgumentValueType.Object:
                     return StringConverter.PointerToString(data.StringValue, false);
 
                 case ArgumentValueType.Boolean:
@@ -154,9 +155,6 @@ namespace AlternateLife.RageMP.Net.Helpers
 
                 case ArgumentValueType.Vector3:
                     return data.Vector3Value;
-
-                case ArgumentValueType.Object:
-                    return data.StringValue;
 
                 case ArgumentValueType.Null:
                     return null;
