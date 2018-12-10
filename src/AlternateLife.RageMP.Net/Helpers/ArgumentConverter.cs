@@ -196,7 +196,7 @@ namespace AlternateLife.RageMP.Net.Helpers
         {
             var entityType = (EntityType) data.Type;
 
-            if (_plugin.EntityPoolMapping.TryGetValue(entityType, out var pool) == false)
+            if (_plugin.TryGetPool(entityType, out var pool) == false)
             {
                 _plugin.Logger.Warn($"Entity conversion not implemented for {entityType.ToString()}");
 
