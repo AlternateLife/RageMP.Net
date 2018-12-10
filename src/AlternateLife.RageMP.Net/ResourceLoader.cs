@@ -4,22 +4,20 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Interfaces;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net
 {
     internal class ResourceLoader
     {
-        private readonly ILogger _logger;
+        private readonly Plugin _plugin;
         private const string _basePath = "dotnet/resources";
 
         private readonly Dictionary<string, Assembly> _loadedAssemblies;
         private List<ResourceHandler> _resources;
 
-        internal ResourceLoader(ILogger logger)
+        internal ResourceLoader(Plugin plugin)
         {
-            _logger = logger;
+            _plugin = plugin;
             _loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToDictionary(x => x.GetName().FullName, x => x);
         }
 
@@ -51,7 +49,7 @@ namespace AlternateLife.RageMP.Net
 
             foreach (var directory in directoryFolder.GetDirectories())
             {
-                yield return new ResourceHandler(_logger, directory, this);
+                yield return new ResourceHandler(_plugin, directory, this);
             }
         }
 
@@ -74,7 +72,7 @@ namespace AlternateLife.RageMP.Net
             }
             catch (FileLoadException e)
             {
-                _logger.Error($"An error occured while loading assembly \"{path}\": ", e);
+                _plugin.Logger.Error($"An error occured while loading assembly \"{path}\": ", e);
 
                 return null;
             }

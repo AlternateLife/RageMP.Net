@@ -48,10 +48,11 @@ namespace AlternateLife.RageMP.Net
             NativeMultiplayer = multiplayer;
             _mainThreadId = Thread.CurrentThread.ManagedThreadId;
             _taskScheduler = new RageTaskScheduler();
+            _resourceLoader = new ResourceLoader(this);
 
-            Logger = new Logger(this);
             ArgumentConverter = new ArgumentConverter(this);
 
+            Logger = new Logger(this);
             EventScripting = new EventScripting(this);
             Commands = new Commands(this);
 
@@ -66,8 +67,6 @@ namespace AlternateLife.RageMP.Net
 
             Config = CreateNativeManager<Config>(Rage.Multiplayer.Multiplayer_GetConfig);
             World = CreateNativeManager<World>(Rage.Multiplayer.Multiplayer_GetWorld);
-
-            _resourceLoader = new ResourceLoader(Logger);
 
             _entityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
