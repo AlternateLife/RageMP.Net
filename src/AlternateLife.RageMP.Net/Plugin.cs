@@ -13,11 +13,13 @@ using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net
 {
-    internal class Plugin
+    internal partial class Plugin
     {
         private readonly string _basePath = $"dotnet{Path.DirectorySeparatorChar}";
 
         private readonly ResourceLoader _resourceLoader;
+        private readonly RageTaskScheduler _taskScheduler;
+        private readonly int _mainThreadId;
 
         internal IntPtr NativeMultiplayer { get; }
 
@@ -38,8 +40,6 @@ namespace AlternateLife.RageMP.Net
         internal ArgumentConverter ArgumentConverter { get; }
 
         internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
-        internal RageTaskScheduler TaskScheduler { get; }
-        private int MainThreadId { get; }
 
         internal Plugin(IntPtr multiplayer)
         {
@@ -47,13 +47,12 @@ namespace AlternateLife.RageMP.Net
             MP.Setup(this);
 
             NativeMultiplayer = multiplayer;
-            MainThreadId = Thread.CurrentThread.ManagedThreadId;
+            _mainThreadId = Thread.CurrentThread.ManagedThreadId;
+            _taskScheduler = new RageTaskScheduler();
 
             Logger = new Logger(this);
             ArgumentConverter = new ArgumentConverter(this);
 
-            _resourceLoader = new ResourceLoader(Logger);
-            TaskScheduler = new RageTaskScheduler();
             EventScripting = new EventScripting(this);
             Commands = new Commands(this);
 
@@ -68,6 +67,8 @@ namespace AlternateLife.RageMP.Net
 
             Config = CreateNativeManager<Config>(Rage.Multiplayer.Multiplayer_GetConfig);
             World = CreateNativeManager<World>(Rage.Multiplayer.Multiplayer_GetWorld);
+
+            _resourceLoader = new ResourceLoader(Logger);
 
             EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
@@ -102,47 +103,6 @@ namespace AlternateLife.RageMP.Net
             await _resourceLoader
                 .Start()
                 .ConfigureAwait(false);
-        }
-
-        internal Task Schedule(Action action, bool forceSchedule = false)
-        {
-            if (forceSchedule == false && IsInMainThread())
-            {
-                try
-                {
-                    action();
-
-                    return Task.CompletedTask;
-                }
-                catch (Exception e)
-                {
-                    return Task.FromException(e);
-                }
-            }
-
-            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
-        }
-
-        internal Task<T> Schedule<T>(Func<T> action, bool forceSchedule = false)
-        {
-            if (forceSchedule == false && IsInMainThread())
-            {
-                try
-                {
-                    return Task.FromResult(action());
-                }
-                catch (Exception e)
-                {
-                    return Task.FromException<T>(e);
-                }
-            }
-
-            return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, TaskScheduler);
-        }
-
-        public bool IsInMainThread()
-        {
-            return Thread.CurrentThread.ManagedThreadId == MainThreadId;
         }
 
         internal string GetBasePath(string path)
