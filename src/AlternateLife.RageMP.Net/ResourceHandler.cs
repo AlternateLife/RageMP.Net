@@ -5,14 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
-using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net
 {
     internal class ResourceHandler
     {
-        private readonly ILogger _logger;
+        private readonly Plugin _plugin;
         private readonly DirectoryInfo _directory;
         private readonly ResourceLoader _resourceLoader;
 
@@ -21,9 +20,9 @@ namespace AlternateLife.RageMP.Net
 
         private IResource _entryPoint;
 
-        public ResourceHandler(ILogger logger, DirectoryInfo directory, ResourceLoader resourceLoader)
+        public ResourceHandler(Plugin plugin, DirectoryInfo directory, ResourceLoader resourceLoader)
         {
-            _logger = logger;
+            _plugin = plugin;
             _directory = directory;
             _resourceLoader = resourceLoader;
 
@@ -173,7 +172,7 @@ namespace AlternateLife.RageMP.Net
 
         private void Log(LogLevel logLevel, string message, Exception exception = null)
         {
-            _logger.Log(logLevel, $"{_resourceName}: {message}", exception);
+            _plugin.Logger.Log(logLevel, $"{_resourceName}: {message}", exception);
         }
 
     }
