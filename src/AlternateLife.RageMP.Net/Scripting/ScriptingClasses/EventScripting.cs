@@ -525,7 +525,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         {
             type = (EntityType) Rage.Entity.Entity_GetType(entityPointer);
 
-            if (_plugin.EntityPoolMapping.TryGetValue(type, out pool) == false)
+            if (_plugin.TryGetPool(type, out pool) == false)
             {
                 pool = null;
 

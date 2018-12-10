@@ -20,6 +20,7 @@ namespace AlternateLife.RageMP.Net
         private readonly ResourceLoader _resourceLoader;
         private readonly RageTaskScheduler _taskScheduler;
         private readonly int _mainThreadId;
+        private readonly Dictionary<EntityType, IInternalPool> _entityPoolMapping;
 
         internal IntPtr NativeMultiplayer { get; }
 
@@ -38,8 +39,6 @@ namespace AlternateLife.RageMP.Net
 
         internal Logger Logger { get; }
         internal ArgumentConverter ArgumentConverter { get; }
-
-        internal Dictionary<EntityType, IInternalPool> EntityPoolMapping { get; }
 
         internal Plugin(IntPtr multiplayer)
         {
@@ -70,7 +69,7 @@ namespace AlternateLife.RageMP.Net
 
             _resourceLoader = new ResourceLoader(Logger);
 
-            EntityPoolMapping = new Dictionary<EntityType, IInternalPool>
+            _entityPoolMapping = new Dictionary<EntityType, IInternalPool>
             {
                 { EntityType.Player, PlayerPool },
                 { EntityType.Vehicle, VehiclePool },
@@ -103,6 +102,11 @@ namespace AlternateLife.RageMP.Net
             await _resourceLoader
                 .Start()
                 .ConfigureAwait(false);
+        }
+
+        internal bool TryGetPool(EntityType entityType, out IInternalPool pool)
+        {
+            return _entityPoolMapping.TryGetValue(entityType, out pool);
         }
 
         internal string GetBasePath(string path)
