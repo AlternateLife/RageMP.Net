@@ -10,18 +10,18 @@ namespace AlternateLife.RageMP.Net
     {
         public void ConfigureServices(Plugin plugin, IServiceCollection services)
         {
-            services.AddSingleton<IPlayerPool, PlayerPool>(p => plugin.PlayerPool);
-            services.AddSingleton<IVehiclePool, VehiclePool>(p => plugin.VehiclePool);
-            services.AddSingleton<IBlipPool, BlipPool>(p => plugin.BlipPool);
-            services.AddSingleton<ICheckpointPool, CheckpointPool>(p => plugin.CheckpointPool);
-            services.AddSingleton<IColshapePool, ColshapePool>(p => plugin.ColshapePool);
-            services.AddSingleton<IMarkerPool, MarkerPool>(p => plugin.MarkerPool);
-            services.AddSingleton<IObjectPool, ObjectPool>(p => plugin.ObjectPool);
-            services.AddSingleton<ITextLabelPool, TextLabelPool>(p => plugin.TextLabelPool);
-            services.AddSingleton<IConfig, Config>(p => plugin.Config);
-            services.AddSingleton<IWorld, World>(p => plugin.World);
-            services.AddSingleton<ILogger, Logger>(p => plugin.Logger);
-            services.AddSingleton<IEventScripting, EventScripting>(p => plugin.EventScripting);
+            services.AddSingleton<IPlayerPool>(p => plugin.PlayerPool);
+            services.AddSingleton<IVehiclePool>(p => plugin.VehiclePool);
+            services.AddSingleton<IBlipPool>(p => plugin.BlipPool);
+            services.AddSingleton<ICheckpointPool>(p => plugin.CheckpointPool);
+            services.AddSingleton<IColshapePool>(p => plugin.ColshapePool);
+            services.AddSingleton<IMarkerPool>(p => plugin.MarkerPool);
+            services.AddSingleton<IObjectPool>(p => plugin.ObjectPool);
+            services.AddSingleton<ITextLabelPool>(p => plugin.TextLabelPool);
+            services.AddSingleton<IConfig>(p => plugin.Config);
+            services.AddSingleton<IWorld>(p => plugin.World);
+            services.AddSingleton<ILogger>(p => plugin.Logger);
+            services.AddSingleton<IEventScripting>(p => plugin.EventScripting);
             services.AddSingleton<ICommands>(x => plugin.Commands);
         }
     }
