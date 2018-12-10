@@ -308,7 +308,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         {
             _tick.CallAsync(x => x());
 
-            _plugin.ScheduleTick();
+            _plugin.TickScheduler();
         }
 
         private void DispatchPlayerJoin(IntPtr playerPointer)

@@ -42,7 +42,7 @@ namespace AlternateLife.RageMP.Net
             return Task.Factory.StartNew(action, CancellationToken.None, TaskCreationOptions.DenyChildAttach, _taskScheduler);
         }
 
-        internal void ScheduleTick()
+        internal void TickScheduler()
         {
             _taskScheduler.Tick();
         }
