@@ -795,5 +795,9 @@ namespace AlternateLife.RageMP.Net.Enums
         Dhill01Amy = 4282288299,
         ChiGoon02Gmm = 4285659174,
         ScreenWriter = 4293277303,
+        CbsAlan = 1925887591,
+        CbsBryony = 2006035933,
+        IgSacha = 1476581877,
+        MpFBennyMech01 = 2139205821,
     }
 }
