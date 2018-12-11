@@ -90,6 +90,10 @@ namespace AlternateLife.RageMP.Net.Enums
         Bottle = 4192643659,
         CarbineRifleMk2 = 4208062921,
         Parachute = 4222310262,
-        SmokeGrenade = 4256991824
+        SmokeGrenade = 4256991824,
+        RayPistol = 2939590305,
+        RayCarbine = 1198256469,
+        RayMinigun = 3056410471,
+
     }
 }
