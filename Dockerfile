@@ -12,9 +12,9 @@ RUN apt-get install -y dotnet-sdk-2.1
 RUN rm packages-microsoft-prod.deb
 
 # Install ragemp server
-RUN wget https://cdn.rage.mp/lin/ragemp-srv-036.tar.gz
-RUN tar -xzvf ragemp-srv-036.tar.gz
-RUN rm ragemp-srv-036.tar.gz
+RUN wget https://cdn.rage.mp/lin/ragemp-srv-037.tar.gz
+RUN tar -xzvf ragemp-srv-037.tar.gz
+RUN rm ragemp-srv-037.tar.gz
 
 # Install .Net core clr runtime
 WORKDIR /ragemp-srv
@@ -22,9 +22,9 @@ RUN mkdir -p dotnet/plugins
 RUN mkdir -p dotnet/resources
 RUN mkdir -p dotnet/runtime/download
 WORKDIR /ragemp-srv/dotnet/runtime/download
-RUN wget https://download.visualstudio.microsoft.com/download/pr/05a71d80-3e59-4f1f-8298-2697013e261c/be191f2f4f4db74c29030008ed3632f0/dotnet-runtime-2.1.5-linux-x64.tar.gz
-RUN tar -zxvf dotnet-runtime-2.1.5-linux-x64.tar.gz
-RUN cp shared/Microsoft.NETCore.App/2.1.5/* ../
+RUN wget https://download.visualstudio.microsoft.com/download/pr/1057e14e-16cc-410b-80a4-5c2420c8359c/004dc3ce8255475d4723de9a011ac513/dotnet-runtime-2.2.0-linux-x64.tar.gz
+RUN tar -zxvf dotnet-runtime-2.2.0-linux-x64.tar.gz
+RUN cp shared/Microsoft.NETCore.App/2.2.0/* ../
 WORKDIR /ragemp-srv/dotnet/runtime
 RUN rm -r download
 
