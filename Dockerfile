@@ -1,14 +1,13 @@
 FROM ubuntu
 
 # Install tools
-RUN apt-get update
-RUN apt-get install -y build-essential cmake wget libunwind8 apt-transport-https gdb
+RUN apt-get update && apt-get install -y build-essential cmake wget libunwind8 apt-transport-https gdb software-properties-common
 
 # Install .Net core sdk
 RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
-RUN apt-get update
-RUN apt-get install -y dotnet-sdk-2.1
+RUN add-apt-repository universe
+RUN apt-get update && apt-get install -y dotnet-sdk-2.2
 RUN rm packages-microsoft-prod.deb
 
 # Install ragemp server
@@ -43,9 +42,9 @@ COPY src .
 WORKDIR /dotnet/src/AlternateLife.RageMP.Net
 RUN dotnet publish -c Linux
 
-RUN cp bin/Linux/netcoreapp2.1/publish/NLog.dll /ragemp-srv/dotnet/plugins/
-RUN cp bin/Linux/netcoreapp2.1/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
-RUN cp bin/Linux/netcoreapp2.1/publish/NLog.config /ragemp-srv/dotnet/
+RUN cp bin/Linux/netcoreapp2.2/publish/NLog.dll /ragemp-srv/dotnet/plugins/
+RUN cp bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
+RUN cp bin/Linux/netcoreapp2.2/publish/NLog.config /ragemp-srv/dotnet/
 
 WORKDIR /ragemp-srv
 
