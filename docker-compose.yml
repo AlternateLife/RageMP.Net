@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  ragemp:
+    build: .
+    ports:
+      - "22005:22005/udp"
+      - "22006:22006"
+    volumes:
+      - ./src/AlternateLife.RageMP.Net.Example/bin/Testing/netcoreapp2.2/:/ragemp-srv/dotnet/resources/example
