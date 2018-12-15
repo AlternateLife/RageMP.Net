@@ -47,8 +47,9 @@ RUN cp bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/pl
 RUN cp bin/Linux/netcoreapp2.2/publish/NLog.config /ragemp-srv/dotnet/
 
 WORKDIR /ragemp-srv
+RUN mkdir /ragemp-config
 
 EXPOSE 22005/udp
 EXPOSE 22006/tcp
 
-CMD ./server
+CMD cp -r /ragemp-config . && ./server
