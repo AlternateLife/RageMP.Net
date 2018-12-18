@@ -84,7 +84,7 @@ namespace AlternateLife.RageMP.Net.Example
 
 ## Docker
 
-Hosten on [DockerHub](https://cloud.docker.com/repository/docker/alternatelife/ragemp-server) is an image containing the Rage-MP linux server with this bridge installed.
+On [DockerHub](https://cloud.docker.com/repository/docker/alternatelife/ragemp-server) is an image containing the RAGE Multiplayer Linux server with AlternateLife.RageMP.Net already preinstalled. You can find more documentation there.
 
 ## See also
 
