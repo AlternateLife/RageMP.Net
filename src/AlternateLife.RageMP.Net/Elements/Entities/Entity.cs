@@ -153,7 +153,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             using (var converter = new StringConverter())
             {
-                Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), _plugin.ArgumentConverter.ConvertFromObject(data));
+                var arg = _plugin.ArgumentConverter.ConvertFromObject(data);
+
+                Rage.Entity.Entity_SetVariable(NativePointer, converter.StringToPointer(key), ref arg);
             }
         }
 
