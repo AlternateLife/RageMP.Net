@@ -55,7 +55,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern IntPtr Entity_GetVariable(IntPtr entity, IntPtr key);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Entity_SetVariable(IntPtr entity, IntPtr key, ArgumentData value);
+            internal static extern void Entity_SetVariable(IntPtr entity, IntPtr key, ref ArgumentData value);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern void Entity_SetVariables(IntPtr entity, IntPtr[] keys, ArgumentData[] values, ulong count);
