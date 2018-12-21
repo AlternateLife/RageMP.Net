@@ -1,5 +1,7 @@
 FROM ubuntu
 
+ARG bridge_version=1.0.0.0
+
 # Install tools
 RUN apt-get update && apt-get install -y build-essential cmake wget libunwind8 apt-transport-https gdb software-properties-common
 
@@ -40,7 +42,7 @@ RUN mkdir /dotnet/src
 WORKDIR /dotnet/src
 COPY src .
 WORKDIR /dotnet/src/AlternateLife.RageMP.Net
-RUN dotnet publish -c Linux
+RUN dotnet publish -c Linux -p:Version=$bridge_version -p:FileVersion=$bridge_version
 
 RUN cp bin/Linux/netcoreapp2.2/publish/NLog.dll /ragemp-srv/dotnet/plugins/
 RUN cp bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
