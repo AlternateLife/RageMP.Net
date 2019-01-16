@@ -1,8 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Data
 {
