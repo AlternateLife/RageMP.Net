@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
-namespace AlternateLife.RageMP.Net.Example
+namespace AlternateLife.RageMP.Net.Example.Server
 {
     public class ExampleResource : IResource
     {
