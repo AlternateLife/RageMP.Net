@@ -1,13 +1,14 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers;
 
 namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 {
@@ -15,143 +16,192 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
     {
         private readonly Plugin _plugin;
         private readonly ILogger _logger;
-
-        private readonly ConcurrentDictionary<string, CommandInformation> _commands = new ConcurrentDictionary<string, CommandInformation>();
-
-        internal Commands(Plugin plugin)
+        
+        private readonly List<Command> _commands = new List<Command>();
+        
+        public Commands(Plugin plugin)
         {
             _plugin = plugin;
             _logger = _plugin.Logger;
         }
-
+        
         public bool DoesCommandExist(string name)
         {
-            return _commands.ContainsKey(name);
+            Contract.NotEmpty(name, nameof(name));
+            
+            return _commands.Any(c => c.Name == name);
         }
-
+        
         public IReadOnlyCollection<string> GetRegisteredCommands()
         {
-            return _commands.Keys.ToList();
+            return _commands.Select(c => c.Name).ToList();
         }
 
-        public bool Register(string name, CommandDelegate callback)
+        public void RemoveHandler(ICommandHandler handler)
         {
-            Contract.NotEmpty(name, nameof(name));
-            Contract.NotNull(callback, nameof(callback));
-
-            var commandInfo = new CommandInformation(name, callback);
-
-            return _commands.TryAdd(name, commandInfo);
+            Contract.NotNull(handler, nameof(handler));
+            
+            RemoveCommands(c => c.Handler == handler);
         }
-
-        public void Remove(CommandDelegate callback)
-        {
-            Contract.NotNull(callback, nameof(callback));
-
-            RemoveCommands(x => x.CommandHandler == null && x.Callback == callback);
-        }
-
+        
         public void Remove(string name)
         {
             Contract.NotEmpty(name, nameof(name));
 
-            RemoveCommands(x => x.Name == name);
+            RemoveCommands(c => c.Name == name);
         }
 
+        private void RemoveCommands(Predicate<Command> predicate)
+        {
+            foreach (var command in _commands)
+            {
+                if (predicate(command))
+                {
+                    _commands.Remove(command);
+                }
+            }
+        }
+        
         public void RegisterHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
 
-            foreach (var commandMethod in handler.GetType().GetMethods().Where(x => x.GetCustomAttributes(typeof(CommandAttribute), true).Any()))
+            var commandMethods = handler.GetType().GetMethods()
+                .Where(m => m.GetCustomAttributes(typeof(CommandAttribute), true).Length > 0);
+
+            foreach (var commandMethod in commandMethods)
             {
                 var attribute = commandMethod.GetCustomAttribute<CommandAttribute>();
-
+                
                 if (string.IsNullOrEmpty(attribute.Name))
                 {
                     _logger.Warn($"Skipping method {commandMethod.Name} because of invalid command name.");
-                    
+                    continue;
+                }
+
+                if (_commands.Any(c => c.Name == attribute.Name))
+                {
+                    _logger.Warn($"Command {attribute.Name}: Name is already in use!");
                     continue;
                 }
                 
                 if (commandMethod.ReturnType != typeof(Task))
                 {
                     _logger.Warn($"Command {attribute.Name}: Return type {commandMethod.ReturnType} is invalid, {typeof(Task)} expected!");
-
                     continue;
                 }
 
                 if (commandMethod.IsStatic)
                 {
                     _logger.Warn($"Command {attribute.Name}: Static methods are not allowed!");
-
                     continue;
                 }
-
-                CommandDelegate commandDelegate;
-                try
-                {
-                    commandDelegate = (CommandDelegate) Delegate.CreateDelegate(typeof(CommandDelegate), handler, commandMethod);
-                }
-                catch (ArgumentException)
-                {
-                    _logger.Warn($"Command {attribute.Name}: Signature is invalid, method should implement {typeof(CommandDelegate)}!");
-
-                    continue;
-                }
-
-                var commandInfo = new CommandInformation(attribute.Name, commandDelegate, handler);
-
-                if (_commands.TryAdd(attribute.Name, commandInfo) == false)
-                {
-                    _logger.Warn($"Command {attribute.Name}: Could not register command of method \"{commandMethod.Name}\" in \"{commandMethod.DeclaringType}\", maybe command-name is already in use!");
-                }
+                
+                _commands.Add(new Command(attribute.Name, commandMethod, handler));
             }
         }
-
-        public void RemoveHandler(ICommandHandler handler)
+        
+        private static bool IsParams(ICustomAttributeProvider param)
         {
-            Contract.NotNull(handler, nameof(handler));
-
-            RemoveCommands(x => x.CommandHandler == handler);
+            return param.GetCustomAttributes(typeof (ParamArrayAttribute), false).Length > 0;
         }
-
-        private void RemoveCommands(Func<CommandInformation, bool> predicate)
+        
+        private readonly Dictionary<Type, ITypeParser> _typeParsingSwitch = new Dictionary<Type, ITypeParser>
         {
-            foreach (var command in _commands.Reverse())
+            {typeof(int),     new PrimitiveParser<int>(int.TryParse)},
+            {typeof(float),   new PrimitiveParser<float>(float.TryParse)},
+            {typeof(double),  new PrimitiveParser<double>(double.TryParse)},
+            {typeof(uint),    new PrimitiveParser<uint>(uint.TryParse)},
+            {typeof(long),    new PrimitiveParser<long>(long.TryParse)},
+            {typeof(char),    new PrimitiveParser<char>(char.TryParse)},
+            {typeof(bool),    new PrimitiveParser<bool>(bool.TryParse)},
+            {typeof(byte),    new PrimitiveParser<byte>(byte.TryParse)},
+            {typeof(sbyte),   new PrimitiveParser<sbyte>(sbyte.TryParse)},
+            {typeof(short),   new PrimitiveParser<short>(short.TryParse)},
+            {typeof(decimal), new PrimitiveParser<decimal>(decimal.TryParse)},
+            {typeof(ushort),  new PrimitiveParser<ushort>(ushort.TryParse)},
+            {typeof(ulong),   new PrimitiveParser<ulong>(ulong.TryParse)},
+            {typeof(string),  new StringParser()},
+            {typeof(Enum),    new EnumParser()}
+        };
+
+        private IEnumerable<object> ProcessArguments(IReadOnlyList<string> args, IReadOnlyList<ParameterInfo> expectedParameters)
+        {
+            if (args.Count < expectedParameters.Count)
             {
-                if (predicate(command.Value) == false)
+                return null;
+            }
+            var parsedArgs = new List<object>();
+            for (int i = 0; i < args.Count; i++)
+            {
+                var expectedType = expectedParameters[i].ParameterType;
+                var targetType = expectedType;
+                if (expectedType.BaseType == typeof(Enum))
                 {
-                    continue;
+                    expectedType = typeof(Enum);
+                }
+                bool isParams = IsParams(expectedParameters[i]);
+
+                if (i == expectedParameters.Count - 1 && isParams)
+                {
+                    var paramList = new List<object>();
+                    for (; i < args.Count; i++)
+                    {
+                        paramList.Add(args[i]);
+                    }
+
+                    parsedArgs.Add(paramList.ToArray());
+                    break;
                 }
 
-                _commands.TryRemove(command.Key, out _);
+                if (i == expectedParameters.Count - 1 && !isParams && args.Count > expectedParameters.Count)
+                {
+                    return null;
+                }
+                
+                if (!_typeParsingSwitch.ContainsKey(expectedType))
+                {
+                    return null;
+                }
+                
+                if (!_typeParsingSwitch[expectedType].TryParse(args[i], targetType, out var parsedPara))
+                {
+                    return null;
+                }
+                parsedArgs.Add(parsedPara);
             }
+
+            return parsedArgs;
         }
 
-        public async Task ExecuteCommand(IPlayer player, string commandText)
+        public async Task ExecuteCommand(IPlayer player, string text)
         {
-            if (string.IsNullOrWhiteSpace(commandText))
+            string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (commandMessage.Length == 0)
             {
                 return;
             }
+            string commandname = commandMessage[0];
 
-            var parts = commandText.Trim().Split(' ');
-
-            var commandName = parts[0];
-
-            if (_commands.TryGetValue(commandName, out var commandInformation) == false)
+            var command = _commands.FirstOrDefault(c => c.Name == commandname);
+            if (command == null)
             {
+                await player.OutputChatBoxAsync("Command not found.");
                 return;
             }
 
-            try
+            string[] commandArgs = commandMessage.Skip(1).Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            var parsedArgs = ProcessArguments(commandArgs, command.MethodInfo.GetParameters().Skip(1).ToArray());
+            if (parsedArgs == null)
             {
-                await commandInformation.Callback(player, parts.Skip(1).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray());
+                await player.OutputChatBoxAsync("Type conversion failed. Command parameters are: " + command.GetParameterList());
+                return;
             }
-            catch (Exception e)
-            {
-                _logger.Error($"An error occured when player {player.Name} executed command: {commandName}: ", e);
-            }
+            
+            object[] invokingArgs = {player};
+            invokingArgs = invokingArgs.AppendArray(parsedArgs.ToArray());
+            await command.Invoke(invokingArgs);
+            _logger.Info($"Player {player.Name} issued command {text}.");
         }
     }
 }
