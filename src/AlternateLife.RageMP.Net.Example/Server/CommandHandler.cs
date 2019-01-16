@@ -1,18 +1,17 @@
-using System;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
-namespace AlternateLife.RageMP.Net.Example
+namespace AlternateLife.RageMP.Net.Example.Server
 {
     public class CommandHandler : ICommandHandler
     {
         [Command("vehicle")]
-        public async Task Vehicle(IPlayer player, string[] arguments)
+        public async Task Vehicle(IPlayer player, VehicleHash hash)
         {
-            var vehicle = await MP.Vehicles.NewAsync(VehicleHash.Elegy, player.Position);
+            var vehicle = await MP.Vehicles.NewAsync(hash, player.Position);
 
             player.PutIntoVehicle(vehicle, -1);
 
@@ -20,33 +19,17 @@ namespace AlternateLife.RageMP.Net.Example
         }
 
         [Command("weather")]
-        public async Task Weather(IPlayer player, string[] arguments)
+        public async Task Weather(IPlayer player, WeatherType weatherType)
         {
-            var weatherType = arguments[0];
-
-            if (Enum.TryParse(weatherType, true, out WeatherType type) == false)
-            {
-                await player.OutputChatBoxAsync($"Weather {weatherType} is invalid!");
-
-                return;
-            }
-
-            MP.World.Weather = type;
+            MP.World.Weather = weatherType;
+            await player.OutputChatBoxAsync("Weather changed");
         }
 
         [Command("weapon")]
-        public async Task Weapon(IPlayer player, string[] arguments)
+        public async Task Weapon(IPlayer player, WeaponHash hash)
         {
-            var weaponName = arguments[0];
-
-            if (Enum.TryParse(weaponName, true, out WeaponHash hash) == false)
-            {
-                await player.OutputChatBoxAsync($"Weapon {weaponName} is invalid!");
-
-                return;
-            }
-
             player.GiveWeapon(hash, 100);
+            await player.OutputChatBoxAsync("Weapon received");
         }
     }
 }
