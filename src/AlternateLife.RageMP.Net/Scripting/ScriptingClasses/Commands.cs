@@ -16,8 +16,10 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
     {
         private readonly Plugin _plugin;
         private readonly ILogger _logger;
-        
-        private readonly List<Command> _commands = new List<Command>();
+
+        public event EventHandler<CommandErrorEventArgs> CommandError;
+
+        private readonly Dictionary<string, CommandInformation> _commands = new Dictionary<string, CommandInformation>();
         
         public Commands(Plugin plugin)
         {
@@ -28,38 +30,34 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         public bool DoesCommandExist(string name)
         {
             Contract.NotEmpty(name, nameof(name));
-            
-            return _commands.Any(c => c.Name == name);
+
+            return _commands.ContainsKey(name);
         }
         
         public IReadOnlyCollection<string> GetRegisteredCommands()
         {
-            return _commands.Select(c => c.Name).ToList();
+            return _commands.Keys;
         }
 
         public void RemoveHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
+
+            var command = _commands.Values.FirstOrDefault(c => c.CommandHandler == handler);
             
-            RemoveCommands(c => c.Handler == handler);
+            if (command == null)
+            {
+                return;
+            }
+
+            _commands.Remove(command.Name);
         }
         
         public void Remove(string name)
         {
             Contract.NotEmpty(name, nameof(name));
 
-            RemoveCommands(c => c.Name == name);
-        }
-
-        private void RemoveCommands(Predicate<Command> predicate)
-        {
-            foreach (var command in _commands)
-            {
-                if (predicate(command))
-                {
-                    _commands.Remove(command);
-                }
-            }
+            _commands.Remove(name);
         }
         
         public void RegisterHandler(ICommandHandler handler)
@@ -79,7 +77,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     continue;
                 }
 
-                if (_commands.Any(c => c.Name == attribute.Name))
+                if (_commands.ContainsKey(attribute.Name))
                 {
                     _logger.Warn($"Command {attribute.Name}: Name is already in use!");
                     continue;
@@ -97,7 +95,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     continue;
                 }
                 
-                _commands.Add(new Command(attribute.Name, commandMethod, handler));
+                _commands.Add(attribute.Name, new CommandInformation(attribute.Name, handler, commandMethod));
             }
         }
         
@@ -183,10 +181,9 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
             string commandname = commandMessage[0];
 
-            var command = _commands.FirstOrDefault(c => c.Name == commandname);
-            if (command == null)
+            if (_commands.TryGetValue(commandname, out var command) == false)
             {
-                await player.OutputChatBoxAsync("Command not found.");
+                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandname} not found"));
                 return;
             }
 
@@ -194,14 +191,24 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var parsedArgs = ProcessArguments(commandArgs, command.MethodInfo.GetParameters().Skip(1).ToArray());
             if (parsedArgs == null)
             {
-                await player.OutputChatBoxAsync("Type conversion failed. Command parameters are: " + command.GetParameterList());
+                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
+                    "Type conversion failed. Command parameters are: " + command.GetParameterList()));
                 return;
             }
             
-            object[] invokingArgs = {player};
-            invokingArgs = invokingArgs.AppendArray(parsedArgs.ToArray());
-            await command.Invoke(invokingArgs);
-            _logger.Info($"Player {player.Name} issued command {text}.");
+            try
+            {
+                await command.Invoke(invokingArguments);
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"An error occured when player {player.Name} executed command: {command.Name}: ", e);
+            }
+        }
+
+        protected virtual void OnCommandError(CommandErrorEventArgs e)
+        {
+            CommandError?.Invoke(this, e);
         }
     }
 }

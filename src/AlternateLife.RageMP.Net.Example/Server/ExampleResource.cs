@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
-namespace AlternateLife.RageMP.Net.Example.Server
+namespace AlternateLife.RageMP.Net.Example
 {
     public class ExampleResource : IResource
     {
@@ -13,7 +14,13 @@ namespace AlternateLife.RageMP.Net.Example.Server
 
             MP.Events.PlayerDeath += OnPlayerDeath;
 
-            MP.Commands.RegisterHandler(new CommandHandler());
+            MP.Commands.CommandError += OnCommandError;
+            MP.Commands.RegisterHandler(new CommandHandler());  
+        }
+
+        private async void OnCommandError(object sender, CommandErrorEventArgs e)
+        {
+            await e.Player.OutputChatBoxAsync(e.ErrorMessage);
         }
 
         public Task OnStartAsync()
