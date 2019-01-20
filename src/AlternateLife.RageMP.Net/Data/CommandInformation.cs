@@ -5,22 +5,24 @@ using AlternateLife.RageMP.Net.Interfaces;
 
 namespace AlternateLife.RageMP.Net.Data
 {
-    internal class Command
+    internal class CommandInformation
     {
-        public string Name { get; }
-        public MethodInfo MethodInfo { get; }
-        public ICommandHandler Handler { get; }
+        public ICommandHandler CommandHandler { get; }
 
-        public Command(string name, MethodInfo methodInfo, ICommandHandler handler)
+        public MethodInfo MethodInfo { get; }
+        
+        public string Name { get; }
+
+        public CommandInformation(string name, ICommandHandler commandHandler, MethodInfo methodInfo)
         {
+            CommandHandler = commandHandler;
             Name = name;
             MethodInfo = methodInfo;
-            Handler = handler;
         }
-
+        
         public async Task Invoke(object[] args)
         {
-            await (Task)MethodInfo.Invoke(Handler, args);
+            await (Task)MethodInfo.Invoke(CommandHandler, args);
         }
 
         public string GetParameterList()

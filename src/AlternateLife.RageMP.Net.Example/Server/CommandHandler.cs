@@ -4,7 +4,7 @@ using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
 
-namespace AlternateLife.RageMP.Net.Example.Server
+namespace AlternateLife.RageMP.Net.Example
 {
     public class CommandHandler : ICommandHandler
     {
