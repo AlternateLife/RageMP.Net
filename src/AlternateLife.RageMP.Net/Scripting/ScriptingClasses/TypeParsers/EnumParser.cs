@@ -5,16 +5,9 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers
 {
     internal class EnumParser : ITypeParser
     {
-        public bool TryParse(string s, Type targetType, out object value)
+        public bool TryParse(string inputString, Type targetType, out object value)
         {
-            value = default(object);
-            if (!Enum.TryParse(targetType, s, true, out object val))
-            {
-                return false;
-            }
-
-            value = val;
-            return true;
+            return Enum.TryParse(targetType, inputString, true, out value);
         }
     }
 }
