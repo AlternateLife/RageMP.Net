@@ -1,10 +1,16 @@
 using System;
 using System.Collections.Generic;
+using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface ICommands
     {
+        /// <summary>
+        /// Gets invoked when an invalid command is entered.
+        /// </summary>
+        event EventHandler<CommandErrorEventArgs> CommandError;
+
         /// <summary>
         /// Checks if specified event exists.
         /// </summary>
