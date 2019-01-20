@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
-using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers;
@@ -123,18 +122,19 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             {typeof(Enum),    new EnumParser()}
         };
 
-        private IEnumerable<object> ProcessArguments(IReadOnlyList<string> args, IReadOnlyList<ParameterInfo> expectedParameters)
+        private bool ProcessArguments(IReadOnlyList<string> args, IReadOnlyList<ParameterInfo> expectedParameters, IList<object> invokingParameters)
         {
             if (args.Count < expectedParameters.Count)
             {
-                return null;
+                return false;
             }
-            var parsedArgs = new List<object>();
+            
+            var parsedArguments = new List<object>();
             for (int i = 0; i < args.Count; i++)
             {
                 var expectedType = expectedParameters[i].ParameterType;
                 var targetType = expectedType;
-                if (expectedType.BaseType == typeof(Enum))
+                if (expectedType.IsEnum)
                 {
                     expectedType = typeof(Enum);
                 }
@@ -142,34 +142,35 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
                 if (i == expectedParameters.Count - 1 && isParams)
                 {
-                    var paramList = new List<object>();
+                    var parameterList = new List<object>();
                     for (; i < args.Count; i++)
                     {
-                        paramList.Add(args[i]);
+                        parameterList.Add(args[i]);
                     }
 
-                    parsedArgs.Add(paramList.ToArray());
+                    parsedArguments.Add(parameterList.ToArray());
                     break;
                 }
 
-                if (i == expectedParameters.Count - 1 && !isParams && args.Count > expectedParameters.Count)
+                if (i == expectedParameters.Count - 1 && isParams == false && args.Count > expectedParameters.Count)
                 {
-                    return null;
+                    return false;
                 }
                 
-                if (!_typeParsingSwitch.ContainsKey(expectedType))
+                if(_typeParsingSwitch.TryGetValue(expectedType, out var parser) == false ||
+                   parser.TryParse(args[i], targetType, out var parsedParameter) == false)
                 {
-                    return null;
+                    return false;
                 }
-                
-                if (!_typeParsingSwitch[expectedType].TryParse(args[i], targetType, out var parsedPara))
-                {
-                    return null;
-                }
-                parsedArgs.Add(parsedPara);
+                parsedArguments.Add(parsedParameter);
             }
 
-            return parsedArgs;
+            for (int i = 0; i < parsedArguments.Count; i++)
+            {
+                invokingParameters[i + 1] = parsedArguments[i];
+            }
+
+            return true;
         }
 
         public async Task ExecuteCommand(IPlayer player, string text)
@@ -186,10 +187,12 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandname} not found"));
                 return;
             }
-
-            string[] commandArgs = commandMessage.Skip(1).Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-            var parsedArgs = ProcessArguments(commandArgs, command.MethodInfo.GetParameters().Skip(1).ToArray());
-            if (parsedArgs == null)
+            
+            object[] invokingArguments = new object[command.MethodInfo.GetParameters().Length];
+            invokingArguments[0] = player;
+            
+            string[] commandArguments = commandMessage.Skip(1).Where(s => string.IsNullOrWhiteSpace(s) == false).ToArray();
+            if (ProcessArguments(commandArguments, command.MethodInfo.GetParameters().Skip(1).ToArray(), invokingArguments) == false)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
                     "Type conversion failed. Command parameters are: " + command.GetParameterList()));
