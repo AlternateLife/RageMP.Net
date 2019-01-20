@@ -5,9 +5,9 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers
 {
     internal class StringParser : ITypeParser
     {
-        public bool TryParse(string s, Type targetType, out object value)
+        public bool TryParse(string inputString, Type targetType, out object value)
         {
-            value = s;
+            value = inputString;
             return true;
         }
     }

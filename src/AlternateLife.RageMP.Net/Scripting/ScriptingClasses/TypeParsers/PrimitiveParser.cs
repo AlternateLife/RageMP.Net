@@ -12,10 +12,10 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers
             _parser = parser;
         }
         
-        public bool TryParse(string s, Type targetType, out object value)
+        public bool TryParse(string inputString, Type targetType, out object value)
         {
             value = default(object);
-            if (!_parser(s, out T val))
+            if (!_parser(inputString, out T val))
             {
                 return false;
             }
