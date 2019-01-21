@@ -47,5 +47,6 @@ namespace AlternateLife.RageMP.Net.Scripting
 
     public delegate Task PlayerRemoteEventDelegate(IPlayer player, string eventName, object[] arguments);
 
+    public delegate Task CommandDelegate(IPlayer player, string[] arguments);
     public delegate bool ParserDelegate<T>(string s, out T val);
 }
