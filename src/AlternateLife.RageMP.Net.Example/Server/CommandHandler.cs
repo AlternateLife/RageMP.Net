@@ -18,6 +18,12 @@ namespace AlternateLife.RageMP.Net.Example
             await player.OutputChatBoxAsync("Vehicle created");
         }
 
+        [Command("test")]
+        public async Task Test(IPlayer player, string[] arguments)
+        {
+            await player.OutputChatBoxAsync(arguments[0]);
+        }
+
         [Command("weather")]
         public async Task Weather(IPlayer player, WeatherType weatherType)
         {
