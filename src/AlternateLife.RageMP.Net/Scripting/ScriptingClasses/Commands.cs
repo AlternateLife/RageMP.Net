@@ -141,11 +141,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return parameterTypes.Where((t, i) => t != commandDelegateParameter[i]).Any() == false;
         }
         
-        private static bool IsParams(ICustomAttributeProvider param)
-        {
-            return param.GetCustomAttributes(typeof (ParamArrayAttribute), false).Length > 0;
-        }
-        
         private readonly Dictionary<Type, ITypeParser> _typeParsingSwitch = new Dictionary<Type, ITypeParser>
         {
             {typeof(int),     new PrimitiveParser<int>(int.TryParse)},
@@ -165,52 +160,31 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             {typeof(Enum),    new EnumParser()}
         };
 
-        private bool ProcessArguments(IReadOnlyList<string> args, IReadOnlyList<ParameterInfo> expectedParameters, IList<object> invokingParameters)
+        private bool ProcessArguments(IReadOnlyList<string> arguments, IReadOnlyList<ParameterInfo> expectedParameters, IList<object> invokingParameters)
         {
-            if (args.Count < expectedParameters.Count)
+            for (int i = 1; i < arguments.Count; i++)
             {
-                return false;
-            }
-            
-            var parsedArguments = new List<object>();
-            for (int i = 0; i < args.Count; i++)
-            {
-                var expectedType = expectedParameters[i].ParameterType;
+                var expectedParameter = expectedParameters[i];
+                var expectedType = expectedParameter.ParameterType;
                 var targetType = expectedType;
                 if (expectedType.IsEnum)
                 {
                     expectedType = typeof(Enum);
                 }
-                bool isParams = IsParams(expectedParameters[i]);
 
-                if (i == expectedParameters.Count - 1 && isParams)
+                if (i >= arguments.Count)
                 {
-                    var parameterList = new List<object>();
-                    for (; i < args.Count; i++)
-                    {
-                        parameterList.Add(args[i]);
-                    }
+                    invokingParameters[i] = expectedParameter.DefaultValue;
 
-                    parsedArguments.Add(parameterList.ToArray());
-                    break;
+                    continue;
                 }
 
-                if (i == expectedParameters.Count - 1 && isParams == false && args.Count > expectedParameters.Count)
+                if(_typeParsingSwitch.TryGetValue(expectedType, out var parser) == false || parser.TryParse(arguments[i], targetType, out var parsedParameter) == false)
                 {
                     return false;
                 }
-                
-                if(_typeParsingSwitch.TryGetValue(expectedType, out var parser) == false ||
-                   parser.TryParse(args[i], targetType, out var parsedParameter) == false)
-                {
-                    return false;
-                }
-                parsedArguments.Add(parsedParameter);
-            }
 
-            for (int i = 0; i < parsedArguments.Count; i++)
-            {
-                invokingParameters[i + 1] = parsedArguments[i];
+                invokingParameters[i] = parsedParameter;
             }
 
             return true;
@@ -218,12 +192,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         public async Task ExecuteCommand(IPlayer player, string text)
         {
-            string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (commandMessage.Length == 0)
+            string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray();
+            if (commandMessage.Any() == false) 
             {
                 return;
             }
-            string commandname = commandMessage[0];
+            
+            var commandname = commandMessage[0];
 
             if (_commands.TryGetValue(commandname, out var command) == false)
             {
@@ -231,15 +206,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 return;
             }
 
-            string[] commandArguments = commandMessage.Skip(1).Where(s => string.IsNullOrWhiteSpace(s) == false).ToArray();
-
             switch (command)
             {
                 case ReflectionCommand reflectionCommand:
-                    await ExecuteReflectionCommand(player, reflectionCommand, commandArguments);
+                    await ExecuteReflectionCommand(player, reflectionCommand, commandMessage);
                     break;
                 case DelegateCommand delegateCommand:
-                    await ExecuteDelegateCommand(player, delegateCommand, commandArguments);
+                    await ExecuteDelegateCommand(player, delegateCommand, commandMessage);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -248,10 +221,19 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         private async Task ExecuteReflectionCommand(IPlayer player, ReflectionCommand reflectionCommand, string[] arguments)
         {
-            object[] invokingArguments = new object[reflectionCommand.MethodInfo.GetParameters().Length];
+            var commandParameters = reflectionCommand.MethodInfo.GetParameters();
+
+            if (commandParameters.Count(x => x.HasDefaultValue == false) > arguments.Length)
+            {
+                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.MissingArguments, "The given command lacks arguments!"));
+
+                return;
+            }
+            
+            var invokingArguments = new object[commandParameters.Length];
             invokingArguments[0] = player;
 
-            if (ProcessArguments(arguments, reflectionCommand.MethodInfo.GetParameters().Skip(1).ToArray(), invokingArguments) == false)
+            if (ProcessArguments(arguments, commandParameters.ToArray(), invokingArguments) == false)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
                     "Type conversion failed. Command parameters are: " + reflectionCommand.GetParameterList()));
@@ -272,7 +254,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         {
             try
             {
-                await delegateCommand.CommandDelegate(player, arguments);
+                await delegateCommand.CommandDelegate(player, arguments.Skip(1).ToArray());
             }
             catch (Exception e)
             {
