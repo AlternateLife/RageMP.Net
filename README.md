@@ -22,7 +22,7 @@ You can find the latest AlternateLife.RageMP.Net documentation [here](https://ra
 
 ## Example
 
-This is a sneak-peak on how to create the `Main`-class, so the server can find your entry point where to start from. 
+This is a sneak peek on how to create the `Main`-class, so the server can find your entry point where to start from. 
 
 ```cs
 using System.Threading.Tasks;
