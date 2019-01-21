@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,7 +19,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         public event EventHandler<CommandErrorEventArgs> CommandError;
 
-        private readonly Dictionary<string, CommandInformation> _commands = new Dictionary<string, CommandInformation>();
+        private readonly ConcurrentDictionary<string, CommandInformation> _commands = new ConcurrentDictionary<string, CommandInformation>();
         
         public Commands(Plugin plugin)
         {
@@ -35,28 +36,51 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         
         public IReadOnlyCollection<string> GetRegisteredCommands()
         {
-            return _commands.Keys;
+            return _commands.Keys.ToList();
         }
 
         public void RemoveHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
 
-            var command = _commands.Values.FirstOrDefault(c => c.CommandHandler == handler);
-            
-            if (command == null)
-            {
-                return;
-            }
-
-            _commands.Remove(command.Name);
+            RemoveCommands(c => (c as ReflectionCommand)?.CommandHandler == handler);
         }
         
+        public bool Register(string name, CommandDelegate callback)
+        {
+            Contract.NotEmpty(name, nameof(name));
+            Contract.NotNull(callback, nameof(callback));
+
+            var commandInfo = new DelegateCommand(name, callback);
+
+            return _commands.TryAdd(name, commandInfo);
+        }
+
+        public void Remove(CommandDelegate callback)
+        {
+            Contract.NotNull(callback, nameof(callback));
+
+            RemoveCommands(c => (c as DelegateCommand)?.CommandDelegate == callback);
+        }
+
+        private void RemoveCommands(Predicate<CommandInformation> predicate)
+        {
+            foreach (var command in _commands.Reverse())
+            {
+                if (predicate(command.Value) == false)
+                {
+                    continue;
+                }
+
+                _commands.TryRemove(command.Key, out _);
+            }
+        }
+
         public void Remove(string name)
         {
             Contract.NotEmpty(name, nameof(name));
 
-            _commands.Remove(name);
+            _commands.TryRemove(name, out _);
         }
         
         public void RegisterHandler(ICommandHandler handler)
@@ -75,12 +99,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     _logger.Warn($"Skipping method {commandMethod.Name} because of invalid command name.");
                     continue;
                 }
-
-                if (_commands.ContainsKey(attribute.Name))
-                {
-                    _logger.Warn($"Command {attribute.Name}: Name is already in use!");
-                    continue;
-                }
                 
                 if (commandMethod.ReturnType != typeof(Task))
                 {
@@ -93,9 +111,34 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     _logger.Warn($"Command {attribute.Name}: Static methods are not allowed!");
                     continue;
                 }
-                
-                _commands.Add(attribute.Name, new CommandInformation(attribute.Name, handler, commandMethod));
+
+                CommandInformation command;
+                if (HasCommandDelegateSignature(commandMethod))
+                {
+                    command = new DelegateCommand(attribute.Name, (CommandDelegate) Delegate.CreateDelegate(typeof(CommandDelegate), handler, commandMethod), handler);
+                }
+                else
+                {
+                    command = new ReflectionCommand(attribute.Name, handler, commandMethod);
+                }
+
+                if (_commands.TryAdd(attribute.Name, command) == false)
+                {
+                    _logger.Warn($"Command {attribute.Name}: Could not register command of method \"{commandMethod.Name}\" in \"{commandMethod.DeclaringType}\", maybe command-name is already in use!");
+                }
             }
+        }
+
+        private static bool HasCommandDelegateSignature(MethodBase methodInfo)
+        {
+            var parameterTypes = methodInfo.GetParameters().Select(p => p.ParameterType).ToList();
+            var commandDelegateParameter = typeof(CommandDelegate).GetMethod("Invoke").GetParameters().Select(p => p.ParameterType).ToList();
+            if (parameterTypes.Count != commandDelegateParameter.Count)
+            {
+                return false;
+            }
+
+            return parameterTypes.Where((t, i) => t != commandDelegateParameter[i]).Any() == false;
         }
         
         private static bool IsParams(ICustomAttributeProvider param)
@@ -187,25 +230,53 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandname} not found"));
                 return;
             }
-            
-            object[] invokingArguments = new object[command.MethodInfo.GetParameters().Length];
-            invokingArguments[0] = player;
-            
+
             string[] commandArguments = commandMessage.Skip(1).Where(s => string.IsNullOrWhiteSpace(s) == false).ToArray();
-            if (ProcessArguments(commandArguments, command.MethodInfo.GetParameters().Skip(1).ToArray(), invokingArguments) == false)
+
+            switch (command)
+            {
+                case ReflectionCommand reflectionCommand:
+                    await ExecuteReflectionCommand(player, reflectionCommand, commandArguments);
+                    break;
+                case DelegateCommand delegateCommand:
+                    await ExecuteDelegateCommand(player, delegateCommand, commandArguments);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private async Task ExecuteReflectionCommand(IPlayer player, ReflectionCommand reflectionCommand, string[] arguments)
+        {
+            object[] invokingArguments = new object[reflectionCommand.MethodInfo.GetParameters().Length];
+            invokingArguments[0] = player;
+
+            if (ProcessArguments(arguments, reflectionCommand.MethodInfo.GetParameters().Skip(1).ToArray(), invokingArguments) == false)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
-                    "Type conversion failed. Command parameters are: " + command.GetParameterList()));
+                    "Type conversion failed. Command parameters are: " + reflectionCommand.GetParameterList()));
                 return;
             }
-            
+
             try
             {
-                await command.Invoke(invokingArguments);
+                await reflectionCommand.Invoke(invokingArguments);
             }
             catch (Exception e)
             {
-                _logger.Error($"An error occured when player {player.Name} executed command: {command.Name}: ", e);
+                _logger.Error($"An error occured when player {player.Name} executed command: {reflectionCommand.Name}: ", e);
+            }
+        }
+
+        private async Task ExecuteDelegateCommand(IPlayer player, DelegateCommand delegateCommand, string[] arguments)
+        {
+            try
+            {
+                await delegateCommand.CommandDelegate(player, arguments);
+            }
+            catch (Exception e)
+            {
+                _logger.Error($"An error occured when player {player.Name} executed command: {delegateCommand.Name}: ", e);
             }
         }
 
