@@ -192,7 +192,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         public async Task ExecuteCommand(IPlayer player, string text)
         {
-            string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Where(x => string.IsNullOrWhiteSpace(x) == false).ToArray();
+            string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (commandMessage.Any() == false) 
             {
                 return;
@@ -209,7 +209,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             switch (command)
             {
                 case ReflectionCommand reflectionCommand:
-                    await ExecuteReflectionCommand(player, reflectionCommand, commandMessage);
+                    await ExecuteReflectionCommand(player, reflectionCommand, text);
                     break;
                 case DelegateCommand delegateCommand:
                     await ExecuteDelegateCommand(player, delegateCommand, commandMessage);
@@ -219,14 +219,14 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        private async Task ExecuteReflectionCommand(IPlayer player, ReflectionCommand reflectionCommand, string[] arguments)
+        private async Task ExecuteReflectionCommand(IPlayer player, ReflectionCommand reflectionCommand, string commandText)
         {
             var commandParameters = reflectionCommand.MethodInfo.GetParameters();
+            var arguments = commandText.Split(' ', commandParameters.Length, StringSplitOptions.RemoveEmptyEntries);
 
             if (commandParameters.Count(x => x.HasDefaultValue == false) > arguments.Length)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.MissingArguments, "The given command lacks arguments!"));
-
                 return;
             }
             
