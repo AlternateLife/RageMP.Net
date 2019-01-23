@@ -1,7 +1,5 @@
 # AlternateLife.RageMP.Net
-![Windows build status](https://teamcity.alternate-life.de/app/rest/builds/buildType:(id:RageMP_NETCore_Release)/statusIcon) (Windows)
-![Linux build status](https://teamcity.alternate-life.de/app/rest/builds/buildType:(id:RageMP_NETCore_Linux_Release)/statusIcon) (Linux)
-[![Docker build status](https://teamcity.alternate-life.de/app/rest/builds/buildType:(id:RageMP_NETCore_Linux_Docker_Release)/statusIcon)](https://cloud.docker.com/repository/docker/alternatelife/ragemp-server) (Docker)
+[![Development Build status](https://teamcity.alternate-life.de/app/rest/builds/buildType:(id:RageMP_NETCore_BuildDevelopment)/statusIcon)](https://teamcity.alternate-life.de/viewType.html?buildTypeId=RageMP_NETCore_BuildDevelopment) (Windows + Linux + Docker)
 [![NuGet](https://img.shields.io/nuget/dt/AlternateLife.RageMP.Net.svg)](https://www.nuget.org/packages/AlternateLife.RageMP.Net)
 
 AlternateLife.RageMP.Net is an alternative server-side .NET Core 2.2 implementation for [RAGE Multiplayer](https://rage.mp). This library targets more advanced developers which are more familiar with the RAGE Multiplayer server API and its features. It offers a mostly asynchronous API to interact with, so a thread-safe access to the native API is always guaranteed.
