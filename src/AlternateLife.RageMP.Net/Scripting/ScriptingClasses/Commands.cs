@@ -21,10 +21,16 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         private readonly ConcurrentDictionary<string, CommandInformation> _commands = new ConcurrentDictionary<string, CommandInformation>();
         
+        private readonly ConcurrentDictionary<Type, ITypeParser> _typeParsers = new ConcurrentDictionary<Type, ITypeParser>();
+        
         public Commands(Plugin plugin)
         {
             _plugin = plugin;
             _logger = _plugin.Logger;
+            foreach (var (key, value) in TypeParserRegister.GetStringParsers())
+            {
+                _typeParsers.TryAdd(key, value);
+            }
         }
         
         public bool DoesCommandExist(string name)
@@ -140,25 +146,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             return parameterTypes.Where((t, i) => t != commandDelegateParameter[i]).Any() == false;
         }
-        
-        private readonly Dictionary<Type, ITypeParser> _typeParsingSwitch = new Dictionary<Type, ITypeParser>
-        {
-            {typeof(int),     new PrimitiveParser<int>(int.TryParse)},
-            {typeof(float),   new PrimitiveParser<float>(float.TryParse)},
-            {typeof(double),  new PrimitiveParser<double>(double.TryParse)},
-            {typeof(uint),    new PrimitiveParser<uint>(uint.TryParse)},
-            {typeof(long),    new PrimitiveParser<long>(long.TryParse)},
-            {typeof(char),    new PrimitiveParser<char>(char.TryParse)},
-            {typeof(bool),    new PrimitiveParser<bool>(bool.TryParse)},
-            {typeof(byte),    new PrimitiveParser<byte>(byte.TryParse)},
-            {typeof(sbyte),   new PrimitiveParser<sbyte>(sbyte.TryParse)},
-            {typeof(short),   new PrimitiveParser<short>(short.TryParse)},
-            {typeof(decimal), new PrimitiveParser<decimal>(decimal.TryParse)},
-            {typeof(ushort),  new PrimitiveParser<ushort>(ushort.TryParse)},
-            {typeof(ulong),   new PrimitiveParser<ulong>(ulong.TryParse)},
-            {typeof(string),  new StringParser()},
-            {typeof(Enum),    new EnumParser()}
-        };
 
         private bool ProcessArguments(IReadOnlyList<string> arguments, IReadOnlyList<ParameterInfo> expectedParameters, IList<object> invokingParameters)
         {
@@ -179,7 +166,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                     continue;
                 }
 
-                if(_typeParsingSwitch.TryGetValue(expectedType, out var parser) == false || parser.TryParse(arguments[i], targetType, out var parsedParameter) == false)
+                if(_typeParsers.TryGetValue(expectedType, out var parser) == false || parser.TryParse(arguments[i], targetType, out var parsedParameter) == false)
                 {
                     return false;
                 }
