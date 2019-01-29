@@ -33,6 +33,6 @@
             <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/ragemp-srv/dotnet/resources/example/</TargetLocation>
         </PropertyGroup>
 
-        <Copy SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
+        <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
     </Target>
 </Project>
