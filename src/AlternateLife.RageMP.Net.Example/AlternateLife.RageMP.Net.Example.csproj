@@ -25,11 +25,14 @@
       <ProjectReference Include="..\AlternateLife.RageMP.Net\AlternateLife.RageMP.Net.csproj" />
     </ItemGroup>
 
-    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb" DestinationFolder="../../../RageMP Server/dotnet/resources/example/" SkipUnchangedFiles="false" />
-    </Target>
+    <Target Name="CopyFiles" AfterTargets="build">
+        <PropertyGroup>
+            <CopiedFiles>$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb</CopiedFiles>
 
-    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Linux' ">
-        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.Example.dll;$(OutputPath)\AlternateLife.RageMP.Net.Example.pdb" DestinationFolder="/ragemp-srv/dotnet/resources/example/" SkipUnchangedFiles="false" />
+            <TargetLocation Condition=" '$(Configuration)' == 'Testing' ">../../../RageMP Server/dotnet/resources/example/</TargetLocation>
+            <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/ragemp-srv/dotnet/resources/example/</TargetLocation>
+        </PropertyGroup>
+
+        <Copy SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
     </Target>
 </Project>
