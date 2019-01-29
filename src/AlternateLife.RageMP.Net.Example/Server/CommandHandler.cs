@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Enums;
@@ -30,6 +31,26 @@ namespace AlternateLife.RageMP.Net.Example
         {
             player.GiveWeapon(hash, 100);
             await player.OutputChatBoxAsync("Weapon received");
+        }
+
+        [Command("skin")]
+        public async Task PrintArguments(IPlayer player, string[] arguments)
+        {
+            if (arguments.Length <= 0)
+            {
+                return;
+            }
+
+            if (Enum.TryParse(arguments[0], out PedHash result) == false)
+            {
+                await player.OutputChatBoxAsync("The given model is not valid!");
+
+                return;
+            }
+
+            player.Model = result;
+
+            await player.OutputChatBoxAsync($"Skin changed to \"{result}\"!");
         }
     }
 }
