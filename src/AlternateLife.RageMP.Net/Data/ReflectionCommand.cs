@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 
@@ -21,7 +22,21 @@ namespace AlternateLife.RageMP.Net.Data
 
         public string GetParameterList()
         {
-            return MethodInfo.GetParameters().Skip(1).Aggregate("", (s, p) => s + p.ParameterType.Name + " ").Trim();
+            var result = new StringBuilder();
+
+            foreach (var parameterInfo in MethodInfo.GetParameters().Skip(1))
+            {
+                if (parameterInfo.HasDefaultValue)
+                {
+                    result.Append($"<{parameterInfo.Name}> ");
+                }
+                else
+                {
+                    result.Append($"[{parameterInfo.Name}] ");
+                }
+            }
+
+            return result.ToString();
         }
 
     }
