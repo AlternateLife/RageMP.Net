@@ -8,7 +8,6 @@ using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
-using AlternateLife.RageMP.Net.Scripting.ScriptingClasses.TypeParsers;
 
 namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 {
@@ -20,26 +19,24 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         public event EventHandler<CommandErrorEventArgs> CommandError;
 
         private readonly ConcurrentDictionary<string, CommandInformation> _commands = new ConcurrentDictionary<string, CommandInformation>();
-        
-        private readonly ConcurrentDictionary<Type, ITypeParser> _typeParsers = new ConcurrentDictionary<Type, ITypeParser>();
-        
+
+        private readonly ConcurrentDictionary<Type, ITypeParser> _typeParsers;
+
         public Commands(Plugin plugin)
         {
             _plugin = plugin;
             _logger = _plugin.Logger;
-            foreach (var (key, value) in TypeParserRegister.GetStringParsers())
-            {
-                _typeParsers.TryAdd(key, value);
-            }
+
+            _typeParsers = new ConcurrentDictionary<Type, ITypeParser>(TypeParserRegister.GetStringParsers());
         }
-        
+
         public bool DoesCommandExist(string name)
         {
             Contract.NotEmpty(name, nameof(name));
 
             return _commands.ContainsKey(name);
         }
-        
+
         public IReadOnlyCollection<string> GetRegisteredCommands()
         {
             return _commands.Keys.ToList();
@@ -49,9 +46,9 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         {
             Contract.NotNull(handler, nameof(handler));
 
-            RemoveCommands(c => (c as ReflectionCommand)?.CommandHandler == handler);
+            RemoveCommands(c => c is ReflectionCommand reflectionCommand && reflectionCommand.CommandHandler == handler);
         }
-        
+
         public bool Register(string name, CommandDelegate callback)
         {
             Contract.NotEmpty(name, nameof(name));
@@ -69,7 +66,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             RemoveCommands(c => (c as DelegateCommand)?.CommandDelegate == callback);
         }
 
-        private void RemoveCommands(Predicate<CommandInformation> predicate)
+        private void RemoveCommands(Func<CommandInformation, bool> predicate)
         {
             foreach (var command in _commands.Reverse())
             {
@@ -88,40 +85,46 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             _commands.TryRemove(name, out _);
         }
-        
+
         public void RegisterHandler(ICommandHandler handler)
         {
             Contract.NotNull(handler, nameof(handler));
 
-            var commandMethods = handler.GetType().GetMethods()
-                .Where(m => m.GetCustomAttributes(typeof(CommandAttribute), true).Length > 0);
+            var commandMethods = handler
+                .GetType()
+                .GetMethods()
+                .Where(m => m.GetCustomAttributes(typeof(CommandAttribute), true).Any());
 
             foreach (var commandMethod in commandMethods)
             {
                 var attribute = commandMethod.GetCustomAttribute<CommandAttribute>();
-                
+
                 if (string.IsNullOrEmpty(attribute.Name))
                 {
                     _logger.Warn($"Skipping method {commandMethod.Name} because of invalid command name.");
+
                     continue;
                 }
-                
+
                 if (commandMethod.ReturnType != typeof(Task))
                 {
                     _logger.Warn($"Command {attribute.Name}: Return type {commandMethod.ReturnType} is invalid, {typeof(Task)} expected!");
+
                     continue;
                 }
 
                 if (commandMethod.IsStatic)
                 {
                     _logger.Warn($"Command {attribute.Name}: Static methods are not allowed!");
+
                     continue;
                 }
 
                 CommandInformation command;
-                if (HasCommandDelegateSignature(commandMethod))
+                var commandDelegate = (CommandDelegate) Delegate.CreateDelegate(typeof(CommandDelegate), handler, commandMethod, false);
+                if (commandDelegate != null)
                 {
-                    command = new DelegateCommand(attribute.Name, (CommandDelegate) Delegate.CreateDelegate(typeof(CommandDelegate), handler, commandMethod), handler);
+                    command = new DelegateCommand(attribute.Name, commandDelegate, handler);
                 }
                 else
                 {
@@ -135,18 +138,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        private static bool HasCommandDelegateSignature(MethodBase methodInfo)
-        {
-            var parameterTypes = methodInfo.GetParameters().Select(p => p.ParameterType).ToList();
-            var commandDelegateParameter = typeof(CommandDelegate).GetMethod("Invoke").GetParameters().Select(p => p.ParameterType).ToList();
-            if (parameterTypes.Count != commandDelegateParameter.Count)
-            {
-                return false;
-            }
-
-            return parameterTypes.Where((t, i) => t != commandDelegateParameter[i]).Any() == false;
-        }
-
         private bool ProcessArguments(IReadOnlyList<string> arguments, IReadOnlyList<ParameterInfo> expectedParameters, IList<object> invokingParameters)
         {
             for (int i = 1; i < arguments.Count; i++)
@@ -154,6 +145,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 var expectedParameter = expectedParameters[i];
                 var expectedType = expectedParameter.ParameterType;
                 var targetType = expectedType;
+
                 if (expectedType.IsEnum)
                 {
                     expectedType = typeof(Enum);
@@ -180,16 +172,17 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         public async Task ExecuteCommand(IPlayer player, string text)
         {
             string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (commandMessage.Any() == false) 
+            if (commandMessage.Any() == false)
             {
                 return;
             }
-            
-            var commandname = commandMessage[0];
 
-            if (_commands.TryGetValue(commandname, out var command) == false)
+            var commandName = commandMessage[0];
+
+            if (_commands.TryGetValue(commandName, out var command) == false)
             {
-                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandname} not found"));
+                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandName} not found"));
+
                 return;
             }
 
@@ -198,11 +191,15 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 case ReflectionCommand reflectionCommand:
                     await ExecuteReflectionCommand(player, reflectionCommand, text);
                     break;
+
                 case DelegateCommand delegateCommand:
                     await ExecuteDelegateCommand(player, delegateCommand, commandMessage);
                     break;
+
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    _logger.Warn($"Command {commandName}: Invalid command-type: {command.GetType()}");
+                    break;
+
             }
         }
 
@@ -214,16 +211,18 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             if (commandParameters.Count(x => x.HasDefaultValue == false) > arguments.Length)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.MissingArguments, "The given command lacks arguments!"));
+
                 return;
             }
-            
+
             var invokingArguments = new object[commandParameters.Length];
             invokingArguments[0] = player;
 
-            if (ProcessArguments(arguments, commandParameters.ToArray(), invokingArguments) == false)
+            if (ProcessArguments(arguments, commandParameters, invokingArguments) == false)
             {
                 OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
-                    "Type conversion failed. Command parameters are: " + reflectionCommand.GetParameterList()));
+                    $"Type conversion failed. Command parameters are: {reflectionCommand.GetParameterList()}"));
+
                 return;
             }
 
