@@ -10,9 +10,9 @@ namespace AlternateLife.RageMP.Net.Example
     public class CommandHandler : ICommandHandler
     {
         [Command("vehicle")]
-        public async Task Vehicle(IPlayer player, VehicleHash hash)
+        public async Task Vehicle(IPlayer player, VehicleHash vehicleName)
         {
-            var vehicle = await MP.Vehicles.NewAsync(hash, player.Position);
+            var vehicle = await MP.Vehicles.NewAsync(vehicleName, player.Position);
 
             player.PutIntoVehicle(vehicle, -1);
 
@@ -27,9 +27,9 @@ namespace AlternateLife.RageMP.Net.Example
         }
 
         [Command("weapon")]
-        public async Task Weapon(IPlayer player, WeaponHash hash)
+        public async Task Weapon(IPlayer player, WeaponHash weaponName)
         {
-            player.GiveWeapon(hash, 100);
+            player.GiveWeapon(weaponName, 100);
             await player.OutputChatBoxAsync("Weapon received");
         }
 
