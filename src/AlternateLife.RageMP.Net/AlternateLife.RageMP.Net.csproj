@@ -42,12 +42,14 @@
       </Content>
     </ItemGroup>
 
-    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Testing' ">
-        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="../../../RageMP Server/dotnet/plugins/" SkipUnchangedFiles="false" />
-    </Target>
+    <Target Name="CopyFiles" AfterTargets="build">
+        <PropertyGroup>
+            <CopiedFiles>$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb</CopiedFiles>
 
-    <Target Name="CopyFiles" AfterTargets="build" Condition=" '$(Configuration)' == 'Linux' ">
-        <Copy SourceFiles="$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb" DestinationFolder="/ragemp-srv/dotnet/plugins/" SkipUnchangedFiles="false" />
-    </Target>
+            <TargetLocation Condition=" '$(Configuration)' == 'Testing' ">../../../RageMP Server/dotnet/plugins/</TargetLocation>
+            <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/ragemp-srv/dotnet/resources/plugins/</TargetLocation>
+        </PropertyGroup>
 
+        <Copy SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
+    </Target>
 </Project>
