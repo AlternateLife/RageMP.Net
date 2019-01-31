@@ -1,6 +1,6 @@
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -18,7 +18,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the checkpoint</param>
         /// <param name="dimension">Dimension of the checkpoint</param>
         /// <returns>New <see cref="ICheckpoint" /> instance</returns>
-        Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible = true, uint dimension = MP.GlobalDimension);
+        Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible = true, uint dimension = MP.GlobalDimension);
 
         /// <summary>
         /// Create a new checkpoint.
@@ -31,6 +31,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the checkpoint</param>
         /// <param name="dimension">Dimension of the checkpoint</param>
         /// <returns>New <see cref="ICheckpoint" /> instance</returns>
-        Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible = true, uint dimension = MP.GlobalDimension);
+        Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible = true, uint dimension = MP.GlobalDimension);
     }
 }

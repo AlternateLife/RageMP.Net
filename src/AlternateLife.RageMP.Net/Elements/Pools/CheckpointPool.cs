@@ -1,8 +1,9 @@
 using System;
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Elements.Entities;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 
@@ -14,16 +15,16 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
+        public async Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
         {
             var pointer = await _plugin
-                .Schedule(() => Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color.NumberValue, visible, dimension))
+                .Schedule(() => Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color.GetNumberValue(), visible, dimension))
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
+        public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
         {
             return NewAsync((uint) type, position, nextPosition, radius, color, visible, dimension);
         }
