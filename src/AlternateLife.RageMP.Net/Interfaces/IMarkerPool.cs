@@ -1,6 +1,6 @@
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Scripting;
 
@@ -20,7 +20,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the marker</param>
         /// <param name="dimension">Dimension of the marker</param>
         /// <returns>New <see cref="IMarker" /> instance</returns>
-        Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
+        Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension = MP.GlobalDimension);
 
         /// <summary>
         /// Create a new marker.
@@ -34,7 +34,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the marker</param>
         /// <param name="dimension">Dimension of the marker</param>
         /// <returns>New <see cref="IMarker" /> instance</returns>
-        Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
+        Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension = MP.GlobalDimension);
 
         /// <summary>
         /// Create a new marker.
@@ -48,6 +48,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="visible">Visible state of the marker</param>
         /// <param name="dimension">Dimension of the marker</param>
         /// <returns>New <see cref="IMarker" /> instance</returns>
-        Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension = MP.GlobalDimension);
+        Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension = MP.GlobalDimension);
     }
 }
