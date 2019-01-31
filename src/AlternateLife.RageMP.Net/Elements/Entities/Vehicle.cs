@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
@@ -265,19 +266,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public ColorRgba NeonsColor
+        public Color NeonsColor
         {
             get
             {
                 CheckExistence();
 
-                return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer)).FromModColor();
             }
             set
             {
                 CheckExistence();
 
-                Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue());
+                Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, value.R, value.G, value.B);
             }
         }
 
@@ -502,21 +503,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return (int) GetPaint((uint) id);
         }
 
-        public void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor)
+        public void SetColorRgb(Color primaryColor, Color secondaryColor)
         {
             CheckExistence();
 
-            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor.NumberValue, secondaryColor.NumberValue);
+            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor.GetNumberValue(), secondaryColor.GetNumberValue());
         }
 
-        public ColorRgba GetColorRgb(uint colorSlot)
+        public Color GetColorRgb(uint colorSlot)
         {
             CheckExistence();
 
-            return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot));
+            return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot)).FromModColor();
         }
 
-        public ColorRgba GetColorRgb(int colorSlot)
+        public Color GetColorRgb(int colorSlot)
         {
             return GetColorRgb((uint) colorSlot);
         }

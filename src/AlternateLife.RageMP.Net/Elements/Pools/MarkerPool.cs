@@ -1,9 +1,10 @@
 using System;
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 
@@ -15,21 +16,21 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
+        public async Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
         {
             var pointer = await _plugin
-                .Schedule(() => Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color.NumberValue, visible, dimension))
+                .Schedule(() => Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color.GetNumberValue(), visible, dimension))
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
         }
 
-        public Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
+        public Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
         {
             return NewAsync((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }
 
-        public Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
+        public Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
         {
             return NewAsync((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }

@@ -1,6 +1,8 @@
 using System;
+using System.Drawing;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
@@ -9,19 +11,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class TextLabel : Entity, ITextLabel
     {
-        public ColorRgba Color
+        public Color Color
         {
             get
             {
                 CheckExistence();
 
-                return StructConverter.PointerToStruct<ColorRgba>(Rage.TextLabel.TextLabel_GetColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.TextLabel.TextLabel_GetColor(NativePointer)).FromModColor();
             }
             set
             {
                 CheckExistence();
 
-                Rage.TextLabel.TextLabel_SetColor(NativePointer, value.NumberValue);
+                Rage.TextLabel.TextLabel_SetColor(NativePointer, value.GetNumberValue());
             }
         }
 

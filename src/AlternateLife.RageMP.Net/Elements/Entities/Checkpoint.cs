@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
@@ -12,19 +14,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Checkpoint : Entity, ICheckpoint
     {
-        public ColorRgba Color
+        public Color Color
         {
             get
             {
                 CheckExistence();
 
-                return StructConverter.PointerToStruct<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer));
+                return StructConverter.PointerToStruct<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer)).FromModColor();
             }
             set
             {
                 CheckExistence();
 
-                Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.GetRed(), value.GetGreen(), value.GetBlue(), value.GetAlpha());
+                Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A);
             }
         }
 
