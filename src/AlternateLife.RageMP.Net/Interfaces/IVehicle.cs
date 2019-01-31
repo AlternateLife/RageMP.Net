@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
@@ -140,7 +141,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the neons color of the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ColorRgba NeonsColor { get; set; }
+        Color NeonsColor { get; set; }
 
         /// <summary>
         /// Get or set the number plate of the vehicle.
@@ -287,23 +288,23 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="primaryColor">Primary rgb color of the vehicle</param>
         /// <param name="secondaryColor">Secondary rgb color of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetColorRgb(ColorRgba primaryColor, ColorRgba secondaryColor);
+        void SetColorRgb(Color primaryColor, Color secondaryColor);
 
         /// <summary>
         /// Get the color of the given color slot.
         /// </summary>
         /// <param name="colorSlot">Slot of the color</param>
-        /// <returns><see cref="ColorRgba" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
+        /// <returns><see cref="Color" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ColorRgba GetColorRgb(uint colorSlot);
+        Color GetColorRgb(uint colorSlot);
 
         /// <summary>
         /// Get the color of the given color slot.
         /// </summary>
         /// <param name="colorSlot">Slot of the color</param>
-        /// <returns><see cref="ColorRgba" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
+        /// <returns><see cref="Color" /> of the vehicle at the given <paramref name="colorSlot" /></returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ColorRgba GetColorRgb(int colorSlot);
+        Color GetColorRgb(int colorSlot);
 
         /// <summary>
         /// Set the primary and secondary color of the vehicle.

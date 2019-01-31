@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Exceptions;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -12,7 +12,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Get or set the color of the entity.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ColorRgba Color { get; set; }
+        Color Color { get; set; }
 
         /// <summary>
         /// Get or set the direction of the entity.
