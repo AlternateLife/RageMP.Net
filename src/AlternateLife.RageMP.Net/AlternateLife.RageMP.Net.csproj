@@ -8,8 +8,8 @@
         <RootNamespace>AlternateLife.RageMP.Net</RootNamespace>
         <Authors>AlternateLife</Authors>
         <Description>Alternative RAGE Multiplayer .NET Core SDK</Description>
-        <Copyright>2018 AlternateLife</Copyright>
-        <PackageLicenseUrl>https://github.com/AlternateLife/RageMP.Net/blob/master/LICENSE</PackageLicenseUrl>
+        <Copyright>2019 AlternateLife</Copyright>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/AlternateLife/RageMP.Net/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/AlternateLife/ragemp-dotnet-core/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
