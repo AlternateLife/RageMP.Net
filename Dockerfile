@@ -23,9 +23,9 @@ RUN mkdir -p dotnet/plugins
 RUN mkdir -p dotnet/resources
 RUN mkdir -p dotnet/runtime/download
 WORKDIR /ragemp-srv/dotnet/runtime/download
-RUN wget https://download.visualstudio.microsoft.com/download/pr/372f18c3-f642-4b73-8255-40a87430a9bb/dd0b412220dc49868b0ba1c58252b6d0/dotnet-runtime-2.2.1-linux-x64.tar.gz
-RUN tar -zxvf dotnet-runtime-2.2.1-linux-x64.tar.gz
-RUN cp shared/Microsoft.NETCore.App/2.2.1/* ../
+RUN wget https://download.visualstudio.microsoft.com/download/pr/97b97652-4f74-4866-b708-2e9b41064459/7c722daf1a80a89aa8c3dec9103c24fc/dotnet-runtime-2.2.2-linux-x64.tar.gz
+RUN tar -zxvf dotnet-runtime-2.2.2-linux-x64.tar.gz
+RUN cp shared/Microsoft.NETCore.App/2.2.2/* ../
 WORKDIR /ragemp-srv/dotnet/runtime
 RUN rm -r download
 
