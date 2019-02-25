@@ -11,7 +11,7 @@
         <Copyright>2019 AlternateLife</Copyright>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/AlternateLife/RageMP.Net/</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/AlternateLife/ragemp-dotnet-core/</RepositoryUrl>
+        <RepositoryUrl>https://github.com/AlternateLife/RageMP.Net/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>ragemp gta bridge</PackageTags>
     </PropertyGroup>
