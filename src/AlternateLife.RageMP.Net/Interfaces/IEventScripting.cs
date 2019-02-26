@@ -11,6 +11,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         event PlayerDeathDelegate PlayerDeath;
         event PlayerQuitDelegate PlayerQuit;
         event PlayerCommandDelegate PlayerCommand;
+        event PlayerCommandFailedDelegate PlayerCommandFailed;
         event PlayerChatDelegate PlayerChat;
         event PlayerSpawnDelegate PlayerSpawn;
         event PlayerDamageDelegate PlayerDamage;
