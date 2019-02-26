@@ -77,6 +77,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             remove => _playerCommand.Unsubscribe(value);
         }
 
+        private readonly Helpers.EventHandler<PlayerCommandFailedDelegate> _playerCommandFailed;
+        public event PlayerCommandFailedDelegate PlayerCommandFailed
+        {
+            add => _playerCommandFailed.Subscribe(value);
+            remove => _playerCommandFailed.Unsubscribe(value);
+        }
+
         private readonly NativeEventHandler<NativePlayerChatDelegate, PlayerChatDelegate> _playerChat;
         public event PlayerChatDelegate PlayerChat
         {
@@ -240,6 +247,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerDeath = new NativeEventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate>(plugin, EventType.PlayerDeath, DispatchPlayerDeath);
             _playerQuit = new NativeEventHandler<NativePlayerQuitDelegate, PlayerQuitDelegate>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
             _playerCommand = new NativeEventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate>(plugin, EventType.PlayerCommand, DispatchPlayerCommand, true);
+            _playerCommandFailed = new Helpers.EventHandler<PlayerCommandFailedDelegate>(plugin);
             _playerChat = new NativeEventHandler<NativePlayerChatDelegate, PlayerChatDelegate>(plugin, EventType.PlayerChat, DispatchPlayerChat);
             _playerSpawn = new NativeEventHandler<NativePlayerSpawnDelegate, PlayerSpawnDelegate>(plugin, EventType.PlayerSpawn, DispatchPlayerSpawn);
             _playerDamage = new NativeEventHandler<NativePlayerDamageDelegate, PlayerDamageDelegate>(plugin, EventType.PlayerDamage, DispatchPlayerDamage);
@@ -359,6 +367,11 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             await Task.Run(() => _plugin.Commands.ExecuteCommand(player, message))
                 .ConfigureAwait(false);
+        }
+
+        internal void DispatchPlayerCommandFailed(IPlayer player, string input, CommandError error, string errorMessage)
+        {
+            _playerCommandFailed.CallAsync(x => x(player, input, error, errorMessage));
         }
 
         private void DispatchPlayerChat(IntPtr playerPointer, IntPtr text)

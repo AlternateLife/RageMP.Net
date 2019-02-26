@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 
@@ -15,8 +16,6 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
     {
         private readonly Plugin _plugin;
         private readonly ILogger _logger;
-
-        public event EventHandler<CommandErrorEventArgs> CommandError;
 
         private readonly ConcurrentDictionary<string, CommandInformation> _commands = new ConcurrentDictionary<string, CommandInformation>();
 
@@ -181,7 +180,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             if (_commands.TryGetValue(commandName, out var command) == false)
             {
-                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.CommandNotFound, $"Command {commandName} not found"));
+                OnCommandError(player, text, CommandError.CommandNotFound, $"Command {commandName} not found");
 
                 return;
             }
@@ -210,7 +209,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             if (commandParameters.Count(x => x.HasDefaultValue == false) > arguments.Length)
             {
-                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.MissingArguments, "The given command lacks arguments!"));
+                OnCommandError(player, commandText, CommandError.MissingArguments, "The given command lacks arguments!");
 
                 return;
             }
@@ -220,8 +219,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             if (ProcessArguments(arguments, commandParameters, invokingArguments) == false)
             {
-                OnCommandError(new CommandErrorEventArgs(player, Enums.CommandError.TypeParsingFailed,
-                    $"Type conversion failed. Command parameters are: {reflectionCommand.GetParameterList()}"));
+                OnCommandError(player, commandText, CommandError.TypeParsingFailed, $"Type conversion failed. Command parameters are: {reflectionCommand.GetParameterList()}");
 
                 return;
             }
@@ -248,9 +246,9 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
         }
 
-        protected virtual void OnCommandError(CommandErrorEventArgs e)
+        protected virtual void OnCommandError(IPlayer player, string input, CommandError error, string errorMessage)
         {
-            CommandError?.Invoke(this, e);
+            _plugin.EventScripting.DispatchPlayerCommandFailed(player, input, error, errorMessage);
         }
     }
 }
