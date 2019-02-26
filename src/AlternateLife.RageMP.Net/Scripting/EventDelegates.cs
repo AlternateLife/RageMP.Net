@@ -16,6 +16,7 @@ namespace AlternateLife.RageMP.Net.Scripting
     public delegate Task PlayerReadyDelegate(IPlayer player);
     public delegate void PlayerQuitDelegate(IPlayer player, DisconnectReason type, string reason);
     public delegate Task PlayerCommandDelegate(IPlayer player, string text, CommandEventArgs eventArgs);
+    public delegate Task PlayerCommandFailedDelegate(IPlayer player, string input, CommandError error, string errorMessage);
     public delegate Task PlayerChatDelegate(IPlayer player, string text);
     public delegate Task PlayerDeathDelegate(IPlayer player, uint reason, IPlayer killerPlayer);
     public delegate Task PlayerSpawnDelegate(IPlayer player);

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Scripting;
-using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Example
 {
@@ -13,14 +13,14 @@ namespace AlternateLife.RageMP.Net.Example
             MP.Events.PlayerReady += OnPlayerReady;
 
             MP.Events.PlayerDeath += OnPlayerDeath;
+            MP.Events.PlayerCommandFailed += OnPlayerCommandFailed;
 
-            MP.Commands.CommandError += OnCommandError;
-            MP.Commands.RegisterHandler(new CommandHandler());  
+            MP.Commands.RegisterHandler(new CommandHandler());
         }
 
-        private async void OnCommandError(object sender, CommandErrorEventArgs e)
+        private Task OnPlayerCommandFailed(IPlayer player, string input, CommandError error, string errormessage)
         {
-            await e.Player.OutputChatBoxAsync(e.ErrorMessage);
+            return player.OutputChatBoxAsync(errormessage);
         }
 
         public Task OnStartAsync()
