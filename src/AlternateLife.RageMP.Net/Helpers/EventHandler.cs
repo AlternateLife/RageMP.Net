@@ -1,62 +1,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Enums;
-using AlternateLife.RageMP.Net.Native;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class EventHandler<TNative, TEvent>
+    internal class EventHandler<TEvent>
     {
         private readonly Plugin _plugin;
-        private readonly EventType _type;
-        private readonly TNative _nativeCallback;
-        private readonly bool _forceRegistration;
 
-        private readonly HashSet<TEvent> _subscriptions = new HashSet<TEvent>();
+        protected readonly HashSet<TEvent> _subscriptions = new HashSet<TEvent>();
 
-        public EventHandler(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false)
+        public EventHandler(Plugin plugin)
         {
             _plugin = plugin;
-            _type = type;
-            _nativeCallback = nativeCallback;
-            _forceRegistration = forceRegistration;
-
-            if (_forceRegistration)
-            {
-                Rage.Events.RegisterEventHandler((int) _type, Marshal.GetFunctionPointerForDelegate(_nativeCallback));
-            }
         }
 
-        public void Subscribe(TEvent callback)
+        public virtual bool Subscribe(TEvent callback)
         {
             Contract.NotNull(callback, nameof(callback));
 
-            var wasEmpty = _subscriptions.Any() == false;
-            var wasAdded = _subscriptions.Add(callback);
-
-            if (_forceRegistration || wasAdded == false || wasEmpty == false)
-            {
-                return;
-            }
-
-            Rage.Events.RegisterEventHandler((int) _type, Marshal.GetFunctionPointerForDelegate(_nativeCallback));
+            return _subscriptions.Add(callback);
         }
 
-        public void Unsubscribe(TEvent callback)
+        public virtual bool Unsubscribe(TEvent callback)
         {
             Contract.NotNull(callback, nameof(callback));
 
-            var wasRemoved = _subscriptions.Remove(callback);
-
-            if (_forceRegistration || wasRemoved == false || _subscriptions.Any())
-            {
-                return;
-            }
-
-            Rage.Events.UnregisterEventHandler((int) _type);
+            return _subscriptions.Remove(callback);
         }
 
         public void Call(Action<TEvent> callback)
@@ -119,7 +90,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {typeof(TEvent)}", e);
             }
         }
 
@@ -131,7 +102,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {typeof(TEvent)}", e);
             }
         }
 
@@ -143,7 +114,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
             catch (Exception e)
             {
-                _plugin.Logger.Error($"An error occured during execution of event {_type}", e);
+                _plugin.Logger.Error($"An error occured during execution of event {typeof(TEvent)}", e);
             }
         }
     }
