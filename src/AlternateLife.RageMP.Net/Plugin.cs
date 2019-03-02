@@ -36,6 +36,7 @@ namespace AlternateLife.RageMP.Net
         internal Config Config { get; }
         internal World World { get; }
         internal Commands Commands { get; }
+        internal Utility Utility { get; }
 
         internal Logger Logger { get; }
         internal ArgumentConverter ArgumentConverter { get; }
@@ -55,6 +56,7 @@ namespace AlternateLife.RageMP.Net
             Logger = new Logger(this);
             EventScripting = new EventScripting(this);
             Commands = new Commands(this);
+            Utility = new Utility(this);
 
             PlayerPool = CreateNativeManager<PlayerPool>(Rage.Multiplayer.Multiplayer_GetPlayerPool);
             VehiclePool = CreateNativeManager<VehiclePool>(Rage.Multiplayer.Multiplayer_GetVehiclePool);
