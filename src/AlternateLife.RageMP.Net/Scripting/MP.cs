@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 
 namespace AlternateLife.RageMP.Net.Scripting
@@ -25,6 +23,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         public static IConfig Config => _plugin.Config;
         public static IWorld World => _plugin.World;
         public static ICommands Commands => _plugin.Commands;
+        public static IUtility Utility => _plugin.Utility;
 
         public static ILogger Logger => _plugin.Logger;
 
@@ -42,27 +41,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// <returns>Integer that represents given string data</returns>
         public static uint Joaat(string data)
         {
-            if (string.IsNullOrEmpty(data))
-            {
-                return 0;
-            }
-
-            var characters = Encoding.UTF8.GetBytes(data.ToLower());
-
-            uint hash = 0;
-
-            foreach (var t in characters)
-            {
-                hash += t;
-                hash += hash << 10;
-                hash ^= hash >> 6;
-            }
-
-            hash += hash << 3;
-            hash ^= hash >> 11;
-            hash += hash << 15;
-
-            return hash;
+            return _plugin.Utility.Joaat(data);
         }
 
         /// <summary>
@@ -74,16 +53,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// <returns>Collection of converted values</returns>
         public static IList<uint> Joaat(IList<string> input)
         {
-            Contract.NotNull(input, nameof(input));
-
-            var result = new uint[input.Count];
-
-            for (var i = 0; i < input.Count; i++)
-            {
-                result[i] = Joaat(input[i]);
-            }
-
-            return result;
+            return _plugin.Utility.Joaat(input);
         }
 
         /// <summary>
@@ -95,7 +65,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
         public static Task Schedule(Action action, bool forceSchedule = false)
         {
-            return _plugin.Schedule(action, forceSchedule);
+            return _plugin.Utility.Schedule(action, forceSchedule);
         }
 
         /// <summary>
@@ -107,7 +77,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
         public static Task<T> Schedule<T>(Func<T> action, bool forceSchedule = false)
         {
-            return _plugin.Schedule(action, forceSchedule);
+            return _plugin.Utility.Schedule(action, forceSchedule);
         }
 
     }
