@@ -39,6 +39,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// </summary>
         /// <param name="data">text to convert</param>
         /// <returns>Integer that represents given string data</returns>
+        [Obsolete("Use MP.Utility.Jooat(string data) instead")]
         public static uint Joaat(string data)
         {
             return _plugin.Utility.Joaat(data);
@@ -51,6 +52,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// </summary>
         /// <param name="input">texts to convert</param>
         /// <returns>Collection of converted values</returns>
+        [Obsolete("Use MP.Utility.Jooat(IList<string> input) instead")]
         public static IList<uint> Joaat(IList<string> input)
         {
             return _plugin.Utility.Joaat(input);
@@ -63,6 +65,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// </summary>
         /// <param name="action"><paramref name="action"/> to schedule</param>
         /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
+        [Obsolete("Use MP.Utility.Schedule(Action action, bool forceSchedule = false) instead")]
         public static Task Schedule(Action action, bool forceSchedule = false)
         {
             return _plugin.Utility.Schedule(action, forceSchedule);
@@ -75,6 +78,7 @@ namespace AlternateLife.RageMP.Net.Scripting
         /// </summary>
         /// <param name="action"><paramref name="action"/> to schedule</param>
         /// <param name="forceSchedule">If true, main thread check will be ignored and action will be scheduled</param>
+        [Obsolete("Use MP.Utility.Schedule<T>(Func<T> action, bool forceSchedule = false) instead")]
         public static Task<T> Schedule<T>(Func<T> action, bool forceSchedule = false)
         {
             return _plugin.Utility.Schedule(action, forceSchedule);
