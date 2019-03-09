@@ -10,35 +10,67 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface IMarker : IEntity
     {
         /// <summary>
-        /// Get or set the color of the entity.
+        /// Set the color of the marker.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Color Color { get; set; }
+        /// <param name="color">New color of the marker</param>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task SetColorAsync(Color color);
 
         /// <summary>
-        /// Get or set the direction of the entity.
+        /// Get the color of the marker.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 Direction { get; set; }
+        /// <returns>Color of the marker</returns>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task<Color> GetColorAsync();
 
         /// <summary>
-        /// Get or set the scale of the entity.
+        /// Set the direction of the marker.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Scale { get; set; }
+        /// <param name="direction">New direction of the marker</param>
+        /// <returns></returns>
+        Task SetDirectionAsync(Vector3 direction);
 
         /// <summary>
-        /// Get or set the visible state of the entity.
+        /// Get the direction of the marker.
         /// </summary>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsVisible { get; set; }
+        /// <returns>Direction of the marker</returns>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task<Vector3> GetDirectionAsync();
+
+        /// <summary>
+        /// Set the scale of the marker.
+        /// </summary>
+        /// <param name="scale">New scale of the marker</param>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task SetScaleAsync(float scale);
+
+        /// <summary>
+        /// Get or set the scale of the marker.
+        /// </summary>
+        /// <returns>Scale of the marker</returns>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task<float> GetScaleAsync();
+
+        /// <summary>
+        /// Set the visible state of the marker.
+        /// </summary>
+        /// <param name="visible">New visible state of the marker</param>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task SetVisibleAsync(bool visible);
+
+        /// <summary>
+        /// Get the visible state of the marker.
+        /// </summary>
+        /// <returns>True if the marker is visible, otherwise false</returns>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
+        Task<bool> IsVisibleAsync();
 
         /// <summary>
         /// Show marker for a list of players.
         /// </summary>
         /// <param name="players">List of players to show the marker for</param>
         /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
         Task ShowForAsync(IEnumerable<IPlayer> players);
 
         /// <summary>
@@ -46,7 +78,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="players">List of players to hide the marker for</param>
         /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
-        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="EntityDeletedException">This marker was deleted before</exception>
         Task HideForAsync(IEnumerable<IPlayer> players);
     }
 }
