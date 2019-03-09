@@ -14,270 +14,209 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public string Serial { get; }
 
-        public string Name
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Player.Player_GetName(NativePointer));
-            }
-            set
-            {
-                Contract.NotEmpty(value, nameof(value));
-                CheckExistence();
-
-                using (var converter = new StringConverter())
-                {
-                    Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value));
-                }
-            }
-        }
-
-        public string SocialClubName
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Player.Player_GetSocialClubName(NativePointer));
-            }
-        }
-
-        public float Heading
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetHeading(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Player.Player_SetHeading(NativePointer, value);
-            }
-        }
-
-        public override Vector3 Rotation
-        {
-            get
-            {
-                CheckExistence();
-
-                var vehicle = Vehicle;
-
-                if (vehicle != null)
-                {
-                    return vehicle.Rotation;
-                }
-
-                return new Vector3(0, 0, Heading);
-            }
-            set
-            {
-                CheckExistence();
-
-                Heading = value.Z;
-            }
-        }
-
-        public float MoveSpeed
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetMoveSpeed(NativePointer);
-            }
-        }
-
-        public float Health
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetHealth(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Player.Player_SetHealth(NativePointer, value);
-            }
-        }
-
-        public float Armor
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetArmor(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Player.Player_SetArmor(NativePointer, value);
-            }
-        }
-
-        public Vector3 AimingAt
-        {
-            get
-            {
-                CheckExistence();
-
-                return StructConverter.PointerToStruct<Vector3>(Rage.Player.Player_GetAminingAt(NativePointer));
-            }
-        }
-
-        public string Ip
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Player.Player_GetIp(NativePointer));
-            }
-        }
-
-        public int Ping
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetPing(NativePointer);
-            }
-        }
-
-        public float PacketLoss
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_GetPacketLoss(NativePointer);
-            }
-        }
-
-        public string KickReason
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Player.Player_GetKickReason(NativePointer));
-            }
-        }
-
-        public bool IsJumping
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsJumping(NativePointer);
-            }
-        }
-
-        public bool IsInCover
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsInCover(NativePointer);
-            }
-        }
-
-        public bool IsEnteringVehicle
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsEnteringVehicle(NativePointer);
-            }
-        }
-
-        public bool IsLeavingVehicle
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsLeavingVehicle(NativePointer);
-            }
-        }
-
-        public bool IsClimbing
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsClimbing(NativePointer);
-            }
-        }
-
-        public bool IsOnLadder
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsOnLadder(NativePointer);
-            }
-        }
-
-        public bool IsReloading
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsReloading(NativePointer);
-            }
-        }
-
-        public bool IsInMelee
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsInMelee(NativePointer);
-            }
-        }
-
-        public bool IsAiming
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Player.Player_IsAiming(NativePointer);
-            }
-        }
-
-        public string ActionString
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Player.Player_GetActionString(NativePointer));
-            }
-        }
-
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
             Serial = StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
+        }
+
+        public Task SetNameAsync(string value)
+        {
+            Contract.NotEmpty(value, nameof(value));
+            CheckExistence();
+
+            using (var converter = new StringConverter())
+            {
+                return _plugin.Schedule(() => Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value)));
+            }
+        }
+
+        public Task<string> GetNameAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StringConverter.PointerToString(Rage.Player.Player_GetName(NativePointer)));
+        }
+
+        public Task<string> GetSocialClubNameAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StringConverter.PointerToString(Rage.Player.Player_GetSocialClubName(NativePointer)));
+        }
+
+        public Task SetHeadingAsync(float value)
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_SetHeading(NativePointer, value));
+        }
+
+        public Task<float> GetHeadingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetHeading(NativePointer));
+        }
+
+        public override Task SetRotation(Vector3 value)
+        {
+            CheckExistence();
+
+            return SetHeadingAsync(value.Z);
+        }
+
+        public override async Task<Vector3> GetRotation()
+        {
+            CheckExistence();
+
+            var vehicle = await GetVehicleAsync();
+
+            if (vehicle != null)
+            {
+                return await vehicle.GetRotation();
+            }
+
+            return new Vector3(0, 0, await GetHeadingAsync());
+        }
+
+        public Task<float> GetMoveSpeedAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetMoveSpeed(NativePointer));
+        }
+
+        public Task SetHealthAsync(float value)
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_SetHealth(NativePointer, value));
+        }
+
+        public Task<float> GetHealthAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetHealth(NativePointer));
+        }
+
+        public Task SetArmorAsync(float value)
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_SetArmor(NativePointer, value));
+        }
+
+        public Task<float> GetArmorAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetArmor(NativePointer));
+        }
+
+        public Task<Vector3> GetAimingAtAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Player.Player_GetAminingAt(NativePointer)));
+        }
+
+        public Task<string> GetIpAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StringConverter.PointerToString(Rage.Player.Player_GetIp(NativePointer)));
+        }
+
+        public Task<int> GetPingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetPing(NativePointer));
+        }
+
+        public Task<float> GetPacketLossAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetPacketLoss(NativePointer));
+        }
+
+        public Task<string> GetKickReasonAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StringConverter.PointerToString(Rage.Player.Player_GetKickReason(NativePointer)));
+        }
+
+        public Task<bool> IsJumpingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsJumping(NativePointer));
+        }
+
+        public Task<bool> IsInCoverAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsInCover(NativePointer));
+        }
+
+        public Task<bool> IsEnteringVehicleAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsEnteringVehicle(NativePointer));
+        }
+
+        public Task<bool> IsLeavingVehicleAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsLeavingVehicle(NativePointer));
+        }
+
+        public Task<bool> IsClimbingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsClimbing(NativePointer));
+        }
+
+        public Task<bool> IsOnLadderAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsOnLadder(NativePointer));
+        }
+
+        public Task<bool> IsReloadingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsReloading(NativePointer));
+        }
+
+        public Task<bool> IsInMeleeAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsInMelee(NativePointer));
+        }
+
+        public Task<bool> IsAimingAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_IsAiming(NativePointer));
+        }
+
+        public Task<string> GetActionStringAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => StringConverter.PointerToString(Rage.Player.Player_GetActionString(NativePointer)));
         }
 
         public async Task KickAsync(string reason = null)
