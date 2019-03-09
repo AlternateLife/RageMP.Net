@@ -14,14 +14,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return base.SetModel((uint) value);
+            return base.SetModelAsync((uint) value);
         }
 
         public new async Task<PedHash> GetModelAsync()
         {
             CheckExistence();
 
-            return (PedHash) await base.GetModel();
+            return (PedHash) await base.GetModelAsync();
         }
 
         public Task SetEyeColorAsync(uint value)
