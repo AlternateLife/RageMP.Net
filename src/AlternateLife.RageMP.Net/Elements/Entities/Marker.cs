@@ -15,72 +15,64 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Marker : Entity, IMarker
     {
-        public Color Color
-        {
-            get
-            {
-                CheckExistence();
-
-                return StructConverter.PointerToStruct<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer)).FromModColor();
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Marker.Marker_SetColor(NativePointer, value.R, value.G, value.B, value.A);
-            }
-        }
-
-        public Vector3 Direction
-        {
-            get
-            {
-                CheckExistence();
-
-                return StructConverter.PointerToStruct<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer));
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Marker.Marker_SetDirection(NativePointer, value);
-            }
-        }
-
-        public float Scale
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Marker.Marker_GetScale(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Marker.Marker_SetScale(NativePointer, value);
-            }
-        }
-
-        public bool IsVisible
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Marker.Marker_IsVisible(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Marker.Marker_SetVisible(NativePointer, value);
-            }
-        }
-
         internal Marker(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Marker)
         {
+        }
+
+        public async Task SetColorAsync(Color value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Marker.Marker_SetColor(NativePointer, value.R, value.G, value.B, value.A)).ConfigureAwait(false);
+        }
+
+        public async Task<Color> GetColorAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => StructConverter.PointerToStruct<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer)).FromModColor()).ConfigureAwait(false);
+        }
+
+        public async Task SetDirectionAsync(Vector3 value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Marker.Marker_SetDirection(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<Vector3> GetDirectionAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer))).ConfigureAwait(false);
+        }
+
+        public async Task SetScaleAsync(float value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Marker.Marker_SetScale(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<float> GetScaleAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Marker.Marker_GetScale(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetVisibleAsync(bool value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Marker.Marker_SetVisible(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsVisibleAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Marker.Marker_IsVisible(NativePointer)).ConfigureAwait(false);
         }
 
         public async Task ShowForAsync(IEnumerable<IPlayer> players)
