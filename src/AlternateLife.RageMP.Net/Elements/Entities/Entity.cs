@@ -34,77 +34,77 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Exists = true;
         }
 
-        public Task SetModel(uint value)
+        public Task SetModelAsync(uint value)
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_SetModel(NativePointer, value));
         }
 
-        public Task<uint> GetModel()
+        public Task<uint> GetModelAsync()
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_GetModel(NativePointer));
         }
 
-        public Task SetAlpha(uint value)
+        public Task SetAlphaAsync(uint value)
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_SetAlpha(NativePointer, value));
         }
 
-        public Task<uint> GetAlpha()
+        public Task<uint> GetAlphaAsync()
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_GetAlpha(NativePointer));
         }
 
-        public Task SetDimension(uint value)
+        public Task SetDimensionAsync(uint value)
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_SetDimension(NativePointer, value));
         }
 
-        public Task<uint> GetDimension()
+        public Task<uint> GetDimensionAsync()
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_GetDimension(NativePointer));
         }
 
-        public Task SetPosition(Vector3 value)
+        public Task SetPositionAsync(Vector3 value)
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_SetPosition(NativePointer, value));
         }
 
-        public Task<Vector3> GetPosition()
+        public Task<Vector3> GetPositionAsync()
         {
             CheckExistence();
 
             return _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer)));
         }
 
-        public virtual Task SetRotation(Vector3 value)
+        public virtual Task SetRotationAsync(Vector3 value)
         {
             CheckExistence();
 
             return _plugin.Schedule(() => Rage.Entity.Entity_SetRotation(NativePointer, value));
         }
 
-        public virtual Task<Vector3> GetRotation()
+        public virtual Task<Vector3> GetRotationAsync()
         {
             CheckExistence();
 
             return _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer)));
         }
 
-        public Task<Vector3> GetVelocity()
+        public Task<Vector3> GetVelocityAsync()
         {
             CheckExistence();
 
