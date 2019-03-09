@@ -10,61 +10,61 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public new Task SetModelAsync(PedHash value)
+        public new async Task SetModelAsync(PedHash value)
         {
             CheckExistence();
 
-            return base.SetModelAsync((uint) value);
+            await base.SetModelAsync((uint) value).ConfigureAwait(false);
         }
 
         public new async Task<PedHash> GetModelAsync()
         {
             CheckExistence();
 
-            return (PedHash) await base.GetModelAsync();
+            return (PedHash) await base.GetModelAsync().ConfigureAwait(false);
         }
 
-        public Task SetEyeColorAsync(uint value)
+        public async Task SetEyeColorAsync(uint value)
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => Rage.Player.Player_SetEyeColor(NativePointer, value));
+            await _plugin.Schedule(() => Rage.Player.Player_SetEyeColor(NativePointer, value)).ConfigureAwait(false);
         }
 
-        public Task<uint> GetEyeColorAsync()
+        public async Task<uint> GetEyeColorAsync()
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => Rage.Player.Player_GetEyeColor(NativePointer));
+            return await _plugin.Schedule(() => Rage.Player.Player_GetEyeColor(NativePointer)).ConfigureAwait(false);
         }
 
-        public Task<uint> GetHairColorAsync()
+        public async Task<uint> GetHairColorAsync()
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => Rage.Player.Player_GetHairColor(NativePointer));
+            return await _plugin.Schedule(() => Rage.Player.Player_GetHairColor(NativePointer)).ConfigureAwait(false);
         }
 
-        public Task<uint> GetHairHighlightColorAsync()
+        public async Task<uint> GetHairHighlightColorAsync()
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => Rage.Player.Player_GetHairHighlightColor(NativePointer));
+            return await _plugin.Schedule(() => Rage.Player.Player_GetHairHighlightColor(NativePointer)).ConfigureAwait(false);
         }
 
-        public Task SetHeadBlendAsync(HeadBlendData value)
+        public async Task SetHeadBlendAsync(HeadBlendData value)
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2],
-                value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix, value.SkinMix, value.ThirdMix));
+            await _plugin.Schedule(() => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2],
+                value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix, value.SkinMix, value.ThirdMix)).ConfigureAwait(false);
         }
 
-        public Task<HeadBlendData> GetHeadBlendAsync()
+        public async Task<HeadBlendData> GetHeadBlendAsync()
         {
             CheckExistence();
 
-            return _plugin.Schedule(() => StructConverter.PointerToStruct<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer)));
+            return await _plugin.Schedule(() => StructConverter.PointerToStruct<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer))).ConfigureAwait(false);
         }
 
         public async Task<ClothData> GetClothAsync(ClothSlot slot)
