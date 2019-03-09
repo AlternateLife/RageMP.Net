@@ -28,43 +28,57 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Player.Player_SetEyeColor(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetEyeColor(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetEyeColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetEyeColor(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetEyeColor(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetHairColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetHairColor(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetHairColor(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetHairHighlightColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetHairHighlightColor(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetHairHighlightColor(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetHeadBlendAsync(HeadBlendData value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2],
-                value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix, value.SkinMix, value.ThirdMix)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetHeadBlend(NativePointer, value.Shape[0], value.Shape[1], value.Shape[2],
+                value.Skin[0], value.Skin[1], value.Skin[2], value.ShapeMix, value.SkinMix, value.ThirdMix))
+                .ConfigureAwait(false);
         }
 
         public async Task<HeadBlendData> GetHeadBlendAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<HeadBlendData>(Rage.Player.Player_GetHeadBlend(NativePointer))).ConfigureAwait(false);
+            var headBlendPointer = await _plugin
+                .Schedule(() => Rage.Player.Player_GetHeadBlend(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<HeadBlendData>(headBlendPointer);
         }
 
         public async Task<ClothData> GetClothAsync(ClothSlot slot)
