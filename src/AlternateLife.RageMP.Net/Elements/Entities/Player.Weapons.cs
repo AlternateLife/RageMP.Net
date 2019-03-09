@@ -11,36 +11,32 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public uint CurrentWeapon
+        public Task SetCurrentWeaponAsync(uint value)
         {
-            get
-            {
-                CheckExistence();
+            CheckExistence();
 
-                return Rage.Player.Player_GetCurrentWeapon(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Player.Player_SetCurrentWeapon(NativePointer, value);
-            }
+            return _plugin.Schedule(() => Rage.Player.Player_SetCurrentWeapon(NativePointer, value));
         }
 
-        public uint CurrentWeaponAmmo
+        public Task<uint> GetCurrentWeaponAsync()
         {
-            get
-            {
-                CheckExistence();
+            CheckExistence();
 
-                return Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
+            return _plugin.Schedule(() => Rage.Player.Player_GetCurrentWeapon(NativePointer));
+        }
 
-                Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value);
-            }
+        public Task SetCurrentWeaponAmmoAsync(uint value)
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value));
+        }
+
+        public Task<uint> GetCurrentWeaponAmmoAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer));
         }
 
 
