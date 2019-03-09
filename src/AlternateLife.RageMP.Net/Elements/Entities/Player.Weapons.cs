@@ -60,7 +60,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<int> GetWeaponAmmoAsync(int weapon)
         {
-            return (int) await GetWeaponAmmoAsync((WeaponHash) weapon);
+            return (int) await GetWeaponAmmoAsync((WeaponHash) weapon)
+                .ConfigureAwait(false);
         }
 
         public async Task SetWeaponAmmoAsync(WeaponHash weaponHash, uint ammo)
