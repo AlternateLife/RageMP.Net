@@ -29,7 +29,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return await _plugin.Schedule(() => Rage.Blip.Blip_GetDrawDistance(NativePointer)).ConfigureAwait(false);
         }
 
-        public new async Task SetRotationAsync(int value)
+        public async Task SetRotationAsync(int value)
         {
             CheckExistence();
 

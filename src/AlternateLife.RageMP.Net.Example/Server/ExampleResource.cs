@@ -33,25 +33,21 @@ namespace AlternateLife.RageMP.Net.Example
             return Task.CompletedTask;
         }
 
-        private Task OnPlayerJoin(IPlayer player)
+        private async Task OnPlayerJoin(IPlayer player)
         {
-            MP.Logger.Info($"Player {player.SocialClubName} ({player.Ip}) joined!");
-
-            return Task.CompletedTask;
+            MP.Logger.Info($"Player {await player.GetSocialClubNameAsync()} ({await player.GetIpAsync()}) joined!");
         }
 
-        private Task OnPlayerReady(IPlayer player)
+        private async Task OnPlayerReady(IPlayer player)
         {
-            player.Dimension = MP.GlobalDimension;
+            await player.SetDimensionAsync(MP.GlobalDimension);
 
-            MP.Logger.Info($"Player {player.SocialClubName} ({player.Ip}) is ready now.");
-
-            return Task.CompletedTask;
+            MP.Logger.Info($"Player {await player.GetSocialClubNameAsync()} ({await player.GetIpAsync()}) is ready now.");
         }
 
-        private Task OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
+        private async Task OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
         {
-            return player.SpawnAsync(player.Position, player.Heading);
+            await player.SpawnAsync(await player.GetPositionAsync(), await player.GetHeadingAsync());
         }
     }
 }

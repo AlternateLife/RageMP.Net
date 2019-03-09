@@ -26,7 +26,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="rotation">New rotation of the blip</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        new Task SetRotationAsync(int rotation);
+        Task SetRotationAsync(int rotation);
 
         /// <summary>
         /// Get the rotation of the blip.

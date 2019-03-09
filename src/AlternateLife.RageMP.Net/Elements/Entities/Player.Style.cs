@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public new async Task SetModelAsync(PedHash value)
+        public async Task SetModelAsync(PedHash value)
         {
             CheckExistence();
 
