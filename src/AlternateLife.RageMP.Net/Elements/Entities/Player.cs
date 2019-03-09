@@ -58,14 +58,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return _plugin.Schedule(() => Rage.Player.Player_GetHeading(NativePointer));
         }
 
-        public override Task SetRotation(Vector3 value)
+        public override Task SetRotationAsync(Vector3 value)
         {
             CheckExistence();
 
             return SetHeadingAsync(value.Z);
         }
 
-        public override async Task<Vector3> GetRotation()
+        public override async Task<Vector3> GetRotationAsync()
         {
             CheckExistence();
 
@@ -73,7 +73,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             if (vehicle != null)
             {
-                return await vehicle.GetRotation();
+                return await vehicle.GetRotationAsync();
             }
 
             return new Vector3(0, 0, await GetHeadingAsync());
