@@ -15,72 +15,64 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Checkpoint : Entity, ICheckpoint
     {
-        public Color Color
-        {
-            get
-            {
-                CheckExistence();
-
-                return StructConverter.PointerToStruct<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer)).FromModColor();
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A);
-            }
-        }
-
-        public Vector3 Direction
-        {
-            get
-            {
-                CheckExistence();
-
-                return StructConverter.PointerToStruct<Vector3>(Rage.Checkpoint.Checkpoint_GetDirection(NativePointer));
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value);
-            }
-        }
-
-        public float Radius
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Checkpoint.Checkpoint_GetRadius(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value);
-            }
-        }
-
-        public bool IsVisible
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Checkpoint.Checkpoint_IsVisible(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value);
-            }
-        }
-
         internal Checkpoint(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Checkpoint)
         {
+        }
+
+        public async Task SetColorAsync(Color value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A)).ConfigureAwait(false);
+        }
+
+        public async Task<Color> GetColorAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => StructConverter.PointerToStruct<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer)).FromModColor()).ConfigureAwait(false);
+        }
+
+        public async Task SetDirectionAsync(Vector3 value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<Vector3> GetDirectionAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Checkpoint.Checkpoint_GetDirection(NativePointer))).ConfigureAwait(false);
+        }
+
+        public async Task SetRadiusAsync(float value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<float> GetRadiusAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_GetRadius(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetVisibleAsync(bool value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsVisibleAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_IsVisible(NativePointer)).ConfigureAwait(false);
         }
 
         public async Task ShowForAsync(IEnumerable<IPlayer> players)
