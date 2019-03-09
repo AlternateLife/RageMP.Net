@@ -73,7 +73,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Destroy the entity.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task Destroy();
+        Task DestroyAsync();
 
         /// <summary>
         /// Get shared data of the entity.
