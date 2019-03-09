@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
@@ -30,19 +31,23 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public void PutIntoVehicle(IVehicle vehicle, int seat)
+        public async Task PutIntoVehicleAsync(IVehicle vehicle, int seat)
         {
             Contract.NotNull(vehicle, nameof(vehicle));
             CheckExistence();
 
-            Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat))
+                .ConfigureAwait(false);
         }
 
-        public void RemoveFromVehicle()
+        public async Task RemoveFromVehicleAsync()
         {
             CheckExistence();
 
-            Rage.Player.Player_RemoveFromVehicle(NativePointer);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_RemoveFromVehicle(NativePointer))
+                .ConfigureAwait(false);
         }
     }
 }

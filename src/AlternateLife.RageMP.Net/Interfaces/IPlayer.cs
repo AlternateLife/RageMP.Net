@@ -288,7 +288,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="position">Position to spawn the player at</param>
         /// <param name="heading">Heading to spawn the player with</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void Spawn(Vector3 position, float heading);
+        Task SpawnAsync(Vector3 position, float heading);
 
         /// <summary>
         /// Play an animation on the player.
@@ -299,13 +299,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="flags">Flags of the animation</param>
         /// <exception cref="ArgumentNullException"><paramref name="dictionary" /> or <paramref name="name" /> is null or empty</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void PlayAnimation(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);
+        Task PlayAnimationAsync(string dictionary, string name, float speed = 8f, AnimationFlags flags = 0);
 
         /// <summary>
         /// Stop playing any animation on the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void StopAnimation();
+        Task StopAnimationAsync();
 
         /// <summary>
         /// Play a scenario on the player.
@@ -313,7 +313,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="scenario">Name of the scenario</param>
         /// <exception cref="ArgumentNullException"><paramref name="scenario" /> is null or empty</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void PlayScenario(string scenario);
+        Task PlayScenarioAsync(string scenario);
 
         /// <summary>
         /// Get cloth of the player at given slot.
@@ -321,7 +321,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the cloth</param>
         /// <returns><see cref="ClothSlot" /> of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ClothData GetCloth(ClothSlot slot);
+        Task<ClothData> GetClothAsync(ClothSlot slot);
 
         /// <summary>
         /// Get cloth of the player at given slot.
@@ -329,7 +329,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the cloth</param>
         /// <returns><see cref="ClothSlot" /> of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ClothData GetCloth(int slot);
+        Task<ClothData> GetClothAsync(int slot);
 
         /// <summary>
         /// Set cloth of the player at given slot.
@@ -337,7 +337,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the cloth</param>
         /// <param name="data">Value of the slot</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetCloth(ClothSlot slot, ClothData data);
+        Task SetClothAsync(ClothSlot slot, ClothData data);
 
         /// <summary>
         /// Set cloth of the player at given slot.
@@ -347,7 +347,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="texture">Texture value of the cloth</param>
         /// <param name="palette">Palette value of the cloth</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetCloth(ClothSlot slot, byte drawable, byte texture, byte palette);
+        Task SetClothAsync(ClothSlot slot, byte drawable, byte texture, byte palette);
 
         /// <summary>
         /// Set multiple clothes of the player.
@@ -355,7 +355,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="clothes">Clothes to set on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="clothes" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetClothes(IDictionary<ClothSlot, ClothData> clothes);
+        Task SetClothesAsync(IDictionary<ClothSlot, ClothData> clothes);
 
         /// <summary>
         /// Get prop of the player at given slot.
@@ -363,7 +363,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the prop</param>
         /// <returns><see cref="PropSlot" /> of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        PropData GetProp(PropSlot slot);
+        Task<PropData> GetPropAsync(PropSlot slot);
 
         /// <summary>
         /// Get prop of the player at given slot.
@@ -371,7 +371,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the prop</param>
         /// <returns><see cref="PropSlot" /> of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        PropData GetProp(int slot);
+        Task<PropData> GetPropAsync(int slot);
 
         /// <summary>
         /// Set prop of the player at given slot.
@@ -379,7 +379,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="slot">Slot of the prop</param>
         /// <param name="data">Value of the prop</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetProp(PropSlot slot, PropData data);
+        Task SetPropAsync(PropSlot slot, PropData data);
 
         /// <summary>
         /// Set prop of the player at given slot.
@@ -388,7 +388,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="drawable">Drawable value of the prop</param>
         /// <param name="texture">Texture value of the prop</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetProp(PropSlot slot, byte drawable, byte texture);
+        Task SetPropAsync(PropSlot slot, byte drawable, byte texture);
 
         /// <summary>
         /// Set multiple props of the player.
@@ -396,7 +396,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="props">Props to set on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="props" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetProps(IDictionary<PropSlot, PropData> props);
+        Task SetPropsAsync(IDictionary<PropSlot, PropData> props);
 
         /// <summary>
         /// Get the decoration of the player at given collection.
@@ -404,7 +404,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <returns>Decoration of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint GetDecoration(uint collection);
+        Task<uint> GetDecorationAsync(uint collection);
 
         /// <summary>
         /// Get the decoration of the player at given collection.
@@ -412,7 +412,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <returns>Decoration of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        int GetDecoration(int collection);
+        Task<int> GetDecorationAsync(int collection);
 
         /// <summary>
         /// Remove a decoration of the player.
@@ -420,7 +420,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <param name="overlay">Overlay value of the decoration</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveDecoration(uint collection, uint overlay);
+        Task RemoveDecorationAsync(uint collection, uint overlay);
 
         /// <summary>
         /// Remove a decoration of the player.
@@ -428,7 +428,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <param name="overlay">Overlay value of the decoration</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveDecoration(int collection, int overlay);
+        Task RemoveDecorationAsync(int collection, int overlay);
 
         /// <summary>
         /// Set a decoration on the player.
@@ -436,7 +436,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <param name="overlay">Overlay value of the decoration</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetDecoration(uint collection, uint overlay);
+        Task SetDecorationAsync(uint collection, uint overlay);
 
         /// <summary>
         /// Set a decoration on the player.
@@ -444,7 +444,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="collection">Collection of the decoration</param>
         /// <param name="overlay">Overlay value of the decoration</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetDecoration(int collection, int overlay);
+        Task SetDecorationAsync(int collection, int overlay);
 
         /// <summary>
         /// Set multiple decorations on the player.
@@ -452,7 +452,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="decorations">Decorations to set on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="decorations" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetDecorations(IDictionary<uint, uint> decorations);
+        Task SetDecorationsAsync(IDictionary<uint, uint> decorations);
 
         /// <summary>
         /// Set multiple decorations on the player.
@@ -460,13 +460,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="decorations">Decorations to set on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="decorations" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetDecorations(IDictionary<int, int> decorations);
+        Task SetDecorationsAsync(IDictionary<int, int> decorations);
 
         /// <summary>
         /// Removes all applied decorations from the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void ClearDecorations();
+        Task ClearDecorationsAsync();
 
         /// <summary>
         /// Set the hair color of the player.
@@ -474,7 +474,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="color">Color of the hair</param>
         /// <param name="highlightColor">Highlight color of the hair</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetHairColor(uint color, uint highlightColor);
+        Task SetHairColorAsync(uint color, uint highlightColor);
 
         /// <summary>
         /// Set the hair color of the player.
@@ -482,7 +482,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="color">Color of the hair</param>
         /// <param name="highlightColor">Highlight color of the hair</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetHairColor(int color, int highlightColor);
+        Task SetHairColorAsync(int color, int highlightColor);
 
         /// <summary>
         /// Get a face feature of the player.
@@ -490,7 +490,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="id">Slot of the face feature</param>
         /// <returns>Value of the face feature</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float GetFaceFeature(uint id);
+        Task<float> GetFaceFeatureAsync(uint id);
 
         /// <summary>
         /// Get a face feature of the player.
@@ -498,7 +498,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="id">Slot of the face feature</param>
         /// <returns>Value of the face feature</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float GetFaceFeature(int id);
+        Task<float> GetFaceFeatureAsync(int id);
 
         /// <summary>
         /// Set a face feature on the player.
@@ -506,7 +506,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="id">Slot of the face feature</param>
         /// <param name="scale">Value of the face feature</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetFaceFeature(uint id, float scale);
+        Task SetFaceFeatureAsync(uint id, float scale);
 
         /// <summary>
         /// Set a face feature on the player.
@@ -514,7 +514,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="id">Slot of the face feature</param>
         /// <param name="scale">Value of the face feature</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetFaceFeature(int id, float scale);
+        Task SetFaceFeatureAsync(int id, float scale);
 
         /// <summary>
         /// Update the head blend of the player.
@@ -523,7 +523,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="skinMix">Skin mix of the head blend</param>
         /// <param name="thirdMix">Third mix of the head blend</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void UpdateHeadBlend(float shapeMix, float skinMix, float thirdMix);
+        Task UpdateHeadBlendAsync(float shapeMix, float skinMix, float thirdMix);
 
         /// <summary>
         /// Get the head overlay of the player.
@@ -531,7 +531,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="overlayId">Slot of the head overlay</param>
         /// <returns>Value of the <see cref="HeadOverlayData" /></returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        HeadOverlayData GetHeadOverlay(uint overlayId);
+        Task<HeadOverlayData> GetHeadOverlayAsync(uint overlayId);
 
         /// <summary>
         /// Get the head overlay of the player.
@@ -539,7 +539,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="overlayId">Slot of the head overlay</param>
         /// <returns>Value of the <see cref="HeadOverlayData" /></returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        HeadOverlayData GetHeadOverlay(int overlayId);
+        Task<HeadOverlayData> GetHeadOverlayAsync(int overlayId);
 
         /// <summary>
         /// Set the head overlay of the player.
@@ -547,7 +547,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="overlayId">Slot of the head overlay</param>
         /// <param name="overlayData">Value of the head overlay</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData);
+        Task SetHeadOverlayAsync(uint overlayId, HeadOverlayData overlayData);
 
         /// <summary>
         /// Set the head overlay of the player.
@@ -555,7 +555,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="overlayId">Slot of the head overlay</param>
         /// <param name="overlayData">Value of the head overlay</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetHeadOverlay(int overlayId, HeadOverlayData overlayData);
+        Task SetHeadOverlayAsync(int overlayId, HeadOverlayData overlayData);
 
         /// <summary>
         /// Customize the player.
@@ -570,7 +570,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="decorations">Decorations of the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="headOverlays" /> or <paramref name="decorations" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
+        Task SetCustomizationAsync(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations);
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="decorations">Decorations of the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="headOverlays" /> or <paramref name="decorations" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetCustomization(bool isMale, HeadBlendData headBlend, int eyeColor, int hairColor, int highlightColor, float[] faceFeatures,
+        Task SetCustomizationAsync(bool isMale, HeadBlendData headBlend, int eyeColor, int hairColor, int highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<int, int> decorations);
 
         /// <summary>
@@ -596,13 +596,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="seat">Seat the put the player on</param>
         /// <exception cref="ArgumentNullException"><paramref name="vehicle" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void PutIntoVehicle(IVehicle vehicle, int seat);
+        Task PutIntoVehicleAsync(IVehicle vehicle, int seat);
 
         /// <summary>
         /// Remove the player from any vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveFromVehicle();
+        Task RemoveFromVehicleAsync();
 
         /// <summary>
         /// Get the ammo of given weapon.
@@ -610,7 +610,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to get the ammo for</param>
         /// <returns>Ammo of the weapon</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint GetWeaponAmmo(WeaponHash weapon);
+        Task<uint> GetWeaponAmmoAsync(WeaponHash weapon);
 
         /// <summary>
         /// Get the ammo of given weapon.
@@ -618,7 +618,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to get the ammo for</param>
         /// <returns>Ammo of the weapon</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint GetWeaponAmmo(uint weapon);
+        Task<uint> GetWeaponAmmoAsync(uint weapon);
 
         /// <summary>
         /// Get the ammo of given weapon.
@@ -626,7 +626,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to get the ammo for</param>
         /// <returns>Ammo of the weapon</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        int GetWeaponAmmo(int weapon);
+        Task<int> GetWeaponAmmoAsync(int weapon);
 
         /// <summary>
         /// Set the ammo of given weapon.
@@ -634,7 +634,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetWeaponAmmo(WeaponHash weapon, uint ammo);
+        Task SetWeaponAmmoAsync(WeaponHash weapon, uint ammo);
 
         /// <summary>
         /// Set the ammo of given weapon.
@@ -642,7 +642,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetWeaponAmmo(WeaponHash weapon, int ammo);
+        Task SetWeaponAmmoAsync(WeaponHash weapon, int ammo);
 
         /// <summary>
         /// Set the ammo of given weapon.
@@ -650,7 +650,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetWeaponAmmo(uint weapon, uint ammo);
+        Task SetWeaponAmmoAsync(uint weapon, uint ammo);
 
         /// <summary>
         /// Set the ammo of given weapon.
@@ -658,7 +658,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to set the ammo for</param>
         /// <param name="ammo">Ammo for the weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void SetWeaponAmmo(int weapon, int ammo);
+        Task SetWeaponAmmoAsync(int weapon, int ammo);
 
         /// <summary>
         /// Give a weapon to the player.
@@ -666,7 +666,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to give the player</param>
         /// <param name="ammo">Ammo of the given weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapon(WeaponHash weapon, uint ammo);
+        Task GiveWeaponAsync(WeaponHash weapon, uint ammo);
 
         /// <summary>
         /// Give a weapon to the player.
@@ -674,7 +674,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to give the player</param>
         /// <param name="ammo">Ammo of the given weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapon(WeaponHash weapon, int ammo);
+        Task GiveWeaponAsync(WeaponHash weapon, int ammo);
 
         /// <summary>
         /// Give a weapon to the player.
@@ -682,7 +682,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to give the player</param>
         /// <param name="ammo">Ammo of the given weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapon(uint weapon, uint ammo);
+        Task GiveWeaponAsync(uint weapon, uint ammo);
 
         /// <summary>
         /// Give a weapon to the player.
@@ -690,7 +690,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapon">Weapon to give the player</param>
         /// <param name="ammo">Ammo of the given weapon</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapon(int weapon, int ammo);
+        Task GiveWeaponAsync(int weapon, int ammo);
 
         /// <summary>
         /// Give multiple weapons to the player.
@@ -698,7 +698,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapons(IDictionary<WeaponHash, uint> weapons);
+        Task GiveWeaponsAsync(IDictionary<WeaponHash, uint> weapons);
 
         /// <summary>
         /// Give multiple weapons to the player.
@@ -706,7 +706,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapons(IDictionary<WeaponHash, int> weapons);
+        Task GiveWeaponsAsync(IDictionary<WeaponHash, int> weapons);
 
         /// <summary>
         /// Give multiple weapons to the player.
@@ -714,7 +714,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapons(IDictionary<uint, uint> weapons);
+        Task GiveWeaponsAsync(IDictionary<uint, uint> weapons);
 
         /// <summary>
         /// Give multiple weapons to the player.
@@ -722,28 +722,28 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Key value set of weapons with ammo</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void GiveWeapons(IDictionary<int, int> weapons);
+        Task GiveWeaponsAsync(IDictionary<int, int> weapons);
 
         /// <summary>
         /// Remove a weapon from the player.
         /// </summary>
         /// <param name="weapon">Weapon to remove</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapon(WeaponHash weapon);
+        Task RemoveWeaponAsync(WeaponHash weapon);
 
         /// <summary>
         /// Remove a weapon from the player.
         /// </summary>
         /// <param name="weapon">Weapon to remove</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapon(uint weapon);
+        Task RemoveWeaponAsync(uint weapon);
 
         /// <summary>
         /// Remove a weapon from the player.
         /// </summary>
         /// <param name="weapon">Weapon to remove</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapon(int weapon);
+        Task RemoveWeaponAsync(int weapon);
 
         /// <summary>
         /// Remove multiple weapons from the player.
@@ -751,7 +751,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Weapons to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapons(IEnumerable<WeaponHash> weapons);
+        Task RemoveWeaponsAsync(IEnumerable<WeaponHash> weapons);
 
         /// <summary>
         /// Remove multiple weapons from the player.
@@ -759,7 +759,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Weapons to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapons(IEnumerable<uint> weapons);
+        Task RemoveWeaponsAsync(IEnumerable<uint> weapons);
 
         /// <summary>
         /// Remove multiple weapons from the player.
@@ -767,13 +767,13 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="weapons">Weapons to remove</param>
         /// <exception cref="ArgumentNullException"><paramref name="weapons" /> hashes is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveWeapons(IEnumerable<int> weapons);
+        Task RemoveWeaponsAsync(IEnumerable<int> weapons);
 
         /// <summary>
         /// Remove all weapons from the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveAllWeapons();
+        Task RemoveAllWeaponsAsync();
 
         /// <summary>
         /// Check if given player is streamed.
@@ -782,7 +782,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <returns>True if the <paramref name="player" /> is streamed, otherwise false</returns>
         /// <exception cref="ArgumentNullException"><paramref name="player" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsStreamed(IPlayer player);
+        Task<bool> IsStreamedAsync(IPlayer player);
 
         /// <summary>
         /// Remove object from the player.
@@ -791,7 +791,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="position">Position to search object in</param>
         /// <param name="radius">Radius to search object in</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveObject(uint model, Vector3 position, float radius);
+        Task RemoveObjectAsync(uint model, Vector3 position, float radius);
 
         /// <summary>
         /// Remove object from the player.
@@ -800,7 +800,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="position">Position to search object in</param>
         /// <param name="radius">Radius to search object in</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void RemoveObject(int model, Vector3 position, float radius);
+        Task RemoveObjectAsync(int model, Vector3 position, float radius);
 
         /// <summary>
         /// Run code on the player.
@@ -810,7 +810,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="code">Code to execute on the player</param>
         /// <exception cref="ArgumentNullException"><paramref name="code" /> is null or empty</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void Eval(string code);
+        Task EvalAsync(string code);
 
         /// <summary>
         /// Get the current list of players that can hear this current player.
