@@ -11,108 +11,98 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Blip : Entity, IBlip
     {
-        public float DrawDistance
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Blip.Blip_GetDrawDistance(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Blip.Blip_SetDrawDistance(NativePointer, value);
-            }
-        }
-
-        public new int Rotation
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Blip.Blip_GetRotation(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Blip.Blip_SetRotation(NativePointer, value);
-            }
-        }
-
-        public bool ShortRange
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Blip.Blip_IsShortRange(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Blip.Blip_SetShortRange(NativePointer, value);
-            }
-        }
-
-        public uint Color
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Blip.Blip_GetColor(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Blip.Blip_SetColor(NativePointer, value);
-            }
-        }
-
-        public float Scale
-        {
-            get
-            {
-                CheckExistence();
-
-                return Rage.Blip.Blip_GetScale(NativePointer);
-            }
-            set
-            {
-                CheckExistence();
-
-                Rage.Blip.Blip_SetScale(NativePointer, value);
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                CheckExistence();
-
-                return StringConverter.PointerToString(Rage.Blip.Blip_GetName(NativePointer));
-            }
-            set
-            {
-                Contract.NotNull(value, nameof(value));
-                CheckExistence();
-
-                using (var converter = new StringConverter())
-                {
-                    Rage.Blip.Blip_SetName(NativePointer, converter.StringToPointer(value));
-                }
-            }
-        }
-
         internal Blip(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Blip)
         {
+        }
+
+        public async Task SetDrawDistanceAsync(float value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Blip.Blip_SetDrawDistance(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<float> GetDrawDistanceAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Blip.Blip_GetDrawDistance(NativePointer)).ConfigureAwait(false);
+        }
+
+        public new async Task SetRotationAsync(int value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Blip.Blip_SetRotation(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public new async Task<int> GetRotationAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Blip.Blip_GetRotation(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetShortRangeAsync(bool value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Blip.Blip_SetShortRange(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> GetShortRangeAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Blip.Blip_IsShortRange(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetColorAsync(uint value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Blip.Blip_SetColor(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<uint> GetColorAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Blip.Blip_GetColor(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetScaleAsync(float value)
+        {
+            CheckExistence();
+
+            await _plugin.Schedule(() => Rage.Blip.Blip_SetScale(NativePointer, value)).ConfigureAwait(false);
+        }
+
+        public async Task<float> GetScaleAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => Rage.Blip.Blip_GetScale(NativePointer)).ConfigureAwait(false);
+        }
+
+        public async Task SetNameAsync(string value)
+        {
+            Contract.NotNull(value, nameof(value));
+            CheckExistence();
+
+            using (var converter = new StringConverter())
+            {
+                var name = converter.StringToPointer(value);
+
+                await _plugin.Schedule(() => Rage.Blip.Blip_SetName(NativePointer, name)).ConfigureAwait(false);
+            }
+        }
+
+        public async Task<string> GetNameAsync()
+        {
+            CheckExistence();
+
+            return await _plugin.Schedule(() => StringConverter.PointerToString(Rage.Blip.Blip_GetName(NativePointer))).ConfigureAwait(false);
         }
 
         public async Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, uint color, float scale)
