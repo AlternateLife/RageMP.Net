@@ -10,8 +10,9 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get the type of the colshape.
         /// </summary>
+        /// <returns>Type of the colshape</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        ColshapeType ShapeType { get; }
+        Task<ColshapeType> GetShapeTypeAsync();
 
         /// <summary>
         /// Check if a position is within the colshape.
