@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
@@ -54,7 +55,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
         }
 
-        public void SetWeatherTransition(WeatherType weather, float time)
+        public async Task SetWeatherTransitionAsync(WeatherType weather, float time)
         {
             var weatherName = ConvertWeatherTypeToName(weather);
             if (string.IsNullOrEmpty(weatherName))
@@ -64,27 +65,39 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
             using (var converter = new StringConverter())
             {
-                Rage.World.World_SetWeatherTransition(_nativePointer, converter.StringToPointer(weatherName), time);
+                var namePointer = converter.StringToPointer(weatherName);
+
+                await _plugin
+                    .Schedule(() => Rage.World.World_SetWeatherTransition(_nativePointer, namePointer, time))
+                    .ConfigureAwait(false);
             }
         }
 
-        public void RequestIpl(string ipl)
+        public async Task RequestIplAsync(string ipl)
         {
             Contract.NotEmpty(ipl, nameof(ipl));
 
             using (var converter = new StringConverter())
             {
-                Rage.World.World_RequestIpl(_nativePointer, converter.StringToPointer(ipl));
+                var iplPointer = converter.StringToPointer(ipl);
+
+                await _plugin
+                    .Schedule(() => Rage.World.World_RequestIpl(_nativePointer, iplPointer))
+                    .ConfigureAwait(false);
             }
         }
 
-        public void RemoveIpl(string ipl)
+        public async Task RemoveIplAsync(string ipl)
         {
             Contract.NotEmpty(ipl, nameof(ipl));
 
             using (var converter = new StringConverter())
             {
-                Rage.World.World_RemoveIpl(_nativePointer, converter.StringToPointer(ipl));
+                var iplPointer = converter.StringToPointer(ipl);
+
+                await _plugin
+                    .Schedule(() => Rage.World.World_RemoveIpl(_nativePointer, iplPointer))
+                    .ConfigureAwait(false);
             }
         }
 

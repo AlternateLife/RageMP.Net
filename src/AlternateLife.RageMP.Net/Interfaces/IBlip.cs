@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Exceptions;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -53,7 +54,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="scale">Scale of the route</param>
         /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale);
+        Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, uint color, float scale);
 
         /// <summary>
         /// Show route for a list of players with given color and scale.
@@ -65,7 +66,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="scale">Scale of the route</param>
         /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void ShowRoute(IEnumerable<IPlayer> forPlayers, int color, float scale);
+        Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, int color, float scale);
 
         /// <summary>
         /// Hide route for a list of players.
@@ -73,6 +74,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="forPlayers">List of players to hide the route for</param>
         /// <exception cref="ArgumentNullException"><paramref name="forPlayers" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void HideRoute(IEnumerable<IPlayer> forPlayers);
+        Task HideRouteAsync(IEnumerable<IPlayer> forPlayers);
     }
 }

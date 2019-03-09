@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 
@@ -33,20 +34,20 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="weather">New weather to transit to</param>
         /// <param name="time">Duration of the transition</param>
-        void SetWeatherTransition(WeatherType weather, float time = 0.5f);
+        Task SetWeatherTransitionAsync(WeatherType weather, float time = 0.5f);
 
         /// <summary>
         /// Request an ipl in the world.
         /// </summary>
         /// <param name="ipl">Name of the ipl to load</param>
         /// <exception cref="ArgumentNullException"><paramref name="ipl" /> is null or empty</exception>
-        void RequestIpl(string ipl);
+        Task RequestIplAsync(string ipl);
 
         /// <summary>
         /// Remove an ipl from the world.
         /// </summary>
         /// <param name="ipl">Name of the ipl to unload</param>
         /// <exception cref="ArgumentNullException"><paramref name="ipl" /> is null or empty</exception>
-        void RemoveIpl(string ipl);
+        Task RemoveIplAsync(string ipl);
     }
 }

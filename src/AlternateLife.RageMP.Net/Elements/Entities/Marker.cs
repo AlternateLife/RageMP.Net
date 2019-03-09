@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Extensions;
@@ -82,24 +83,28 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public void ShowFor(IEnumerable<IPlayer> players)
+        public async Task ShowForAsync(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
             CheckExistence();
 
             var pointers = players.Select(x => x.NativePointer).ToArray();
 
-            Rage.Marker.Marker_ShowFor(NativePointer, pointers, (ulong) pointers.Length);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_ShowFor(NativePointer, pointers, (ulong) pointers.Length))
+                .ConfigureAwait(false);
         }
 
-        public void HideFor(IEnumerable<IPlayer> players)
+        public async Task HideForAsync(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
             CheckExistence();
 
             var pointers = players.Select(x => x.NativePointer).ToArray();
 
-            Rage.Marker.Marker_HideFor(NativePointer, pointers, (ulong) pointers.Length);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_HideFor(NativePointer, pointers, (ulong) pointers.Length))
+                .ConfigureAwait(false);
         }
     }
 }
