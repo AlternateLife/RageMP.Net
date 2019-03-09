@@ -11,21 +11,26 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            var pointer = await _plugin.Schedule(() => Rage.Player.Player_GetVehicle(NativePointer)).ConfigureAwait(false);
+            var pointer = await _plugin
+                .Schedule(() => Rage.Player.Player_GetVehicle(NativePointer))
+                .ConfigureAwait(false);
 
             return _plugin.VehiclePool[pointer];
         }
 
         public async Task<bool> IsInVehicleAsync()
         {
-            return await GetVehicleAsync().ConfigureAwait(false) != null;
+            return await GetVehicleAsync()
+                       .ConfigureAwait(false) != null;
         }
 
         public async Task<int> GetSeatAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetSeat(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetSeat(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task PutIntoVehicleAsync(IVehicle vehicle, int seat)
