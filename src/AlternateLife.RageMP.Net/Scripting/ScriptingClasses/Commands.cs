@@ -230,7 +230,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
             catch (Exception e)
             {
-                _logger.Error($"An error occured when player {player.Name} executed command: {reflectionCommand.Name}: ", e);
+                _logger.Error($"An error occured when player {await player.GetNameAsync()} executed command: {reflectionCommand.Name}: ", e);
             }
         }
 
@@ -242,7 +242,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             }
             catch (Exception e)
             {
-                _logger.Error($"An error occured when player {player.Name} executed command: {delegateCommand.Name}: ", e);
+                _logger.Error($"An error occured when player {await player.GetNameAsync()} executed command: {delegateCommand.Name}: ", e);
             }
         }
 
