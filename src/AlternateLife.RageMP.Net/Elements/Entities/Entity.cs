@@ -38,77 +38,105 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Entity.Entity_SetModel(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Entity.Entity_SetModel(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetModelAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Entity.Entity_GetModel(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetModel(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetAlphaAsync(uint value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Entity.Entity_SetAlpha(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Entity.Entity_SetAlpha(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetAlphaAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Entity.Entity_GetAlpha(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetAlpha(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetDimensionAsync(uint value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Entity.Entity_SetDimension(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Entity.Entity_SetDimension(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetDimensionAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Entity.Entity_GetDimension(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetDimension(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetPositionAsync(Vector3 value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Entity.Entity_SetPosition(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Entity.Entity_SetPosition(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<Vector3> GetPositionAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetPosition(NativePointer))).ConfigureAwait(false);
+            var positionPointer = await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetPosition(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<Vector3>(positionPointer);
         }
 
         public virtual async Task SetRotationAsync(Vector3 value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Entity.Entity_SetRotation(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Entity.Entity_SetRotation(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public virtual async Task<Vector3> GetRotationAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetRotation(NativePointer))).ConfigureAwait(false);
+            var rotationPointer = await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetRotation(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<Vector3>(rotationPointer);
         }
 
         public async Task<Vector3> GetVelocityAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Entity.Entity_GetVelocity(NativePointer))).ConfigureAwait(false);
+            var velocityPointer = await _plugin
+                .Schedule(() => Rage.Entity.Entity_GetVelocity(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<Vector3>(velocityPointer);
         }
 
         public Task DestroyAsync()
