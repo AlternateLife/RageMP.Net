@@ -124,7 +124,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Exists = true;
         }
 
-        public Task Destroy()
+        public Task DestroyAsync()
         {
             CheckExistence();
 
