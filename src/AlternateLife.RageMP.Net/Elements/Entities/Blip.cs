@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
@@ -114,29 +115,33 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale)
+        public async Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, uint color, float scale)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
             CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
-            Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale);
+            await _plugin
+                .Schedule(() => Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale))
+                .ConfigureAwait(false);
         }
 
-        public void ShowRoute(IEnumerable<IPlayer> forPlayers, int color, float scale)
+        public Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, int color, float scale)
         {
-            ShowRoute(forPlayers, (uint) color, scale);
+            return ShowRouteAsync(forPlayers, (uint) color, scale);
         }
 
-        public void HideRoute(IEnumerable<IPlayer> forPlayers)
+        public async Task HideRouteAsync(IEnumerable<IPlayer> forPlayers)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
             CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
-            Rage.Blip.Blip_UnrouteFor(NativePointer, playerPointers, playerPointers.Length);
+            await _plugin
+                .Schedule(() => Rage.Blip.Blip_UnrouteFor(NativePointer, playerPointers, playerPointers.Length))
+                .ConfigureAwait(false);
         }
     }
 }
