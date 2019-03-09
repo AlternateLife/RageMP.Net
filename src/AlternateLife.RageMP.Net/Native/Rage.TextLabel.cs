@@ -18,7 +18,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern IntPtr TextLabel_GetText(IntPtr textLabel);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void TextLabel_SetText(IntPtr textLabel, IntPtr color);
+            internal static extern void TextLabel_SetText(IntPtr textLabel, IntPtr text);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern bool TextLabel_GetLOS(IntPtr textLabel);
