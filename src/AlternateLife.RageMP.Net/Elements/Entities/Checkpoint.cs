@@ -23,56 +23,76 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A))
+                .ConfigureAwait(false);
         }
 
         public async Task<Color> GetColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<ColorRgba>(Rage.Checkpoint.Checkpoint_GetColor(NativePointer)).FromModColor()).ConfigureAwait(false);
+            var colorPointer = await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_GetColor(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
         }
 
         public async Task SetDirectionAsync(Vector3 value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<Vector3> GetDirectionAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Checkpoint.Checkpoint_GetDirection(NativePointer))).ConfigureAwait(false);
+            var directionPointer = await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_GetDirection(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<Vector3>(directionPointer);
         }
 
         public async Task SetRadiusAsync(float value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<float> GetRadiusAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_GetRadius(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_GetRadius(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetVisibleAsync(bool value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> IsVisibleAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Checkpoint.Checkpoint_IsVisible(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Checkpoint.Checkpoint_IsVisible(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task ShowForAsync(IEnumerable<IPlayer> players)
