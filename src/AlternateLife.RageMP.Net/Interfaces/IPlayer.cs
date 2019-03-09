@@ -16,191 +16,283 @@ namespace AlternateLife.RageMP.Net.Interfaces
         string Serial { get; }
 
         /// <summary>
-        /// Get or set the name of the player.
+        /// Set the name of the player.
         /// </summary>
+        /// <param name="name">New name of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null or empty</exception>
-        string Name { get; set; }
+        Task SetNameAsync(string name);
+
+        /// <summary>
+        /// Get the name of the player.
+        /// </summary>
+        /// <returns>Name of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<string> GetNameAsync();
 
         /// <summary>
         /// Get the social club name of the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        string SocialClubName { get; }
+        Task<string> GetSocialClubNameAsync();
 
         /// <summary>
-        /// Get or set the heading of the player.
+        /// Set the heading of the player.
         /// </summary>
+        /// <param name="heading">New heading of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Heading { get; set; }
+        Task SetHeadingAsync(float heading);
+
+        /// <summary>
+        /// Get the heading of the player.
+        /// </summary>
+        /// <returns>Heading of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<float> GetHeadingAsync();
 
         /// <summary>
         /// Get the move speed of the player.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float MoveSpeed { get; }
+        Task<float> GetMoveSpeedAsync();
 
         /// <summary>
-        /// Get or set the health of the player.
+        /// Set the health of the player.
         /// </summary>
+        /// <param name="health">New health of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Health { get; set; }
+        Task SetHealthAsync(float health);
 
         /// <summary>
-        /// Get or set the armor of the player.
+        /// Get the health of the player.
         /// </summary>
+        /// <returns>Health of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Armor { get; set; }
+        Task<float> GetHealthAsync();
 
         /// <summary>
-        /// Get or set the model of the player.
+        /// Set the armor of the player
         /// </summary>
+        /// <param name="armor">New armor of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        new PedHash Model { get; set; }
+        Task SetArmorAsync(float armor);
+
+        /// <summary>
+        /// Get the armor of the player.
+        /// </summary>
+        /// <returns>Armor of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<float> GetArmorAsync();
+
+        /// <summary>
+        /// Set the model of the player.
+        /// </summary>
+        /// <param name="model">New model of the player</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        new Task SetModelAsync(PedHash model);
+
+        /// <summary>
+        /// Get the model of the player.
+        /// </summary>
+        /// <returns>Model of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        new Task<PedHash> GetModelAsync();
 
         /// <summary>
         /// Get the position player is aiming at.
         /// </summary>
+        /// <returns>Position the player is aiming at</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 AimingAt { get; }
+        Task<Vector3> GetAimingAtAsync();
 
         /// <summary>
         /// Get the ip of the player.
         /// </summary>
+        /// <returns>Ip address of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        string Ip { get; }
+        Task<string> GetIpAsync();
 
         /// <summary>
         /// Get the ping of the player.
         /// </summary>
+        /// <returns>Ping of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        int Ping { get; }
+        Task<int> GetPingAsync();
 
         /// <summary>
         /// Get the packet loss of the player.
         /// </summary>
+        /// <returns>Packet loss of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float PacketLoss { get; }
+        Task<float> GetPacketLossAsync();
 
         /// <summary>
         /// Get the kick reason of the player.
         /// </summary>
+        /// <returns>Kick reason for the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        string KickReason { get; }
+        Task<string> GetKickReasonAsync();
 
         /// <summary>
         /// Check if the player is jumping.
         /// </summary>
+        /// <returns>True if the player is jumping, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsJumping { get; }
+        Task<bool> IsJumpingAsync();
 
         /// <summary>
         /// Check if the player is in cover.
         /// </summary>
+        /// <returns>True if the player is in cover, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsInCover { get; }
+        Task<bool> IsInCoverAsync();
 
         /// <summary>
         /// Check if the player is entering a vehicle.
         /// </summary>
+        /// <returns>True if the player is entering a vehicle, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsEnteringVehicle { get; }
+        Task<bool> IsEnteringVehicleAsync();
 
         /// <summary>
         /// Check if the player is leaving a vehicle.
         /// </summary>
+        /// <returns>True if the player is leaving a vehicle, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsLeavingVehicle { get; }
+        Task<bool> IsLeavingVehicleAsync();
 
         /// <summary>
         /// Check if the player is climbing.
         /// </summary>
+        /// <returns>True if the player is climbing, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsClimbing { get; }
+        Task<bool> IsClimbingAsync();
 
         /// <summary>
         /// Check if the player is on a ladder.
         /// </summary>
+        /// <returns>True if the player is on a ladder, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsOnLadder { get; }
+        Task<bool> IsOnLadderAsync();
 
         /// <summary>
         /// Check if the player is reloading.
         /// </summary>
+        /// <returns>True if the player is reloading, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsReloading { get; }
+        Task<bool> IsReloadingAsync();
 
         /// <summary>
         /// Check if the player is in melee.
         /// </summary>
+        /// <returns>True if the player is in melee, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsInMelee { get; }
+        Task<bool> IsInMeleeAsync();
 
         /// <summary>
         /// Check if the player is aiming.
         /// </summary>
+        /// <returns>True if the player is aiming, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsAiming { get; }
+        Task<bool> IsAimingAsync();
 
         /// <summary>
-        /// Get or set the eye color of the vehicle.
+        /// Set the eye color of the player.
         /// </summary>
+        /// <param name="eyeColor">New eye color of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint EyeColor { get; set; }
+        Task SetEyeColorAsync(uint eyeColor);
 
         /// <summary>
-        /// Get the hair color of the vehicle.
+        /// Get the eye color of the player.
         /// </summary>
+        /// <returns>Eye color of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint HairColor { get; }
+        Task<uint> GetEyeColorAsync();
 
         /// <summary>
-        /// Get the highlight color of the vehicle.
+        /// Get the hair color of the player.
         /// </summary>
+        /// <returns>Hair color of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint HairHighlightColor { get; }
+        Task<uint> GetHairColorAsync();
 
         /// <summary>
-        /// Get or set the <see cref="HeadBlendData" /> of the vehicle.
+        /// Get the highlight color of the player.
         /// </summary>
+        /// <returns>Hair highlight color of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        HeadBlendData HeadBlend { get; set; }
+        Task<uint> GetHairHighlightColorAsync();
 
         /// <summary>
-        /// Get the action string of the vehicle.
+        /// Set the <see cref="HeadBlendData"/> of the player.
         /// </summary>
+        /// <param name="headBlend">New head blend of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        string ActionString { get; }
+        Task SetHeadBlendAsync(HeadBlendData headBlend);
+
+        /// <summary>
+        /// Get the <see cref="HeadBlendData" /> of the player.
+        /// </summary>
+        /// <returns>Head blend of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<HeadBlendData> GetHeadBlendAsync();
+
+        /// <summary>
+        /// Get the action string of the player.
+        /// </summary>
+        /// <returns>Action string of the player</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<string> GetActionStringAsync();
 
         /// <summary>
         /// Get the <see cref="IVehicle" /> the player is in or null if not in any vehicle.
         /// </summary>
+        /// <returns>Vehicle the player is in</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IVehicle Vehicle { get; }
+        Task<IVehicle> GetVehicleAsync();
 
         /// <summary>
         /// Check if the player is in any vehicle.
         /// </summary>
+        /// <returns>True if the player is in any vehicle, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsInVehicle { get; }
+        Task<bool> IsInVehicleAsync();
 
         /// <summary>
         /// Get the seat the player is on.
         /// </summary>
+        /// <returns>Vehicle seat the player is on</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        int Seat { get; }
+        Task<int> GetSeatAsync();
 
         /// <summary>
-        /// Get or set the weapon the player has equipped.
+        /// Set the weapon the player has equipped.
         /// </summary>
+        /// <param name="currentWeapon">Current weapon of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint CurrentWeapon { get; set; }
+        Task SetCurrentWeaponAsync(uint currentWeapon);
 
         /// <summary>
-        /// Get or set the ammo of the current weapon.
+        /// Get the weapon the player has equipped.
         /// </summary>
+        /// <returns>Current weapon of the player</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint CurrentWeaponAmmo { get; set; }
+        Task<uint> GetCurrentWeaponAsync();
+
+        /// <summary>
+        /// Set the ammo of the current weapon.
+        /// </summary>
+        /// <param name="ammo">New ammo of the current weapon</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetCurrentWeaponAmmoAsync(uint ammo);
+
+        /// <summary>
+        /// Get the ammo of the current weapon.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetCurrentWeaponAmmoAsync();
 
         /// <summary>
         /// Kick the player.
