@@ -14,189 +14,337 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <summary>
         /// Get the quaternion rotation of the vehicle.
         /// </summary>
+        /// <returns>Quaternion rotation of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Quaternion Quaternion { get; }
+        Task<Quaternion> GetQuaternionAsync();
 
         /// <summary>
         /// Get the heading of the vehicle.
         /// </summary>
+        /// <returns>Heading of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Heading { get; }
+        Task<float> GetHeadingAsync();
 
         /// <summary>
         /// Get the movable state of the vehicle.
         /// </summary>
+        /// <returns>Movable state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float MovableState { get; }
+        Task<float> GetMovableStateAsync();
 
         /// <summary>
         /// Get the trailer instance of the vehicle.
         /// </summary>
+        /// <returns>Trailer of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IVehicle Trailer { get; }
+        Task<IVehicle> GetTrailerAsync();
 
         /// <summary>
         /// Get the trailered by instance of the vehicle.
         /// </summary>
+        /// <returns>Trailered vehicle of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        IVehicle TraileredBy { get; }
+        Task<IVehicle> GetTraileredByAsync();
 
         /// <summary>
-        /// Get or set the siren state of the vehicle.
+        /// Set the siren state of the vehicle.
         /// </summary>
+        /// <param name="active">New siren state of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsSirenActive { get; set; }
+        Task SetSirenActiveAsync(bool active);
 
         /// <summary>
-        /// Get or set the horn state of the vehicle.
+        /// Get the siren state of the vehicle.
         /// </summary>
+        /// <returns>Siren state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsHornActive { get; }
+        Task<bool> IsSirenActiveAsync();
 
         /// <summary>
-        /// Get or set the highbeams state of the vehicle.
+        /// Get the horn state of the vehicle.
         /// </summary>
+        /// <returns>Horn state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool AreHighbeamsActive { get; set; }
+        Task<bool> IsHornActiveAsync();
 
         /// <summary>
-        /// Get or set the lights state of the vehicle.
+        /// Set the highbeams state of the vehicle.
         /// </summary>
+        /// <param name="active">New highbeams state of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool AreLightsActive { get; set; }
+        Task SetHighbeamsActiveAsync(bool active);
 
         /// <summary>
-        /// Get or set the taxi lights state of the vehicle.
+        /// Get the highbeams state of the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool AreTaxiLightsActive { get; set; }
+        Task<bool> AreHighbeamsActiveAsync();
 
         /// <summary>
-        /// Get or set the engine state of the vehicle.
+        /// Set the lights state of the vehicle.
         /// </summary>
+        /// <param name="active">New lights state of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsEngineActive { get; set; }
+        Task SetLightsActiveAsync(bool active);
+
+        /// <summary>
+        /// Get the lights state of the vehicle.
+        /// </summary>
+        /// <returns>Lights state of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<bool> AreLightsActiveAsync();
+
+        /// <summary>
+        /// Set the taxi lights state of the vehicle.
+        /// </summary>
+        /// <param name="active">New taxi lights state of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetTaxiLightsActiveAsync(bool active);
+
+        /// <summary>
+        /// Get the taxi lights state of the vehicle.
+        /// </summary>
+        /// <returns>Taxi lights state of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<bool> AreTaxiLightsActiveAsync();
+
+        /// <summary>
+        /// Set the engine state of the vehicle.
+        /// </summary>
+        /// <returns>New engine state of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetEngineActiveAsync(bool active);
+
+        /// <summary>
+        /// Get the engine state of the vehicle.
+        /// </summary>
+        /// <returns>Engine state of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<bool> IsEngineActiveAsync();
 
         /// <summary>
         /// Get the rocket boost state of the vehicle.
         /// </summary>
+        /// <returns>Rocket boost state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsRocketBoostActive { get; }
+        Task<bool> IsRocketBoostActiveAsync();
 
         /// <summary>
         /// Get the break state of the vehicle.
         /// </summary>
+        /// <returns>Break state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsBreakActive { get; }
+        Task<bool> IsBreakActiveAsync();
+
+        /// <summary>
+        /// Set the neons state of the vehicle.
+        /// </summary>
+        /// <param name="active">New neons state of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetNeonsActiveAsync(bool active);
 
         /// <summary>
         /// Get or set the neons state of the vehicle.
         /// </summary>
+        /// <returns>Neons state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool AreNeonsActive { get; set; }
+        Task<bool> AreNeonsActiveAsync();
 
         /// <summary>
-        /// Get or set the lock state of the vehicle.
+        /// Set the lock state of the vehicle.
         /// </summary>
+        /// <param name="locked">New lock state of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsLocked { get; set; }
+        Task SetLockedAsync(bool locked);
+
+        /// <summary>
+        /// Get the lock state of the vehicle.
+        /// </summary>
+        /// <returns>Lock state of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<bool> IsLockedAsync();
 
         /// <summary>
         /// Get if the vehicle is dead.
         /// </summary>
+        /// <returns>True if the vehicle is dead, otherwise false</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsDead { get; }
+        Task<bool> IsDeadAsync();
 
         /// <summary>
         /// Get the steering angle of the vehicle.
         /// </summary>
+        /// <returns>Steering angle of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float SteerAngle { get; }
+        Task<float> GetSteerAngleAsync();
 
         /// <summary>
-        /// Get the gas padel state of the vehicle.
+        /// Get the gas pedal state of the vehicle.
         /// </summary>
+        /// <returns>Gas pedal state of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float GasPedalState { get; }
+        Task<float> GetGasPedalStateAsync();
 
         /// <summary>
         /// Get the engine health of the vehicle.
         /// </summary>
+        /// <returns>Engine health of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float EngineHealth { get; }
+        Task<float> GetEngineHealthAsync();
 
         /// <summary>
         /// Get the body health of the vehicle.
         /// </summary>
+        /// <returns>Body health of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float BodyHealth { get; }
+        Task<float> GetBodyHealthAsync();
 
         /// <summary>
         /// Get the material type of the vehicle.
         /// </summary>
+        /// <returns>Material type of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        MaterialType MaterialType { get; }
+        Task<MaterialType> GetMaterialTypeAsync();
 
         /// <summary>
-        /// Get or set the neons color of the vehicle.
+        /// Set the neons color of the vehicle.
         /// </summary>
+        /// <param name="color">New neons color of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Color NeonsColor { get; set; }
+        Task SetNeonsColorAsync(Color color);
 
         /// <summary>
-        /// Get or set the number plate of the vehicle.
+        /// Get the neons color of the vehicle.
         /// </summary>
+        /// <returns>Neons color of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<Color> GetNeonsColorAsync();
+
+        /// <summary>
+        /// Set the number plate of the vehicle.
+        /// </summary>
+        /// <param name="numberPlate">New number plate of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
-        string NumberPlate { get; set; }
+        Task SetNumberPlateAsync(string numberPlate);
 
         /// <summary>
-        /// Get or set the livery of the vehicle.
+        /// Get the number plate of the vehicle.
         /// </summary>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Livery { get; set; }
+        Task<string> GetNumberPlateAsync();
 
         /// <summary>
-        /// Get or set the wheel color of the vehicle.
+        /// Set the livery of the vehicle.
         /// </summary>
+        /// <param name="livery">Livery of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint WheelColor { get; set; }
+        Task SetLiveryAsync(uint livery);
 
         /// <summary>
-        /// Get or set the wheel type of the vehicle.
+        /// Get the livery of the vehicle.
         /// </summary>
+        /// <returns>Livery of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint WheelType { get; set; }
+        Task<uint> GetLiveryAsync();
 
         /// <summary>
-        /// Get or set the number plate type of the vehicle.
+        /// Set the wheel color of the vehicle.
         /// </summary>
+        /// <param name="color">New wheel color of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint NumberPlateType { get; set; }
+        Task SetWheelColorAsync(uint color);
 
         /// <summary>
-        /// Get or set the pearlescent color of the vehicle.
+        /// Get the wheel color of the vehicle.
         /// </summary>
+        /// <returns>Wheel color of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint PearlescentColor { get; set; }
+        Task<uint> GetWheelColorAsync();
 
         /// <summary>
-        /// Get or set the window tint of the vehicle.
+        /// Set the wheel type of the vehicle.
         /// </summary>
+        /// <param name="wheelType">New wheel type of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint WindowTint { get; set; }
+        Task SetWheelTypeAsync(uint wheelType);
 
         /// <summary>
-        /// Get or set the dashboard color of the vehicle.
+        /// Get the wheel type of the vehicle.
         /// </summary>
+        /// <returns>Wheel type of the vehicle</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint DashboardColor { get; set; }
+        Task<uint> GetWheelTypeAsync();
 
         /// <summary>
-        /// Get or set the trim color of the vehicle.
+        /// Set the number plate type of the vehicle.
         /// </summary>
+        /// <param name="type">New number plate type of the vehicle</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint TrimColor { get; set; }
+        Task SetNumberPlateTypeAsync(uint type);
+
+        /// <summary>
+        /// Get the number plate type of the vehicle.
+        /// </summary>
+        /// <returns>Number plate type of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetNumberPlateTypeAsync();
+
+        /// <summary>
+        /// Set the pearlescent color of the vehicle.
+        /// </summary>
+        /// <param name="color">New pearlescent color of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetPearlescentColorAsync(uint color);
+
+        /// <summary>
+        /// Get the pearlescent color of the vehicle.
+        /// </summary>
+        /// <returns>Pearlescent color of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetPearlescentColorAsync();
+
+        /// <summary>
+        /// Set the window tint of the vehicle.
+        /// </summary>
+        /// <param name="tint">New window tint of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetWindowTintAsync(uint tint);
+
+        /// <summary>
+        /// Get the window tint of the vehicle.
+        /// </summary>
+        /// <returns>Window tint of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetWindowTintAsync();
+
+        /// <summary>
+        /// Set the dashboard color of the vehicle.
+        /// </summary>
+        /// <param name="color">Dashboard color of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetDashboardColorAsync(uint color);
+
+        /// <summary>
+        /// Get the dashboard color of the vehicle.
+        /// </summary>
+        /// <returns>Dashboard color of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetDashboardColorAsync();
+
+        /// <summary>
+        /// Set the trim color of the vehicle.
+        /// </summary>
+        /// <param name="color">New trim color of the vehicle</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetTrimColorAsync(uint color);
+
+        /// <summary>
+        /// Get the trim color of the vehicle.
+        /// </summary>
+        /// <returns>Trim color of the vehicle</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetTrimColorAsync();
 
         /// <summary>
         /// Explode the vehicle.
