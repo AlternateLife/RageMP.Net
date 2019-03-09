@@ -34,40 +34,81 @@ namespace AlternateLife.RageMP.Net.Interfaces
         EntityType Type { get; }
 
         /// <summary>
-        /// Get or set the model of the entity.
+        /// Set the model the the entity.
         /// </summary>
+        /// <param name="model">New model of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Model { get; set; }
+        Task SetModel(uint model);
 
         /// <summary>
-        /// Get or set the alpha of the entity.
+        /// Get the model of the entity.
         /// </summary>
+        /// <returns>Model of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Alpha { get; set; }
+        Task<uint> GetModel();
 
         /// <summary>
-        /// Get or set the dimension of the entity.
+        /// Set the alpha of the entity.
         /// </summary>
+        /// <param name="alpha">New alpha of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Dimension { get; set; }
+        Task SetAlpha(uint alpha);
 
         /// <summary>
-        /// Get or set the position of the entity.
+        /// Get the alpha of the entity.
         /// </summary>
+        /// <returns>Alpha of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 Position { get; set; }
+        Task<uint> GetAlpha();
 
         /// <summary>
-        /// Get or set the rotation of the entity.
+        /// Set the dimension of the entity.
         /// </summary>
+        /// <param name="dimension">New Dimension of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 Rotation { get; set; }
+        Task SetDimension(uint dimension);
+
+        /// <summary>
+        /// Get the dimension of the entity.
+        /// </summary>
+        /// <returns>Dimension of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetDimension();
+
+        /// <summary>
+        /// Set the position of the entity.
+        /// </summary>
+        /// <param name="position">New position of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetPosition(Vector3 position);
+
+        /// <summary>
+        /// Get the position of the entity.
+        /// </summary>
+        /// <returns>Position of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<Vector3> GetPosition();
+
+        /// <summary>
+        /// Set the rotation of the entity.
+        /// </summary>
+        /// <param name="rotation">New rotation of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetRotation(Vector3 rotation);
+
+        /// <summary>
+        /// Get the rotation of the entity.
+        /// </summary>
+        /// <returns>Rotation of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<Vector3> GetRotation();
 
         /// <summary>
         /// Get the velocity of the entity.
         /// </summary>
+        /// <returns>Velocity of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 Velocity { get; }
+        Task<Vector3> GetVelocity();
 
         /// <summary>
         /// Destroy the entity.
