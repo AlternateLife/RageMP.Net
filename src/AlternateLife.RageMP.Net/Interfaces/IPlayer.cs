@@ -89,7 +89,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="model">New model of the player</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        new Task SetModelAsync(PedHash model);
+        Task SetModelAsync(PedHash model);
 
         /// <summary>
         /// Get the model of the player.
