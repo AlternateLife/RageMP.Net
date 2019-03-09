@@ -7,28 +7,25 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public IVehicle Vehicle
+        public async Task<IVehicle> GetVehicleAsync()
         {
-            get
-            {
-                CheckExistence();
+            CheckExistence();
 
-                var pointer = Rage.Player.Player_GetVehicle(NativePointer);
+            var pointer = await _plugin.Schedule(() => Rage.Player.Player_GetVehicle(NativePointer));
 
-                return _plugin.VehiclePool[pointer];
-            }
+            return _plugin.VehiclePool[pointer];
         }
 
-        public bool IsInVehicle => Vehicle != null;
-
-        public int Seat
+        public async Task<bool> IsInVehicleAsync()
         {
-            get
-            {
-                CheckExistence();
+            return await GetVehicleAsync() != null;
+        }
 
-                return Rage.Player.Player_GetSeat(NativePointer);
-            }
+        public Task<int> GetSeatAsync()
+        {
+            CheckExistence();
+
+            return _plugin.Schedule(() => Rage.Player.Player_GetSeat(NativePointer));
         }
 
         public async Task PutIntoVehicleAsync(IVehicle vehicle, int seat)
