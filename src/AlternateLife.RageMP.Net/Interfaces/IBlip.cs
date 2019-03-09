@@ -8,41 +8,87 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface IBlip : IEntity
     {
         /// <summary>
-        /// Get or set draw distance of the blip.
+        /// Set the draw distance of the blip.
         /// </summary>
+        /// <param name="distance">New draw distance of the blip</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float DrawDistance { get; set; }
+        Task SetDrawDistanceAsync(float distance);
 
         /// <summary>
-        /// Get or set rotation of the blip.
+        /// Get the draw distance of the blip.
         /// </summary>
+        /// <returns>Draw distance of the blip</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        new int Rotation { get; set; }
+        Task<float> GetDrawDistanceAsync();
 
         /// <summary>
-        /// Get or set short range flag of the blip.
+        /// Set the rotation of the blip.
         /// </summary>
+        /// <param name="rotation">New rotation of the blip</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool ShortRange { get; set; }
+        new Task SetRotationAsync(int rotation);
 
         /// <summary>
-        /// Get or set color of the blip.
+        /// Get the rotation of the blip.
         /// </summary>
+        /// <returns>Rotation of the blip</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        uint Color { get; set; }
+        new Task<int> GetRotationAsync();
 
         /// <summary>
-        /// Get or set scale of the blip.
+        /// Set the short range flag of the blip.
         /// </summary>
+        /// <param name="shortRange">New short range flag of the blip</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Scale { get; set; }
+        Task SetShortRangeAsync(bool shortRange);
 
         /// <summary>
-        /// Get or set name of the blip.
+        /// Get the short range flag of the blip.
         /// </summary>
+        /// <returns>Short range of the blip</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is null</exception>
-        string Name { get; set; }
+        Task<bool> GetShortRangeAsync();
+
+        /// <summary>
+        /// Set the color of the blip.
+        /// </summary>
+        /// <param name="color">Color of the blip</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetColorAsync(uint color);
+
+        /// <summary>
+        /// Get the color of the blip.
+        /// </summary>
+        /// <returns>Color of the blip</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<uint> GetColorAsync();
+
+        /// <summary>
+        /// Set the scale of the blip.
+        /// </summary>
+        /// <param name="scale">New scale of the blip</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetScaleAsync(float scale);
+
+        /// <summary>
+        /// Get the scale of the blip.
+        /// </summary>
+        /// <returns>Scale of the blip</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<float> GetScaleAsync();
+
+        /// <summary>
+        /// Set the name of the blip.
+        /// </summary>
+        /// <param name="name">New name of the blip</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null</exception>
+        Task SetNameAsync(string name);
+
+        /// <summary>
+        /// Get the name of the blip.
+        /// </summary>
+        Task<string> GetNameAsync();
 
         /// <summary>
         /// Show route for a list of players with given color and scale.
