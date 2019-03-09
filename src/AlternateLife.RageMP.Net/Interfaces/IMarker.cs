@@ -27,7 +27,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// Set the direction of the marker.
         /// </summary>
         /// <param name="direction">New direction of the marker</param>
-        /// <returns></returns>
         Task SetDirectionAsync(Vector3 direction);
 
         /// <summary>

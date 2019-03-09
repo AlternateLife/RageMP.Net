@@ -15,28 +15,36 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Player.Player_SetCurrentWeapon(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetCurrentWeapon(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetCurrentWeaponAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetCurrentWeapon(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetCurrentWeapon(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetCurrentWeaponAmmoAsync(uint value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetCurrentWeaponAmmo(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetCurrentWeaponAmmoAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetCurrentWeaponAmmo(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetWeaponAmmoAsync(WeaponHash weaponHash)
