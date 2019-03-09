@@ -10,28 +10,60 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface ICheckpoint : IEntity
     {
         /// <summary>
-        /// Get or set the color of the checkpoint.
+        /// Set the color of the checkpoint.
         /// </summary>
+        /// <param name="color">New color of the checkpoint</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Color Color { get; set; }
+        Task SetColorAsync(Color color);
 
         /// <summary>
-        /// Get or set the direction of the checkpoint.
+        /// Get the color of the checkpoint.
         /// </summary>
+        /// <returns>Color of the checkpoint</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Vector3 Direction { get; set; }
+        Task<Color> GetColorAsync();
 
         /// <summary>
-        /// Get or set the radius of the checkpoint.
+        /// Set the direction of the checkpoint.
         /// </summary>
+        /// <param name="direction">New direction of the checkpoint</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        float Radius { get; set; }
+        Task SetDirectionAsync(Vector3 direction);
 
         /// <summary>
-        /// Get or set if the checkpoint is visible.
+        /// Get the direction of the checkpoint.
         /// </summary>
+        /// <returns>Direction of the checkpoint</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        bool IsVisible { get; set; }
+        Task<Vector3> GetDirectionAsync();
+
+        /// <summary>
+        /// Set the radius of the checkpoint.
+        /// </summary>
+        /// <param name="radius">Radius of the checkpoint</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetRadiusAsync(float radius);
+
+        /// <summary>
+        /// Get the radius of the checkpoint.
+        /// </summary>
+        /// <returns>Radius of the checkpoint</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<float> GetRadiusAsync();
+
+        /// <summary>
+        /// Set if the checkpoint is visible.
+        /// </summary>
+        /// <param name="visible">New visible state of the checkpoint</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task SetVisibleAsync(bool visible);
+
+        /// <summary>
+        /// Get if the checkpoint is visible.
+        /// </summary>
+        /// <returns>Visible state of the checkpoint</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Task<bool> IsVisibleAsync();
 
         /// <summary>
         /// Show checkpoint for a list of players.
