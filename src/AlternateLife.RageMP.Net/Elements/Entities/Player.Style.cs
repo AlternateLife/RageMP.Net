@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Helpers;
@@ -78,31 +79,35 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             }
         }
 
-        public ClothData GetCloth(ClothSlot slot)
+        public async Task<ClothData> GetClothAsync(ClothSlot slot)
         {
             CheckExistence();
 
-            return StructConverter.PointerToStruct<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot));
+            return await _plugin
+                .Schedule(() => StructConverter.PointerToStruct<ClothData>(Rage.Player.Player_GetClothes(NativePointer, (uint) slot)))
+                .ConfigureAwait(false);
         }
 
-        public ClothData GetCloth(int slot)
+        public Task<ClothData> GetClothAsync(int slot)
         {
-            return GetCloth((ClothSlot) slot);
+            return GetClothAsync((ClothSlot) slot);
         }
 
-        public void SetCloth(ClothSlot slot, ClothData data)
+        public async Task SetClothAsync(ClothSlot slot, ClothData data)
         {
             CheckExistence();
 
-            Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetCloth(NativePointer, (uint) slot, data))
+                .ConfigureAwait(false);
         }
 
-        public void SetCloth(ClothSlot slot, byte drawable, byte texture, byte palette)
+        public Task SetClothAsync(ClothSlot slot, byte drawable, byte texture, byte palette)
         {
-            SetCloth(slot, new ClothData(drawable, texture, palette));
+            return SetClothAsync(slot, new ClothData(drawable, texture, palette));
         }
 
-        public void SetClothes(IDictionary<ClothSlot, ClothData> clothes)
+        public async Task SetClothesAsync(IDictionary<ClothSlot, ClothData> clothes)
         {
             Contract.NotNull(clothes, nameof(clothes));
             CheckExistence();
@@ -110,34 +115,42 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var keys = clothes.Keys.Select(x => (uint) x).ToArray();
             var values = clothes.Values.ToArray();
 
-            Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.Length);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.Length))
+                .ConfigureAwait(false);
         }
 
-        public PropData GetProp(PropSlot slot)
+        public async Task<PropData> GetPropAsync(PropSlot slot)
         {
             CheckExistence();
 
-            return StructConverter.PointerToStruct<PropData>(Rage.Player.Player_GetProp(NativePointer, (uint) slot));
+            var prop = await _plugin
+                .Schedule(() => Rage.Player.Player_GetProp(NativePointer, (uint) slot))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<PropData>(prop);
         }
 
-        public PropData GetProp(int slot)
+        public Task<PropData> GetPropAsync(int slot)
         {
-            return GetProp((PropSlot) slot);
+            return GetPropAsync((PropSlot) slot);
         }
 
-        public void SetProp(PropSlot slot, PropData data)
+        public async Task SetPropAsync(PropSlot slot, PropData data)
         {
             CheckExistence();
 
-            Rage.Player.Player_SetProp(NativePointer, (uint) slot, data);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetProp(NativePointer, (uint) slot, data))
+                .ConfigureAwait(false);
         }
 
-        public void SetProp(PropSlot slot, byte drawable, byte texture)
+        public Task SetPropAsync(PropSlot slot, byte drawable, byte texture)
         {
-            SetProp(slot, new PropData(drawable, texture));
+            return SetPropAsync(slot, new PropData(drawable, texture));
         }
 
-        public void SetProps(IDictionary<PropSlot, PropData> props)
+        public async Task SetPropsAsync(IDictionary<PropSlot, PropData> props)
         {
             Contract.NotNull(props, nameof(props));
             CheckExistence();
@@ -145,46 +158,54 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var keys = props.Keys.Select(x => (uint) x).ToArray();
             var values = props.Values.ToArray();
 
-            Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.Length);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.Length))
+                .ConfigureAwait(false);
         }
 
-        public uint GetDecoration(uint collection)
+        public async Task<uint> GetDecorationAsync(uint collection)
         {
             CheckExistence();
 
-            return Rage.Player.Player_GetDecoration(NativePointer, collection);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetDecoration(NativePointer, collection))
+                .ConfigureAwait(false);
         }
 
-        public int GetDecoration(int collection)
+        public async Task<int> GetDecorationAsync(int collection)
         {
-            return (int) GetDecoration((uint) collection);
+            return (int) await GetDecorationAsync((uint) collection).ConfigureAwait(false);
         }
 
-        public void RemoveDecoration(uint collection, uint overlay)
-        {
-            CheckExistence();
-
-            Rage.Player.Player_RemoveDecoration(NativePointer, collection, overlay);
-        }
-
-        public void RemoveDecoration(int collection, int overlay)
-        {
-            RemoveDecoration((uint) collection, (uint) overlay);
-        }
-
-        public void SetDecoration(uint collection, uint overlay)
+        public async Task RemoveDecorationAsync(uint collection, uint overlay)
         {
             CheckExistence();
 
-            Rage.Player.Player_SetDecoration(NativePointer, collection, overlay);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_RemoveDecoration(NativePointer, collection, overlay))
+                .ConfigureAwait(false);
         }
 
-        public void SetDecoration(int collection, int overlay)
+        public Task RemoveDecorationAsync(int collection, int overlay)
         {
-            SetDecoration((uint) collection, (uint) overlay);
+            return RemoveDecorationAsync((uint) collection, (uint) overlay);
         }
 
-        public void SetDecorations(IDictionary<uint, uint> decorations)
+        public async Task SetDecorationAsync(uint collection, uint overlay)
+        {
+            CheckExistence();
+
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetDecoration(NativePointer, collection, overlay))
+                .ConfigureAwait(false);
+        }
+
+        public Task SetDecorationAsync(int collection, int overlay)
+        {
+            return SetDecorationAsync((uint) collection, (uint) overlay);
+        }
+
+        public async Task SetDecorationsAsync(IDictionary<uint, uint> decorations)
         {
             Contract.NotNull(decorations, nameof(decorations));
             CheckExistence();
@@ -192,89 +213,107 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var keys = decorations.Keys.ToArray();
             var values = decorations.Values.ToArray();
 
-            Rage.Player.Player_SetDecorations(NativePointer, keys, values, (ulong) keys.Length);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetDecorations(NativePointer, keys, values, (ulong) keys.Length))
+                .ConfigureAwait(false);
         }
 
-        public void SetDecorations(IDictionary<int, int> decorations)
+        public Task SetDecorationsAsync(IDictionary<int, int> decorations)
         {
-            SetDecorations(decorations.ToDictionary(x => (uint) x.Key, x => (uint) x.Value));
+            return SetDecorationsAsync(decorations.ToDictionary(x => (uint) x.Key, x => (uint) x.Value));
         }
 
-        public void ClearDecorations()
-        {
-            CheckExistence();
-
-            Rage.Player.Player_ClearDecorations(NativePointer);
-        }
-
-        public void SetHairColor(uint color, uint highlightColor)
+        public async Task ClearDecorationsAsync()
         {
             CheckExistence();
 
-            Rage.Player.Player_SetHairColor(NativePointer, color, highlightColor);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_ClearDecorations(NativePointer))
+                .ConfigureAwait(false);
         }
 
-        public void SetHairColor(int color, int highlightColor)
-        {
-            SetHairColor((uint) color, (uint) highlightColor);
-        }
-
-        public float GetFaceFeature(uint id)
+        public async Task SetHairColorAsync(uint color, uint highlightColor)
         {
             CheckExistence();
 
-            return Rage.Player.Player_GetFaceFeature(NativePointer, id);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetHairColor(NativePointer, color, highlightColor))
+                .ConfigureAwait(false);
         }
 
-        public float GetFaceFeature(int id)
+        public Task SetHairColorAsync(int color, int highlightColor)
         {
-            return GetFaceFeature((uint) id);
+            return SetHairColorAsync((uint) color, (uint) highlightColor);
         }
 
-        public void SetFaceFeature(uint id, float scale)
-        {
-            CheckExistence();
-
-            Rage.Player.Player_SetFaceFeature(NativePointer, id, scale);
-        }
-
-        public void SetFaceFeature(int id, float scale)
-        {
-            SetFaceFeature((uint) id, scale);
-        }
-
-        public void UpdateHeadBlend(float shapeMix, float skinMix, float thirdMix)
+        public async Task<float> GetFaceFeatureAsync(uint id)
         {
             CheckExistence();
 
-            Rage.Player.Player_UpdateHeadBlend(NativePointer, shapeMix, skinMix, thirdMix);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_GetFaceFeature(NativePointer, id))
+                .ConfigureAwait(false);
         }
 
-        public HeadOverlayData GetHeadOverlay(uint overlayId)
+        public Task<float> GetFaceFeatureAsync(int id)
+        {
+            return GetFaceFeatureAsync((uint) id);
+        }
+
+        public async Task SetFaceFeatureAsync(uint id, float scale)
         {
             CheckExistence();
 
-            return StructConverter.PointerToStruct<HeadOverlayData>(Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId));
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetFaceFeature(NativePointer, id, scale))
+                .ConfigureAwait(false);
         }
 
-        public HeadOverlayData GetHeadOverlay(int overlayId)
+        public Task SetFaceFeatureAsync(int id, float scale)
         {
-            return GetHeadOverlay((uint) overlayId);
+            return SetFaceFeatureAsync((uint) id, scale);
         }
 
-        public void SetHeadOverlay(uint overlayId, HeadOverlayData overlayData)
+        public async Task UpdateHeadBlendAsync(float shapeMix, float skinMix, float thirdMix)
         {
             CheckExistence();
 
-            Rage.Player.Player_SetHeadOverlay(NativePointer, overlayId, overlayData);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_UpdateHeadBlend(NativePointer, shapeMix, skinMix, thirdMix))
+                .ConfigureAwait(false);
         }
 
-        public void SetHeadOverlay(int overlayId, HeadOverlayData overlayData)
+        public async Task<HeadOverlayData> GetHeadOverlayAsync(uint overlayId)
         {
-            SetHeadOverlay((uint) overlayId, overlayData);
+            CheckExistence();
+
+            var headOverlayPointer = await _plugin
+                .Schedule(() => Rage.Player.Player_GetHeadOverlay(NativePointer, overlayId))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<HeadOverlayData>(headOverlayPointer);
         }
 
-        public void SetCustomization(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
+        public Task<HeadOverlayData> GetHeadOverlayAsync(int overlayId)
+        {
+            return GetHeadOverlayAsync((uint) overlayId);
+        }
+
+        public async Task SetHeadOverlayAsync(uint overlayId, HeadOverlayData overlayData)
+        {
+            CheckExistence();
+
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetHeadOverlay(NativePointer, overlayId, overlayData))
+                .ConfigureAwait(false);
+        }
+
+        public Task SetHeadOverlayAsync(int overlayId, HeadOverlayData overlayData)
+        {
+            return SetHeadOverlayAsync((uint) overlayId, overlayData);
+        }
+
+        public async Task SetCustomizationAsync(bool isMale, HeadBlendData headBlend, uint eyeColor, uint hairColor, uint highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<uint, uint> decorations)
         {
             Contract.NotNull(headOverlays, nameof(headOverlays));
@@ -287,14 +326,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var decorationKeys = decorations.Keys.ToArray();
             var decorationValues = decorations.Values.ToArray();
 
-            Rage.Player.Player_SetCustomization(NativePointer, isMale, headBlend, eyeColor, hairColor, highlightColor, faceFeatures, (ulong) faceFeatures.Length, headOverlayKeys,
-                headOverlayValues, (ulong) headOverlayKeys.Length, decorationKeys, decorationValues, (ulong) decorationKeys.Length);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_SetCustomization(NativePointer, isMale, headBlend, eyeColor, hairColor, highlightColor, faceFeatures, (ulong) faceFeatures.Length, headOverlayKeys,
+                headOverlayValues, (ulong) headOverlayKeys.Length, decorationKeys, decorationValues, (ulong) decorationKeys.Length))
+                .ConfigureAwait(false);
         }
 
-        public void SetCustomization(bool isMale, HeadBlendData headBlend, int eyeColor, int hairColor, int highlightColor, float[] faceFeatures,
+        public Task SetCustomizationAsync(bool isMale, HeadBlendData headBlend, int eyeColor, int hairColor, int highlightColor, float[] faceFeatures,
             IDictionary<int, HeadOverlayData> headOverlays, IDictionary<int, int> decorations)
         {
-            SetCustomization(isMale, headBlend, (uint) eyeColor, (uint) hairColor, (uint) highlightColor, faceFeatures, headOverlays,
+            return SetCustomizationAsync(isMale, headBlend, (uint) eyeColor, (uint) hairColor, (uint) highlightColor, faceFeatures, headOverlays,
                 decorations.ToDictionary(x => (uint) x.Key, x => (uint) x.Value));
         }
     }
