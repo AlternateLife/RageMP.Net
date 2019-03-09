@@ -174,7 +174,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<int> GetDecorationAsync(int collection)
         {
-            return (int) await GetDecorationAsync((uint) collection).ConfigureAwait(false);
+            return (int) await GetDecorationAsync((uint) collection)
+                .ConfigureAwait(false);
         }
 
         public async Task RemoveDecorationAsync(uint collection, uint overlay)
