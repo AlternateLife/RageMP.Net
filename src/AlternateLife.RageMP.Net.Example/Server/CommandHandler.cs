@@ -12,7 +12,7 @@ namespace AlternateLife.RageMP.Net.Example
         [Command("vehicle")]
         public async Task Vehicle(IPlayer player, VehicleHash vehicleName)
         {
-            var vehicle = await MP.Vehicles.NewAsync(vehicleName, player.Position);
+            var vehicle = await MP.Vehicles.NewAsync(vehicleName, await player.GetPositionAsync());
 
             await player.PutIntoVehicleAsync(vehicle, -1);
 
@@ -48,7 +48,7 @@ namespace AlternateLife.RageMP.Net.Example
                 return;
             }
 
-            player.Model = result;
+            await player.SetModelAsync(result);
 
             await player.OutputChatBoxAsync($"Skin changed to \"{result}\"!");
         }
