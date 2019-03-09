@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Exceptions;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -38,7 +39,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="players">List of players to show the checkpoint for</param>
         /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void ShowFor(IEnumerable<IPlayer> players);
+        Task ShowForAsync(IEnumerable<IPlayer> players);
 
         /// <summary>
         /// Hide checkpoint for a list of players.
@@ -46,6 +47,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="players">List of players to hide the checkpoint for</param>
         /// <exception cref="ArgumentNullException"><paramref name="players" /> is null</exception>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        void HideFor(IEnumerable<IPlayer> players);
+        Task HideForAsync(IEnumerable<IPlayer> players);
     }
 }
