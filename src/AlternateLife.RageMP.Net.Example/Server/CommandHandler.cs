@@ -14,7 +14,7 @@ namespace AlternateLife.RageMP.Net.Example
         {
             var vehicle = await MP.Vehicles.NewAsync(vehicleName, player.Position);
 
-            player.PutIntoVehicle(vehicle, -1);
+            await player.PutIntoVehicleAsync(vehicle, -1);
 
             await player.OutputChatBoxAsync("Vehicle created");
         }
@@ -29,7 +29,7 @@ namespace AlternateLife.RageMP.Net.Example
         [Command("weapon")]
         public async Task Weapon(IPlayer player, WeaponHash weaponName)
         {
-            player.GiveWeapon(weaponName, 100);
+            await player.GiveWeaponAsync(weaponName, 100);
             await player.OutputChatBoxAsync("Weapon received");
         }
 
