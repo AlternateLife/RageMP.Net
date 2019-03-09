@@ -38,77 +38,77 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="model">New model of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task SetModel(uint model);
+        Task SetModelAsync(uint model);
 
         /// <summary>
         /// Get the model of the entity.
         /// </summary>
         /// <returns>Model of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<uint> GetModel();
+        Task<uint> GetModelAsync();
 
         /// <summary>
         /// Set the alpha of the entity.
         /// </summary>
         /// <param name="alpha">New alpha of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task SetAlpha(uint alpha);
+        Task SetAlphaAsync(uint alpha);
 
         /// <summary>
         /// Get the alpha of the entity.
         /// </summary>
         /// <returns>Alpha of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<uint> GetAlpha();
+        Task<uint> GetAlphaAsync();
 
         /// <summary>
         /// Set the dimension of the entity.
         /// </summary>
         /// <param name="dimension">New Dimension of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task SetDimension(uint dimension);
+        Task SetDimensionAsync(uint dimension);
 
         /// <summary>
         /// Get the dimension of the entity.
         /// </summary>
         /// <returns>Dimension of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<uint> GetDimension();
+        Task<uint> GetDimensionAsync();
 
         /// <summary>
         /// Set the position of the entity.
         /// </summary>
         /// <param name="position">New position of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task SetPosition(Vector3 position);
+        Task SetPositionAsync(Vector3 position);
 
         /// <summary>
         /// Get the position of the entity.
         /// </summary>
         /// <returns>Position of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<Vector3> GetPosition();
+        Task<Vector3> GetPositionAsync();
 
         /// <summary>
         /// Set the rotation of the entity.
         /// </summary>
         /// <param name="rotation">New rotation of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task SetRotation(Vector3 rotation);
+        Task SetRotationAsync(Vector3 rotation);
 
         /// <summary>
         /// Get the rotation of the entity.
         /// </summary>
         /// <returns>Rotation of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<Vector3> GetRotation();
+        Task<Vector3> GetRotationAsync();
 
         /// <summary>
         /// Get the velocity of the entity.
         /// </summary>
         /// <returns>Velocity of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task<Vector3> GetVelocity();
+        Task<Vector3> GetVelocityAsync();
 
         /// <summary>
         /// Destroy the entity.
