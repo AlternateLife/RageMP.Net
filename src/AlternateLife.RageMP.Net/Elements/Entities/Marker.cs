@@ -23,56 +23,76 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Marker.Marker_SetColor(NativePointer, value.R, value.G, value.B, value.A)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_SetColor(NativePointer, value.R, value.G, value.B, value.A))
+                .ConfigureAwait(false);
         }
 
         public async Task<Color> GetColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<ColorRgba>(Rage.Marker.Marker_GetColor(NativePointer)).FromModColor()).ConfigureAwait(false);
+            var colorPointer = await _plugin
+                .Schedule(() => Rage.Marker.Marker_GetColor(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
         }
 
         public async Task SetDirectionAsync(Vector3 value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Marker.Marker_SetDirection(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_SetDirection(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<Vector3> GetDirectionAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<Vector3>(Rage.Marker.Marker_GetDirection(NativePointer))).ConfigureAwait(false);
+            var directionPointer = await _plugin
+                .Schedule(() => Rage.Marker.Marker_GetDirection(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<Vector3>(directionPointer);
         }
 
         public async Task SetScaleAsync(float value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Marker.Marker_SetScale(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_SetScale(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<float> GetScaleAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Marker.Marker_GetScale(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Marker.Marker_GetScale(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetVisibleAsync(bool value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.Marker.Marker_SetVisible(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.Marker.Marker_SetVisible(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> IsVisibleAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.Marker.Marker_IsVisible(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.Marker.Marker_IsVisible(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task ShowForAsync(IEnumerable<IPlayer> players)
