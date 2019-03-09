@@ -26,7 +26,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 Contract.NotEmpty(value, nameof(value));
                 CheckExistence();
-                
+
                 using (var converter = new StringConverter())
                 {
                     Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value));
@@ -399,14 +399,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             ArgumentData.Dispose(data);
         }
 
-        public void Spawn(Vector3 position, float heading)
+        public async Task SpawnAsync(Vector3 position, float heading)
         {
             CheckExistence();
 
-            Rage.Player.Player_Spawn(NativePointer, position, heading);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_Spawn(NativePointer, position, heading))
+                .ConfigureAwait(false);
         }
 
-        public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
+        public async Task PlayAnimationAsync(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
         {
             Contract.NotEmpty(dictionary, nameof(dictionary));
             Contract.NotEmpty(name, nameof(name));
@@ -414,56 +416,75 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_PlayAnimation(NativePointer, converter.StringToPointer(dictionary), converter.StringToPointer(name), speed, (int) flags);
+                var dictionaryPointer = converter.StringToPointer(dictionary);
+                var namePointer = converter.StringToPointer(name);
+
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_PlayAnimation(NativePointer, dictionaryPointer, namePointer, speed, (int) flags))
+                    .ConfigureAwait(false);
             }
         }
 
-        public void StopAnimation()
+        public async Task StopAnimationAsync()
         {
             CheckExistence();
 
-            Rage.Player.Player_StopAnimation(NativePointer);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_StopAnimation(NativePointer))
+                .ConfigureAwait(false);
         }
 
-        public void PlayScenario(string scenario)
+        public async Task PlayScenarioAsync(string scenario)
         {
             Contract.NotEmpty(scenario, nameof(scenario));
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_PlayScenario(NativePointer, converter.StringToPointer(scenario));
+                var scenarioPointer = converter.StringToPointer(scenario);
+
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_PlayScenario(NativePointer, scenarioPointer))
+                    .ConfigureAwait(false);
             }
         }
 
-        public bool IsStreamed(IPlayer player)
+        public async Task<bool> IsStreamedAsync(IPlayer player)
         {
             Contract.NotNull(player, nameof(player));
             CheckExistence();
 
-            return Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer);
+            return await _plugin
+                .Schedule(() => Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer))
+                .ConfigureAwait(false);
         }
 
-        public void RemoveObject(uint model, Vector3 position, float radius)
+        public async Task RemoveObjectAsync(uint model, Vector3 position, float radius)
         {
             CheckExistence();
 
-            Rage.Player.Player_RemoveObject(NativePointer, model, position, radius);
+            await _plugin
+                .Schedule(() => Rage.Player.Player_RemoveObject(NativePointer, model, position, radius))
+                .ConfigureAwait(false);
         }
 
-        public void RemoveObject(int model, Vector3 position, float radius)
+        public Task RemoveObjectAsync(int model, Vector3 position, float radius)
         {
-            RemoveObject((uint) model, position, radius);
+            return RemoveObjectAsync((uint) model, position, radius);
         }
 
-        public void Eval(string code)
+        public async Task EvalAsync(string code)
         {
             Contract.NotEmpty(code, nameof(code));
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
-                Rage.Player.Player_Eval(NativePointer, converter.StringToPointer(code));
+                var codePointer = converter.StringToPointer(code);
+
+                await _plugin
+                    .Schedule(() => Rage.Player.Player_Eval(NativePointer, codePointer))
+                    .ConfigureAwait(false);
             }
         }
 
