@@ -51,9 +51,7 @@ namespace AlternateLife.RageMP.Net.Example
 
         private Task OnPlayerDeath(IPlayer player, uint reason, IPlayer killerplayer)
         {
-            player.Spawn(player.Position, player.Heading);
-
-            return Task.CompletedTask;
+            return player.SpawnAsync(player.Position, player.Heading);
         }
     }
 }
