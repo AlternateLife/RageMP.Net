@@ -21,14 +21,20 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.TextLabel.TextLabel_SetColor(NativePointer, value.GetNumberValue())).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_SetColor(NativePointer, value.GetNumberValue()))
+                .ConfigureAwait(false);
         }
 
         public async Task<Color> GetColorAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StructConverter.PointerToStruct<ColorRgba>(Rage.TextLabel.TextLabel_GetColor(NativePointer)).FromModColor()).ConfigureAwait(false);
+            var colorPointer = await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_GetColor(NativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
         }
 
         public async Task SetTextAsync(string value)
@@ -39,7 +45,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var text = converter.StringToPointer(value);
 
-                await _plugin.Schedule(() => Rage.TextLabel.TextLabel_SetText(NativePointer, text)).ConfigureAwait(false);
+                await _plugin
+                    .Schedule(() => Rage.TextLabel.TextLabel_SetText(NativePointer, text))
+                    .ConfigureAwait(false);
             }
         }
 
@@ -47,49 +55,65 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => StringConverter.PointerToString(Rage.TextLabel.TextLabel_GetText(NativePointer))).ConfigureAwait(false);
+            var textPointer = await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_GetText(NativePointer))
+                .ConfigureAwait(false);
+
+            return StringConverter.PointerToString(textPointer);
         }
 
         public async Task SetLOSAsync(bool value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.TextLabel.TextLabel_SetLOS(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_SetLOS(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> GetLOSAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.TextLabel.TextLabel_GetLOS(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_GetLOS(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetDrawDistanceAsync(float value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.TextLabel.TextLabel_SetDrawDistance(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_SetDrawDistance(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<float> GetDrawDistanceAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.TextLabel.TextLabel_GetDrawDistance(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_GetDrawDistance(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task SetFontAsync(uint value)
         {
             CheckExistence();
 
-            await _plugin.Schedule(() => Rage.TextLabel.TextLabel_SetFont(NativePointer, value)).ConfigureAwait(false);
+            await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_SetFont(NativePointer, value))
+                .ConfigureAwait(false);
         }
 
         public async Task<uint> GetFontAsync()
         {
             CheckExistence();
 
-            return await _plugin.Schedule(() => Rage.TextLabel.TextLabel_GetFont(NativePointer)).ConfigureAwait(false);
+            return await _plugin
+                .Schedule(() => Rage.TextLabel.TextLabel_GetFont(NativePointer))
+                .ConfigureAwait(false);
         }
 
     }

@@ -17,7 +17,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            return (ColshapeType) await _plugin.Schedule(() => Rage.Colshape.Colshape_GetShapeType(NativePointer)).ConfigureAwait(false);
+            return (ColshapeType) await _plugin
+                .Schedule(() => Rage.Colshape.Colshape_GetShapeType(NativePointer))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> IsPointWhithinAsync(Vector3 position)
