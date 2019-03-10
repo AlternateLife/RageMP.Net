@@ -76,7 +76,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.PlayerPool.PlayerPool__Call(_nativePointer, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() => Rage.PlayerPool.PlayerPool__Call(_nativePointer, eventNamePointer, data, (ulong) data.LongLength))
                     .ConfigureAwait(false);
             }
 
@@ -100,7 +100,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallInRange(_nativePointer, position, range, dimension, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallInRange(_nativePointer, position, range, dimension, eventNamePointer, data, (ulong) data.LongLength))
                     .ConfigureAwait(false);
             }
 
@@ -124,7 +124,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallInDimension(_nativePointer, dimension, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallInDimension(_nativePointer, dimension, eventNamePointer, data, (ulong) data.LongLength))
                     .ConfigureAwait(false);
             }
 
@@ -155,7 +155,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallFor(_nativePointer, playerPointers, (ulong) playerPointers.Length, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() => Rage.PlayerPool.PlayerPool__CallFor(_nativePointer, playerPointers, (ulong) playerPointers.LongLength, eventNamePointer, data, (ulong) data.LongLength))
                     .ConfigureAwait(false);
             }
 
@@ -174,7 +174,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.PlayerPool.PlayerPool__Invoke(_nativePointer, nativeHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.PlayerPool.PlayerPool__Invoke(_nativePointer, nativeHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -192,7 +192,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInRange(_nativePointer, position, range, dimension, nativeHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInRange(_nativePointer, position, range, dimension, nativeHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -210,7 +210,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInDimension(_nativePointer, dimension, nativeHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeInDimension(_nativePointer, dimension, nativeHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -230,7 +230,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             await _plugin
-                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeFor(_nativePointer, playerPointers, (ulong) playerPointers.Length, nativeHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.PlayerPool.PlayerPool__InvokeFor(_nativePointer, playerPointers, (ulong) playerPointers.LongLength, nativeHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
