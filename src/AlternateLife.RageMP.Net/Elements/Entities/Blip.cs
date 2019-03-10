@@ -15,132 +15,172 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public async Task SetDrawDistanceAsync(float value)
+        public void SetDrawDistance(float value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_SetDrawDistance(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_SetDrawDistance(NativePointer, value);
         }
 
-        public async Task<float> GetDrawDistanceAsync()
+        public Task SetDrawDistanceAsync(float value)
+        {
+            return _plugin.Schedule(() => SetDrawDistance(value));
+        }
+
+        public float GetDrawDistance()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Blip.Blip_GetDrawDistance(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Blip.Blip_GetDrawDistance(NativePointer);
         }
 
-        public async Task SetRotationAsync(int value)
+        public Task<float> GetDrawDistanceAsync()
+        {
+            return _plugin.Schedule(GetDrawDistance);
+        }
+
+        public void SetRotation(int value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_SetRotation(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_SetRotation(NativePointer, value);
         }
 
-        public new async Task<int> GetRotationAsync()
+        public Task SetRotationAsync(int value)
+        {
+            return _plugin.Schedule(() => SetRotation(value));
+        }
+
+        public new int GetRotation()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Blip.Blip_GetRotation(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Blip.Blip_GetRotation(NativePointer);
         }
 
-        public async Task SetShortRangeAsync(bool value)
+        public new Task<int> GetRotationAsync()
+        {
+            return _plugin.Schedule(GetRotation);
+        }
+
+        public void SetShortRange(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_SetShortRange(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_SetShortRange(NativePointer, value);
         }
 
-        public async Task<bool> GetShortRangeAsync()
+        public Task SetShortRangeAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetShortRange(value));
+        }
+
+        public bool GetShortRange()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Blip.Blip_IsShortRange(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Blip.Blip_IsShortRange(NativePointer);
         }
 
-        public async Task SetColorAsync(uint value)
+        public Task<bool> GetShortRangeAsync()
+        {
+            return _plugin.Schedule(GetShortRange);
+        }
+
+        public void SetColor(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_SetColor(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_SetColor(NativePointer, value);
         }
 
-        public async Task<uint> GetColorAsync()
+        public Task SetColorAsync(uint value)
+        {
+            return _plugin.Schedule(() => SetColor(value));
+        }
+
+        public uint GetColor()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Blip.Blip_GetColor(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Blip.Blip_GetColor(NativePointer);
         }
 
-        public async Task SetScaleAsync(float value)
+        public Task<uint> GetColorAsync()
+        {
+            return _plugin.Schedule(GetColor);
+        }
+
+        public void SetScale(float value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_SetScale(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_SetScale(NativePointer, value);
         }
 
-        public async Task<float> GetScaleAsync()
+        public Task SetScaleAsync(float value)
+        {
+            return _plugin.Schedule(() => SetScale(value));
+        }
+
+        public float GetScale()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Blip.Blip_GetScale(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Blip.Blip_GetScale(NativePointer);
         }
 
-        public async Task SetNameAsync(string value)
+        public Task<float> GetScaleAsync()
+        {
+            return _plugin.Schedule(GetScale);
+        }
+
+        public void SetName(string value)
         {
             Contract.NotNull(value, nameof(value));
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
-                var name = converter.StringToPointer(value);
-
-                await _plugin
-                    .Schedule(() => Rage.Blip.Blip_SetName(NativePointer, name))
-                    .ConfigureAwait(false);
+                Rage.Blip.Blip_SetName(NativePointer, converter.StringToPointer(value));
             }
         }
 
-        public async Task<string> GetNameAsync()
+        public Task SetNameAsync(string value)
+        {
+            return _plugin.Schedule(() => SetName(value));
+        }
+
+        public string GetName()
         {
             CheckExistence();
 
-            var namePointer = await _plugin
-                .Schedule(() => Rage.Blip.Blip_GetName(NativePointer))
-                .ConfigureAwait(false);
-
-            return StringConverter.PointerToString(namePointer);
+            return StringConverter.PointerToString(Rage.Blip.Blip_GetName(NativePointer));
         }
 
-        public async Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, uint color, float scale)
+        public Task<string> GetNameAsync()
+        {
+            return _plugin.Schedule(GetName);
+        }
+
+        public void ShowRoute(IEnumerable<IPlayer> forPlayers, uint color, float scale)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
             CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_RouteFor(NativePointer, playerPointers, playerPointers.Length, color, scale);
+        }
+
+        public Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, uint color, float scale)
+        {
+            return _plugin.Schedule(() => ShowRoute(forPlayers, color, scale));
+        }
+
+        public void ShowRoute(IEnumerable<IPlayer> forPlayers, int color, float scale)
+        {
+            ShowRoute(forPlayers, (uint) color, scale);
         }
 
         public Task ShowRouteAsync(IEnumerable<IPlayer> forPlayers, int color, float scale)
@@ -148,16 +188,19 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return ShowRouteAsync(forPlayers, (uint) color, scale);
         }
 
-        public async Task HideRouteAsync(IEnumerable<IPlayer> forPlayers)
+        public void HideRoute(IEnumerable<IPlayer> forPlayers)
         {
             Contract.NotNull(forPlayers, nameof(forPlayers));
             CheckExistence();
 
             var playerPointers = forPlayers.Select(x => x.NativePointer).ToArray();
 
-            await _plugin
-                .Schedule(() => Rage.Blip.Blip_UnrouteFor(NativePointer, playerPointers, playerPointers.Length))
-                .ConfigureAwait(false);
+            Rage.Blip.Blip_UnrouteFor(NativePointer, playerPointers, playerPointers.Length);
+        }
+
+        public Task HideRouteAsync(IEnumerable<IPlayer> forPlayers)
+        {
+            return _plugin.Schedule(() => HideRoute(forPlayers));
         }
     }
 }
