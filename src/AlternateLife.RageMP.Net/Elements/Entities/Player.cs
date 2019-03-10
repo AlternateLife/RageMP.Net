@@ -357,7 +357,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.LongLength))
                     .ConfigureAwait(false);
             }
 
@@ -377,7 +377,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -396,7 +396,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length))
+                .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.LongLength))
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);

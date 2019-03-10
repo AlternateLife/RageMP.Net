@@ -118,7 +118,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var values = clothes.Values.ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.Length))
+                .Schedule(() => Rage.Player.Player_SetClothes(NativePointer, keys, values, (ulong) keys.LongLength))
                 .ConfigureAwait(false);
         }
 
@@ -161,7 +161,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var values = props.Values.ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.Length))
+                .Schedule(() => Rage.Player.Player_SetProps(NativePointer, keys, values, (ulong) keys.LongLength))
                 .ConfigureAwait(false);
         }
 
@@ -217,7 +217,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var values = decorations.Values.ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_SetDecorations(NativePointer, keys, values, (ulong) keys.Length))
+                .Schedule(() => Rage.Player.Player_SetDecorations(NativePointer, keys, values, (ulong) keys.LongLength))
                 .ConfigureAwait(false);
         }
 
@@ -330,8 +330,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var decorationValues = decorations.Values.ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_SetCustomization(NativePointer, isMale, headBlend, eyeColor, hairColor, highlightColor, faceFeatures, (ulong) faceFeatures.Length, headOverlayKeys,
-                headOverlayValues, (ulong) headOverlayKeys.Length, decorationKeys, decorationValues, (ulong) decorationKeys.Length))
+                .Schedule(() => Rage.Player.Player_SetCustomization(NativePointer, isMale, headBlend, eyeColor, hairColor, highlightColor, faceFeatures, (ulong) faceFeatures.LongLength, headOverlayKeys,
+                headOverlayValues, (ulong) headOverlayKeys.LongLength, decorationKeys, decorationValues, (ulong) decorationKeys.LongLength))
                 .ConfigureAwait(false);
         }
 
