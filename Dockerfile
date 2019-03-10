@@ -41,11 +41,9 @@ RUN apt-get update && \
 
 RUN mkdir /ragemp-config
 COPY --from=cmake /ragemp-srv /ragemp-srv
-COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/AlternateLife.RageMP.Net.dll /ragemp-srv/dotnet/plugins/
-COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/NLog.dll /ragemp-srv/dotnet/plugins/
-COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
+COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/AlternateLife.RageMP.Net.dll /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/NLog.dll /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
 COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/NLog.config /ragemp-srv/dotnet/
-COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2/* /ragemp-srv/dotnet/runtime/
+COPY --from=dotnet /usr/share/dotnet/shared/Microsoft.NETCore.App/2.2.2 /ragemp-srv/dotnet/runtime/
 WORKDIR /ragemp-srv
 
 EXPOSE 22005/udp
