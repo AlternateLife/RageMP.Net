@@ -172,7 +172,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var weapons = weaponHashes.ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_RemoveWeapons(NativePointer, weapons, (ulong) weapons.Length))
+                .Schedule(() => Rage.Player.Player_RemoveWeapons(NativePointer, weapons, (ulong) weapons.LongLength))
                 .ConfigureAwait(false);
         }
 

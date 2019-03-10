@@ -103,7 +103,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.Length))
+                .Schedule(() => Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength))
                 .ConfigureAwait(false);
         }
 
@@ -115,7 +115,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
             await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_HideFor(NativePointer, playerPointers, (ulong) playerPointers.Length))
+                .Schedule(() => Rage.Checkpoint.Checkpoint_HideFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength))
                 .ConfigureAwait(false);
         }
     }
