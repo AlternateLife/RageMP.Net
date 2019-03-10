@@ -13,22 +13,28 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public async Task<ColshapeType> GetShapeTypeAsync()
+        public ColshapeType GetShapeType()
         {
             CheckExistence();
 
-            return (ColshapeType) await _plugin
-                .Schedule(() => Rage.Colshape.Colshape_GetShapeType(NativePointer))
-                .ConfigureAwait(false);
+            return (ColshapeType) Rage.Colshape.Colshape_GetShapeType(NativePointer);
         }
 
-        public async Task<bool> IsPointWhithinAsync(Vector3 position)
+        public Task<ColshapeType> GetShapeTypeAsync()
+        {
+            return _plugin.Schedule(GetShapeType);
+        }
+
+        public bool IsPointWhithin(Vector3 position)
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Colshape.Colshape_IsPointWithin(NativePointer, position))
-                .ConfigureAwait(false);
+            return Rage.Colshape.Colshape_IsPointWithin(NativePointer, position);
+        }
+
+        public Task<bool> IsPointWhithinAsync(Vector3 position)
+        {
+            return _plugin.Schedule(() => IsPointWhithin(position));
         }
     }
 }
