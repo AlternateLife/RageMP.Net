@@ -19,104 +19,134 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public async Task SetColorAsync(Color value)
+        public void SetColor(Color value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_SetColor(NativePointer, value.R, value.G, value.B, value.A);
         }
 
-        public async Task<Color> GetColorAsync()
+        public Task SetColorAsync(Color value)
+        {
+            return _plugin.Schedule(() => SetColor(value));
+        }
+
+        public Color GetColor()
         {
             CheckExistence();
 
-            var colorPointer = await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_GetColor(NativePointer))
-                .ConfigureAwait(false);
+            var colorPointer = Rage.Checkpoint.Checkpoint_GetColor(NativePointer);
 
             return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
         }
 
-        public async Task SetDirectionAsync(Vector3 value)
+        public Task<Color> GetColorAsync()
         {
-            CheckExistence();
-
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetColor);
         }
 
-        public async Task<Vector3> GetDirectionAsync()
+        public void SetDirection(Vector3 value)
         {
             CheckExistence();
 
-            var directionPointer = await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_GetDirection(NativePointer))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_SetDirection(NativePointer, value);
+        }
+
+        public Task SetDirectionAsync(Vector3 value)
+        {
+            return _plugin.Schedule(() => SetDirection(value));
+        }
+
+        public Vector3 GetDirection()
+        {
+            CheckExistence();
+
+            var directionPointer = Rage.Checkpoint.Checkpoint_GetDirection(NativePointer);
 
             return StructConverter.PointerToStruct<Vector3>(directionPointer);
         }
 
-        public async Task SetRadiusAsync(float value)
+        public Task<Vector3> GetDirectionAsync()
+        {
+            return _plugin.Schedule(GetDirection);
+        }
+
+        public void SetRadius(float value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_SetRadius(NativePointer, value);
         }
 
-        public async Task<float> GetRadiusAsync()
+        public Task SetRadiusAsync(float value)
+        {
+            return _plugin.Schedule(() => SetRadius(value));
+        }
+
+        public float GetRadius()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_GetRadius(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Checkpoint.Checkpoint_GetRadius(NativePointer);
         }
 
-        public async Task SetVisibleAsync(bool value)
+        public Task<float> GetRadiusAsync()
+        {
+            return _plugin.Schedule(GetRadius);
+        }
+
+        public void SetVisible(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_SetVisible(NativePointer, value);
         }
 
-        public async Task<bool> IsVisibleAsync()
+        public Task SetVisibleAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetVisible(value));
+        }
+
+        public bool IsVisible()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_IsVisible(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Checkpoint.Checkpoint_IsVisible(NativePointer);
         }
 
-        public async Task ShowForAsync(IEnumerable<IPlayer> players)
+        public Task<bool> IsVisibleAsync()
+        {
+            return _plugin.Schedule(IsVisible);
+        }
+
+        public void ShowFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
             CheckExistence();
 
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_ShowFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength);
         }
 
-        public async Task HideForAsync(IEnumerable<IPlayer> players)
+        public Task ShowForAsync(IEnumerable<IPlayer> players)
+        {
+            return _plugin.Schedule(() => ShowFor(players));
+        }
+
+        public void HideFor(IEnumerable<IPlayer> players)
         {
             Contract.NotNull(players, nameof(players));
             CheckExistence();
 
             var playerPointers = players.Select(x => x.NativePointer).ToArray();
 
-            await _plugin
-                .Schedule(() => Rage.Checkpoint.Checkpoint_HideFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength))
-                .ConfigureAwait(false);
+            Rage.Checkpoint.Checkpoint_HideFor(NativePointer, playerPointers, (ulong) playerPointers.LongLength);
+        }
+
+        public Task HideForAsync(IEnumerable<IPlayer> players)
+        {
+            return _plugin.Schedule(() => HideForAsync(players));
         }
     }
 }
