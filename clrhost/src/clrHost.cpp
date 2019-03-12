@@ -76,7 +76,7 @@ bool ClrHost::load() {
         return false;
     }
 
-    if (_mainCallback == nullptr && getDelegate("Main", (void **)&_mainCallback) == false) {
+    if (_mainCallback == nullptr && getDelegate("PluginMain", (void **) &_mainCallback) == false) {
         return false;
     }
 
@@ -203,7 +203,8 @@ bool ClrHost::createAppDomain() {
     }
 
     // execute assembly to set a valid entry point which is needed by some libraries as mysql
-    auto libraryPath = getAbsolutePath(std::string(PLUGIN_DIR_PATH) + PLUGIN_NAME);
+    unsigned int exitCode = 0;
+    auto libraryPath = getAbsolutePath(std::string(PLUGIN_DIR_PATH) + PLUGIN_NAME + ".dll");
 
     result = _executeAssembly(
         _runtimeHost,
@@ -211,7 +212,7 @@ bool ClrHost::createAppDomain() {
         0,
         nullptr,
         libraryPath.c_str(),
-        nullptr
+        &exitCode
     );
 
     if (result < 0) {

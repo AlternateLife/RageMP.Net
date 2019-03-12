@@ -14,6 +14,7 @@
         <RepositoryUrl>https://github.com/AlternateLife/RageMP.Net/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>ragemp gta bridge</PackageTags>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Testing' ">
