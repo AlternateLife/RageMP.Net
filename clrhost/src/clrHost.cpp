@@ -60,6 +60,7 @@ ClrHost::ClrHost() {
     _initializeCoreCLR = nullptr;
     _shutdownCoreCLR = nullptr;
     _createDelegate = nullptr;
+    _executeAssembly = nullptr;
 }
 
 ClrHost::~ClrHost() {
@@ -122,6 +123,7 @@ bool ClrHost::loadCoreClr() {
     _initializeCoreCLR = (coreclr_initialize_ptr)GetProcAddress(_coreClrLib, "coreclr_initialize");
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr)GetProcAddress(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr)GetProcAddress(_coreClrLib, "coreclr_create_delegate");
+    _executeAssembly = (coreclr_execute_assembly_ptr)GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
 #else
 #ifdef __APPLE__
     coreClrDllPath += "libcoreclr.dylib";
@@ -141,7 +143,7 @@ bool ClrHost::loadCoreClr() {
     _createDelegate = (coreclr_create_delegate_ptr)dlsym(_coreClrLib, "coreclr_create_delegate");
 #endif
 
-    if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr) {
+    if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr || _executeAssembly == nullptr) {
         std::cerr << "[.NET] Unable to find CoreCLR dll methods" << std::endl;
 
         return false;
@@ -196,6 +198,24 @@ bool ClrHost::createAppDomain() {
 
     if (result < 0) {
         std::cerr << "[.NET] Unable to create app domain: 0x" << std::hex << result << std::endl;
+
+        return false;
+    }
+
+    // execute assembly to set a valid entry point which is needed by some libraries as mysql
+    auto libraryPath = getAbsolutePath(std::string(PLUGIN_DIR_PATH) + PLUGIN_NAME);
+
+    result = _executeAssembly(
+        _runtimeHost,
+        _domainId,
+        0,
+        nullptr,
+        libraryPath.c_str(),
+        nullptr
+    );
+
+    if (result < 0) {
+        std::cerr << "[.NET] Unable to execute assembly: 0x" << std::hex << result << std::endl;
 
         return false;
     }

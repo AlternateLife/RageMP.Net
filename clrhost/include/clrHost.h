@@ -53,6 +53,7 @@ private:
     coreclr_initialize_ptr _initializeCoreCLR;
     coreclr_shutdown_2_ptr _shutdownCoreCLR;
     coreclr_create_delegate_ptr _createDelegate;
+    coreclr_execute_assembly_ptr _executeAssembly;
 
     void *_runtimeHost;
     unsigned int _domainId;
