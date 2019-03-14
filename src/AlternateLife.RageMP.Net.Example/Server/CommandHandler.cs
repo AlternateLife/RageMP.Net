@@ -22,7 +22,7 @@ namespace AlternateLife.RageMP.Net.Example
         [Command("weather")]
         public async Task Weather(IPlayer player, WeatherType weatherType)
         {
-            MP.World.Weather = weatherType;
+            await MP.World.SetWeatherAsync(weatherType);
             await player.OutputChatBoxAsync("Weather changed");
         }
 
