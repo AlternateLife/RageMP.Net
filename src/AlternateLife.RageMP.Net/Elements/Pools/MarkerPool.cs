@@ -17,18 +17,31 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
+        public IMarker New(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
         {
-            var pointer = await _plugin
-                .Schedule(() => Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color.ToModColor(), visible, dimension))
-                .ConfigureAwait(false);
+            var pointer = Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color.ToModColor(), visible, dimension);
 
             return CreateAndSaveEntity(pointer);
+        }
+
+        public Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
+        {
+            return _plugin.Schedule(() => New(type, position, rotation, direction, scale, color, visible, dimension));
+        }
+
+        public IMarker New(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
+        {
+            return New((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }
 
         public Task<IMarker> NewAsync(uint type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
         {
             return NewAsync((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
+        }
+
+        public IMarker New(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)
+        {
+            return New((MarkerType) type, position, rotation, direction, scale, color, visible, dimension);
         }
 
         public Task<IMarker> NewAsync(int type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, Color color, bool visible, uint dimension)

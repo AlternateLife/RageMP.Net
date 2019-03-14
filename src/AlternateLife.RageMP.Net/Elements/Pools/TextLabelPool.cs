@@ -2,7 +2,6 @@ using System;
 using System.Drawing;
 using System.Numerics;
 using System.Threading.Tasks;
-using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
@@ -17,7 +16,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, Color color, float drawDistance, bool los, uint dimension)
+        public ITextLabel New(Vector3 position, string text, uint font, Color color, float drawDistance, bool los, uint dimension)
         {
             Contract.NotNull(text, nameof(text));
 
@@ -25,12 +24,20 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
             {
                 var textPointer = converter.StringToPointer(text);
 
-                var pointer = await _plugin
-                    .Schedule(() => Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, textPointer, font, color.ToModColor(), drawDistance, los, dimension))
-                    .ConfigureAwait(false);
+                var pointer = Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, textPointer, font, color.ToModColor(), drawDistance, los, dimension);
 
                 return CreateAndSaveEntity(pointer);
             }
+        }
+
+        public Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, Color color, float drawDistance, bool los, uint dimension)
+        {
+            return _plugin.Schedule(() => New(position, text, font, color, drawDistance, los, dimension));
+        }
+
+        public ITextLabel New(Vector3 position, string text, int font, Color color, float drawDistance, bool los, uint dimension)
+        {
+            return New(position, text, (uint) font, color, drawDistance, los, dimension);
         }
 
         public Task<ITextLabel> NewAsync(Vector3 position, string text, int font, Color color, float drawDistance, bool los, uint dimension)
