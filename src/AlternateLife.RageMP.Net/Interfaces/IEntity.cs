@@ -38,7 +38,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="model">New model of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void SetModel(uint model);
+
+        /// <summary>
+        /// Set the model the the entity.
+        /// </summary>
+        /// <param name="model">New model of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task SetModelAsync(uint model);
+
+        /// <summary>
+        /// Get the model of the entity.
+        /// </summary>
+        /// <returns>Model of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        uint GetModel();
 
         /// <summary>
         /// Get the model of the entity.
@@ -52,7 +66,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="alpha">New alpha of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void SetAlpha(uint alpha);
+
+        /// <summary>
+        /// Set the alpha of the entity.
+        /// </summary>
+        /// <param name="alpha">New alpha of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task SetAlphaAsync(uint alpha);
+
+        /// <summary>
+        /// Get the alpha of the entity.
+        /// </summary>
+        /// <returns>Alpha of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        uint GetAlpha();
 
         /// <summary>
         /// Get the alpha of the entity.
@@ -66,7 +94,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="dimension">New Dimension of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void SetDimension(uint dimension);
+
+        /// <summary>
+        /// Set the dimension of the entity.
+        /// </summary>
+        /// <param name="dimension">New Dimension of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task SetDimensionAsync(uint dimension);
+
+        /// <summary>
+        /// Get the dimension of the entity.
+        /// </summary>
+        /// <returns>Dimension of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        uint GetDimension();
 
         /// <summary>
         /// Get the dimension of the entity.
@@ -80,7 +122,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="position">New position of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void SetPosition(Vector3 position);
+
+        /// <summary>
+        /// Set the position of the entity.
+        /// </summary>
+        /// <param name="position">New position of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task SetPositionAsync(Vector3 position);
+
+        /// <summary>
+        /// Get the position of the entity.
+        /// </summary>
+        /// <returns>Position of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Vector3 GetPosition();
 
         /// <summary>
         /// Get the position of the entity.
@@ -94,7 +150,21 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="rotation">New rotation of the entity</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void SetRotation(Vector3 rotation);
+
+        /// <summary>
+        /// Set the rotation of the entity.
+        /// </summary>
+        /// <param name="rotation">New rotation of the entity</param>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task SetRotationAsync(Vector3 rotation);
+
+        /// <summary>
+        /// Get the rotation of the entity.
+        /// </summary>
+        /// <returns>Rotation of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Vector3 GetRotation();
 
         /// <summary>
         /// Get the rotation of the entity.
@@ -108,7 +178,20 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <returns>Velocity of the entity</returns>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        Vector3 GetVelocity();
+
+        /// <summary>
+        /// Get the velocity of the entity.
+        /// </summary>
+        /// <returns>Velocity of the entity</returns>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
         Task<Vector3> GetVelocityAsync();
+
+        /// <summary>
+        /// Destroy the entity.
+        /// </summary>
+        /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
+        void Destroy();
 
         /// <summary>
         /// Destroy the entity.
