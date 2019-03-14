@@ -15,13 +15,21 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
+        public ICheckpoint New(uint type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
         {
-            var pointer = await _plugin
-                .Schedule(() => Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color.GetNumberValue(), visible, dimension))
-                .ConfigureAwait(false);
+            var pointer = Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color.GetNumberValue(), visible, dimension);
 
             return CreateAndSaveEntity(pointer);
+        }
+
+        public Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
+        {
+            return _plugin.Schedule(() => New(type, position, nextPosition, radius, color, visible, dimension));
+        }
+
+        public ICheckpoint New(int type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)
+        {
+            return New((uint) type, position, nextPosition, radius, color, visible, dimension);
         }
 
         public Task<ICheckpoint> NewAsync(int type, Vector3 position, Vector3 nextPosition, float radius, Color color, bool visible, uint dimension)

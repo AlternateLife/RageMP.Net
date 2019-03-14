@@ -15,25 +15,38 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         {
         }
 
-        public async Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
+        public IVehicle New(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
             Contract.NotNull(numberPlate, nameof(numberPlate));
-            
+
             using (var converter = new StringConverter())
             {
                 var numberplatePointer = converter.StringToPointer(numberPlate);
 
-                var pointer = await _plugin
-                    .Schedule(() => Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, numberplatePointer, alpha, locked, engine, dimension))
-                    .ConfigureAwait(false);
+                var pointer = Rage.VehiclePool.VehiclePool_New(_nativePointer, (uint) model, position, heading, numberplatePointer, alpha, locked, engine, dimension);
 
                 return CreateAndSaveEntity(pointer);
             }
         }
 
+        public Task<IVehicle> NewAsync(VehicleHash model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
+        {
+            return _plugin.Schedule(() => New(model, position, heading, numberPlate, alpha, locked, engine, dimension));
+        }
+
+        public IVehicle New(uint model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
+        {
+            return New((VehicleHash) model, position, heading, numberPlate, alpha, locked, engine, dimension);
+        }
+
         public Task<IVehicle> NewAsync(uint model, Vector3 position, float heading, string numberPlate, uint alpha, bool locked, bool engine, uint dimension)
         {
             return NewAsync((VehicleHash) model, position, heading, numberPlate, alpha, locked, engine, dimension);
+        }
+
+        public IVehicle New(int model, Vector3 position, float heading, string numberPlate, int alpha, bool locked, bool engine, uint dimension)
+        {
+            return New((VehicleHash) model, position, heading, numberPlate, (uint) alpha, locked, engine, dimension);
         }
 
         public Task<IVehicle> NewAsync(int model, Vector3 position, float heading, string numberPlate, int alpha, bool locked, bool engine, uint dimension)
