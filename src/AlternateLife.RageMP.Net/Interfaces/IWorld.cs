@@ -8,26 +8,48 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface IWorld
     {
         /// <summary>
-        /// Get or set the time of the world.
+        /// Set the time of the world.
         /// </summary>
-        TimeData Time { get; set; }
+        Task SetTimeAsync(TimeData time);
 
         /// <summary>
-        /// Get or set the weather of the world.
+        /// Get the time of the world.
+        /// </summary>
+        Task<TimeData> GetTimeAsync();
+
+        /// <summary>
+        /// Set the weather of the world.
         ///
         /// If value is set to WeatherType.XMAS, snow will lay on the ground.
         /// </summary>
-        WeatherType Weather { get; set; }
+        Task SetWeatherAsync(WeatherType type);
 
         /// <summary>
-        /// Get or set the traffic lights lock state of the world.
+        /// Get the weather of the world.
+        ///
+        /// If value is set to WeatherType.XMAS, snow will lay on the ground.
         /// </summary>
-        bool AreTrafficLightsLocked { get; set; }
+        Task<WeatherType> GetWeatherAsync();
 
         /// <summary>
-        /// Get or set the traffic light state of the world.
+        /// Set the traffic lights lock state of the world.
         /// </summary>
-        int TrafficLightsState { get; set; }
+        Task SetTrafficLightsLockedAsync(bool locked);
+
+        /// <summary>
+        /// Get the traffic lights lock state of the world.
+        /// </summary>
+        Task<bool> AreTrafficLightsLockedAsync();
+
+        /// <summary>
+        /// Set the traffic light state of the world.
+        /// </summary>
+        Task SetTrafficLightsStateAsync(int state);
+
+        /// <summary>
+        /// Get the traffic light state of the world.
+        /// </summary>
+        Task<int> GetTrafficLightsStateAsync();
 
         /// <summary>
         /// Start a weather transition on the world.
