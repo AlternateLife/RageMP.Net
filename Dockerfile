@@ -21,7 +21,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release .. && \
     make install
 
 ############# .NET Stage #############
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.104 as dotnet
 
 ARG bridge_version=1.0.0.0
 
@@ -50,3 +50,4 @@ EXPOSE 22005/udp
 EXPOSE 22006/tcp
 
 CMD cp -r /ragemp-config . && ./server
+
