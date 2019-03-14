@@ -13,46 +13,71 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         private readonly IntPtr _nativePointer;
         private readonly Plugin _plugin;
 
-        public TimeData Time
-        {
-            get => StructConverter.PointerToStruct<TimeData>(Rage.World.World_GetTime(_nativePointer));
-            set => Rage.World.World_SetTime(_nativePointer, value.NumberValue);
-        }
-
-        public WeatherType Weather
-        {
-            get => ConvertWeatherNameToType(StringConverter.PointerToString(Rage.World.World_GetWeather(_nativePointer)));
-            set
-            {
-                var weatherName = ConvertWeatherTypeToName(value);
-                if (string.IsNullOrEmpty(weatherName))
-                {
-                    return;
-                }
-
-                using (var converter = new StringConverter())
-                {
-                    Rage.World.World_SetWeather(_nativePointer, converter.StringToPointer(weatherName));
-                }
-            }
-        }
-
-        public bool AreTrafficLightsLocked
-        {
-            get => Rage.World.World_AreTrafficLightsLocked(_nativePointer);
-            set => Rage.World.World_LockTrafficLights(_nativePointer, value);
-        }
-
-        public int TrafficLightsState
-        {
-            get => Rage.World.World_GetTrafficLightsState(_nativePointer);
-            set => Rage.World.World_SetTrafficLightsState(_nativePointer, value);
-        }
-
         public World(IntPtr nativePointer, Plugin plugin)
         {
             _nativePointer = nativePointer;
             _plugin = plugin;
+        }
+
+        public Task SetTimeAsync(TimeData time)
+        {
+            return _plugin.Schedule(() => Rage.World.World_SetTime(_nativePointer, time.NumberValue));
+        }
+
+        public async Task<TimeData> GetTimeAsync()
+        {
+            var timePointer = await _plugin
+                .Schedule(() => Rage.World.World_GetTime(_nativePointer))
+                .ConfigureAwait(false);
+
+            return StructConverter.PointerToStruct<TimeData>(timePointer);
+        }
+
+        public async Task SetWeatherAsync(WeatherType type)
+        {
+            var weatherName = ConvertWeatherTypeToName(type);
+            if (string.IsNullOrEmpty(weatherName))
+            {
+                return;
+            }
+
+            using (var converter = new StringConverter())
+            {
+                var weatherPointer = converter.StringToPointer(weatherName);
+
+                await _plugin
+                    .Schedule(() => Rage.World.World_SetWeather(_nativePointer, weatherPointer))
+                    .ConfigureAwait(false);
+            }
+        }
+
+        public async Task<WeatherType> GetWeatherAsync()
+        {
+            var weatherPointer = await _plugin
+                .Schedule(() => Rage.World.World_GetWeather(_nativePointer))
+                .ConfigureAwait(false);
+
+            return ConvertWeatherNameToType(StringConverter.PointerToString(weatherPointer));
+        }
+
+        public Task SetTrafficLightsLockedAsync(bool locked)
+        {
+            return _plugin.Schedule(() => Rage.World.World_LockTrafficLights(_nativePointer, locked));
+        }
+
+        public Task<bool> AreTrafficLightsLockedAsync()
+        {
+            return _plugin.Schedule(() => Rage.World.World_AreTrafficLightsLocked(_nativePointer));
+        }
+
+        public Task SetTrafficLightsStateAsync(int state)
+        {
+            return _plugin.Schedule(() => Rage.World.World_SetTrafficLightsState(_nativePointer, state));
+        }
+
+        public Task<int> GetTrafficLightsStateAsync()
+        {
+            return _plugin.Schedule(() => Rage.World.World_GetTrafficLightsState(_nativePointer));
         }
 
         public async Task SetWeatherTransitionAsync(WeatherType weather, float time)
