@@ -14,217 +14,217 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         private readonly Plugin _plugin;
         private readonly RemoteEventHandler _remoteEventHandler;
 
-        private readonly NativeEventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate> _entityCreated;
+        private readonly NativeEventDispatcher<NativeEntityCreatedDelegate, EntityCreatedDelegate> _entityCreated;
         public event EntityCreatedDelegate EntityCreated
         {
             add => _entityCreated.Subscribe(value);
             remove => _entityCreated.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeEntityDestroyedDelegate, EntityDestroyedDelegate> _entityDestroyed;
+        private readonly NativeEventDispatcher<NativeEntityDestroyedDelegate, EntityDestroyedDelegate> _entityDestroyed;
         public event EntityDestroyedDelegate EntityDestroyed
         {
             add => _entityDestroyed.Subscribe(value);
             remove => _entityDestroyed.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeEntityModelChangeDelegate, EntityModelChangeDelegate> _entityModelChange;
+        private readonly NativeEventDispatcher<NativeEntityModelChangeDelegate, EntityModelChangeDelegate> _entityModelChange;
         public event EntityModelChangeDelegate EntityModelChange
         {
             add => _entityModelChange.Subscribe(value);
             remove => _entityModelChange.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeTickDelegate, TickDelegate> _tick;
+        private readonly NativeEventDispatcher<NativeTickDelegate, TickDelegate> _tick;
         public event TickDelegate Tick
         {
             add => _tick.Subscribe(value);
             remove => _tick.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerJoinDelegate, PlayerJoinDelegate> _playerJoin;
+        private readonly NativeEventDispatcher<NativePlayerJoinDelegate, PlayerJoinDelegate> _playerJoin;
         public event PlayerJoinDelegate PlayerJoin
         {
             add => _playerJoin.Subscribe(value);
             remove => _playerJoin.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerReadyDelegate, PlayerReadyDelegate> _playerReady;
+        private readonly NativeEventDispatcher<NativePlayerReadyDelegate, PlayerReadyDelegate> _playerReady;
         public event PlayerReadyDelegate PlayerReady
         {
             add => _playerReady.Subscribe(value);
             remove => _playerReady.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate> _playerDeath;
+        private readonly NativeEventDispatcher<NativePlayerDeathDelegate, PlayerDeathDelegate> _playerDeath;
         public event PlayerDeathDelegate PlayerDeath
         {
             add => _playerDeath.Subscribe(value);
             remove => _playerDeath.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerQuitDelegate, PlayerQuitDelegate> _playerQuit;
+        private readonly NativeEventDispatcher<NativePlayerQuitDelegate, PlayerQuitDelegate> _playerQuit;
         public event PlayerQuitDelegate PlayerQuit
         {
             add => _playerQuit.Subscribe(value);
             remove => _playerQuit.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate> _playerCommand;
+        private readonly NativeEventDispatcher<NativePlayerCommandDelegate, PlayerCommandDelegate> _playerCommand;
         public event PlayerCommandDelegate PlayerCommand
         {
             add => _playerCommand.Subscribe(value);
             remove => _playerCommand.Unsubscribe(value);
         }
 
-        private readonly Helpers.EventHandler<PlayerCommandFailedDelegate> _playerCommandFailed;
+        private readonly Helpers.EventDispatcher<PlayerCommandFailedDelegate> _playerCommandFailed;
         public event PlayerCommandFailedDelegate PlayerCommandFailed
         {
             add => _playerCommandFailed.Subscribe(value);
             remove => _playerCommandFailed.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerChatDelegate, PlayerChatDelegate> _playerChat;
+        private readonly NativeEventDispatcher<NativePlayerChatDelegate, PlayerChatDelegate> _playerChat;
         public event PlayerChatDelegate PlayerChat
         {
             add => _playerChat.Subscribe(value);
             remove => _playerChat.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerSpawnDelegate, PlayerSpawnDelegate> _playerSpawn;
+        private readonly NativeEventDispatcher<NativePlayerSpawnDelegate, PlayerSpawnDelegate> _playerSpawn;
         public event PlayerSpawnDelegate PlayerSpawn
         {
             add => _playerSpawn.Subscribe(value);
             remove => _playerSpawn.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerDamageDelegate, PlayerDamageDelegate> _playerDamage;
+        private readonly NativeEventDispatcher<NativePlayerDamageDelegate, PlayerDamageDelegate> _playerDamage;
         public event PlayerDamageDelegate PlayerDamage
         {
             add => _playerDamage.Subscribe(value);
             remove => _playerDamage.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeDelegate> _playerWeaponChange;
+        private readonly NativeEventDispatcher<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeDelegate> _playerWeaponChange;
         public event PlayerWeaponChangeDelegate PlayerWeaponChange
         {
             add => _playerWeaponChange.Subscribe(value);
             remove => _playerWeaponChange.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerStartEnterVehicleDelegate, PlayerStartEnterVehicleDelegate> _playerStartEnterVehicle;
+        private readonly NativeEventDispatcher<NativePlayerStartEnterVehicleDelegate, PlayerStartEnterVehicleDelegate> _playerStartEnterVehicle;
         public event PlayerStartEnterVehicleDelegate PlayerStartEnterVehicle
         {
             add => _playerStartEnterVehicle.Subscribe(value);
             remove => _playerStartEnterVehicle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate> _playerEnterVehicle;
+        private readonly NativeEventDispatcher<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate> _playerEnterVehicle;
         public event PlayerEnterVehicleDelegate PlayerEnterVehicle
         {
             add => _playerEnterVehicle.Subscribe(value);
             remove => _playerEnterVehicle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate> _playerStartExitVehicle;
+        private readonly NativeEventDispatcher<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate> _playerStartExitVehicle;
         public event PlayerStartExitVehicleDelegate PlayerStartExitVehicle
         {
             add => _playerStartExitVehicle.Subscribe(value);
             remove => _playerStartExitVehicle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate> _playerExitVehicle;
+        private readonly NativeEventDispatcher<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate> _playerExitVehicle;
         public event PlayerExitVehicleDelegate PlayerExitVehicle
         {
             add => _playerExitVehicle.Subscribe(value);
             remove => _playerExitVehicle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate> _playerEnterCheckpoint;
+        private readonly NativeEventDispatcher<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate> _playerEnterCheckpoint;
         public event PlayerEnterCheckpointDelegate PlayerEnterCheckpoint
         {
             add => _playerEnterCheckpoint.Subscribe(value);
             remove => _playerEnterCheckpoint.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate> _playerExitCheckpoint;
+        private readonly NativeEventDispatcher<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate> _playerExitCheckpoint;
         public event PlayerExitCheckpointDelegate PlayerExitCheckpoint
         {
             add => _playerExitCheckpoint.Subscribe(value);
             remove => _playerExitCheckpoint.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate> _playerEnterColshape;
+        private readonly NativeEventDispatcher<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate> _playerEnterColshape;
         public event PlayerEnterColshapeDelegate PlayerEnterColshape
         {
             add => _playerEnterColshape.Subscribe(value);
             remove => _playerEnterColshape.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate> _playerExitColshape;
+        private readonly NativeEventDispatcher<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate> _playerExitColshape;
         public event PlayerExitColshapeDelegate PlayerExitColshape
         {
             add => _playerExitColshape.Subscribe(value);
             remove => _playerExitColshape.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeVehicleDeathDelegate, VehicleDeathDelegate> _vehicleDeath;
+        private readonly NativeEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathDelegate> _vehicleDeath;
         public event VehicleDeathDelegate VehicleDeath
         {
             add => _vehicleDeath.Subscribe(value);
             remove => _vehicleDeath.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate> _vehicleSirenToggle;
+        private readonly NativeEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate> _vehicleSirenToggle;
         public event VehicleSirenToggleDelegate VehicleSirenToggle
         {
             add => _vehicleSirenToggle.Subscribe(value);
             remove => _vehicleSirenToggle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate> _vehicleHornToggle;
+        private readonly NativeEventDispatcher<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate> _vehicleHornToggle;
         public event VehicleHornToggleDelegate VehicleHornToggle
         {
             add => _vehicleHornToggle.Subscribe(value);
             remove => _vehicleHornToggle.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate> _vehicleTrailerAttached;
+        private readonly NativeEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate> _vehicleTrailerAttached;
         public event VehicleTrailerAttachedDelegate VehicleTrailerAttached
         {
             add => _vehicleTrailerAttached.Subscribe(value);
             remove => _vehicleTrailerAttached.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativeVehicleDamageDelegate, VehicleDamageDelegate> _vehicleDamage;
+        private readonly NativeEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageDelegate> _vehicleDamage;
         public event VehicleDamageDelegate VehicleDamage
         {
             add => _vehicleDamage.Subscribe(value);
             remove => _vehicleDamage.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate> _playerCreateWaypoint;
+        private readonly NativeEventDispatcher<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate> _playerCreateWaypoint;
         public event PlayerCreateWaypointDelegate PlayerCreateWaypoint
         {
             add => _playerCreateWaypoint.Subscribe(value);
             remove => _playerCreateWaypoint.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate> _playerReachWaypoint;
+        private readonly NativeEventDispatcher<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate> _playerReachWaypoint;
         public event PlayerReachWaypointDelegate PlayerReachWaypoint
         {
             add => _playerReachWaypoint.Subscribe(value);
             remove => _playerReachWaypoint.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerStreamInDelegate, PlayerStreamInDelegate> _playerStreamIn;
+        private readonly NativeEventDispatcher<NativePlayerStreamInDelegate, PlayerStreamInDelegate> _playerStreamIn;
         public event PlayerStreamInDelegate PlayerStreamIn
         {
             add => _playerStreamIn.Subscribe(value);
             remove => _playerStreamIn.Unsubscribe(value);
         }
 
-        private readonly NativeEventHandler<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate> _playerStreamOut;
+        private readonly NativeEventDispatcher<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate> _playerStreamOut;
         public event PlayerStreamOutDelegate PlayerStreamOut
         {
             add => _playerStreamOut.Subscribe(value);
@@ -236,45 +236,45 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
             _remoteEventHandler = new RemoteEventHandler(plugin);
 
-            _tick = new NativeEventHandler<NativeTickDelegate, TickDelegate>(plugin, EventType.Tick, DispatchTick, true);
+            _tick = new NativeEventDispatcher<NativeTickDelegate, TickDelegate>(plugin, EventType.Tick, DispatchTick, true);
 
-            _entityCreated = new NativeEventHandler<NativeEntityCreatedDelegate, EntityCreatedDelegate>(plugin, EventType.EntityCreated, DispatchEntityCreated, true);
-            _entityDestroyed = new NativeEventHandler<NativeEntityDestroyedDelegate, EntityDestroyedDelegate>(plugin, EventType.EntityDestroyed, DispatchEntityDestroyed, true);
-            _entityModelChange = new NativeEventHandler<NativeEntityModelChangeDelegate, EntityModelChangeDelegate>(plugin, EventType.EntityModelChanged, DispatchEntityModelChange);
+            _entityCreated = new NativeEventDispatcher<NativeEntityCreatedDelegate, EntityCreatedDelegate>(plugin, EventType.EntityCreated, DispatchEntityCreated, true);
+            _entityDestroyed = new NativeEventDispatcher<NativeEntityDestroyedDelegate, EntityDestroyedDelegate>(plugin, EventType.EntityDestroyed, DispatchEntityDestroyed, true);
+            _entityModelChange = new NativeEventDispatcher<NativeEntityModelChangeDelegate, EntityModelChangeDelegate>(plugin, EventType.EntityModelChanged, DispatchEntityModelChange);
 
-            _playerJoin = new NativeEventHandler<NativePlayerJoinDelegate, PlayerJoinDelegate>(plugin, EventType.PlayerJoin, DispatchPlayerJoin);
-            _playerReady = new NativeEventHandler<NativePlayerReadyDelegate, PlayerReadyDelegate>(plugin, EventType.PlayerReady, DispatchPlayerReady);
-            _playerDeath = new NativeEventHandler<NativePlayerDeathDelegate, PlayerDeathDelegate>(plugin, EventType.PlayerDeath, DispatchPlayerDeath);
-            _playerQuit = new NativeEventHandler<NativePlayerQuitDelegate, PlayerQuitDelegate>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
-            _playerCommand = new NativeEventHandler<NativePlayerCommandDelegate, PlayerCommandDelegate>(plugin, EventType.PlayerCommand, DispatchPlayerCommand, true);
-            _playerCommandFailed = new Helpers.EventHandler<PlayerCommandFailedDelegate>(plugin);
-            _playerChat = new NativeEventHandler<NativePlayerChatDelegate, PlayerChatDelegate>(plugin, EventType.PlayerChat, DispatchPlayerChat);
-            _playerSpawn = new NativeEventHandler<NativePlayerSpawnDelegate, PlayerSpawnDelegate>(plugin, EventType.PlayerSpawn, DispatchPlayerSpawn);
-            _playerDamage = new NativeEventHandler<NativePlayerDamageDelegate, PlayerDamageDelegate>(plugin, EventType.PlayerDamage, DispatchPlayerDamage);
-            _playerWeaponChange = new NativeEventHandler<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeDelegate>(plugin, EventType.PlayerWeaponChange, DispatchPlayerWeaponChange);
+            _playerJoin = new NativeEventDispatcher<NativePlayerJoinDelegate, PlayerJoinDelegate>(plugin, EventType.PlayerJoin, DispatchPlayerJoin);
+            _playerReady = new NativeEventDispatcher<NativePlayerReadyDelegate, PlayerReadyDelegate>(plugin, EventType.PlayerReady, DispatchPlayerReady);
+            _playerDeath = new NativeEventDispatcher<NativePlayerDeathDelegate, PlayerDeathDelegate>(plugin, EventType.PlayerDeath, DispatchPlayerDeath);
+            _playerQuit = new NativeEventDispatcher<NativePlayerQuitDelegate, PlayerQuitDelegate>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
+            _playerCommand = new NativeEventDispatcher<NativePlayerCommandDelegate, PlayerCommandDelegate>(plugin, EventType.PlayerCommand, DispatchPlayerCommand, true);
+            _playerCommandFailed = new Helpers.EventDispatcher<PlayerCommandFailedDelegate>(plugin);
+            _playerChat = new NativeEventDispatcher<NativePlayerChatDelegate, PlayerChatDelegate>(plugin, EventType.PlayerChat, DispatchPlayerChat);
+            _playerSpawn = new NativeEventDispatcher<NativePlayerSpawnDelegate, PlayerSpawnDelegate>(plugin, EventType.PlayerSpawn, DispatchPlayerSpawn);
+            _playerDamage = new NativeEventDispatcher<NativePlayerDamageDelegate, PlayerDamageDelegate>(plugin, EventType.PlayerDamage, DispatchPlayerDamage);
+            _playerWeaponChange = new NativeEventDispatcher<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeDelegate>(plugin, EventType.PlayerWeaponChange, DispatchPlayerWeaponChange);
 
-            _playerStartEnterVehicle = new NativeEventHandler<NativePlayerStartEnterVehicleDelegate, PlayerStartEnterVehicleDelegate>(plugin, EventType.PlayerStartEnterVehicle, DispatchStartEnterVehicle);
-            _playerEnterVehicle = new NativeEventHandler<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate>(plugin, EventType.PlayerEnterVehicle, DispatchPlayerEnterVehicle);
-            _playerStartExitVehicle = new NativeEventHandler<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate>(plugin, EventType.PlayerStartExitVehicle, DispatchStartExitVehicle);
-            _playerExitVehicle = new NativeEventHandler<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate>(plugin, EventType.PlayerExitVehicle, DispatchPlayerExitVehicle);
+            _playerStartEnterVehicle = new NativeEventDispatcher<NativePlayerStartEnterVehicleDelegate, PlayerStartEnterVehicleDelegate>(plugin, EventType.PlayerStartEnterVehicle, DispatchStartEnterVehicle);
+            _playerEnterVehicle = new NativeEventDispatcher<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleDelegate>(plugin, EventType.PlayerEnterVehicle, DispatchPlayerEnterVehicle);
+            _playerStartExitVehicle = new NativeEventDispatcher<NativePlayerStartExitVehicleDelegate, PlayerStartExitVehicleDelegate>(plugin, EventType.PlayerStartExitVehicle, DispatchStartExitVehicle);
+            _playerExitVehicle = new NativeEventDispatcher<NativePlayerExitVehicleDelegate, PlayerExitVehicleDelegate>(plugin, EventType.PlayerExitVehicle, DispatchPlayerExitVehicle);
 
-            _playerEnterCheckpoint = new NativeEventHandler<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate>(plugin, EventType.PlayerEnterCheckpoint, DispatchPlayerEnterCheckpoint);
-            _playerExitCheckpoint = new NativeEventHandler<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate>(plugin, EventType.PlayerExitCheckpoint, DispatchPlayerExitCheckpoint);
+            _playerEnterCheckpoint = new NativeEventDispatcher<NativePlayerEnterCheckpointDelegate, PlayerEnterCheckpointDelegate>(plugin, EventType.PlayerEnterCheckpoint, DispatchPlayerEnterCheckpoint);
+            _playerExitCheckpoint = new NativeEventDispatcher<NativePlayerExitCheckpointDelegate, PlayerExitCheckpointDelegate>(plugin, EventType.PlayerExitCheckpoint, DispatchPlayerExitCheckpoint);
 
-            _playerEnterColshape = new NativeEventHandler<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate>(plugin, EventType.PlayerEnterColshape, DispatchPlayerEnterColshape);
-            _playerExitColshape = new NativeEventHandler<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate>(plugin, EventType.PlayerExitColshape, DispatchPlayerExitColshape);
+            _playerEnterColshape = new NativeEventDispatcher<NativePlayerEnterColshapeDelegate, PlayerEnterColshapeDelegate>(plugin, EventType.PlayerEnterColshape, DispatchPlayerEnterColshape);
+            _playerExitColshape = new NativeEventDispatcher<NativePlayerExitColshapeDelegate, PlayerExitColshapeDelegate>(plugin, EventType.PlayerExitColshape, DispatchPlayerExitColshape);
 
-            _playerCreateWaypoint = new NativeEventHandler<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate>(plugin, EventType.PlayerCreateWaypoint, DispatchPlayerCreateWaypoint);
-            _playerReachWaypoint = new NativeEventHandler<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate>(plugin, EventType.PlayerReachWaypoint, DispatchPlayerReachWaypoint);
+            _playerCreateWaypoint = new NativeEventDispatcher<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointDelegate>(plugin, EventType.PlayerCreateWaypoint, DispatchPlayerCreateWaypoint);
+            _playerReachWaypoint = new NativeEventDispatcher<NativePlayerReachWaypointDelegate, PlayerReachWaypointDelegate>(plugin, EventType.PlayerReachWaypoint, DispatchPlayerReachWaypoint);
 
-            _playerStreamIn = new NativeEventHandler<NativePlayerStreamInDelegate, PlayerStreamInDelegate>(plugin, EventType.PlayerStreamIn, DispatchPlayerStreamIn);
-            _playerStreamOut = new NativeEventHandler<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate>(plugin, EventType.PlayerStreamOut, DispatchPlayerStreamOut);
+            _playerStreamIn = new NativeEventDispatcher<NativePlayerStreamInDelegate, PlayerStreamInDelegate>(plugin, EventType.PlayerStreamIn, DispatchPlayerStreamIn);
+            _playerStreamOut = new NativeEventDispatcher<NativePlayerStreamOutDelegate, PlayerStreamOutDelegate>(plugin, EventType.PlayerStreamOut, DispatchPlayerStreamOut);
 
-            _vehicleDeath = new NativeEventHandler<NativeVehicleDeathDelegate, VehicleDeathDelegate>(plugin, EventType.VehicleDeath, DispatchVehicleDeath);
-            _vehicleSirenToggle = new NativeEventHandler<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate>(plugin, EventType.VehicleSirenToggle, DispatchVehicleSirenToggle);
-            _vehicleHornToggle = new NativeEventHandler<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate>(plugin, EventType.VehicleHornToggle, DispatchVehicleHornToggle);
-            _vehicleTrailerAttached = new NativeEventHandler<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate>(plugin, EventType.VehicleTrailerAttached, DispatchTrailerAttached);
-            _vehicleDamage = new NativeEventHandler<NativeVehicleDamageDelegate, VehicleDamageDelegate>(plugin, EventType.VehicleDamage, DispatchVehicleDamage);
+            _vehicleDeath = new NativeEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathDelegate>(plugin, EventType.VehicleDeath, DispatchVehicleDeath);
+            _vehicleSirenToggle = new NativeEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate>(plugin, EventType.VehicleSirenToggle, DispatchVehicleSirenToggle);
+            _vehicleHornToggle = new NativeEventDispatcher<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate>(plugin, EventType.VehicleHornToggle, DispatchVehicleHornToggle);
+            _vehicleTrailerAttached = new NativeEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate>(plugin, EventType.VehicleTrailerAttached, DispatchTrailerAttached);
+            _vehicleDamage = new NativeEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageDelegate>(plugin, EventType.VehicleDamage, DispatchVehicleDamage);
         }
 
         public void Add(string eventName, PlayerRemoteEventDelegate callback)
