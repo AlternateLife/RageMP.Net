@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class EventHandler<TEvent>
+    internal class EventDispatcher<TEvent>
     {
         private readonly Plugin _plugin;
 
         protected readonly HashSet<TEvent> _subscriptions = new HashSet<TEvent>();
 
-        public EventHandler(Plugin plugin)
+        public EventDispatcher(Plugin plugin)
         {
             _plugin = plugin;
         }

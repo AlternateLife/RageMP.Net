@@ -5,13 +5,13 @@ using AlternateLife.RageMP.Net.Native;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class NativeEventHandler<TNative, TEvent> : EventHandler<TEvent>
+    internal class NativeEventDispatcher<TNative, TEvent> : EventDispatcher<TEvent>
     {
         private readonly EventType _type;
         private readonly TNative _nativeCallback;
         private readonly bool _forceRegistration;
 
-        public NativeEventHandler(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false) : base(plugin)
+        public NativeEventDispatcher(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false) : base(plugin)
         {
             _type = type;
             _nativeCallback = nativeCallback;
