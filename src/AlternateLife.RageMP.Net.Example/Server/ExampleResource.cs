@@ -29,32 +29,32 @@ namespace AlternateLife.RageMP.Net.Example
             return Task.CompletedTask;
         }
 
-        private async Task OnPlayerJoin(object sender, PlayerEventArgs e)
+        private async Task OnPlayerJoin(object sender, PlayerEventArgs eventArgs)
         {
-            var player = e.Player;
+            var player = eventArgs.Player;
 
             MP.Logger.Info($"Player {await player.GetSocialClubNameAsync()} ({await player.GetIpAsync()}) joined!");
         }
 
-        private async Task OnPlayerReady(object sender, PlayerEventArgs e)
+        private async Task OnPlayerReady(object sender, PlayerEventArgs eventArgs)
         {
-            var player = e.Player;
+            var player = eventArgs.Player;
 
             await player.SetDimensionAsync(MP.GlobalDimension);
 
             MP.Logger.Info($"Player {await player.GetSocialClubNameAsync()} ({await player.GetIpAsync()}) is ready now.");
         }
 
-        private async Task OnPlayerDeath(object sender, PlayerDeathEventArgs e)
+        private async Task OnPlayerDeath(object sender, PlayerDeathEventArgs eventArgs)
         {
-            var player = e.Player;
+            var player = eventArgs.Player;
 
             await player.SpawnAsync(await player.GetPositionAsync(), await player.GetHeadingAsync());
         }
 
-        private Task OnPlayerCommandFailed(object sender, PlayerCommandFailedEventArgs e)
+        private Task OnPlayerCommandFailed(object sender, PlayerCommandFailedEventArgs eventArgs)
         {
-            return e.Player.OutputChatBoxAsync(e.ErrorMessage);
+            return eventArgs.Player.OutputChatBoxAsync(eventArgs.ErrorMessage);
         }
     }
 }
