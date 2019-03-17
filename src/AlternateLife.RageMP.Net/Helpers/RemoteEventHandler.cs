@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Data;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Native;
 using AlternateLife.RageMP.Net.Scripting;
 
@@ -12,18 +13,20 @@ namespace AlternateLife.RageMP.Net.Helpers
     {
         private readonly Plugin _plugin;
 
-        private readonly ConcurrentDictionary<string, HashSet<PlayerRemoteEventDelegate>> _subscriptions = new ConcurrentDictionary<string, HashSet<PlayerRemoteEventDelegate>>();
+        private readonly ConcurrentDictionary<string, HashSet<AsyncEventHandler<PlayerRemoteEventEventArgs>>> _subscriptions;
 
         internal RemoteEventHandler(Plugin plugin)
         {
             _plugin = plugin;
+
+            _subscriptions = new ConcurrentDictionary<string, HashSet<AsyncEventHandler<PlayerRemoteEventEventArgs>>>();
         }
 
-        public void Subscribe(string eventName, PlayerRemoteEventDelegate callback)
+        public void Subscribe(string eventName, AsyncEventHandler<PlayerRemoteEventEventArgs> callback)
         {
             if (_subscriptions.TryGetValue(eventName, out var eventSubscriptions) == false)
             {
-                eventSubscriptions = new HashSet<PlayerRemoteEventDelegate>();
+                eventSubscriptions = new HashSet<AsyncEventHandler<PlayerRemoteEventEventArgs>>();
 
                 if (_subscriptions.TryAdd(eventName, eventSubscriptions) == false)
                 {
@@ -61,7 +64,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             {
                 try
                 {
-                    subscription(player, eventName, arguments);
+                    subscription(this, new PlayerRemoteEventEventArgs(player, eventName, arguments));
                 }
                 catch (Exception e)
                 {
