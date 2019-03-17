@@ -1,34 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 {
-    internal class AsyncEventDispatcher<TEvent> where TEvent : System.EventArgs
+    internal class AsyncEventDispatcher<TEvent> : EventDispatcher<AsyncEventHandler<TEvent>> where TEvent : System.EventArgs
     {
-        private readonly Plugin _plugin;
-
-        protected readonly HashSet<AsyncEventHandler<TEvent>> _subscriptions = new HashSet<AsyncEventHandler<TEvent>>();
-
-        public AsyncEventDispatcher(Plugin plugin)
+        public AsyncEventDispatcher(Plugin plugin) : base(plugin)
         {
-            _plugin = plugin;
-        }
-
-        public virtual bool Subscribe(AsyncEventHandler<TEvent> callback)
-        {
-            Contract.NotNull(callback, nameof(callback));
-
-            return _subscriptions.Add(callback);
-        }
-
-        public virtual bool Unsubscribe(AsyncEventHandler<TEvent> callback)
-        {
-            Contract.NotNull(callback, nameof(callback));
-
-            return _subscriptions.Remove(callback);
         }
 
         public void CallAsync(object sender, TEvent eventArgs)
