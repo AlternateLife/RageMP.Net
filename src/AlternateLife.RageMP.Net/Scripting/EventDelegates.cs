@@ -1,3 +1,4 @@
+using System;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
@@ -6,6 +7,8 @@ using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Scripting
 {
+    public delegate Task AsyncEventHandler<T>(object sender, T e) where T : EventArgs;
+
     public delegate Task TickDelegate();
 
     public delegate Task EntityCreatedDelegate(IEntity entity);
