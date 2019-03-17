@@ -1,4 +1,5 @@
 using System;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -6,26 +7,26 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface IEventScripting
     {
         event AsyncEventHandler<System.EventArgs> Tick;
-        event PlayerJoinDelegate PlayerJoin;
-        event PlayerReadyDelegate PlayerReady;
-        event PlayerDeathDelegate PlayerDeath;
+        event AsyncEventHandler<PlayerEventArgs> PlayerJoin;
+        event AsyncEventHandler<PlayerEventArgs> PlayerReady;
+        event AsyncEventHandler<PlayerDeathEventArgs> PlayerDeath;
         event PlayerQuitDelegate PlayerQuit;
-        event PlayerCommandDelegate PlayerCommand;
-        event PlayerCommandFailedDelegate PlayerCommandFailed;
-        event PlayerChatDelegate PlayerChat;
-        event PlayerSpawnDelegate PlayerSpawn;
-        event PlayerDamageDelegate PlayerDamage;
-        event PlayerWeaponChangeDelegate PlayerWeaponChange;
-        event PlayerStartEnterVehicleDelegate PlayerStartEnterVehicle;
-        event PlayerEnterVehicleDelegate PlayerEnterVehicle;
-        event PlayerStartExitVehicleDelegate PlayerStartExitVehicle;
-        event PlayerExitVehicleDelegate PlayerExitVehicle;
-        event PlayerEnterCheckpointDelegate PlayerEnterCheckpoint;
-        event PlayerExitCheckpointDelegate PlayerExitCheckpoint;
-        event PlayerEnterColshapeDelegate PlayerEnterColshape;
-        event PlayerExitColshapeDelegate PlayerExitColshape;
-        event PlayerCreateWaypointDelegate PlayerCreateWaypoint;
-        event PlayerReachWaypointDelegate PlayerReachWaypoint;
+        event AsyncEventHandler<PlayerCommandEventArgs> PlayerCommand;
+        event AsyncEventHandler<PlayerCommandFailedEventArgs> PlayerCommandFailed;
+        event AsyncEventHandler<PlayerChatEventArgs> PlayerChat;
+        event AsyncEventHandler<PlayerEventArgs> PlayerSpawn;
+        event AsyncEventHandler<PlayerDamageEventArgs> PlayerDamage;
+        event AsyncEventHandler<PlayerWeaponChangeEventArgs> PlayerWeaponChange;
+        event AsyncEventHandler<PlayerEnterVehicleEventArgs> PlayerStartEnterVehicle;
+        event AsyncEventHandler<PlayerEnterVehicleEventArgs> PlayerEnterVehicle;
+        event AsyncEventHandler<PlayerVehicleEventArgs> PlayerStartExitVehicle;
+        event AsyncEventHandler<PlayerVehicleEventArgs> PlayerExitVehicle;
+        event AsyncEventHandler<PlayerCheckpointEventArgs> PlayerEnterCheckpoint;
+        event AsyncEventHandler<PlayerCheckpointEventArgs> PlayerExitCheckpoint;
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnterColshape;
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExitColshape;
+        event AsyncEventHandler<PlayerCreateWaypointEventArgs> PlayerCreateWaypoint;
+        event AsyncEventHandler<PlayerEventArgs> PlayerReachWaypoint;
 
         event VehicleDeathDelegate VehicleDeath;
         event VehicleSirenToggleDelegate VehicleSirenToggle;
@@ -33,8 +34,8 @@ namespace AlternateLife.RageMP.Net.Interfaces
         event VehicleTrailerAttachedDelegate VehicleTrailerAttached;
         event VehicleDamageDelegate VehicleDamage;
 
-        event PlayerStreamInDelegate PlayerStreamIn;
-        event PlayerStreamOutDelegate PlayerStreamOut;
+        event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamIn;
+        event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamOut;
 
         /// <summary>
         /// Add a client event callback.
@@ -44,6 +45,6 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// <param name="eventName">Name of the event</param>
         /// <param name="callback">Callback to execute on the event</param>
         /// <exception cref="ArgumentNullException"><paramref name="eventName" /> is null or empty</exception>
-        void Add(string eventName, PlayerRemoteEventDelegate callback);
+        void Add(string eventName, AsyncEventHandler<PlayerRemoteEventEventArgs> callback);
     }
 }
