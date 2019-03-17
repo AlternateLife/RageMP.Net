@@ -5,7 +5,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IEventScripting
     {
-        event TickDelegate Tick;
+        event AsyncEventHandler<System.EventArgs> Tick;
         event PlayerJoinDelegate PlayerJoin;
         event PlayerReadyDelegate PlayerReady;
         event PlayerDeathDelegate PlayerDeath;

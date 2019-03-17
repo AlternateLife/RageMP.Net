@@ -35,8 +35,8 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             remove => _entityModelChange.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeTickDelegate, TickDelegate> _tick;
-        public event TickDelegate Tick
+        private readonly NativeAsyncEventDispatcher<NativeTickDelegate, System.EventArgs> _tick;
+        public event AsyncEventHandler<System.EventArgs> Tick
         {
             add => _tick.Subscribe(value);
             remove => _tick.Unsubscribe(value);
@@ -236,7 +236,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _plugin = plugin;
             _remoteEventHandler = new RemoteEventHandler(plugin);
 
-            _tick = new NativeAsyncEventDispatcher<NativeTickDelegate, TickDelegate>(plugin, EventType.Tick, DispatchTick, true);
+            _tick = new NativeAsyncEventDispatcher<NativeTickDelegate, System.EventArgs>(plugin, EventType.Tick, DispatchTick, true);
 
             _entityCreated = new NativeAsyncEventDispatcher<NativeEntityCreatedDelegate, EntityCreatedDelegate>(plugin, EventType.EntityCreated, DispatchEntityCreated, true);
             _entityDestroyed = new NativeAsyncEventDispatcher<NativeEntityDestroyedDelegate, EntityDestroyedDelegate>(plugin, EventType.EntityDestroyed, DispatchEntityDestroyed, true);
@@ -314,7 +314,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
 
         private void DispatchTick()
         {
-            _tick.CallAsync(x => x());
+            _tick.CallAsync(this, System.EventArgs.Empty);
 
             _plugin.TickScheduler();
         }

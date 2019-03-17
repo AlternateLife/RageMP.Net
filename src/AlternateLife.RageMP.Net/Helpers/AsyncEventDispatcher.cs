@@ -6,7 +6,7 @@ using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class AsyncEventDispatcher<TEvent> where TEvent : EventArgs
+    internal class AsyncEventDispatcher<TEvent> where TEvent : System.EventArgs
     {
         private readonly Plugin _plugin;
 
