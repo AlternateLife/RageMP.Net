@@ -1,11 +1,13 @@
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class NativeAsyncEventDispatcher<TNative, TEvent> : AsyncEventDispatcher<TEvent>
+    internal class NativeAsyncEventDispatcher<TNative, TEvent> : AsyncEventDispatcher<TEvent> where TEvent : EventArgs
     {
         private readonly EventType _type;
         private readonly TNative _nativeCallback;
@@ -23,7 +25,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             }
         }
 
-        public override bool Subscribe(TEvent callback)
+        public override bool Subscribe(AsyncEventHandler<TEvent> callback)
         {
             var wasEmpty = _subscriptions.Any() == false;
             var wasAdded = base.Subscribe(callback);
@@ -38,7 +40,7 @@ namespace AlternateLife.RageMP.Net.Helpers
             return true;
         }
 
-        public override bool Unsubscribe(TEvent callback)
+        public override bool Unsubscribe(AsyncEventHandler<TEvent> callback)
         {
             var wasRemoved = base.Unsubscribe(callback);
 
