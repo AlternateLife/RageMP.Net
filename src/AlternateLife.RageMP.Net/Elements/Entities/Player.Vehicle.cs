@@ -7,49 +7,65 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public async Task<IVehicle> GetVehicleAsync()
+        public IVehicle GetVehicle()
         {
             CheckExistence();
 
-            var pointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetVehicle(NativePointer))
-                .ConfigureAwait(false);
+            var pointer = Rage.Player.Player_GetVehicle(NativePointer);
 
             return _plugin.VehiclePool[pointer];
         }
 
-        public async Task<bool> IsInVehicleAsync()
+        public Task<IVehicle> GetVehicleAsync()
         {
-            return await GetVehicleAsync()
-                       .ConfigureAwait(false) != null;
+            return _plugin.Schedule(GetVehicle);
         }
 
-        public async Task<int> GetSeatAsync()
+        public bool IsInVehicle()
+        {
+            return GetVehicle() != null;
+        }
+
+        public Task<bool> IsInVehicleAsync()
+        {
+            return _plugin.Schedule(IsInVehicle);
+        }
+
+        public int GetSeat()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetSeat(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetSeat(NativePointer);
         }
 
-        public async Task PutIntoVehicleAsync(IVehicle vehicle, int seat)
+        public Task<int> GetSeatAsync()
+        {
+            return _plugin.Schedule(GetSeat);
+        }
+
+        public void PutIntoVehicle(IVehicle vehicle, int seat)
         {
             Contract.NotNull(vehicle, nameof(vehicle));
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat))
-                .ConfigureAwait(false);
+            Rage.Player.Player_PutIntoVehicle(NativePointer, vehicle.NativePointer, seat);
         }
 
-        public async Task RemoveFromVehicleAsync()
+        public Task PutIntoVehicleAsync(IVehicle vehicle, int seat)
+        {
+            return _plugin.Schedule(() => PutIntoVehicle(vehicle, seat));
+        }
+
+        public void RemoveFromVehicle()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_RemoveFromVehicle(NativePointer))
-                .ConfigureAwait(false);
+            Rage.Player.Player_RemoveFromVehicle(NativePointer);
+        }
+
+        public Task RemoveFromVehicleAsync()
+        {
+            return _plugin.Schedule(RemoveFromVehicle);
         }
     }
 }
