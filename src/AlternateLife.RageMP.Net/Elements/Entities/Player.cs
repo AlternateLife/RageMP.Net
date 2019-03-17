@@ -19,7 +19,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             Serial = StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
         }
 
-        public async Task SetNameAsync(string value)
+        public void SetName(string value)
         {
             Contract.NotEmpty(value, nameof(value));
             CheckExistence();
@@ -27,316 +27,405 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             using (var converter = new StringConverter())
             {
                 var name = converter.StringToPointer(value);
-
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_SetName(NativePointer, name))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_SetName(NativePointer, name);
             }
         }
 
-        public async Task<string> GetNameAsync()
+        public Task SetNameAsync(string value)
+        {
+            return _plugin.Schedule(() => SetName(value));
+        }
+
+        public string GetName()
         {
             CheckExistence();
 
-            var namePointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetName(NativePointer))
-                .ConfigureAwait(false);
-
+            var namePointer = Rage.Player.Player_GetName(NativePointer);
             return StringConverter.PointerToString(namePointer);
         }
 
-        public async Task<string> GetSocialClubNameAsync()
+        public Task<string> GetNameAsync()
+        {
+            return _plugin.Schedule(GetName);
+        }
+
+        public string GetSocialClubName()
         {
             CheckExistence();
 
-            var socialClubNamePointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetSocialClubName(NativePointer))
-                .ConfigureAwait(false);
-
+            var socialClubNamePointer = Rage.Player.Player_GetSocialClubName(NativePointer);
             return StringConverter.PointerToString(socialClubNamePointer);
         }
 
-        public async Task SetHeadingAsync(float value)
+        public Task<string> GetSocialClubNameAsync()
         {
-            CheckExistence();
-
-            await _plugin
-                .Schedule(() => Rage.Player.Player_SetHeading(NativePointer, value))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetSocialClubName);
         }
 
-        public async Task<float> GetHeadingAsync()
+        public void SetHeading(float value)
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetHeading(NativePointer))
-                .ConfigureAwait(false);
+            Rage.Player.Player_SetHeading(NativePointer, value);
+        }
+
+        public Task SetHeadingAsync(float value)
+        {
+            return _plugin.Schedule(() => SetHeading(value));
+        }
+
+        public float GetHeading()
+        {
+            CheckExistence();
+
+            return Rage.Player.Player_GetHeading(NativePointer);
+        }
+
+        public Task<float> GetHeadingAsync()
+        {
+            return _plugin.Schedule(GetHeading);
+        }
+
+        public override void SetRotation(Vector3 value)
+        {
+            SetHeading(value.Z);
         }
 
         public override async Task SetRotationAsync(Vector3 value)
         {
-            CheckExistence();
-
             await SetHeadingAsync(value.Z);
         }
 
-        public override async Task<Vector3> GetRotationAsync()
+        public override Vector3 GetRotation()
         {
             CheckExistence();
 
-            var vehicle = await GetVehicleAsync();
+            var vehicle = GetVehicle();
 
             if (vehicle != null)
             {
-                return await vehicle.GetRotationAsync();
+                return vehicle.GetRotation();
             }
 
-            return new Vector3(0, 0, await GetHeadingAsync());
+            return new Vector3(0, 0, GetHeading());
         }
 
-        public async Task<float> GetMoveSpeedAsync()
+        public override Task<Vector3> GetRotationAsync()
+        {
+            return _plugin.Schedule(GetRotation);
+        }
+
+        public float GetMoveSpeed()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetMoveSpeed(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetMoveSpeed(NativePointer);
         }
 
-        public async Task SetHealthAsync(float value)
+        public Task<float> GetMoveSpeedAsync()
+        {
+            return _plugin.Schedule(GetMoveSpeed);
+        }
+
+        public void SetHealth(float value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_SetHealth(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Player.Player_SetHealth(NativePointer, value);
         }
 
-        public async Task<float> GetHealthAsync()
+        public Task SetHealthAsync(float value)
+        {
+            return _plugin.Schedule(() => SetHealth(value));
+        }
+
+        public float GetHealth()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetHealth(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetHealth(NativePointer);
         }
 
-        public async Task SetArmorAsync(float value)
+        public Task<float> GetHealthAsync()
+        {
+            return _plugin.Schedule(GetHealth);
+        }
+
+        public void SetArmor(float value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_SetArmor(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Player.Player_SetArmor(NativePointer, value);
         }
 
-        public async Task<float> GetArmorAsync()
+        public Task SetArmorAsync(float value)
+        {
+            return _plugin.Schedule(() => SetArmor(value));
+        }
+
+        public float GetArmor()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetArmor(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetArmor(NativePointer);
         }
 
-        public async Task<Vector3> GetAimingAtAsync()
+        public Task<float> GetArmorAsync()
+        {
+            return _plugin.Schedule(GetArmor);
+        }
+
+        public Vector3 GetAimingAt()
         {
             CheckExistence();
 
-            var aimingAtPointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetAminingAt(NativePointer))
-                .ConfigureAwait(false);
-
+            var aimingAtPointer = Rage.Player.Player_GetAminingAt(NativePointer);
             return StructConverter.PointerToStruct<Vector3>(aimingAtPointer);
         }
 
-        public async Task<string> GetIpAsync()
+        public Task<Vector3> GetAimingAtAsync()
+        {
+            return _plugin.Schedule(GetAimingAt);
+        }
+
+        public string GetIp()
         {
             CheckExistence();
 
-            var ipPointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetIp(NativePointer))
-                .ConfigureAwait(false);
-
+            var ipPointer = Rage.Player.Player_GetIp(NativePointer);
             return StringConverter.PointerToString(ipPointer);
         }
 
-        public async Task<int> GetPingAsync()
+        public Task<string> GetIpAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetPing(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetIp);
         }
 
-        public async Task<float> GetPacketLossAsync()
+        public int GetPing()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_GetPacketLoss(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetPing(NativePointer);
         }
 
-        public async Task<string> GetKickReasonAsync()
+        public Task<int> GetPingAsync()
+        {
+            return _plugin.Schedule(GetPing);
+        }
+
+        public float GetPacketLoss()
         {
             CheckExistence();
 
-            var kickReasonPointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetKickReason(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_GetPacketLoss(NativePointer);
+        }
 
+        public Task<float> GetPacketLossAsync()
+        {
+            return _plugin.Schedule(GetPacketLoss);
+        }
+
+        public string GetKickReason()
+        {
+            CheckExistence();
+
+            var kickReasonPointer = Rage.Player.Player_GetKickReason(NativePointer);
             return StringConverter.PointerToString(kickReasonPointer);
         }
 
-        public async Task<bool> IsJumpingAsync()
+        public Task<string> GetKickReasonAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsJumping(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetKickReason);
         }
 
-        public async Task<bool> IsInCoverAsync()
+        public bool IsJumping()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsInCover(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsJumping(NativePointer);
         }
 
-        public async Task<bool> IsEnteringVehicleAsync()
+        public Task<bool> IsJumpingAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsEnteringVehicle(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(IsJumping);
         }
 
-        public async Task<bool> IsLeavingVehicleAsync()
+        public bool IsInCover()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsLeavingVehicle(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsInCover(NativePointer);
         }
 
-        public async Task<bool> IsClimbingAsync()
+        public Task<bool> IsInCoverAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsClimbing(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(IsInCover);
         }
 
-        public async Task<bool> IsOnLadderAsync()
+        public bool IsEnteringVehicle()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsOnLadder(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsEnteringVehicle(NativePointer);
         }
 
-        public async Task<bool> IsReloadingAsync()
+        public Task<bool> IsEnteringVehicleAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsReloading(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(IsEnteringVehicle);
         }
 
-        public async Task<bool> IsInMeleeAsync()
+        public bool IsLeavingVehicle()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsInMelee(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsLeavingVehicle(NativePointer);
         }
 
-        public async Task<bool> IsAimingAsync()
+        public Task<bool> IsLeavingVehicleAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsAiming(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(IsLeavingVehicle);
         }
 
-        public async Task<string> GetActionStringAsync()
+        public bool IsClimbing()
         {
             CheckExistence();
 
-            var actionStringPointer = await _plugin
-                .Schedule(() => Rage.Player.Player_GetActionString(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsClimbing(NativePointer);
+        }
 
+        public Task<bool> IsClimbingAsync()
+        {
+            return _plugin.Schedule(IsClimbing);
+        }
+
+        public bool IsOnLadder()
+        {
+            CheckExistence();
+
+            return Rage.Player.Player_IsOnLadder(NativePointer);
+        }
+
+        public Task<bool> IsOnLadderAsync()
+        {
+            return _plugin.Schedule(IsOnLadder);
+        }
+
+        public bool IsReloading()
+        {
+            CheckExistence();
+
+            return Rage.Player.Player_IsReloading(NativePointer);
+        }
+
+        public Task<bool> IsReloadingAsync()
+        {
+            return _plugin.Schedule(IsReloading);
+        }
+
+        public bool IsInMelee()
+        {
+            CheckExistence();
+
+            return Rage.Player.Player_IsInMelee(NativePointer);
+        }
+
+        public Task<bool> IsInMeleeAsync()
+        {
+            return _plugin.Schedule(IsInMelee);
+        }
+
+        public bool IsAiming()
+        {
+            CheckExistence();
+
+            return Rage.Player.Player_IsAiming(NativePointer);
+        }
+
+        public Task<bool> IsAimingAsync()
+        {
+            return _plugin.Schedule(IsAiming);
+        }
+
+        public string GetActionString()
+        {
+            CheckExistence();
+
+            var actionStringPointer = Rage.Player.Player_GetActionString(NativePointer);
             return StringConverter.PointerToString(actionStringPointer);
         }
 
-        public async Task KickAsync(string reason = null)
+        public Task<string> GetActionStringAsync()
+        {
+            return _plugin.Schedule(GetActionString);
+        }
+
+        public void Kick(string reason = null)
         {
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
                 var reasonPointer = converter.StringToPointer(reason);
-
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_Kick(NativePointer, reasonPointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_Kick(NativePointer, reasonPointer);
             }
         }
 
-        public async Task BanAsync(string reason = null)
+        public Task KickAsync(string reason = null)
+        {
+            return _plugin.Schedule(() => Kick(reason));
+        }
+
+        public void Ban(string reason = null)
         {
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
                 var reasonPointer = converter.StringToPointer(reason);
-
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_Ban(NativePointer, reasonPointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_Ban(NativePointer, reasonPointer);
             }
         }
 
-        public async Task OutputChatBoxAsync(string text)
+        public Task BanAsync(string reason = null)
+        {
+            return _plugin.Schedule(() => Ban(reason));
+        }
+
+        public void OutputChatBox(string text)
         {
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
                 var textPointer = converter.StringToPointer(text);
-
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_OutputChatBox(NativePointer, textPointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_OutputChatBox(NativePointer, textPointer);
             }
         }
 
-        public async Task NotifyAsync(string text)
+        public Task OutputChatBoxAsync(string text)
+        {
+            return _plugin.Schedule(() => OutputChatBox(text));
+        }
+
+        public void Notify(string text)
         {
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
                 var textPointer = converter.StringToPointer(text);
-
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_Notify(NativePointer, textPointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_Notify(NativePointer, textPointer);
             }
+        }
+
+        public Task NotifyAsync(string text)
+        {
+            return _plugin.Schedule(() => Notify(text));
+        }
+
+        public void Call(string eventName, params object[] arguments)
+        {
+            Call(eventName, (IEnumerable<object>) arguments);
         }
 
         public Task CallAsync(string eventName, params object[] arguments)
@@ -344,7 +433,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return CallAsync(eventName, (IEnumerable<object>) arguments);
         }
 
-        public async Task CallAsync(string eventName, IEnumerable<object> arguments)
+        public void Call(string eventName, IEnumerable<object> arguments)
         {
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
@@ -356,12 +445,20 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var eventNamePointer = converter.StringToPointer(eventName);
 
-                await _plugin
-                    .Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.LongLength))
-                    .ConfigureAwait(false);
+                Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.LongLength);
             }
 
             ArgumentData.Dispose(data);
+        }
+
+        public Task CallAsync(string eventName, IEnumerable<object> arguments)
+        {
+            return _plugin.Schedule(() => Call(eventName, arguments));
+        }
+
+        public void CallHash(ulong eventHash, params object[] arguments)
+        {
+            CallHash(eventHash, (IEnumerable<object>) arguments);
         }
 
         public Task CallHashAsync(ulong eventHash, params object[] arguments)
@@ -369,18 +466,26 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return CallHashAsync(eventHash, (IEnumerable<object>) arguments);
         }
 
-        public async Task CallHashAsync(ulong eventHash, IEnumerable<object> arguments)
+        public void CallHash(ulong eventHash, IEnumerable<object> arguments)
         {
             Contract.NotNull(arguments, nameof(arguments));
             CheckExistence();
 
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.LongLength))
-                .ConfigureAwait(false);
+            Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.LongLength);
 
             ArgumentData.Dispose(data);
+        }
+
+        public Task CallHashAsync(ulong eventHash, IEnumerable<object> arguments)
+        {
+            return _plugin.Schedule(() => CallHash(eventHash, arguments));
+        }
+
+        public void Invoke(ulong nativeHash, params object[] arguments)
+        {
+            Invoke(nativeHash, (IEnumerable<object>) arguments);
         }
 
         public Task InvokeAsync(ulong nativeHash, params object[] arguments)
@@ -388,30 +493,36 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return InvokeAsync(nativeHash, (IEnumerable<object>) arguments);
         }
 
-        public async Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments)
+        public void Invoke(ulong nativeHash, IEnumerable<object> arguments)
         {
             Contract.NotNull(arguments, nameof(arguments));
             CheckExistence();
 
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.LongLength))
-                .ConfigureAwait(false);
+            Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.LongLength);
 
             ArgumentData.Dispose(data);
         }
 
-        public async Task SpawnAsync(Vector3 position, float heading)
+        public Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments)
+        {
+            return _plugin.Schedule(() => Invoke(nativeHash, arguments));
+        }
+
+        public void Spawn(Vector3 position, float heading)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_Spawn(NativePointer, position, heading))
-                .ConfigureAwait(false);
+            Rage.Player.Player_Spawn(NativePointer, position, heading);
         }
 
-        public async Task PlayAnimationAsync(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
+        public Task SpawnAsync(Vector3 position, float heading)
+        {
+            return _plugin.Schedule(() => Spawn(position, heading));
+        }
+
+        public void PlayAnimation(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
         {
             Contract.NotEmpty(dictionary, nameof(dictionary));
             Contract.NotEmpty(name, nameof(name));
@@ -422,22 +533,28 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 var dictionaryPointer = converter.StringToPointer(dictionary);
                 var namePointer = converter.StringToPointer(name);
 
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_PlayAnimation(NativePointer, dictionaryPointer, namePointer, speed, (int) flags))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_PlayAnimation(NativePointer, dictionaryPointer, namePointer, speed, (int) flags);
             }
         }
 
-        public async Task StopAnimationAsync()
+        public Task PlayAnimationAsync(string dictionary, string name, float speed = 8, AnimationFlags flags = (AnimationFlags) 0)
+        {
+            return _plugin.Schedule(() => PlayAnimation(dictionary, name, speed, flags));
+        }
+
+        public void StopAnimation()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_StopAnimation(NativePointer))
-                .ConfigureAwait(false);
+            Rage.Player.Player_StopAnimation(NativePointer);
         }
 
-        public async Task PlayScenarioAsync(string scenario)
+        public Task StopAnimationAsync()
+        {
+            return _plugin.Schedule(StopAnimation);
+        }
+
+        public void PlayScenario(string scenario)
         {
             Contract.NotEmpty(scenario, nameof(scenario));
             CheckExistence();
@@ -446,29 +563,43 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var scenarioPointer = converter.StringToPointer(scenario);
 
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_PlayScenario(NativePointer, scenarioPointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_PlayScenario(NativePointer, scenarioPointer);
             }
         }
 
-        public async Task<bool> IsStreamedAsync(IPlayer player)
+        public Task PlayScenarioAsync(string scenario)
+        {
+            return _plugin.Schedule(() => PlayScenario(scenario));
+        }
+
+        public bool IsStreamed(IPlayer player)
         {
             Contract.NotNull(player, nameof(player));
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Player.Player_IsStreamed(NativePointer, player.NativePointer);
         }
 
-        public async Task RemoveObjectAsync(uint model, Vector3 position, float radius)
+        public Task<bool> IsStreamedAsync(IPlayer player)
+        {
+            return _plugin.Schedule(() => IsStreamed(player));
+        }
+
+        public void RemoveObject(uint model, Vector3 position, float radius)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_RemoveObject(NativePointer, model, position, radius))
-                .ConfigureAwait(false);
+            Rage.Player.Player_RemoveObject(NativePointer, model, position, radius);
+        }
+
+        public Task RemoveObjectAsync(uint model, Vector3 position, float radius)
+        {
+            return _plugin.Schedule(() => RemoveObject(model, position, radius));
+        }
+
+        public void RemoveObject(int model, Vector3 position, float radius)
+        {
+            RemoveObject((uint) model, position, radius);
         }
 
         public Task RemoveObjectAsync(int model, Vector3 position, float radius)
@@ -476,7 +607,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return RemoveObjectAsync((uint) model, position, radius);
         }
 
-        public async Task EvalAsync(string code)
+        public void Eval(string code)
         {
             Contract.NotEmpty(code, nameof(code));
             CheckExistence();
@@ -485,24 +616,27 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 var codePointer = converter.StringToPointer(code);
 
-                await _plugin
-                    .Schedule(() => Rage.Player.Player_Eval(NativePointer, codePointer))
-                    .ConfigureAwait(false);
+                Rage.Player.Player_Eval(NativePointer, codePointer);
             }
         }
 
-        public async Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
+        public Task EvalAsync(string code)
+        {
+            return _plugin.Schedule(() => Eval(code));
+        }
+
+        public IReadOnlyCollection<IPlayer> GetStreamedPlayers()
         {
             CheckExistence();
 
-            IntPtr playerPointers = IntPtr.Zero;
-            ulong size = 0;
-
-            await _plugin
-                .Schedule(() => Rage.Player.Player_GetStreamed(NativePointer, out playerPointers, out size))
-                .ConfigureAwait(false);
+            Rage.Player.Player_GetStreamed(NativePointer, out var playerPointers, out var size);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, x => _plugin.PlayerPool[x]);
+        }
+
+        public Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
+        {
+            return _plugin.Schedule(GetStreamedPlayers);
         }
     }
 }
