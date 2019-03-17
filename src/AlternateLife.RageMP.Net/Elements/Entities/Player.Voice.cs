@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Helpers;
@@ -9,40 +8,46 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player
     {
-        public async Task<IReadOnlyCollection<IPlayer>> GetVoiceListenersAsync()
+        public IReadOnlyCollection<IPlayer> GetVoiceListeners()
         {
             CheckExistence();
 
-            IntPtr players = IntPtr.Zero;
-            ulong count = 0;
-
-            await _plugin
-                .Schedule(() => Rage.Player.Player_GetVoiceListeners(NativePointer, out players, out count))
-                .ConfigureAwait(false);
+            Rage.Player.Player_GetVoiceListeners(NativePointer, out var players, out var count);
 
             return ArrayHelper.ConvertFromIntPtr(players, count, x => _plugin.PlayerPool[x]);
         }
 
-        public async Task EnableVoiceToAsync(IPlayer target)
+        public Task<IReadOnlyCollection<IPlayer>> GetVoiceListenersAsync()
         {
-            Contract.NotNull(target, nameof(target));
-            Contract.EntityValid(target, nameof(target));
-            CheckExistence();
-
-            await _plugin
-                .Schedule(() => Rage.Player.Player_EnableVoiceTo(NativePointer, target.NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetVoiceListeners);
         }
 
-        public async Task DisableVoiceToAsync(IPlayer target)
+        public void EnableVoiceTo(IPlayer target)
         {
             Contract.NotNull(target, nameof(target));
             Contract.EntityValid(target, nameof(target));
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Player.Player_DisableVoiceTo(NativePointer, target.NativePointer))
-                .ConfigureAwait(false);
+            Rage.Player.Player_EnableVoiceTo(NativePointer, target.NativePointer);
+        }
+
+        public Task EnableVoiceToAsync(IPlayer target)
+        {
+            return _plugin.Schedule(() => EnableVoiceTo(target));
+        }
+
+        public void DisableVoiceTo(IPlayer target)
+        {
+            Contract.NotNull(target, nameof(target));
+            Contract.EntityValid(target, nameof(target));
+            CheckExistence();
+
+            Rage.Player.Player_DisableVoiceTo(NativePointer, target.NativePointer);
+        }
+
+        public Task DisableVoiceToAsync(IPlayer target)
+        {
+            return _plugin.Schedule(() => DisableVoiceTo(target));
         }
     }
 }
