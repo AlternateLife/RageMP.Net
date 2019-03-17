@@ -1,11 +1,10 @@
-using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Native;
 using AlternateLife.RageMP.Net.Scripting;
 
-namespace AlternateLife.RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 {
     internal class NativeAsyncEventDispatcher<TNative, TEvent> : AsyncEventDispatcher<TEvent> where TEvent : System.EventArgs
     {
