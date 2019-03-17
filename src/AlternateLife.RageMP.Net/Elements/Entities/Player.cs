@@ -41,6 +41,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var namePointer = Rage.Player.Player_GetName(NativePointer);
+
             return StringConverter.PointerToString(namePointer);
         }
 
@@ -54,6 +55,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var socialClubNamePointer = Rage.Player.Player_GetSocialClubName(NativePointer);
+
             return StringConverter.PointerToString(socialClubNamePointer);
         }
 
@@ -91,9 +93,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             SetHeading(value.Z);
         }
 
-        public override async Task SetRotationAsync(Vector3 value)
+        public override Task SetRotationAsync(Vector3 value)
         {
-            await SetHeadingAsync(value.Z);
+            return SetHeadingAsync(value.Z);
         }
 
         public override Vector3 GetRotation()
@@ -180,6 +182,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var aimingAtPointer = Rage.Player.Player_GetAminingAt(NativePointer);
+
             return StructConverter.PointerToStruct<Vector3>(aimingAtPointer);
         }
 
@@ -193,6 +196,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var ipPointer = Rage.Player.Player_GetIp(NativePointer);
+
             return StringConverter.PointerToString(ipPointer);
         }
 
@@ -230,6 +234,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var kickReasonPointer = Rage.Player.Player_GetKickReason(NativePointer);
+
             return StringConverter.PointerToString(kickReasonPointer);
         }
 
@@ -351,6 +356,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             var actionStringPointer = Rage.Player.Player_GetActionString(NativePointer);
+
             return StringConverter.PointerToString(actionStringPointer);
         }
 
