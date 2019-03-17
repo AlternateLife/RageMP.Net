@@ -7,7 +7,7 @@ using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers
 {
-    internal class NativeAsyncEventDispatcher<TNative, TEvent> : AsyncEventDispatcher<TEvent> where TEvent : EventArgs
+    internal class NativeAsyncEventDispatcher<TNative, TEvent> : AsyncEventDispatcher<TEvent> where TEvent : System.EventArgs
     {
         private readonly EventType _type;
         private readonly TNative _nativeCallback;
