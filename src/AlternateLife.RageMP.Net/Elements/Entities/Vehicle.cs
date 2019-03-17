@@ -18,488 +18,637 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
         }
 
-        public async Task<Quaternion> GetQuaternionAsync()
+        public Quaternion GetQuaternion()
         {
             CheckExistence();
 
-            var quaternionPointer = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetQuaternion(NativePointer))
-                .ConfigureAwait(false);
-
-            return StructConverter.PointerToStruct<Quaternion>(quaternionPointer);
+            return StructConverter.PointerToStruct<Quaternion>(Rage.Vehicle.Vehicle_GetQuaternion(NativePointer));
         }
 
-        public async Task<float> GetHeadingAsync()
+        public Task<Quaternion> GetQuaternionAsync()
+        {
+            return _plugin.Schedule(GetQuaternion);
+        }
+
+        public float GetHeading()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetHeading(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetHeading(NativePointer);
         }
 
-        public async Task<float> GetMovableStateAsync()
+        public Task<float> GetHeadingAsync()
+        {
+            return _plugin.Schedule(GetHeading);
+        }
+
+        public float GetMovableState()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetMovableState(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetMovableState(NativePointer);
         }
 
-        public async Task<IVehicle> GetTrailerAsync()
+        public Task<float> GetMovableStateAsync()
+        {
+            return _plugin.Schedule(GetMovableState);
+        }
+
+        public IVehicle GetTrailer()
         {
             CheckExistence();
 
-            var vehicle = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetTrailer(NativePointer))
-                .ConfigureAwait(false);
-
-            return _plugin.VehiclePool[vehicle];
+            return _plugin.VehiclePool[Rage.Vehicle.Vehicle_GetTrailer(NativePointer)];
         }
 
-        public async Task<IVehicle> GetTraileredByAsync()
+        public Task<IVehicle> GetTrailerAsync()
+        {
+            return _plugin.Schedule(GetTrailer);
+        }
+
+        public IVehicle GetTraileredBy()
         {
             CheckExistence();
 
-            var vehicle = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetTraileredBy(NativePointer))
-                .ConfigureAwait(false);
-
-            return _plugin.VehiclePool[vehicle];
+            return _plugin.VehiclePool[Rage.Vehicle.Vehicle_GetTraileredBy(NativePointer)];
         }
 
-        public async Task SetSirenActiveAsync(bool value)
+        public Task<IVehicle> GetTraileredByAsync()
+        {
+            return _plugin.Schedule(GetTraileredBy);
+        }
+
+        public void SetSirenActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetSirenActive(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetSirenActive(NativePointer, value);
         }
 
-        public async Task<bool> IsSirenActiveAsync()
+        public Task SetSirenActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetSirenActive(value));
+        }
+
+        public bool IsSirenActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsSirenActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsSirenActive(NativePointer);
         }
 
-        public async Task SetHighbeamsActiveAsync(bool value)
+        public Task<bool> IsSirenActiveAsync()
+        {
+            return _plugin.Schedule(IsSirenActive);
+        }
+
+        public void SetHighbeamsActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetHighbeamsActive(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetHighbeamsActive(NativePointer, value);
         }
 
-        public async Task<bool> AreHighbeamsActiveAsync()
+        public Task SetHighbeamsActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetHighbeamsActive(value));
+        }
+
+        public bool AreHighbeamsActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_AreHighbeamsActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_AreHighbeamsActive(NativePointer);
         }
 
-        public async Task SetLightsActiveAsync(bool value)
+        public Task<bool> AreHighbeamsActiveAsync()
+        {
+            return _plugin.Schedule(AreHighbeamsActive);
+        }
+
+        public void SetLightsActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetLightsActive(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetLightsActive(NativePointer, value);
         }
 
-        public async Task<bool> AreLightsActiveAsync()
+        public Task SetLightsActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetLightsActive(value));
+        }
+
+        public bool AreLightsActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_AreLightsActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_AreLightsActive(NativePointer);
         }
 
-        public async Task SetTaxiLightsActiveAsync(bool value)
+        public Task<bool> AreLightsActiveAsync()
+        {
+            return _plugin.Schedule(AreLightsActive);
+        }
+
+        public void SetTaxiLightsActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetTaxiLightsActive(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetTaxiLightsActive(NativePointer, value);
         }
 
-        public async Task<bool> AreTaxiLightsActiveAsync()
+        public Task SetTaxiLightsActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetTaxiLightsActive(value));
+        }
+
+        public bool AreTaxiLightsActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_AreTaxiLightsActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_AreTaxiLightsActive(NativePointer);
         }
 
-        public async Task SetEngineActiveAsync(bool value)
+        public Task<bool> AreTaxiLightsActiveAsync()
+        {
+            return _plugin.Schedule(AreTaxiLightsActive);
+        }
+
+        public void SetEngineActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetEngineActive(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetEngineActive(NativePointer, value);
         }
 
-        public async Task<bool> IsEngineActiveAsync()
+        public Task SetEngineActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetEngineActive(value));
+        }
+
+        public bool IsEngineActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsEngineActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsEngineActive(NativePointer);
         }
 
-        public async Task SetNeonsActiveAsync(bool value)
+        public Task<bool> IsEngineActiveAsync()
+        {
+            return _plugin.Schedule(IsEngineActive);
+        }
+
+        public void SetNeonsActive(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_EnableNeons(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_EnableNeons(NativePointer, value);
         }
 
-        public async Task<bool> AreNeonsActiveAsync()
+        public Task SetNeonsActiveAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetNeonsActive(value));
+        }
+
+        public bool AreNeonsActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_AreNeonsEnabled(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_AreNeonsEnabled(NativePointer);
         }
 
-        public async Task SetLockedAsync(bool value)
+        public Task<bool> AreNeonsActiveAsync()
+        {
+            return _plugin.Schedule(AreNeonsActive);
+        }
+
+        public void SetLocked(bool value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_Lock(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_Lock(NativePointer, value);
         }
 
-        public async Task<bool> IsLockedAsync()
+        public Task SetLockedAsync(bool value)
+        {
+            return _plugin.Schedule(() => SetLocked(value));
+        }
+
+        public bool IsLocked()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsLocked(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsLocked(NativePointer);
         }
 
-        public async Task<bool> IsHornActiveAsync()
+        public Task<bool> IsLockedAsync()
+        {
+            return _plugin.Schedule(IsLocked);
+        }
+
+        public bool IsHornActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsHornActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsHornActive(NativePointer);
         }
 
-        public async Task<bool> IsRocketBoostActiveAsync()
+        public Task<bool> IsHornActiveAsync()
+        {
+            return _plugin.Schedule(IsHornActive);
+        }
+
+        public bool IsRocketBoostActive()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsRocketBoostActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsRocketBoostActive(NativePointer);
         }
 
-        public async Task<bool> IsBreakActiveAsync()
+        public Task<bool> IsRocketBoostActiveAsync()
+        {
+            return _plugin.Schedule(IsRocketBoostActive);
+        }
+
+        public bool IsBreakActive()
         {
             CheckExistence();
 
-            return await _plugin.
-                Schedule(() => Rage.Vehicle.Vehicle_IsBrakeActive(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsBrakeActive(NativePointer);
         }
 
-        public async Task<bool> IsDeadAsync()
+        public Task<bool> IsBreakActiveAsync()
+        {
+            return _plugin.Schedule(IsBreakActive);
+        }
+
+        public bool IsDead()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsDead(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsDead(NativePointer);
         }
 
-        public async Task<float> GetSteerAngleAsync()
+        public Task<bool> IsDeadAsync()
+        {
+            return _plugin.Schedule(IsDead);
+        }
+
+        public float GetSteerAngle()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetSteerAngle(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetSteerAngle(NativePointer);
         }
 
-        public async Task<float> GetGasPedalStateAsync()
+        public Task<float> GetSteerAngleAsync()
+        {
+            return _plugin.Schedule(GetSteerAngle);
+        }
+
+        public float GetGasPedalState()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetGasPedalState(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetGasPedalState(NativePointer);
         }
 
-        public async Task<float> GetEngineHealthAsync()
+        public Task<float> GetGasPedalStateAsync()
+        {
+            return _plugin.Schedule(GetGasPedalState);
+        }
+
+        public float GetEngineHealth()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetEngineHealth(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetEngineHealth(NativePointer);
         }
 
-        public async Task<float> GetBodyHealthAsync()
+        public Task<float> GetEngineHealthAsync()
+        {
+            return _plugin.Schedule(GetEngineHealth);
+        }
+
+        public float GetBodyHealth()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetBodyHealth(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetBodyHealth(NativePointer);
         }
 
-        public async Task<MaterialType> GetMaterialTypeAsync()
+        public Task<float> GetBodyHealthAsync()
+        {
+            return _plugin.Schedule(GetBodyHealth);
+        }
+
+        public MaterialType GetMaterialType()
         {
             CheckExistence();
 
-            return (MaterialType) await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetMaterialType(NativePointer))
-                .ConfigureAwait(false);
+            return (MaterialType) Rage.Vehicle.Vehicle_GetMaterialType(NativePointer);
         }
 
-        public async Task SetNeonsColorAsync(Color value)
+        public Task<MaterialType> GetMaterialTypeAsync()
+        {
+            return _plugin.Schedule(GetMaterialType);
+        }
+
+        public void SetNeonsColor(Color value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, value.R, value.G, value.B))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetNeonsColor(NativePointer, value.R, value.G, value.B);
         }
 
-        public async Task<Color> GetNeonsColorAsync()
+        public Task SetNeonsColorAsync(Color value)
+        {
+            return _plugin.Schedule(() => SetNeonsColor(value));
+        }
+
+        public Color GetNeonsColor()
         {
             CheckExistence();
 
-            var colorPointer = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer))
-                .ConfigureAwait(false);
-
-            return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
+            return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetNeonsColor(NativePointer)).FromModColor();
         }
 
-        public async Task SetNumberPlateAsync(string value)
+        public Task<Color> GetNeonsColorAsync()
+        {
+            return _plugin.Schedule(GetNeonsColor);
+        }
+
+        public void SetNumberPlate(string value)
         {
             Contract.NotNull(value, nameof(value));
             CheckExistence();
 
             using (var converter = new StringConverter())
             {
-                var numberPlate = converter.StringToPointer(value);
-
-                await _plugin
-                    .Schedule(() => Rage.Vehicle.Vehicle_SetNumberPlate(NativePointer, numberPlate))
-                    .ConfigureAwait(false);
+                Rage.Vehicle.Vehicle_SetNumberPlate(NativePointer, converter.StringToPointer(value));
             }
         }
 
-        public async Task<string> GetNumberPlateAsync()
+        public Task SetNumberPlateAsync(string value)
         {
-            CheckExistence();
-
-            var numberPlatePointer = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetNumberPlate(NativePointer))
-                .ConfigureAwait(false);
-
-            return StringConverter.PointerToString(numberPlatePointer);
+            return _plugin.Schedule(() => SetNumberPlate(value));
         }
 
-        public async Task SetLiveryAsync(uint value)
+        public string GetNumberPlate()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetLivery(NativePointer, value))
-                .ConfigureAwait(false);
+            return StringConverter.PointerToString(Rage.Vehicle.Vehicle_GetNumberPlate(NativePointer));
         }
 
-        public async Task<uint> GetLiveryAsync()
+        public Task<string> GetNumberPlateAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetLivery(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetNumberPlate);
         }
 
-        public async Task SetWheelColorAsync(uint value)
+        public void SetLivery(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetWheelColor(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetLivery(NativePointer, value);
         }
 
-        public async Task<uint> GetWheelColorAsync()
+        public Task SetLiveryAsync(uint value)
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetWheelColor(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(() => SetLivery(value));
         }
 
-        public async Task SetWheelTypeAsync(uint value)
+        public uint GetLivery()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetWheelType(NativePointer, value))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetLivery(NativePointer);
         }
 
-        public async Task<uint> GetWheelTypeAsync()
+        public Task<uint> GetLiveryAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetWheelType(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetLivery);
         }
 
-        public async Task SetNumberPlateTypeAsync(uint value)
+        public void SetWheelColor(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetNumberPlateType(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetWheelColor(NativePointer, value);
         }
 
-        public async Task<uint> GetNumberPlateTypeAsync()
+        public Task SetWheelColorAsync(uint value)
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetNumberPlateType(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(() => SetWheelColor(value));
         }
 
-        public async Task SetPearlescentColorAsync(uint value)
+        public uint GetWheelColor()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetPearlescentColor(NativePointer, value))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetWheelColor(NativePointer);
         }
 
-        public async Task<uint> GetPearlescentColorAsync()
+        public Task<uint> GetWheelColorAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetPearlescentColor(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetWheelColor);
         }
 
-        public async Task SetWindowTintAsync(uint value)
+        public void SetWheelType(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetWindowTint(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetWheelType(NativePointer, value);
         }
 
-        public async Task<uint> GetWindowTintAsync()
+        public Task SetWheelTypeAsync(uint value)
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetWindowTint(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(() => SetWheelType(value));
         }
 
-        public async Task SetDashboardColorAsync(uint value)
+        public uint GetWheelType()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetDashboardColor(NativePointer, value))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetWheelType(NativePointer);
         }
 
-        public async Task<uint> GetDashboardColorAsync()
+        public Task<uint> GetWheelTypeAsync()
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetDashboardColor(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetWheelType);
         }
 
-        public async Task SetTrimColorAsync(uint value)
+        public void SetNumberPlateType(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetTrimColor(NativePointer, value))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetNumberPlateType(NativePointer, value);
         }
 
-        public async Task<uint> GetTrimColorAsync()
+        public Task SetNumberPlateTypeAsync(uint value)
         {
-            CheckExistence();
-
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetTrimColor(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(() => SetNumberPlateType(value));
         }
 
-        public async Task ExplodeAsync()
+        public uint GetNumberPlateType()
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_Explode(NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetNumberPlateType(NativePointer);
         }
 
-        public async Task RepairAsync()
+        public Task<uint> GetNumberPlateTypeAsync()
         {
-            CheckExistence();
-
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_Repair(NativePointer))
-                .ConfigureAwait(false);
+            return _plugin.Schedule(GetNumberPlateType);
         }
 
-        public async Task SpawnAsync(Vector3 position, float heading)
+        public void SetPearlescentColor(uint value)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_Spawn(NativePointer, position, heading))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetPearlescentColor(NativePointer, value);
         }
 
-        public async Task<uint> GetModAsync(uint id)
+        public Task SetPearlescentColorAsync(uint value)
+        {
+            return _plugin.Schedule(() => SetPearlescentColor(value));
+        }
+
+        public uint GetPearlescentColor()
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetMod(NativePointer, id))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetPearlescentColor(NativePointer);
+        }
+
+        public Task<uint> GetPearlescentColorAsync()
+        {
+            return _plugin.Schedule(GetPearlescentColor);
+        }
+
+        public void SetWindowTint(uint value)
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_SetWindowTint(NativePointer, value);
+        }
+
+        public Task SetWindowTintAsync(uint value)
+        {
+            return _plugin.Schedule(() => SetWindowTint(value));
+        }
+
+        public uint GetWindowTint()
+        {
+            CheckExistence();
+
+            return Rage.Vehicle.Vehicle_GetWindowTint(NativePointer);
+        }
+
+        public Task<uint> GetWindowTintAsync()
+        {
+            return _plugin.Schedule(GetWindowTint);
+        }
+
+        public void SetDashboardColor(uint value)
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_SetDashboardColor(NativePointer, value);
+        }
+
+        public Task SetDashboardColorAsync(uint value)
+        {
+            return _plugin.Schedule(() => SetDashboardColor(value));
+        }
+
+        public uint GetDashboardColor()
+        {
+            CheckExistence();
+
+            return Rage.Vehicle.Vehicle_GetDashboardColor(NativePointer);
+        }
+
+        public Task<uint> GetDashboardColorAsync()
+        {
+            return _plugin.Schedule(GetDashboardColor);
+        }
+
+        public void SetTrimColor(uint value)
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_SetTrimColor(NativePointer, value);
+        }
+
+        public Task SetTrimColorAsync(uint value)
+        {
+            return _plugin.Schedule(() => SetTrimColor(value));
+        }
+
+        public uint GetTrimColor()
+        {
+            CheckExistence();
+
+            return Rage.Vehicle.Vehicle_GetTrimColor(NativePointer);
+        }
+
+        public Task<uint> GetTrimColorAsync()
+        {
+            return _plugin.Schedule(GetTrimColor);
+        }
+
+        public void Explode()
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_Explode(NativePointer);
+        }
+
+        public Task ExplodeAsync()
+        {
+            return _plugin.Schedule(Explode);
+        }
+
+        public void Repair()
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_Repair(NativePointer);
+        }
+
+        public Task RepairAsync()
+        {
+            return _plugin.Schedule(Repair);
+        }
+
+        public void Spawn(Vector3 position, float heading)
+        {
+            CheckExistence();
+
+            Rage.Vehicle.Vehicle_Spawn(NativePointer, position, heading);
+        }
+
+        public Task SpawnAsync(Vector3 position, float heading)
+        {
+            return _plugin.Schedule(() => Spawn(position, heading));
+        }
+
+        public uint GetMod(uint id)
+        {
+            CheckExistence();
+
+            return Rage.Vehicle.Vehicle_GetMod(NativePointer, id);
+        }
+
+        public Task<uint> GetModAsync(uint id)
+        {
+            return _plugin.Schedule(() => GetMod(id));
+        }
+
+        public int GetMod(int id)
+        {
+            return (int) GetMod((uint) id);
         }
 
         public async Task<int> GetModAsync(int id)
@@ -507,13 +656,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return (int) await GetModAsync((uint) id).ConfigureAwait(false);
         }
 
-        public async Task SetModAsync(uint id, uint mod)
+        public void SetMod(uint id, uint mod)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetMod(NativePointer, id, mod))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetMod(NativePointer, id, mod);
+        }
+
+        public Task SetModAsync(uint id, uint mod)
+        {
+            return _plugin.Schedule(() => SetMod(id, mod));
+        }
+
+        public void SetMod(int id, int mod)
+        {
+            SetMod((uint) id, (uint) mod);
         }
 
         public Task SetModAsync(int id, int mod)
@@ -521,13 +678,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return SetModAsync((uint) id, (uint) mod);
         }
 
-        public async Task<uint> GetColorAsync(uint id)
+        public uint GetColor(uint id)
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetColor(NativePointer, id))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetColor(NativePointer, id);
+        }
+
+        public Task<uint> GetColorAsync(uint id)
+        {
+            return _plugin.Schedule(() => GetColor(id));
+        }
+
+        public int GetColor(int id)
+        {
+            return (int) GetColor((uint) id);
         }
 
         public async Task<int> GetColorAsync(int id)
@@ -536,13 +701,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 .ConfigureAwait(false);
         }
 
-        public async Task<uint> GetPaintAsync(uint id)
+        public uint GetPaint(uint id)
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetPaint(NativePointer, id))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetPaint(NativePointer, id);
+        }
+
+        public Task<uint> GetPaintAsync(uint id)
+        {
+            return _plugin.Schedule(() => GetPaint(id));
+        }
+
+        public int GetPaint(int id)
+        {
+            return (int) GetPaint((uint) id);
         }
 
         public async Task<int> GetPaintAsync(int id)
@@ -551,24 +724,33 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 .ConfigureAwait(false);
         }
 
-        public async Task SetColorRgbAsync(Color primaryColor, Color secondaryColor)
+        public void SetColorRgb(Color primaryColor, Color secondaryColor)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor.ToModColor(), secondaryColor.ToModColor()))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor.ToModColor(), secondaryColor.ToModColor());
         }
 
-        public async Task<Color> GetColorRgbAsync(uint colorSlot)
+        public Task SetColorRgbAsync(Color primaryColor, Color secondaryColor)
+        {
+            return _plugin.Schedule(() => SetColorRgb(primaryColor, secondaryColor));
+        }
+
+        public Color GetColorRgb(uint colorSlot)
         {
             CheckExistence();
 
-            var colorPointer = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot))
-                .ConfigureAwait(false);
+            return StructConverter.PointerToStruct<ColorRgba>(Rage.Vehicle.Vehicle_GetColorRGB(NativePointer, colorSlot)).FromModColor();
+        }
 
-            return StructConverter.PointerToStruct<ColorRgba>(colorPointer).FromModColor();
+        public Task<Color> GetColorRgbAsync(uint colorSlot)
+        {
+            return _plugin.Schedule(() => GetColorRgb(colorSlot));
+        }
+
+        public Color GetColorRgb(int colorSlot)
+        {
+            return GetColorRgb((uint) colorSlot);
         }
 
         public Task<Color> GetColorRgbAsync(int colorSlot)
@@ -576,13 +758,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return GetColorRgbAsync((uint) colorSlot);
         }
 
-        public async Task SetColorAsync(uint primary, uint secondary)
+        public void SetColor(uint primary, uint secondary)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, secondary))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetColor(NativePointer, primary, secondary);
+        }
+
+        public Task SetColorAsync(uint primary, uint secondary)
+        {
+            return _plugin.Schedule(() => SetColor(primary, secondary));
+        }
+
+        public void SetColor(int primary, int secondary)
+        {
+            SetColor((uint) primary, (uint) secondary);
         }
 
         public Task SetColorAsync(int primary, int secondary)
@@ -590,22 +780,33 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return SetColorAsync((uint) primary, (uint) secondary);
         }
 
-        public async Task SetPaintAsync(PaintData primary, PaintData secondary)
+        public void SetPaint(PaintData primary, PaintData secondary)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetPaint(NativePointer, primary, secondary))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetPaint(NativePointer, primary, secondary);
         }
 
-        public async Task<bool> GetExtraAsync(uint id)
+        public Task SetPaintAsync(PaintData primary, PaintData secondary)
+        {
+            return _plugin.Schedule(() => Rage.Vehicle.Vehicle_SetPaint(NativePointer, primary, secondary));
+        }
+
+        public bool GetExtra(uint id)
         {
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetExtra(NativePointer, id))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_GetExtra(NativePointer, id);
+        }
+
+        public Task<bool> GetExtraAsync(uint id)
+        {
+            return _plugin.Schedule(() => GetExtra(id));
+        }
+
+        public bool GetExtra(int id)
+        {
+            return GetExtra((uint) id);
         }
 
         public Task<bool> GetExtraAsync(int id)
@@ -613,13 +814,21 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return GetExtraAsync((uint) id);
         }
 
-        public async Task SetExtraAsync(uint id, bool state)
+        public void SetExtra(uint id, bool state)
         {
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetExtra(NativePointer, id, state))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetExtra(NativePointer, id, state);
+        }
+
+        public Task SetExtraAsync(uint id, bool state)
+        {
+            return _plugin.Schedule(() => SetExtra(id, state));
+        }
+
+        public void SetExtra(int id, bool state)
+        {
+            SetExtra((uint) id, state);
         }
 
         public Task SetExtraAsync(int id, bool state)
@@ -627,63 +836,70 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return SetExtraAsync((uint) id, state);
         }
 
-        public async Task<IReadOnlyCollection<IPlayer>> GetOccupantsAsync()
+        public IReadOnlyCollection<IPlayer> GetOccupants()
         {
             CheckExistence();
 
-            IntPtr playerPointers = IntPtr.Zero;
-            ulong size = 0;
-
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out var playerPointers, out var size);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, p => _plugin.PlayerPool[p]);
         }
 
-        public async Task<IPlayer> GetOccupantAsync(int seat)
+        public Task<IReadOnlyCollection<IPlayer>> GetOccupantsAsync()
+        {
+            return _plugin.Schedule(GetOccupants);
+        }
+
+        public IPlayer GetOccupant(int seat)
         {
             CheckExistence();
 
-            var pointer = await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetOccupant(NativePointer, seat))
-                .ConfigureAwait(false);
-
-            return _plugin.PlayerPool[pointer];
+            return _plugin.PlayerPool[Rage.Vehicle.Vehicle_GetOccupant(NativePointer, seat)];
         }
 
-        public async Task SetOccupantAsync(int seat, IPlayer player)
+        public Task<IPlayer> GetOccupantAsync(int seat)
+        {
+            return _plugin.Schedule(() => GetOccupant(seat));
+        }
+
+        public void SetOccupant(int seat, IPlayer player)
         {
             Contract.NotNull(player, nameof(player));
             CheckExistence();
 
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_SetOccupant(NativePointer, seat, player.NativePointer))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_SetOccupant(NativePointer, seat, player.NativePointer);
         }
 
-        public async Task<bool> IsStreamedAsync(IPlayer forPlayer)
+        public Task SetOccupantAsync(int seat, IPlayer player)
+        {
+            return _plugin.Schedule(() => SetOccupant(seat, player));
+        }
+
+        public bool IsStreamed(IPlayer forPlayer)
         {
             Contract.NotNull(forPlayer, nameof(forPlayer));
             CheckExistence();
 
-            return await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_IsStreamed(NativePointer, forPlayer.NativePointer))
-                .ConfigureAwait(false);
+            return Rage.Vehicle.Vehicle_IsStreamed(NativePointer, forPlayer.NativePointer);
         }
 
-        public async Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
+        public Task<bool> IsStreamedAsync(IPlayer forPlayer)
+        {
+            return _plugin.Schedule(() => IsStreamed(forPlayer));
+        }
+
+        public IReadOnlyCollection<IPlayer> GetStreamedPlayers()
         {
             CheckExistence();
 
-            IntPtr playerPointers = IntPtr.Zero;
-            ulong size = 0;
-
-            await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetStreamed(NativePointer, out playerPointers, out size))
-                .ConfigureAwait(false);
+            Rage.Vehicle.Vehicle_GetStreamed(NativePointer, out var playerPointers, out var size);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, x => _plugin.PlayerPool[x]);
+        }
+
+        public Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
+        {
+            return _plugin.Schedule(GetStreamedPlayers);
         }
     }
 }
