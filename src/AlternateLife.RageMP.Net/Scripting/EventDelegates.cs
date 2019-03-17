@@ -7,9 +7,7 @@ using AlternateLife.RageMP.Net.Scripting.ScriptingClasses;
 
 namespace AlternateLife.RageMP.Net.Scripting
 {
-    public delegate Task AsyncEventHandler<T>(object sender, T e) where T : EventArgs;
-
-    public delegate Task TickDelegate();
+    public delegate Task AsyncEventHandler<T>(object sender, T e) where T : System.EventArgs;
 
     public delegate Task EntityCreatedDelegate(IEntity entity);
     public delegate Task EntityDestroyedDelegate(IEntity entity);
