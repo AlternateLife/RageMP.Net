@@ -1,4 +1,5 @@
 using System;
+using AlternateLife.RageMP.Net.Elements.Entities;
 using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Scripting;
@@ -8,6 +9,11 @@ namespace AlternateLife.RageMP.Net.Interfaces
     public interface IEventScripting
     {
         event AsyncEventHandler<System.EventArgs> Tick;
+
+        event AsyncEventHandler<EntityEventArgs> EntityCreated;
+        event AsyncEventHandler<EntityEventArgs> EntityDestroyed;
+        event AsyncEventHandler<EntityModelEventArgs> EntityModelChange;
+
         event AsyncEventHandler<PlayerEventArgs> PlayerJoin;
         event AsyncEventHandler<PlayerEventArgs> PlayerReady;
         event AsyncEventHandler<PlayerDeathEventArgs> PlayerDeath;
