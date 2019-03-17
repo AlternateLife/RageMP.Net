@@ -1622,7 +1622,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         /// </summary>
         /// <param name="weapon">Weapon to remove</param>
         /// <exception cref="EntityDeletedException">This entity was deleted before</exception>
-        Task RemoveWeapon(WeaponHash weapon);
+        void RemoveWeapon(WeaponHash weapon);
 
         /// <summary>
         /// Remove a weapon from the player.
