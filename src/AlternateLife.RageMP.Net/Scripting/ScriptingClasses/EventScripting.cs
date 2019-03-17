@@ -65,8 +65,8 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             remove => _playerDeath.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitDelegate> _playerQuit;
-        public event PlayerQuitDelegate PlayerQuit
+        private readonly NativeSyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitEventArgs> _playerQuit;
+        public event EventHandler<PlayerQuitEventArgs> PlayerQuit
         {
             add => _playerQuit.Subscribe(value);
             remove => _playerQuit.Unsubscribe(value);
@@ -247,7 +247,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerJoin = new NativeAsyncEventDispatcher<NativePlayerJoinDelegate, PlayerEventArgs>(plugin, EventType.PlayerJoin, DispatchPlayerJoin);
             _playerReady = new NativeAsyncEventDispatcher<NativePlayerReadyDelegate, PlayerEventArgs>(plugin, EventType.PlayerReady, DispatchPlayerReady);
             _playerDeath = new NativeAsyncEventDispatcher<NativePlayerDeathDelegate, PlayerDeathEventArgs>(plugin, EventType.PlayerDeath, DispatchPlayerDeath);
-            _playerQuit = new NativeAsyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitDelegate>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
+            _playerQuit = new NativeSyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitEventArgs>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
             _playerCommand = new NativeAsyncEventDispatcher<NativePlayerCommandDelegate, PlayerCommandEventArgs>(plugin, EventType.PlayerCommand, DispatchPlayerCommand, true);
             _playerCommandFailed = new AsyncEventDispatcher<PlayerCommandFailedEventArgs>(plugin);
             _playerChat = new NativeAsyncEventDispatcher<NativePlayerChatDelegate, PlayerChatEventArgs>(plugin, EventType.PlayerChat, DispatchPlayerChat);
@@ -348,7 +348,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var player = _plugin.PlayerPool[playerPointer];
             var message = StringConverter.PointerToString(reason);
 
-            _playerQuit.Call(x => x(player, (DisconnectReason)type, message));
+            _playerQuit.Call(this, new PlayerQuitEventArgs(player, (DisconnectReason)type, message));
         }
 
         private async void DispatchPlayerCommand(IntPtr playerPointer, IntPtr text)
