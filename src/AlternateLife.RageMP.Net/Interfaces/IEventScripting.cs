@@ -28,11 +28,11 @@ namespace AlternateLife.RageMP.Net.Interfaces
         event AsyncEventHandler<PlayerCreateWaypointEventArgs> PlayerCreateWaypoint;
         event AsyncEventHandler<PlayerEventArgs> PlayerReachWaypoint;
 
-        event VehicleDeathDelegate VehicleDeath;
-        event VehicleSirenToggleDelegate VehicleSirenToggle;
-        event VehicleHornToggleDelegate VehicleHornToggle;
-        event VehicleTrailerAttachedDelegate VehicleTrailerAttached;
-        event VehicleDamageDelegate VehicleDamage;
+        event AsyncEventHandler<VehicleDeathEventArgs> VehicleDeath;
+        event AsyncEventHandler<VehicleToggleEventArgs> VehicleSirenToggle;
+        event AsyncEventHandler<VehicleToggleEventArgs> VehicleHornToggle;
+        event AsyncEventHandler<VehicleTrailerEventArgs> VehicleTrailerAttached;
+        event AsyncEventHandler<VehicleDamageEventArgs> VehicleDamage;
 
         event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamIn;
         event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamOut;

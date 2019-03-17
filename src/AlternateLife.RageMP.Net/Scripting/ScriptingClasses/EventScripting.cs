@@ -169,36 +169,36 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             remove => _playerExitColshape.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathDelegate> _vehicleDeath;
-        public event VehicleDeathDelegate VehicleDeath
+        private readonly NativeAsyncEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathEventArgs> _vehicleDeath;
+        public event AsyncEventHandler<VehicleDeathEventArgs> VehicleDeath
         {
             add => _vehicleDeath.Subscribe(value);
             remove => _vehicleDeath.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate> _vehicleSirenToggle;
-        public event VehicleSirenToggleDelegate VehicleSirenToggle
+        private readonly NativeAsyncEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleToggleEventArgs> _vehicleSirenToggle;
+        public event AsyncEventHandler<VehicleToggleEventArgs> VehicleSirenToggle
         {
             add => _vehicleSirenToggle.Subscribe(value);
             remove => _vehicleSirenToggle.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate> _vehicleHornToggle;
-        public event VehicleHornToggleDelegate VehicleHornToggle
+        private readonly NativeAsyncEventDispatcher<NativeVehicleHornToggleDelegate, VehicleToggleEventArgs> _vehicleHornToggle;
+        public event AsyncEventHandler<VehicleToggleEventArgs> VehicleHornToggle
         {
             add => _vehicleHornToggle.Subscribe(value);
             remove => _vehicleHornToggle.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate> _vehicleTrailerAttached;
-        public event VehicleTrailerAttachedDelegate VehicleTrailerAttached
+        private readonly NativeAsyncEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerEventArgs> _vehicleTrailerAttached;
+        public event AsyncEventHandler<VehicleTrailerEventArgs> VehicleTrailerAttached
         {
             add => _vehicleTrailerAttached.Subscribe(value);
             remove => _vehicleTrailerAttached.Unsubscribe(value);
         }
 
-        private readonly NativeAsyncEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageDelegate> _vehicleDamage;
-        public event VehicleDamageDelegate VehicleDamage
+        private readonly NativeAsyncEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageEventArgs> _vehicleDamage;
+        public event AsyncEventHandler<VehicleDamageEventArgs> VehicleDamage
         {
             add => _vehicleDamage.Subscribe(value);
             remove => _vehicleDamage.Unsubscribe(value);
@@ -271,11 +271,11 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerStreamIn = new NativeAsyncEventDispatcher<NativePlayerStreamInDelegate, PlayerStreamEventArgs>(plugin, EventType.PlayerStreamIn, DispatchPlayerStreamIn);
             _playerStreamOut = new NativeAsyncEventDispatcher<NativePlayerStreamOutDelegate, PlayerStreamEventArgs>(plugin, EventType.PlayerStreamOut, DispatchPlayerStreamOut);
 
-            _vehicleDeath = new NativeAsyncEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathDelegate>(plugin, EventType.VehicleDeath, DispatchVehicleDeath);
-            _vehicleSirenToggle = new NativeAsyncEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleSirenToggleDelegate>(plugin, EventType.VehicleSirenToggle, DispatchVehicleSirenToggle);
-            _vehicleHornToggle = new NativeAsyncEventDispatcher<NativeVehicleHornToggleDelegate, VehicleHornToggleDelegate>(plugin, EventType.VehicleHornToggle, DispatchVehicleHornToggle);
-            _vehicleTrailerAttached = new NativeAsyncEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerAttachedDelegate>(plugin, EventType.VehicleTrailerAttached, DispatchTrailerAttached);
-            _vehicleDamage = new NativeAsyncEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageDelegate>(plugin, EventType.VehicleDamage, DispatchVehicleDamage);
+            _vehicleDeath = new NativeAsyncEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathEventArgs>(plugin, EventType.VehicleDeath, DispatchVehicleDeath);
+            _vehicleSirenToggle = new NativeAsyncEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleToggleEventArgs>(plugin, EventType.VehicleSirenToggle, DispatchVehicleSirenToggle);
+            _vehicleHornToggle = new NativeAsyncEventDispatcher<NativeVehicleHornToggleDelegate, VehicleToggleEventArgs>(plugin, EventType.VehicleHornToggle, DispatchVehicleHornToggle);
+            _vehicleTrailerAttached = new NativeAsyncEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerEventArgs>(plugin, EventType.VehicleTrailerAttached, DispatchTrailerAttached);
+            _vehicleDamage = new NativeAsyncEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageEventArgs>(plugin, EventType.VehicleDamage, DispatchVehicleDamage);
         }
 
         public void Add(string eventName, AsyncEventHandler<PlayerRemoteEventEventArgs> callback)
@@ -473,21 +473,21 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var vehicle = _plugin.VehiclePool[vehiclepointer];
             var killerPlayer = _plugin.PlayerPool[killerplayerpointer];
 
-            _vehicleDeath.CallAsync(x => x(vehicle, reason, killerPlayer));
+            _vehicleDeath.CallAsync(this, new VehicleDeathEventArgs(vehicle, reason, killerPlayer));
         }
 
         private void DispatchVehicleSirenToggle(IntPtr vehiclepointer, bool toggle)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleSirenToggle.CallAsync(x => x(vehicle, toggle));
+            _vehicleSirenToggle.CallAsync(this, new VehicleToggleEventArgs(vehicle, toggle));
         }
 
         private void DispatchVehicleHornToggle(IntPtr vehiclepointer, bool toggle)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleSirenToggle.CallAsync(x => x(vehicle, toggle));
+            _vehicleHornToggle.CallAsync(this, new VehicleToggleEventArgs(vehicle, toggle));
         }
 
         private void DispatchTrailerAttached(IntPtr vehiclepointer, IntPtr trailerpointer)
@@ -495,14 +495,14 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             var vehicle = _plugin.VehiclePool[vehiclepointer];
             var trailer = _plugin.VehiclePool[trailerpointer];
 
-            _vehicleTrailerAttached.CallAsync(x => x(vehicle, trailer));
+            _vehicleTrailerAttached.CallAsync(this, new VehicleTrailerEventArgs(vehicle, trailer));
         }
 
         private void DispatchVehicleDamage(IntPtr vehiclepointer, float bodyhealthloss, float enginehealthloss)
         {
             var vehicle = _plugin.VehiclePool[vehiclepointer];
 
-            _vehicleDamage.CallAsync(x => x(vehicle, bodyhealthloss, enginehealthloss));
+            _vehicleDamage.CallAsync(this, new VehicleDamageEventArgs(vehicle, bodyhealthloss, enginehealthloss));
         }
 
         private void DispatchPlayerCreateWaypoint(IntPtr playerpointer, Vector3 position)
