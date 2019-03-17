@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Scripting;
 
-namespace AlternateLife.RageMP.Net.Helpers
+namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 {
     internal class AsyncEventDispatcher<TEvent> where TEvent : System.EventArgs
     {
