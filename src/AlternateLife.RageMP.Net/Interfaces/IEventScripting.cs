@@ -1,5 +1,6 @@
 using System;
 using AlternateLife.RageMP.Net.EventArgs;
+using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
@@ -10,7 +11,7 @@ namespace AlternateLife.RageMP.Net.Interfaces
         event AsyncEventHandler<PlayerEventArgs> PlayerJoin;
         event AsyncEventHandler<PlayerEventArgs> PlayerReady;
         event AsyncEventHandler<PlayerDeathEventArgs> PlayerDeath;
-        event PlayerQuitDelegate PlayerQuit;
+        event EventHandler<PlayerQuitEventArgs> PlayerQuit;
         event AsyncEventHandler<PlayerCommandEventArgs> PlayerCommand;
         event AsyncEventHandler<PlayerCommandFailedEventArgs> PlayerCommandFailed;
         event AsyncEventHandler<PlayerChatEventArgs> PlayerChat;
