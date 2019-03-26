@@ -8,3 +8,4 @@ services:
       - "22006:22006"
     volumes:
       - ./src/AlternateLife.RageMP.Net.Example/bin/Testing/netcoreapp2.2/:/ragemp-srv/dotnet/resources/example
+
