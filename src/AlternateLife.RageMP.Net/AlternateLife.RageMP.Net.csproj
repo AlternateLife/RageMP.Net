@@ -48,7 +48,7 @@
             <CopiedFiles>$(OutputPath)\AlternateLife.RageMP.Net.dll;$(OutputPath)\AlternateLife.RageMP.Net.pdb</CopiedFiles>
 
             <TargetLocation Condition=" '$(Configuration)' == 'Testing' ">../../../RageMP Server/dotnet/plugins/</TargetLocation>
-            <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/ragemp-srv/dotnet/resources/plugins/</TargetLocation>
+            <TargetLocation Condition=" '$(Configuration)' == 'Linux' ">/ragemp-srv/dotnet/plugins/</TargetLocation>
         </PropertyGroup>
 
         <Copy Condition=" '$(TargetLocation)' != '' " SourceFiles="$(CopiedFiles)" DestinationFolder="$(TargetLocation)" SkipUnchangedFiles="false" />
