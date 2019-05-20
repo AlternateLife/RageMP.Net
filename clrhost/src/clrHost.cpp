@@ -125,11 +125,7 @@ bool ClrHost::loadCoreClr() {
     _createDelegate = (coreclr_create_delegate_ptr)GetProcAddress(_coreClrLib, "coreclr_create_delegate");
     _executeAssembly = (coreclr_execute_assembly_ptr)GetProcAddress(_coreClrLib, "coreclr_execute_assembly");
 #else
-#ifdef __APPLE__
-    coreClrDllPath += "libcoreclr.dylib";
-#else
-    coreClrDllPath += "libcoreclr.so";
-#endif
+    coreClrDllPath += "/libcoreclr.so";
 
     _coreClrLib = dlopen(coreClrDllPath.c_str(), RTLD_NOW | RTLD_LOCAL);
     if (_coreClrLib == nullptr) {
@@ -141,6 +137,7 @@ bool ClrHost::loadCoreClr() {
     _initializeCoreCLR = (coreclr_initialize_ptr)dlsym(_coreClrLib, "coreclr_initialize");
     _shutdownCoreCLR = (coreclr_shutdown_2_ptr)dlsym(_coreClrLib, "coreclr_shutdown_2");
     _createDelegate = (coreclr_create_delegate_ptr)dlsym(_coreClrLib, "coreclr_create_delegate");
+    _executeAssembly = (coreclr_execute_assembly_ptr)dlsym(_coreClrLib, "coreclr_execute_assembly");
 #endif
 
     if (_initializeCoreCLR == nullptr || _shutdownCoreCLR == nullptr || _createDelegate == nullptr || _executeAssembly == nullptr) {
@@ -359,9 +356,7 @@ std::string ClrHost::getAbsolutePath(std::string relativePath) {
 #else
     char absolutePath[PATH_MAX];
 
-    if (realpath(relativePath.c_str(), absolutePath) != nullptr) {
-        strcat(absolutePath, "/");
-    } else {
+    if (realpath(relativePath.c_str(), absolutePath) == nullptr) {
         // no absolute path found
         absolutePath[0] = '\0';
     }
