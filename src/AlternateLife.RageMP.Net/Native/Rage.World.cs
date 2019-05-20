@@ -12,7 +12,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern IntPtr World_GetTime(IntPtr world);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void World_SetTime(IntPtr world, TimeData time);
+            internal static extern void World_SetTime(IntPtr world, uint time);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr World_GetWeather(IntPtr world);
