@@ -6,7 +6,7 @@ namespace AlternateLife.RageMP.Net.Data
     public struct ColorRgba
     {
         [FieldOffset(0)]
-        public readonly uint NumberValue;
+        internal readonly uint NumberValue;
 
         public ColorRgba(byte red, byte green, byte blue, byte alpha = 255)
         {

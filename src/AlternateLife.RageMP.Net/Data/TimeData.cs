@@ -6,26 +6,26 @@ namespace AlternateLife.RageMP.Net.Data
     public struct TimeData
     {
         [FieldOffset(0)]
-        private readonly InnerTimeData Time;
+        internal readonly uint NumberValue;
 
         public TimeData(byte hour, byte minute, byte second)
         {
-            Time = new InnerTimeData(hour, minute, second);
+            NumberValue = ((uint) second << 16) + ((uint) minute << 8) + hour;
         }
 
         public byte GetHour()
         {
-            return Time.Hour;
+            return (byte) (NumberValue & 0xFF);
         }
 
         public byte GetMinute()
         {
-            return Time.Minute;
+            return (byte) ((NumberValue >> 8) & 0xFF);
         }
 
         public byte GetSecond()
         {
-            return Time.Second;
+            return (byte) ((NumberValue >> 16) & 0xFF);
         }
     }
 }
