@@ -112,7 +112,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern void Vehicle_SetColor(IntPtr vehicle, uint primaryColor, uint secondaryColor);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void Vehicle_SetColorRGB(IntPtr vehicle, ColorRgba primaryColor, ColorRgba secondaryColor);
+            internal static extern void Vehicle_SetColorRGB(IntPtr vehicle, uint primaryColor, uint secondaryColor);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr Vehicle_GetColorRGB(IntPtr vehicle, uint id);

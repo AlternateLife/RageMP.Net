@@ -1,7 +1,6 @@
 using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
-using AlternateLife.RageMP.Net.Data;
 
 namespace AlternateLife.RageMP.Net.Native
 {
@@ -11,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Native
         internal static class TextLabelPool
         {
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern IntPtr TextLabelPool_New(IntPtr pool, Vector3 position, IntPtr text, uint font, ColorRgba color, float drawDistance, bool los, uint dimension);
+            internal static extern IntPtr TextLabelPool_New(IntPtr pool, Vector3 position, IntPtr text, uint font, uint color, float drawDistance, bool los, uint dimension);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 CheckExistence();
 
-                Rage.TextLabel.TextLabel_SetColor(NativePointer, value);
+                Rage.TextLabel.TextLabel_SetColor(NativePointer, value.NumberValue);
             }
         }
 
@@ -36,7 +36,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             set
             {
                 Contract.NotNull(value, nameof(value));
-                
+
                 using (var converter = new StringConverter())
                 {
                     Rage.TextLabel.TextLabel_SetText(NativePointer, converter.StringToPointer(value));

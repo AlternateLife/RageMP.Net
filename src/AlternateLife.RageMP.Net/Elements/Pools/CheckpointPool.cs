@@ -17,7 +17,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         public async Task<ICheckpoint> NewAsync(uint type, Vector3 position, Vector3 nextPosition, float radius, ColorRgba color, bool visible, uint dimension)
         {
             var pointer = await _plugin
-                .Schedule(() => Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color, visible, dimension))
+                .Schedule(() => Rage.CheckpointPool.CheckpointPool_New(_nativePointer, type, position, nextPosition, radius, color.NumberValue, visible, dimension))
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);

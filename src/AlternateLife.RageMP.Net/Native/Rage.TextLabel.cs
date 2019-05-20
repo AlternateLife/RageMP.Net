@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using AlternateLife.RageMP.Net.Data;
 
 namespace AlternateLife.RageMP.Net.Native
 {
@@ -12,7 +11,7 @@ namespace AlternateLife.RageMP.Net.Native
             internal static extern IntPtr TextLabel_GetColor(IntPtr textLabel);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
-            internal static extern void TextLabel_SetColor(IntPtr textLabel, ColorRgba color);
+            internal static extern void TextLabel_SetColor(IntPtr textLabel, uint color);
 
             [DllImport(_dllName, CallingConvention = _callingConvention)]
             internal static extern IntPtr TextLabel_GetText(IntPtr textLabel);
