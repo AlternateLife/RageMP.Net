@@ -18,13 +18,13 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         public async Task<ITextLabel> NewAsync(Vector3 position, string text, uint font, ColorRgba color, float drawDistance, bool los, uint dimension)
         {
             Contract.NotNull(text, nameof(text));
-            
+
             using (var converter = new StringConverter())
             {
                 var textPointer = converter.StringToPointer(text);
 
                 var pointer = await _plugin
-                    .Schedule(() => Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, textPointer, font, color, drawDistance, los, dimension))
+                    .Schedule(() => Rage.TextLabelPool.TextLabelPool_New(_nativePointer, position, textPointer, font, color.NumberValue, drawDistance, los, dimension))
                     .ConfigureAwait(false);
 
                 return CreateAndSaveEntity(pointer);

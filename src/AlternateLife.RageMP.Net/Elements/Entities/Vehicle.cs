@@ -506,7 +506,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             CheckExistence();
 
-            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor, secondaryColor);
+            Rage.Vehicle.Vehicle_SetColorRGB(NativePointer, primaryColor.NumberValue, secondaryColor.NumberValue);
         }
 
         public ColorRgba GetColorRgb(uint colorSlot)

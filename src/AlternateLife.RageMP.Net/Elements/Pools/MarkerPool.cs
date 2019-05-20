@@ -18,7 +18,7 @@ namespace AlternateLife.RageMP.Net.Elements.Pools
         public async Task<IMarker> NewAsync(MarkerType type, Vector3 position, Vector3 rotation, Vector3 direction, float scale, ColorRgba color, bool visible, uint dimension)
         {
             var pointer = await _plugin
-                .Schedule(() => Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color, visible, dimension))
+                .Schedule(() => Rage.MarkerPool.MarkerPool_New(_nativePointer, (uint) type, position, rotation, direction, scale, color.NumberValue, visible, dimension))
                 .ConfigureAwait(false);
 
             return CreateAndSaveEntity(pointer);
