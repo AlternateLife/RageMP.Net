@@ -21,7 +21,7 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release .. && \
     make install
 
 ############# .NET Stage #############
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2.104 as dotnet
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2.300 as dotnet
 
 ARG bridge_version=1.0.0.0
 
