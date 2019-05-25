@@ -58,7 +58,9 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             }
             catch (Exception e)
             {
-                _plugin.Logger.Error($"An error occured during execution of event {typeof(TEvent)}", e);
+                var methodInfo = subscription.Method;
+
+                _plugin.Logger.Error($"An error occured during execution of event \"{_eventIdentifier}\" ({methodInfo.DeclaringType}:{methodInfo.Name})", e);
             }
         }
 
@@ -70,7 +72,9 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             }
             catch (Exception e)
             {
-                _plugin.Logger.Error($"An error occured during execution of event {typeof(TEvent)}", e);
+                var methodInfo = subscription.Method;
+
+                _plugin.Logger.Error($"An error occured during execution of event \"{_eventIdentifier}\" ({methodInfo.DeclaringType}:{methodInfo.Name})", e);
             }
         }
     }
