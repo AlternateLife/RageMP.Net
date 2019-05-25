@@ -12,7 +12,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         private readonly TNative _nativeCallback;
         private readonly bool _forceRegistration;
 
-        internal NativeSyncEventDispatcher(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false) : base(plugin)
+        internal NativeSyncEventDispatcher(Plugin plugin, EventType type, TNative nativeCallback, bool forceRegistration = false) : base(plugin, type.ToString())
         {
             _type = type;
             _nativeCallback = nativeCallback;
