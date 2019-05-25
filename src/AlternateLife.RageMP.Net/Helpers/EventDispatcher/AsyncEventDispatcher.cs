@@ -54,7 +54,14 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         {
             try
             {
-                await subscription(sender, eventArgs).ConfigureAwait(false);
+                var task = subscription(sender, eventArgs);
+
+                if (task == null)
+                {
+                    throw new NullReferenceException("The subscriber has to return a task.");
+                }
+
+                await task.ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -68,7 +75,14 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         {
             try
             {
-                await subscription(sender, eventArgs).ConfigureAwait(false);
+                var task = subscription(sender, eventArgs);
+
+                if (task == null)
+                {
+                    throw new NullReferenceException("The subscriber has to return a task.");
+                }
+
+                await task.ConfigureAwait(false);
             }
             catch (Exception e)
             {
