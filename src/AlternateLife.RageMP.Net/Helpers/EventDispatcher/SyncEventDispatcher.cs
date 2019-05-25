@@ -5,7 +5,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 {
     internal class SyncEventDispatcher<TEvent> : EventDispatcher<EventHandler<TEvent>> where TEvent : System.EventArgs
     {
-        public SyncEventDispatcher(Plugin plugin) : base(plugin)
+        public SyncEventDispatcher(Plugin plugin, string eventIdentifier) : base(plugin, eventIdentifier)
         {
         }
 

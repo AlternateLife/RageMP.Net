@@ -8,9 +8,12 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 
         protected readonly HashSet<T> _subscriptions = new HashSet<T>();
 
-        internal EventDispatcher(Plugin plugin)
+        protected readonly string _eventIdentifier;
+
+        internal EventDispatcher(Plugin plugin, string eventIdentifier)
         {
             _plugin = plugin;
+            _eventIdentifier = eventIdentifier;
         }
 
         public virtual bool Subscribe(T callback)

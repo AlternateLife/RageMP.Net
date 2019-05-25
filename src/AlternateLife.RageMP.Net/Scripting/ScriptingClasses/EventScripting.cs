@@ -249,7 +249,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             _playerDeath = new NativeAsyncEventDispatcher<NativePlayerDeathDelegate, PlayerDeathEventArgs>(plugin, EventType.PlayerDeath, DispatchPlayerDeath);
             _playerQuit = new NativeSyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitEventArgs>(plugin, EventType.PlayerQuit, DisaptchPlayerQuit);
             _playerCommand = new NativeAsyncEventDispatcher<NativePlayerCommandDelegate, PlayerCommandEventArgs>(plugin, EventType.PlayerCommand, DispatchPlayerCommand, true);
-            _playerCommandFailed = new AsyncEventDispatcher<PlayerCommandFailedEventArgs>(plugin);
+            _playerCommandFailed = new AsyncEventDispatcher<PlayerCommandFailedEventArgs>(plugin, "PlayerCommandFailed");
             _playerChat = new NativeAsyncEventDispatcher<NativePlayerChatDelegate, PlayerChatEventArgs>(plugin, EventType.PlayerChat, DispatchPlayerChat);
             _playerSpawn = new NativeAsyncEventDispatcher<NativePlayerSpawnDelegate, PlayerEventArgs>(plugin, EventType.PlayerSpawn, DispatchPlayerSpawn);
             _playerDamage = new NativeAsyncEventDispatcher<NativePlayerDamageDelegate, PlayerDamageEventArgs>(plugin, EventType.PlayerDamage, DispatchPlayerDamage);
