@@ -19,13 +19,15 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             _eventIdentifier = eventIdentifier;
         }
 
-        public virtual bool Subscribe(T callback)
+        public virtual bool Subscribe(T callback, out bool isFirstSubscriber)
         {
             Contract.NotNull(callback, nameof(callback));
 
             _readerWriterLock.EnterWriteLock();
             try
             {
+                isFirstSubscriber = _subscriptions.Any() == false;
+
                 return _subscriptions.Add(callback);
             }
             finally
@@ -34,14 +36,18 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             }
         }
 
-        public virtual bool Unsubscribe(T callback)
+        public virtual bool Unsubscribe(T callback, out bool wasLastSubscriber)
         {
             Contract.NotNull(callback, nameof(callback));
 
             _readerWriterLock.EnterWriteLock();
             try
             {
-                return _subscriptions.Remove(callback);
+                var result = _subscriptions.Remove(callback);
+
+                wasLastSubscriber = _subscriptions.Any() == false;
+
+                return result;
             }
             finally
             {
@@ -63,19 +69,5 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
                 _readerWriterLock.ExitReadLock();
             }
         }
-
-        protected bool AnySubscriptions()
-        {
-            _readerWriterLock.EnterReadLock();
-            try
-            {
-                return _subscriptions.Any();
-            }
-            finally
-            {
-                _readerWriterLock.ExitReadLock();
-            }
-        }
-
     }
 }

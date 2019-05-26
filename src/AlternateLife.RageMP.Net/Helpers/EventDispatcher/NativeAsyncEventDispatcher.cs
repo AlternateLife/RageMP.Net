@@ -24,14 +24,13 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             }
         }
 
-        public override bool Subscribe(AsyncEventHandler<TEvent> callback)
+        public override bool Subscribe(AsyncEventHandler<TEvent> callback, out bool isFirstSubscriber)
         {
-            var wasEmpty = AnySubscriptions() == false;
-            var wasAdded = base.Subscribe(callback);
+            var wasAdded = base.Subscribe(callback, out isFirstSubscriber);
 
-            if (_forceRegistration || wasAdded == false || wasEmpty == false)
+            if (_forceRegistration || wasAdded == false || isFirstSubscriber == false)
             {
-                return true;
+                return wasAdded;
             }
 
             Rage.Events.RegisterEventHandler((int) _type, Marshal.GetFunctionPointerForDelegate(_nativeCallback));
@@ -39,13 +38,13 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             return true;
         }
 
-        public override bool Unsubscribe(AsyncEventHandler<TEvent> callback)
+        public override bool Unsubscribe(AsyncEventHandler<TEvent> callback, out bool wasLastSubscriber)
         {
-            var wasRemoved = base.Unsubscribe(callback);
+            var wasRemoved = base.Unsubscribe(callback, out wasLastSubscriber);
 
-            if (_forceRegistration || wasRemoved == false || AnySubscriptions())
+            if (_forceRegistration || wasRemoved == false || wasLastSubscriber == false)
             {
-                return true;
+                return wasRemoved;
             }
 
             Rage.Events.UnregisterEventHandler((int) _type);
