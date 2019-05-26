@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 
 namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 {
@@ -6,7 +8,8 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
     {
         protected readonly Plugin _plugin;
 
-        protected readonly HashSet<T> _subscriptions = new HashSet<T>();
+        private readonly HashSet<T> _subscriptions = new HashSet<T>();
+        private readonly ReaderWriterLockSlim _readerWriterLock = new ReaderWriterLockSlim();
 
         protected readonly string _eventIdentifier;
 
@@ -20,14 +23,59 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         {
             Contract.NotNull(callback, nameof(callback));
 
-            return _subscriptions.Add(callback);
+            _readerWriterLock.EnterWriteLock();
+            try
+            {
+                return _subscriptions.Add(callback);
+            }
+            finally
+            {
+                _readerWriterLock.ExitWriteLock();
+            }
         }
 
         public virtual bool Unsubscribe(T callback)
         {
             Contract.NotNull(callback, nameof(callback));
 
-            return _subscriptions.Remove(callback);
+            _readerWriterLock.EnterWriteLock();
+            try
+            {
+                return _subscriptions.Remove(callback);
+            }
+            finally
+            {
+                _readerWriterLock.ExitWriteLock();
+            }
         }
+
+        protected bool TryGetSubscriptions(out IReadOnlyCollection<T> subscriptions)
+        {
+            _readerWriterLock.EnterReadLock();
+            try
+            {
+                subscriptions = _subscriptions.ToList();
+
+                return subscriptions.Any();
+            }
+            finally
+            {
+                _readerWriterLock.ExitReadLock();
+            }
+        }
+
+        protected bool AnySubscriptions()
+        {
+            _readerWriterLock.EnterReadLock();
+            try
+            {
+                return _subscriptions.Any();
+            }
+            finally
+            {
+                _readerWriterLock.ExitReadLock();
+            }
+        }
+
     }
 }
