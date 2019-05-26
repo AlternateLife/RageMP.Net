@@ -19,218 +19,218 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
         private readonly NativeAsyncEventDispatcher<NativeEntityCreatedDelegate, EntityEventArgs> _entityCreated;
         public event AsyncEventHandler<EntityEventArgs> EntityCreated
         {
-            add => _entityCreated.Subscribe(value);
-            remove => _entityCreated.Unsubscribe(value);
+            add => _entityCreated.Subscribe(value, out _);
+            remove => _entityCreated.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeEntityDestroyedDelegate, EntityEventArgs> _entityDestroyed;
         public event AsyncEventHandler<EntityEventArgs> EntityDestroyed
         {
-            add => _entityDestroyed.Subscribe(value);
-            remove => _entityDestroyed.Unsubscribe(value);
+            add => _entityDestroyed.Subscribe(value, out _);
+            remove => _entityDestroyed.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeEntityModelChangeDelegate, EntityModelEventArgs> _entityModelChange;
         public event AsyncEventHandler<EntityModelEventArgs> EntityModelChange
         {
-            add => _entityModelChange.Subscribe(value);
-            remove => _entityModelChange.Unsubscribe(value);
+            add => _entityModelChange.Subscribe(value, out _);
+            remove => _entityModelChange.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeTickDelegate, System.EventArgs> _tick;
         public event AsyncEventHandler<System.EventArgs> Tick
         {
-            add => _tick.Subscribe(value);
-            remove => _tick.Unsubscribe(value);
+            add => _tick.Subscribe(value, out _);
+            remove => _tick.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerJoinDelegate, PlayerEventArgs> _playerJoin;
         public event AsyncEventHandler<PlayerEventArgs> PlayerJoin
         {
-            add => _playerJoin.Subscribe(value);
-            remove => _playerJoin.Unsubscribe(value);
+            add => _playerJoin.Subscribe(value, out _);
+            remove => _playerJoin.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerReadyDelegate, PlayerEventArgs> _playerReady;
         public event AsyncEventHandler<PlayerEventArgs> PlayerReady
         {
-            add => _playerReady.Subscribe(value);
-            remove => _playerReady.Unsubscribe(value);
+            add => _playerReady.Subscribe(value, out _);
+            remove => _playerReady.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerDeathDelegate, PlayerDeathEventArgs> _playerDeath;
         public event AsyncEventHandler<PlayerDeathEventArgs> PlayerDeath
         {
-            add => _playerDeath.Subscribe(value);
-            remove => _playerDeath.Unsubscribe(value);
+            add => _playerDeath.Subscribe(value, out _);
+            remove => _playerDeath.Unsubscribe(value, out _);
         }
 
         private readonly NativeSyncEventDispatcher<NativePlayerQuitDelegate, PlayerQuitEventArgs> _playerQuit;
         public event EventHandler<PlayerQuitEventArgs> PlayerQuit
         {
-            add => _playerQuit.Subscribe(value);
-            remove => _playerQuit.Unsubscribe(value);
+            add => _playerQuit.Subscribe(value, out _);
+            remove => _playerQuit.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerCommandDelegate, PlayerCommandEventArgs> _playerCommand;
         public event AsyncEventHandler<PlayerCommandEventArgs> PlayerCommand
         {
-            add => _playerCommand.Subscribe(value);
-            remove => _playerCommand.Unsubscribe(value);
+            add => _playerCommand.Subscribe(value, out _);
+            remove => _playerCommand.Unsubscribe(value, out _);
         }
 
         private readonly AsyncEventDispatcher<PlayerCommandFailedEventArgs> _playerCommandFailed;
         public event AsyncEventHandler<PlayerCommandFailedEventArgs> PlayerCommandFailed
         {
-            add => _playerCommandFailed.Subscribe(value);
-            remove => _playerCommandFailed.Unsubscribe(value);
+            add => _playerCommandFailed.Subscribe(value, out _);
+            remove => _playerCommandFailed.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerChatDelegate, PlayerChatEventArgs> _playerChat;
         public event AsyncEventHandler<PlayerChatEventArgs> PlayerChat
         {
-            add => _playerChat.Subscribe(value);
-            remove => _playerChat.Unsubscribe(value);
+            add => _playerChat.Subscribe(value, out _);
+            remove => _playerChat.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerSpawnDelegate, PlayerEventArgs> _playerSpawn;
         public event AsyncEventHandler<PlayerEventArgs> PlayerSpawn
         {
-            add => _playerSpawn.Subscribe(value);
-            remove => _playerSpawn.Unsubscribe(value);
+            add => _playerSpawn.Subscribe(value, out _);
+            remove => _playerSpawn.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerDamageDelegate, PlayerDamageEventArgs> _playerDamage;
         public event AsyncEventHandler<PlayerDamageEventArgs> PlayerDamage
         {
-            add => _playerDamage.Subscribe(value);
-            remove => _playerDamage.Unsubscribe(value);
+            add => _playerDamage.Subscribe(value, out _);
+            remove => _playerDamage.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerWeaponChangeDelegate, PlayerWeaponChangeEventArgs> _playerWeaponChange;
         public event AsyncEventHandler<PlayerWeaponChangeEventArgs> PlayerWeaponChange
         {
-            add => _playerWeaponChange.Subscribe(value);
-            remove => _playerWeaponChange.Unsubscribe(value);
+            add => _playerWeaponChange.Subscribe(value, out _);
+            remove => _playerWeaponChange.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerStartEnterVehicleDelegate, PlayerEnterVehicleEventArgs> _playerStartEnterVehicle;
         public event AsyncEventHandler<PlayerEnterVehicleEventArgs> PlayerStartEnterVehicle
         {
-            add => _playerStartEnterVehicle.Subscribe(value);
-            remove => _playerStartEnterVehicle.Unsubscribe(value);
+            add => _playerStartEnterVehicle.Subscribe(value, out _);
+            remove => _playerStartEnterVehicle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerEnterVehicleDelegate, PlayerEnterVehicleEventArgs> _playerEnterVehicle;
         public event AsyncEventHandler<PlayerEnterVehicleEventArgs> PlayerEnterVehicle
         {
-            add => _playerEnterVehicle.Subscribe(value);
-            remove => _playerEnterVehicle.Unsubscribe(value);
+            add => _playerEnterVehicle.Subscribe(value, out _);
+            remove => _playerEnterVehicle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerStartExitVehicleDelegate, PlayerVehicleEventArgs> _playerStartExitVehicle;
         public event AsyncEventHandler<PlayerVehicleEventArgs> PlayerStartExitVehicle
         {
-            add => _playerStartExitVehicle.Subscribe(value);
-            remove => _playerStartExitVehicle.Unsubscribe(value);
+            add => _playerStartExitVehicle.Subscribe(value, out _);
+            remove => _playerStartExitVehicle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerExitVehicleDelegate, PlayerVehicleEventArgs> _playerExitVehicle;
         public event AsyncEventHandler<PlayerVehicleEventArgs> PlayerExitVehicle
         {
-            add => _playerExitVehicle.Subscribe(value);
-            remove => _playerExitVehicle.Unsubscribe(value);
+            add => _playerExitVehicle.Subscribe(value, out _);
+            remove => _playerExitVehicle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerEnterCheckpointDelegate, PlayerCheckpointEventArgs> _playerEnterCheckpoint;
         public event AsyncEventHandler<PlayerCheckpointEventArgs> PlayerEnterCheckpoint
         {
-            add => _playerEnterCheckpoint.Subscribe(value);
-            remove => _playerEnterCheckpoint.Unsubscribe(value);
+            add => _playerEnterCheckpoint.Subscribe(value, out _);
+            remove => _playerEnterCheckpoint.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerExitCheckpointDelegate, PlayerCheckpointEventArgs> _playerExitCheckpoint;
         public event AsyncEventHandler<PlayerCheckpointEventArgs> PlayerExitCheckpoint
         {
-            add => _playerExitCheckpoint.Subscribe(value);
-            remove => _playerExitCheckpoint.Unsubscribe(value);
+            add => _playerExitCheckpoint.Subscribe(value, out _);
+            remove => _playerExitCheckpoint.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerEnterColshapeDelegate, PlayerColshapeEventArgs> _playerEnterColshape;
         public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnterColshape
         {
-            add => _playerEnterColshape.Subscribe(value);
-            remove => _playerEnterColshape.Unsubscribe(value);
+            add => _playerEnterColshape.Subscribe(value, out _);
+            remove => _playerEnterColshape.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerExitColshapeDelegate, PlayerColshapeEventArgs> _playerExitColshape;
         public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExitColshape
         {
-            add => _playerExitColshape.Subscribe(value);
-            remove => _playerExitColshape.Unsubscribe(value);
+            add => _playerExitColshape.Subscribe(value, out _);
+            remove => _playerExitColshape.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeVehicleDeathDelegate, VehicleDeathEventArgs> _vehicleDeath;
         public event AsyncEventHandler<VehicleDeathEventArgs> VehicleDeath
         {
-            add => _vehicleDeath.Subscribe(value);
-            remove => _vehicleDeath.Unsubscribe(value);
+            add => _vehicleDeath.Subscribe(value, out _);
+            remove => _vehicleDeath.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeVehicleSirenToggleDelegate, VehicleToggleEventArgs> _vehicleSirenToggle;
         public event AsyncEventHandler<VehicleToggleEventArgs> VehicleSirenToggle
         {
-            add => _vehicleSirenToggle.Subscribe(value);
-            remove => _vehicleSirenToggle.Unsubscribe(value);
+            add => _vehicleSirenToggle.Subscribe(value, out _);
+            remove => _vehicleSirenToggle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeVehicleHornToggleDelegate, VehicleToggleEventArgs> _vehicleHornToggle;
         public event AsyncEventHandler<VehicleToggleEventArgs> VehicleHornToggle
         {
-            add => _vehicleHornToggle.Subscribe(value);
-            remove => _vehicleHornToggle.Unsubscribe(value);
+            add => _vehicleHornToggle.Subscribe(value, out _);
+            remove => _vehicleHornToggle.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeVehicleTrailerAttachedDelegate, VehicleTrailerEventArgs> _vehicleTrailerAttached;
         public event AsyncEventHandler<VehicleTrailerEventArgs> VehicleTrailerAttached
         {
-            add => _vehicleTrailerAttached.Subscribe(value);
-            remove => _vehicleTrailerAttached.Unsubscribe(value);
+            add => _vehicleTrailerAttached.Subscribe(value, out _);
+            remove => _vehicleTrailerAttached.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativeVehicleDamageDelegate, VehicleDamageEventArgs> _vehicleDamage;
         public event AsyncEventHandler<VehicleDamageEventArgs> VehicleDamage
         {
-            add => _vehicleDamage.Subscribe(value);
-            remove => _vehicleDamage.Unsubscribe(value);
+            add => _vehicleDamage.Subscribe(value, out _);
+            remove => _vehicleDamage.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerCreateWaypointDelegate, PlayerCreateWaypointEventArgs> _playerCreateWaypoint;
         public event AsyncEventHandler<PlayerCreateWaypointEventArgs> PlayerCreateWaypoint
         {
-            add => _playerCreateWaypoint.Subscribe(value);
-            remove => _playerCreateWaypoint.Unsubscribe(value);
+            add => _playerCreateWaypoint.Subscribe(value, out _);
+            remove => _playerCreateWaypoint.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerReachWaypointDelegate, PlayerEventArgs> _playerReachWaypoint;
         public event AsyncEventHandler<PlayerEventArgs> PlayerReachWaypoint
         {
-            add => _playerReachWaypoint.Subscribe(value);
-            remove => _playerReachWaypoint.Unsubscribe(value);
+            add => _playerReachWaypoint.Subscribe(value, out _);
+            remove => _playerReachWaypoint.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerStreamInDelegate, PlayerStreamEventArgs> _playerStreamIn;
         public event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamIn
         {
-            add => _playerStreamIn.Subscribe(value);
-            remove => _playerStreamIn.Unsubscribe(value);
+            add => _playerStreamIn.Subscribe(value, out _);
+            remove => _playerStreamIn.Unsubscribe(value, out _);
         }
 
         private readonly NativeAsyncEventDispatcher<NativePlayerStreamOutDelegate, PlayerStreamEventArgs> _playerStreamOut;
         public event AsyncEventHandler<PlayerStreamEventArgs> PlayerStreamOut
         {
-            add => _playerStreamOut.Subscribe(value);
-            remove => _playerStreamOut.Unsubscribe(value);
+            add => _playerStreamOut.Subscribe(value, out _);
+            remove => _playerStreamOut.Unsubscribe(value, out _);
         }
 
         internal EventScripting(Plugin plugin)
