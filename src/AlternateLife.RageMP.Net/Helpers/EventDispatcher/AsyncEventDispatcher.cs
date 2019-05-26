@@ -16,14 +16,14 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             Contract.NotNull(sender, nameof(sender));
             Contract.NotNull(eventArgs, nameof(eventArgs));
 
-            if (_subscriptions.Any() == false)
+            if (TryGetSubscriptions(out var subscriptions) == false)
             {
                 return;
             }
 
             Task.Run(() =>
             {
-                foreach (var subscription in _subscriptions)
+                foreach (var subscription in subscriptions)
                 {
                     ExecuteSubscriptionAsync(sender, subscription, eventArgs);
                 }
@@ -35,14 +35,14 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             Contract.NotNull(sender, nameof(sender));
             Contract.NotNull(eventArgs, nameof(eventArgs));
 
-            if (_subscriptions.Any() == false)
+            if (TryGetSubscriptions(out var subscriptions) == false)
             {
                 return;
             }
 
             await Task.Run(async () =>
             {
-                foreach (var subscription in _subscriptions)
+                foreach (var subscription in subscriptions)
                 {
                     await ExecuteSubscriptionAsyncAwaitable(sender, subscription, eventArgs)
                         .ConfigureAwait(false);
