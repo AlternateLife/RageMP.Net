@@ -26,7 +26,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 
         public override bool Subscribe(EventHandler<TEvent> callback)
         {
-            var wasEmpty = _subscriptions.Any() == false;
+            var wasEmpty = AnySubscriptions() == false;
             var wasAdded = base.Subscribe(callback);
 
             if (_forceRegistration || wasAdded == false || wasEmpty == false)
@@ -43,7 +43,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         {
             var wasRemoved = base.Unsubscribe(callback);
 
-            if (_forceRegistration || wasRemoved == false || _subscriptions.Any())
+            if (_forceRegistration || wasRemoved == false || AnySubscriptions())
             {
                 return true;
             }

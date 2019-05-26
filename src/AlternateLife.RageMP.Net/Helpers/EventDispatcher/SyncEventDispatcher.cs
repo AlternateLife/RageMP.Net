@@ -14,12 +14,12 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
             Contract.NotNull(sender, nameof(sender));
             Contract.NotNull(eventArgs, nameof(eventArgs));
 
-            if (_subscriptions.Any() == false)
+            if(TryGetSubscriptions(out var subscriptions) == false)
             {
                 return;
             }
 
-            foreach (var subscription in _subscriptions)
+            foreach (var subscription in subscriptions)
             {
                 try
                 {
