@@ -1,5 +1,5 @@
 ############# CMake Stage #############
-FROM ubuntu:latest as cmake
+FROM ubuntu:18.04 as cmake
 
 ARG bridge_version=1.0.0.0
 
@@ -33,7 +33,7 @@ COPY src /dotnet/src
 RUN dotnet publish -c Linux -p:Version=$bridge_version -p:FileVersion=$bridge_version /dotnet/src/AlternateLife.RageMP.Net/AlternateLife.RageMP.Net.csproj
 
 ############# Server Stage #############
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl1.0 && \
