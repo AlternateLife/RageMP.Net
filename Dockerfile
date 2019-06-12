@@ -39,7 +39,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends libssl1.0 && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /ragemp-config
+RUN mkdir /ragemp-config && \
+    mkdir -p /ragemp-srv/dotnet/resources
+
 COPY --from=cmake /ragemp-srv /ragemp-srv
 COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/AlternateLife.RageMP.Net.dll /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/NLog.dll /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/Newtonsoft.Json.dll /ragemp-srv/dotnet/plugins/
 COPY --from=dotnet /dotnet/src/AlternateLife.RageMP.Net/bin/Linux/netcoreapp2.2/publish/NLog.config /ragemp-srv/dotnet/
