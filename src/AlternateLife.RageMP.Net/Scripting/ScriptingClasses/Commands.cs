@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 
@@ -168,6 +169,32 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return true;
         }
 
+        private static bool IsPlayerAuthorizedForCommandAttribute(ICustomAttributeProvider attributeProvider, IPlayer player)
+        {
+            var methodAttribue = attributeProvider.GetCustomAttribute<AuthorizeAttribute>();
+
+            return methodAttribue == null || attributeProvider.GetAttributeValue((AuthorizeAttribute a) => a.IsPlayerAuthorized(player));
+        }
+
+        private static bool IsPlayerAuthorizedForCommand(CommandInformation command, IPlayer player)
+        {
+            var commandMethodAuthorization = false;
+            switch (command)
+            {
+                case DelegateCommand _:
+                    //Delegate commands do not support attributes so when the handler is not restricted the command is not either
+                    commandMethodAuthorization = true;
+                    break;
+
+                case ReflectionCommand reflectionCommand:
+                    commandMethodAuthorization = IsPlayerAuthorizedForCommandAttribute(reflectionCommand.MethodInfo, player);
+                    break;
+            }
+
+            //Method level authorization is overriding handler level, so we dont need to check handler authorization when the mathod is not allowed.
+            return commandMethodAuthorization && IsPlayerAuthorizedForCommandAttribute(command.CommandHandler.GetType(), player);
+        }
+
         public async Task ExecuteCommand(IPlayer player, string text)
         {
             string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -181,6 +208,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             if (_commands.TryGetValue(commandName, out var command) == false)
             {
                 OnCommandError(player, text, CommandError.CommandNotFound, $"Command {commandName} not found");
+
+                return;
+            }
+
+            if (IsPlayerAuthorizedForCommand(command, player) == false)
+            {
+                OnCommandError(player, text, CommandError.NotAuthorized, $"Player is not authorized to use command {commandName}");
 
                 return;
             }
