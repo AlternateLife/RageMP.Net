@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Interfaces;
 
 namespace AlternateLife.RageMP.Net.Attributes
@@ -10,6 +11,6 @@ namespace AlternateLife.RageMP.Net.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public abstract class AuthorizeAttribute : Attribute
     {
-        public abstract bool IsPlayerAuthorized(IPlayer player);
+        public abstract Task<bool> IsPlayerAuthorizedAsync(IPlayer player);
     }
 }

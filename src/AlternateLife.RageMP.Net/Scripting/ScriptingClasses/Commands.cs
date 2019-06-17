@@ -169,30 +169,34 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return true;
         }
 
-        private static bool IsPlayerAuthorizedForCommandAttribute(ICustomAttributeProvider attributeProvider, IPlayer player)
+        private static async Task<bool?> IsPlayerAuthorizedForCommandAttribute(ICustomAttributeProvider attributeProvider, IPlayer player)
         {
             var methodAttribue = attributeProvider.GetCustomAttribute<AuthorizeAttribute>();
 
-            return methodAttribue == null || attributeProvider.GetAttributeValue((AuthorizeAttribute a) => a.IsPlayerAuthorized(player));
+            if (methodAttribue == null)
+            {
+                return null;
+            }
+
+            return await methodAttribue.IsPlayerAuthorizedAsync(player);
         }
 
-        private static bool IsPlayerAuthorizedForCommand(CommandInformation command, IPlayer player)
+        private async Task<bool> IsPlayerAuthorizedForCommand(CommandInformation command, IPlayer player)
         {
-            var commandMethodAuthorization = false;
+            var handlerAuthorization = await IsPlayerAuthorizedForCommandAttribute(command.CommandHandler.GetType(), player);
             switch (command)
             {
                 case DelegateCommand _:
                     //Delegate commands do not support attributes so when the handler is not restricted the command is not either
-                    commandMethodAuthorization = true;
-                    break;
+                    return handlerAuthorization ?? true;
 
                 case ReflectionCommand reflectionCommand:
-                    commandMethodAuthorization = IsPlayerAuthorizedForCommandAttribute(reflectionCommand.MethodInfo, player);
-                    break;
+                    //Method level authorization is overriding handler level, so we dont need to check handler authorization when the method is not allowed.
+                    return await IsPlayerAuthorizedForCommandAttribute(reflectionCommand.MethodInfo, player) ?? handlerAuthorization ?? true;
             }
 
-            //Method level authorization is overriding handler level, so we dont need to check handler authorization when the mathod is not allowed.
-            return commandMethodAuthorization && IsPlayerAuthorizedForCommandAttribute(command.CommandHandler.GetType(), player);
+            _logger.Warn($"Command {command.Name}: Invalid command-type: {command.GetType()}");
+            return true;
         }
 
         public async Task ExecuteCommand(IPlayer player, string text)
@@ -212,7 +216,7 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
                 return;
             }
 
-            if (IsPlayerAuthorizedForCommand(command, player) == false)
+            if (await IsPlayerAuthorizedForCommand(command, player) == false)
             {
                 OnCommandError(player, text, CommandError.NotAuthorized, $"Player is not authorized to use command {commandName}");
 
