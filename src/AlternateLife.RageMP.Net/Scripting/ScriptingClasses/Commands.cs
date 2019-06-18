@@ -169,33 +169,34 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return true;
         }
 
-        private static async Task<bool?> IsPlayerAuthorizedForCommandAttribute(ICustomAttributeProvider attributeProvider, IPlayer player)
-        {
-            var methodAttribue = attributeProvider.GetCustomAttribute<AuthorizeAttribute>();
-
-            if (methodAttribue == null)
-            {
-                return null;
-            }
-
-            return await methodAttribue.IsPlayerAuthorizedAsync(player);
-        }
-
         private async Task<bool> IsPlayerAuthorizedForCommand(CommandInformation command, IPlayer player)
         {
-            var handlerAuthorization = await IsPlayerAuthorizedForCommandAttribute(command.CommandHandler.GetType(), player);
+            MethodInfo commandMethod;
             switch (command)
             {
-                case DelegateCommand _:
-                    //Delegate commands do not support attributes so when the handler is not restricted the command is not either
-                    return handlerAuthorization ?? true;
-
                 case ReflectionCommand reflectionCommand:
-                    //Method level authorization is overriding handler level, so we dont need to check handler authorization when the method is not allowed.
-                    return await IsPlayerAuthorizedForCommandAttribute(reflectionCommand.MethodInfo, player) ?? handlerAuthorization ?? true;
+                    commandMethod = reflectionCommand.MethodInfo;
+                    break;
+
+                case DelegateCommand delegateCommand:
+                    commandMethod = delegateCommand.CommandDelegate.Method;
+                    break;
+
+                default:
+                    _logger.Warn($"Command {command.Name}: Invalid command-type: {command.GetType()}");
+                    return false;
             }
 
-            _logger.Warn($"Command {command.Name}: Invalid command-type: {command.GetType()}");
+            if (commandMethod.TryGetCustomAttribute(out AuthorizeAttribute methodAttribue))
+            {
+                return await methodAttribue.IsPlayerAuthorizedAsync(player);
+            }
+
+            if (command.CommandHandler.GetType().TryGetCustomAttribute(out AuthorizeAttribute handlerAttribute))
+            {
+                return await handlerAttribute.IsPlayerAuthorizedAsync(player);
+            }
+
             return true;
         }
 

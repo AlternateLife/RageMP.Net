@@ -5,14 +5,16 @@ namespace AlternateLife.RageMP.Net.Extensions
 {
     public static class CustomAttributeProviderExtensions
     {
-        public static TAttribute GetCustomAttribute<TAttribute>(this ICustomAttributeProvider provider)
+        public static bool TryGetCustomAttribute<TAttribute>(this ICustomAttributeProvider provider, out TAttribute attribute)
         {
-            if (provider.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() is TAttribute attribute)
+            attribute = default;
+            if (provider.GetCustomAttributes(typeof(TAttribute), true).FirstOrDefault() is TAttribute convertedAttribute)
             {
-                return attribute;
+                attribute = convertedAttribute;
+                return true;
             }
 
-            return default;
+            return false;
         }
     }
 }
