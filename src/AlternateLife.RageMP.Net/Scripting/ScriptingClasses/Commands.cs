@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Attributes;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
 using AlternateLife.RageMP.Net.Interfaces;
 
@@ -168,6 +169,37 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             return true;
         }
 
+        private async Task<bool> IsPlayerAuthorizedForCommand(CommandInformation command, IPlayer player)
+        {
+            MethodInfo commandMethod;
+            switch (command)
+            {
+                case ReflectionCommand reflectionCommand:
+                    commandMethod = reflectionCommand.MethodInfo;
+                    break;
+
+                case DelegateCommand delegateCommand:
+                    commandMethod = delegateCommand.CommandDelegate.Method;
+                    break;
+
+                default:
+                    _logger.Warn($"Command {command.Name}: Invalid command-type: {command.GetType()}");
+                    return false;
+            }
+
+            if (commandMethod.TryGetCustomAttribute(out AuthorizeAttribute methodAttribue))
+            {
+                return await methodAttribue.IsPlayerAuthorizedAsync(player);
+            }
+
+            if (command.CommandHandler.GetType().TryGetCustomAttribute(out AuthorizeAttribute handlerAttribute))
+            {
+                return await handlerAttribute.IsPlayerAuthorizedAsync(player);
+            }
+
+            return true;
+        }
+
         public async Task ExecuteCommand(IPlayer player, string text)
         {
             string[] commandMessage = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -181,6 +213,13 @@ namespace AlternateLife.RageMP.Net.Scripting.ScriptingClasses
             if (_commands.TryGetValue(commandName, out var command) == false)
             {
                 OnCommandError(player, text, CommandError.CommandNotFound, $"Command {commandName} not found");
+
+                return;
+            }
+
+            if (await IsPlayerAuthorizedForCommand(command, player) == false)
+            {
+                OnCommandError(player, text, CommandError.NotAuthorized, $"Player is not authorized to use command {commandName}");
 
                 return;
             }

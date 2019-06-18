@@ -4,6 +4,7 @@ namespace AlternateLife.RageMP.Net.Enums
     {
         CommandNotFound,
         MissingArguments,
-        TypeParsingFailed
+        TypeParsingFailed,
+        NotAuthorized
     }
 }
