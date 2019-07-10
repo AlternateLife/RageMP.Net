@@ -566,13 +566,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<IReadOnlyCollection<IPlayer>> GetOccupantsAsync()
         {
-            CheckExistence();
-
             IntPtr playerPointers = IntPtr.Zero;
             ulong size = 0;
 
             await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Vehicle.Vehicle_GetOccupants(NativePointer, out playerPointers, out size);
+                })
                 .ConfigureAwait(false);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, p => _plugin.PlayerPool[p]);
@@ -605,13 +608,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
         {
-            CheckExistence();
-
             IntPtr playerPointers = IntPtr.Zero;
             ulong size = 0;
 
             await _plugin
-                .Schedule(() => Rage.Vehicle.Vehicle_GetStreamed(NativePointer, out playerPointers, out size))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Vehicle.Vehicle_GetStreamed(NativePointer, out playerPointers, out size);
+                })
                 .ConfigureAwait(false);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, x => _plugin.PlayerPool[x]);

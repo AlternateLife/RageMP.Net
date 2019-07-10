@@ -26,7 +26,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             {
                 Contract.NotEmpty(value, nameof(value));
                 CheckExistence();
-                
+
                 using (var converter = new StringConverter())
                 {
                     Rage.Player.Player_SetName(NativePointer, converter.StringToPointer(value));
@@ -282,42 +282,51 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task KickAsync(string reason = null)
         {
-            CheckExistence();
-
             using (var converter = new StringConverter())
             {
                 var reasonPointer = converter.StringToPointer(reason);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player_Kick(NativePointer, reasonPointer))
+                    .Schedule(() =>
+                    {
+                        CheckExistence();
+
+                        Rage.Player.Player_Kick(NativePointer, reasonPointer);
+                    })
                     .ConfigureAwait(false);
             }
         }
 
         public async Task BanAsync(string reason = null)
         {
-            CheckExistence();
-
             using (var converter = new StringConverter())
             {
                 var reasonPointer = converter.StringToPointer(reason);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player_Ban(NativePointer, reasonPointer))
+                    .Schedule(() =>
+                    {
+                        CheckExistence();
+
+                        Rage.Player.Player_Ban(NativePointer, reasonPointer);
+                    })
                     .ConfigureAwait(false);
             }
         }
 
         public async Task OutputChatBoxAsync(string text)
         {
-            CheckExistence();
-
             using (var converter = new StringConverter())
             {
                 var textPointer = converter.StringToPointer(text);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player_OutputChatBox(NativePointer, textPointer))
+                    .Schedule(() =>
+                    {
+                        CheckExistence();
+
+                        Rage.Player.Player_OutputChatBox(NativePointer, textPointer);
+                    })
                     .ConfigureAwait(false);
             }
         }
@@ -331,7 +340,12 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 var textPointer = converter.StringToPointer(text);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player_Notify(NativePointer, textPointer))
+                    .Schedule(() =>
+                    {
+                        CheckExistence();
+
+                        Rage.Player.Player_Notify(NativePointer, textPointer);
+                    })
                     .ConfigureAwait(false);
             }
         }
@@ -345,7 +359,6 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotEmpty(eventName, nameof(eventName));
             Contract.NotNull(arguments, nameof(arguments));
-            CheckExistence();
 
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
@@ -354,7 +367,12 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
                 var eventNamePointer = converter.StringToPointer(eventName);
 
                 await _plugin
-                    .Schedule(() => Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length))
+                    .Schedule(() =>
+                    {
+                        CheckExistence();
+
+                        Rage.Player.Player__Call(NativePointer, eventNamePointer, data, (ulong) data.Length);
+                    })
                     .ConfigureAwait(false);
             }
 
@@ -369,12 +387,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public async Task CallHashAsync(ulong eventHash, IEnumerable<object> arguments)
         {
             Contract.NotNull(arguments, nameof(arguments));
-            CheckExistence();
 
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player__CallHash(NativePointer, eventHash, data, (ulong) data.Length);
+                })
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -388,12 +410,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         public async Task InvokeAsync(ulong nativeHash, IEnumerable<object> arguments)
         {
             Contract.NotNull(arguments, nameof(arguments));
-            CheckExistence();
 
             var data = _plugin.ArgumentConverter.ConvertFromObjects(arguments);
 
             await _plugin
-                .Schedule(() => Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    return Rage.Player.Player__Invoke(NativePointer, nativeHash, data, (ulong) data.Length);
+                })
                 .ConfigureAwait(false);
 
             ArgumentData.Dispose(data);
@@ -469,13 +495,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<IReadOnlyCollection<IPlayer>> GetStreamedPlayersAsync()
         {
-            CheckExistence();
-
             IntPtr playerPointers = IntPtr.Zero;
             ulong size = 0;
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_GetStreamed(NativePointer, out playerPointers, out size))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player_GetStreamed(NativePointer, out playerPointers, out size);
+                })
                 .ConfigureAwait(false);
 
             return ArrayHelper.ConvertFromIntPtr(playerPointers, size, x => _plugin.PlayerPool[x]);

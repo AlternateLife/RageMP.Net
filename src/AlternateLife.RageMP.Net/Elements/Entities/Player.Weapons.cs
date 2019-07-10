@@ -179,14 +179,17 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         public async Task<IReadOnlyDictionary<WeaponHash, uint>> GetWeaponsAsync()
         {
-            CheckExistence();
-
             IntPtr weapons = IntPtr.Zero;
             IntPtr ammo = IntPtr.Zero;
             ulong count = 0;
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_GetWeapons(NativePointer, out weapons, out ammo, out count))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player_GetWeapons(NativePointer, out weapons, out ammo, out count);
+                })
                 .ConfigureAwait(false);
 
             var allWeapons = new Dictionary<WeaponHash, uint>();

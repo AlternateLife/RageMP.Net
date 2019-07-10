@@ -11,13 +11,16 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
     {
         public async Task<IReadOnlyCollection<IPlayer>> GetVoiceListenersAsync()
         {
-            CheckExistence();
-
             IntPtr players = IntPtr.Zero;
             ulong count = 0;
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_GetVoiceListeners(NativePointer, out players, out count))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player_GetVoiceListeners(NativePointer, out players, out count);
+                })
                 .ConfigureAwait(false);
 
             return ArrayHelper.ConvertFromIntPtr(players, count, x => _plugin.PlayerPool[x]);
@@ -27,10 +30,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotNull(target, nameof(target));
             Contract.EntityValid(target, nameof(target));
-            CheckExistence();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_EnableVoiceTo(NativePointer, target.NativePointer))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player_EnableVoiceTo(NativePointer, target.NativePointer);
+                })
                 .ConfigureAwait(false);
         }
 
@@ -38,10 +45,14 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             Contract.NotNull(target, nameof(target));
             Contract.EntityValid(target, nameof(target));
-            CheckExistence();
 
             await _plugin
-                .Schedule(() => Rage.Player.Player_DisableVoiceTo(NativePointer, target.NativePointer))
+                .Schedule(() =>
+                {
+                    CheckExistence();
+
+                    Rage.Player.Player_DisableVoiceTo(NativePointer, target.NativePointer);
+                })
                 .ConfigureAwait(false);
         }
     }
