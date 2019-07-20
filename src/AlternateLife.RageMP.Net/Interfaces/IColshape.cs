@@ -1,12 +1,17 @@
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Exceptions;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IColshape : IEntity
     {
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnterColshape;
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExitColshape;
+
         /// <summary>
         /// Get the type of the colshape.
         /// </summary>

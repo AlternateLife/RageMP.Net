@@ -164,7 +164,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             return _plugin.Schedule(GetVelocity);
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             CheckExistence();
 
