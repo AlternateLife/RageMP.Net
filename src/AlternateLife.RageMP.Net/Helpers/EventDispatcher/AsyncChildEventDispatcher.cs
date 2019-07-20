@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AlternateLife.RageMP.Net.Enums;
 using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
@@ -9,8 +10,15 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         private readonly AsyncEventDispatcher<TEvent> _parentDispatcher;
         private readonly Func<TEvent, Task<bool>> _condition;
 
+        internal AsyncChildEventDispatcher(Plugin plugin, EventType eventType,
+            AsyncEventDispatcher<TEvent> parentDispatcher, Func<TEvent, Task<bool>> condition = null)
+            : this(plugin, eventType.ToString(), parentDispatcher, condition)
+        {
+
+        }
         internal AsyncChildEventDispatcher(Plugin plugin, string eventIdentifier,
-            AsyncEventDispatcher<TEvent> parentDispatcher, Func<TEvent, Task<bool>> condition = null) : base(plugin, eventIdentifier)
+            AsyncEventDispatcher<TEvent> parentDispatcher, Func<TEvent, Task<bool>> condition = null)
+            : base(plugin, eventIdentifier)
         {
             _parentDispatcher = parentDispatcher;
             _condition = condition;

@@ -32,10 +32,10 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         {
             var events = _plugin.EventScripting;
 
-            _playerEnterDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, "PlayerEnterColshape",
+            _playerEnterDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, EventType.PlayerEnterColshape,
                 events.PlayerEnterColshapeDispatcher, eventArgs => Task.FromResult(eventArgs.Colshape == this));
 
-            _playerExitDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, "PlayerExitColshape",
+            _playerExitDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, EventType.PlayerExitColshape,
                 events.PlayerExitColshapeDispatcher, eventArgs => Task.FromResult(eventArgs.Colshape == this));
         }
 
