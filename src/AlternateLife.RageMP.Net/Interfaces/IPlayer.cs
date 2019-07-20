@@ -4,12 +4,31 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Exceptions;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IPlayer : IEntity
     {
+        event AsyncEventHandler<PlayerCommandEventArgs> Command;
+        event AsyncEventHandler<PlayerCommandFailedEventArgs> CommandFailed;
+        event AsyncEventHandler<PlayerChatEventArgs> Chat;
+        event AsyncEventHandler<PlayerEventArgs> Spawned;
+        event AsyncEventHandler<PlayerDamageEventArgs> Damage;
+        event AsyncEventHandler<PlayerWeaponChangeEventArgs> WeaponChange;
+        event AsyncEventHandler<PlayerEnterVehicleEventArgs> StartEnterVehicle;
+        event AsyncEventHandler<PlayerEnterVehicleEventArgs> EnterVehicle;
+        event AsyncEventHandler<PlayerVehicleEventArgs> StartExitVehicle;
+        event AsyncEventHandler<PlayerVehicleEventArgs> ExitVehicle;
+        event AsyncEventHandler<PlayerCheckpointEventArgs> EnterCheckpoint;
+        event AsyncEventHandler<PlayerCheckpointEventArgs> ExitCheckpoint;
+        event AsyncEventHandler<PlayerColshapeEventArgs> EnterColshape;
+        event AsyncEventHandler<PlayerColshapeEventArgs> ExitColshape;
+        event AsyncEventHandler<PlayerCreateWaypointEventArgs> CreateWaypoint;
+        event AsyncEventHandler<PlayerEventArgs> ReachWaypoint;
+
         /// <summary>
         /// Get the serial of the player.
         /// </summary>
