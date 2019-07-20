@@ -16,13 +16,13 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         private readonly AsyncChildEventDispatcher<PlayerColshapeEventArgs> _playerEnterColshape;
         private readonly AsyncChildEventDispatcher<PlayerColshapeEventArgs> _playerExitColshape;
 
-        public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnterColshape
+        public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnter
         {
             add => _playerEnterColshape.Subscribe(value, out _);
             remove => _playerEnterColshape.Unsubscribe(value, out _);
         }
 
-        public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExitColshape
+        public event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExit
         {
             add => _playerExitColshape.Subscribe(value, out _);
             remove => _playerExitColshape.Unsubscribe(value, out _);

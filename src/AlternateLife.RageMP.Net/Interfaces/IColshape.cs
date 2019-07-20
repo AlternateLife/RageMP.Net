@@ -9,8 +9,8 @@ namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IColshape : IEntity
     {
-        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnterColshape;
-        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExitColshape;
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerEnter;
+        event AsyncEventHandler<PlayerColshapeEventArgs> PlayerExit;
 
         /// <summary>
         /// Get the type of the colshape.
