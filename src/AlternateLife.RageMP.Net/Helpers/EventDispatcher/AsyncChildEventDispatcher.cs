@@ -10,7 +10,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
         private readonly Func<TEvent, Task<bool>> _condition;
 
         internal AsyncChildEventDispatcher(Plugin plugin, string eventIdentifier,
-            AsyncEventDispatcher<TEvent> parentDispatcher, Func<TEvent, Task<bool>> condition) : base(plugin, eventIdentifier)
+            AsyncEventDispatcher<TEvent> parentDispatcher, Func<TEvent, Task<bool>> condition = null) : base(plugin, eventIdentifier)
         {
             _parentDispatcher = parentDispatcher;
             _condition = condition;
@@ -56,7 +56,7 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
 
         private async Task OnEventCall(object sender, TEvent eventargs)
         {
-            if (await _condition(eventargs) == false)
+            if (_condition != null && await _condition(eventargs) == false)
             {
                 return;
             }
