@@ -4,7 +4,9 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
 
@@ -17,6 +19,35 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
         {
             Serial = StringConverter.PointerToString(Rage.Player.Player_GetSerial(NativePointer));
+
+            AsyncChildEventDispatcher<T> CreateDispatcher<T>(EventType eventType, AsyncEventDispatcher<T> parent) where T : PlayerEventArgs
+            {
+                return new AsyncChildEventDispatcher<T>(plugin, eventType, parent, eventArgs => Task.FromResult(eventArgs.Player == this));
+            }
+
+            AsyncChildEventDispatcher<T> CreateDispatcherString<T>(string eventType, AsyncEventDispatcher<T> parent) where T : PlayerEventArgs
+            {
+                return new AsyncChildEventDispatcher<T>(plugin, eventType, parent, eventArgs => Task.FromResult(eventArgs.Player == this));
+            }
+
+            var events = plugin.EventScripting;
+
+            _commandDispatcher = CreateDispatcher(EventType.PlayerCommand, events.PlayerCommandDispatcher);
+            _commandFailedDispatcher = CreateDispatcherString("PlayerCommandFailed", events.PlayerCommandFailedDispatcher);
+            _chatDispatcher = CreateDispatcher(EventType.PlayerChat, events.PlayerChatDispatcher);
+            _spawnDispatcher = CreateDispatcher(EventType.PlayerSpawn, events.PlayerSpawnDispatcher);
+            _damageDispatcher = CreateDispatcher(EventType.PlayerDamage, events.PlayerDamageDispatcher);
+            _weaponChangeDispatcher = CreateDispatcher(EventType.PlayerWeaponChange, events.PlayerWeaponChangeDispatcher);
+            _startEnterVehicleDispatcher = CreateDispatcher(EventType.PlayerStartEnterVehicle, events.PlayerStartEnterVehicleDispatcher);
+            _enterVehicleDispatcher = CreateDispatcher(EventType.PlayerEnterVehicle, events.PlayerEnterVehicleDispatcher);
+            _startExitVehicleDispatcher = CreateDispatcher(EventType.PlayerStartExitVehicle, events.PlayerStartExitVehicleDispatcher);
+            _exitVehicleDispatcher = CreateDispatcher(EventType.PlayerExitVehicle, events.PlayerExitVehicleDispatcher);
+            _enterCheckpointDispatcher = CreateDispatcher(EventType.PlayerEnterCheckpoint, events.PlayerEnterCheckpointDispatcher);
+            _exitCheckpointDispatcher = CreateDispatcher(EventType.PlayerExitCheckpoint, events.PlayerExitCheckpointDispatcher);
+            _enterColshapeDispatcher = CreateDispatcher(EventType.PlayerEnterColshape, events.PlayerEnterColshapeDispatcher);
+            _exitColshapeDispatcher = CreateDispatcher(EventType.PlayerExitColshape, events.PlayerExitColshapeDispatcher);
+            _createWaypointDispatcher = CreateDispatcher(EventType.PlayerCreateWaypoint, events.PlayerCreateWaypointDispatcher);
+            _reachWaypointDispatcher = CreateDispatcher(EventType.PlayerReachWaypoint, events.PlayerReachWaypointDispatcher);
         }
 
         public void SetName(string value)
