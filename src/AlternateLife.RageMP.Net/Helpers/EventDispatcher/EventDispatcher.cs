@@ -69,5 +69,13 @@ namespace AlternateLife.RageMP.Net.Helpers.EventDispatcher
                 _readerWriterLock.ExitReadLock();
             }
         }
+
+        public void ClearSubscriptions()
+        {
+            foreach (var subscription in _subscriptions.Reverse())
+            {
+                Unsubscribe(subscription, out _);
+            }
+        }
     }
 }
