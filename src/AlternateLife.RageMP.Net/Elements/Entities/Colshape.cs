@@ -30,13 +30,15 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         internal Colshape(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Colshape)
         {
+            AsyncChildEventDispatcher<T> CreateDispatcher<T>(EventType eventType, AsyncEventDispatcher<T> parent) where T : PlayerColshapeEventArgs
+            {
+                return new AsyncChildEventDispatcher<T>(plugin, eventType, parent, eventArgs => Task.FromResult(eventArgs.Colshape == this));
+            }
+
             var events = _plugin.EventScripting;
 
-            _playerEnterDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, EventType.PlayerEnterColshape,
-                events.PlayerEnterColshapeDispatcher, eventArgs => Task.FromResult(eventArgs.Colshape == this));
-
-            _playerExitDispatcher = new AsyncChildEventDispatcher<PlayerColshapeEventArgs>(_plugin, EventType.PlayerExitColshape,
-                events.PlayerExitColshapeDispatcher, eventArgs => Task.FromResult(eventArgs.Colshape == this));
+            _playerEnterDispatcher = CreateDispatcher(EventType.PlayerEnterColshape, events.PlayerEnterColshapeDispatcher);
+            _playerExitDispatcher = CreateDispatcher(EventType.PlayerExitColshape, events.PlayerExitColshapeDispatcher);
         }
 
         public ColshapeType GetShapeType()
