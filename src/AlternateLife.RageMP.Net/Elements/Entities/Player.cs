@@ -4,51 +4,14 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
-using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Helpers;
-using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
-using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal partial class Player : Entity, IPlayer
     {
-        private readonly AsyncChildEventDispatcher<PlayerCommandEventArgs> _commandDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerCommandFailedEventArgs> _commandFailedDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerChatEventArgs> _chatDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerEventArgs> _spawnDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerDamageEventArgs> _damageDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerWeaponChangeEventArgs> _weaponChangeDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerEnterVehicleEventArgs> _startEnterVehicleDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerEnterVehicleEventArgs> _enterVehicleDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerVehicleEventArgs> _startExitVehicleDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerVehicleEventArgs> _exitVehicleDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerCheckpointEventArgs> _enterCheckpointDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerCheckpointEventArgs> _exitCheckpointDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerColshapeEventArgs> _enterColshapeDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerColshapeEventArgs> _exitColshapeDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerCreateWaypointEventArgs> _createWaypointDispatcher;
-        private readonly AsyncChildEventDispatcher<PlayerEventArgs> _reachWaypointDispatcher;
-
-        public event AsyncEventHandler<PlayerCommandEventArgs> Command;
-        public event AsyncEventHandler<PlayerCommandFailedEventArgs> CommandFailed;
-        public event AsyncEventHandler<PlayerChatEventArgs> Chat;
-        public event AsyncEventHandler<PlayerEventArgs> Spawned;
-        public event AsyncEventHandler<PlayerDamageEventArgs> Damage;
-        public event AsyncEventHandler<PlayerWeaponChangeEventArgs> WeaponChange;
-        public event AsyncEventHandler<PlayerEnterVehicleEventArgs> StartEnterVehicle;
-        public event AsyncEventHandler<PlayerEnterVehicleEventArgs> EnterVehicle;
-        public event AsyncEventHandler<PlayerVehicleEventArgs> StartExitVehicle;
-        public event AsyncEventHandler<PlayerVehicleEventArgs> ExitVehicle;
-        public event AsyncEventHandler<PlayerCheckpointEventArgs> EnterCheckpoint;
-        public event AsyncEventHandler<PlayerCheckpointEventArgs> ExitCheckpoint;
-        public event AsyncEventHandler<PlayerColshapeEventArgs> EnterColshape;
-        public event AsyncEventHandler<PlayerColshapeEventArgs> ExitColshape;
-        public event AsyncEventHandler<PlayerCreateWaypointEventArgs> CreateWaypoint;
-        public event AsyncEventHandler<PlayerEventArgs> ReachWaypoint;
-
         public string Serial { get; }
 
         internal Player(IntPtr playerPointer, Plugin plugin) : base(playerPointer, plugin, EntityType.Player)
