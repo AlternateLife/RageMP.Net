@@ -33,7 +33,7 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         protected Entity(IntPtr nativePointer, Plugin plugin, EntityType type)
         {
             _modelChangeDispatcher = new AsyncChildEventDispatcher<EntityModelEventArgs>(plugin, EventType.EntityModelChanged,
-                _plugin.EventScripting.EntityModelChangeDispatcher, eventArgs => Task.FromResult(eventArgs.Entity == this));
+                plugin.EventScripting.EntityModelChangeDispatcher, eventArgs => Task.FromResult(eventArgs.Entity == this));
 
             NativePointer = nativePointer;
             _plugin = plugin;
