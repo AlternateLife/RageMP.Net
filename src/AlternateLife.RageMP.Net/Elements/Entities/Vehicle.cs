@@ -23,11 +23,35 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
         private readonly AsyncChildEventDispatcher<VehicleTrailerEventArgs> _trailerAttachedDispatcher;
         private readonly AsyncChildEventDispatcher<VehicleDamageEventArgs> _damageDispatcher;
 
-        public event AsyncEventHandler<VehicleDeathEventArgs> Death;
-        public event AsyncEventHandler<VehicleToggleEventArgs> SirenToggle;
-        public event AsyncEventHandler<VehicleToggleEventArgs> HornToggle;
-        public event AsyncEventHandler<VehicleTrailerEventArgs> TrailerAttached;
-        public event AsyncEventHandler<VehicleDamageEventArgs> Damage;
+        public event AsyncEventHandler<VehicleDeathEventArgs> Death
+        {
+            add => _deathDispatcher.Subscribe(value, out _);
+            remove => _deathDispatcher.Unsubscribe(value, out _);
+        }
+
+        public event AsyncEventHandler<VehicleToggleEventArgs> SirenToggle
+        {
+            add => _sirenToggleDispatcher.Subscribe(value, out _);
+            remove => _sirenToggleDispatcher.Unsubscribe(value, out _);
+        }
+
+        public event AsyncEventHandler<VehicleToggleEventArgs> HornToggle
+        {
+            add => _hornToggleDispatcher.Subscribe(value, out _);
+            remove => _hornToggleDispatcher.Unsubscribe(value, out _);
+        }
+
+        public event AsyncEventHandler<VehicleTrailerEventArgs> TrailerAttached
+        {
+            add => _trailerAttachedDispatcher.Subscribe(value, out _);
+            remove => _trailerAttachedDispatcher.Unsubscribe(value, out _);
+        }
+
+        public event AsyncEventHandler<VehicleDamageEventArgs> Damage
+        {
+            add => _damageDispatcher.Subscribe(value, out _);
+            remove => _damageDispatcher.Unsubscribe(value, out _);
+        }
 
         internal Vehicle(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Vehicle)
         {
