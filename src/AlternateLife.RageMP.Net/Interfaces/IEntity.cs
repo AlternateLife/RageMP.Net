@@ -244,6 +244,12 @@ namespace AlternateLife.RageMP.Net.Interfaces
         void ResetSharedData(string key);
 
         /// <summary>
+        /// Returns every stored data of the entity
+        /// </summary>
+        /// <returns>Copy of all stored data</returns>
+        IReadOnlyDictionary<string, object> GetAllData();
+
+        /// <summary>
         /// Get data of the entity.
         /// </summary>
         /// <param name="key">Key of the data</param>

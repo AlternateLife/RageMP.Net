@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
@@ -241,6 +242,11 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             SetSharedData(key, null);
+        }
+
+        public IReadOnlyDictionary<string, object> GetAllData()
+        {
+            return _data.ToDictionary(x => x.Key, x => x.Value);
         }
 
         public bool TryGetData(string key, out object data)
