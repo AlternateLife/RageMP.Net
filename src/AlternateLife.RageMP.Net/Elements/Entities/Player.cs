@@ -50,6 +50,28 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             _reachWaypointDispatcher = CreateDispatcher(EventType.PlayerReachWaypoint, events.PlayerReachWaypointDispatcher);
         }
 
+        public override void Destroy()
+        {
+            base.Destroy();
+
+            _commandDispatcher.ClearSubscriptions();
+            _commandFailedDispatcher.ClearSubscriptions();
+            _chatDispatcher.ClearSubscriptions();
+            _spawnDispatcher.ClearSubscriptions();
+            _damageDispatcher.ClearSubscriptions();
+            _weaponChangeDispatcher.ClearSubscriptions();
+            _startEnterVehicleDispatcher.ClearSubscriptions();
+            _enterVehicleDispatcher.ClearSubscriptions();
+            _startExitVehicleDispatcher.ClearSubscriptions();
+            _exitVehicleDispatcher.ClearSubscriptions();
+            _enterCheckpointDispatcher.ClearSubscriptions();
+            _exitCheckpointDispatcher.ClearSubscriptions();
+            _enterColshapeDispatcher.ClearSubscriptions();
+            _exitColshapeDispatcher.ClearSubscriptions();
+            _createWaypointDispatcher.ClearSubscriptions();
+            _reachWaypointDispatcher.ClearSubscriptions();
+        }
+
         public void SetName(string value)
         {
             Contract.NotEmpty(value, nameof(value));

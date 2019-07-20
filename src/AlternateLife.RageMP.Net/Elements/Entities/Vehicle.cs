@@ -69,6 +69,17 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             _damageDispatcher = CreateDispatcher(EventType.VehicleDamage, events.VehicleDamageDispatcher);
         }
 
+        public override void Destroy()
+        {
+            base.Destroy();
+
+            _deathDispatcher.ClearSubscriptions();
+            _sirenToggleDispatcher.ClearSubscriptions();
+            _hornToggleDispatcher.ClearSubscriptions();
+            _trailerAttachedDispatcher.ClearSubscriptions();
+            _damageDispatcher.ClearSubscriptions();
+        }
+
         public Quaternion GetQuaternion()
         {
             CheckExistence();
