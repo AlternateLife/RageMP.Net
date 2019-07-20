@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Exceptions;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IEntity
     {
+        event AsyncEventHandler<EntityModelEventArgs> ModelChange;
+
         /// <summary>
         /// Get the internal entity pointer.
         ///

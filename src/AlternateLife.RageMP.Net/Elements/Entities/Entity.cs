@@ -5,10 +5,13 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Exceptions;
 using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
@@ -18,6 +21,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         protected readonly Plugin _plugin;
 
+        private readonly AsyncChildEventDispatcher<EntityModelEventArgs> _modelChangeDispatcher;
+        public event AsyncEventHandler<EntityModelEventArgs> ModelChange;
+
         public IntPtr NativePointer { get; }
         public bool Exists { get; set; }
 
@@ -26,6 +32,9 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
 
         protected Entity(IntPtr nativePointer, Plugin plugin, EntityType type)
         {
+            _modelChangeDispatcher = new AsyncChildEventDispatcher<EntityModelEventArgs>(plugin, EventType.EntityModelChanged,
+                _plugin.EventScripting.EntityModelChangeDispatcher, eventArgs => Task.FromResult(eventArgs.Entity == this));
+
             NativePointer = nativePointer;
             _plugin = plugin;
 
@@ -169,6 +178,8 @@ namespace AlternateLife.RageMP.Net.Elements.Entities
             CheckExistence();
 
             Rage.Entity.Entity_Destroy(NativePointer);
+
+            _modelChangeDispatcher.ClearSubscriptions();
         }
 
         public Task DestroyAsync()
