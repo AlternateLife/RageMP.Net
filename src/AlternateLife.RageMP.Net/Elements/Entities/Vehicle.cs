@@ -5,17 +5,44 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Extensions;
 using AlternateLife.RageMP.Net.Helpers;
+using AlternateLife.RageMP.Net.Helpers.EventDispatcher;
 using AlternateLife.RageMP.Net.Interfaces;
 using AlternateLife.RageMP.Net.Native;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Elements.Entities
 {
     internal class Vehicle : Entity, IVehicle
     {
+        private readonly AsyncChildEventDispatcher<VehicleDeathEventArgs> _deathDispatcher;
+        private readonly AsyncChildEventDispatcher<VehicleToggleEventArgs> _sirenToggleDispatcher;
+        private readonly AsyncChildEventDispatcher<VehicleToggleEventArgs> _hornToggleDispatcher;
+        private readonly AsyncChildEventDispatcher<VehicleTrailerEventArgs> _trailerAttachedDispatcher;
+        private readonly AsyncChildEventDispatcher<VehicleDamageEventArgs> _damageDispatcher;
+
+        public event AsyncEventHandler<VehicleDeathEventArgs> Death;
+        public event AsyncEventHandler<VehicleToggleEventArgs> SirenToggle;
+        public event AsyncEventHandler<VehicleToggleEventArgs> HornToggle;
+        public event AsyncEventHandler<VehicleTrailerEventArgs> TrailerAttached;
+        public event AsyncEventHandler<VehicleDamageEventArgs> Damage;
+
         internal Vehicle(IntPtr nativePointer, Plugin plugin) : base(nativePointer, plugin, EntityType.Vehicle)
         {
+            AsyncChildEventDispatcher<T> CreateDispatcher<T>(EventType eventType, AsyncEventDispatcher<T> parent) where T : VehicleEventArgs
+            {
+                return new AsyncChildEventDispatcher<T>(plugin, eventType, parent, eventArgs => Task.FromResult(eventArgs.Vehicle == this));
+            }
+
+            var events = plugin.EventScripting;
+
+            _deathDispatcher = CreateDispatcher(EventType.VehicleDeath, events.VehicleDeathDispatcher);
+            _sirenToggleDispatcher = CreateDispatcher(EventType.VehicleSirenToggle, events.VehicleSirenToggleDispatcher);
+            _hornToggleDispatcher = CreateDispatcher(EventType.VehicleHornToggle, events.VehicleHornToggleDispatcher);
+            _trailerAttachedDispatcher = CreateDispatcher(EventType.VehicleHornToggle, events.VehicleTrailerAttachedDispatcher);
+            _damageDispatcher = CreateDispatcher(EventType.VehicleDamage, events.VehicleDamageDispatcher);
         }
 
         public Quaternion GetQuaternion()

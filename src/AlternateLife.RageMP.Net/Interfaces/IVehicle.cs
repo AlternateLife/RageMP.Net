@@ -5,12 +5,20 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AlternateLife.RageMP.Net.Data;
 using AlternateLife.RageMP.Net.Enums;
+using AlternateLife.RageMP.Net.EventArgs;
 using AlternateLife.RageMP.Net.Exceptions;
+using AlternateLife.RageMP.Net.Scripting;
 
 namespace AlternateLife.RageMP.Net.Interfaces
 {
     public interface IVehicle : IEntity
     {
+        event AsyncEventHandler<VehicleDeathEventArgs> Death;
+        event AsyncEventHandler<VehicleToggleEventArgs> SirenToggle;
+        event AsyncEventHandler<VehicleToggleEventArgs> HornToggle;
+        event AsyncEventHandler<VehicleTrailerEventArgs> TrailerAttached;
+        event AsyncEventHandler<VehicleDamageEventArgs> Damage;
+
         /// <summary>
         /// Get the quaternion rotation of the vehicle.
         /// </summary>
